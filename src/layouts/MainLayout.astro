@@ -3,7 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import FiberContainer from "../components/threeSetup.jsx";
+import FiberContainer from "../components/fiberCanvas.jsx";
 ---
 
 <!DOCTYPE html>
@@ -12,9 +12,10 @@ import FiberContainer from "../components/threeSetup.jsx";
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <body>
-    <Header title={SITE_TITLE} />
     <FiberContainer client:load />
-    <p>hola</p>
-    <Footer />
+    <div id="mainFrame">
+      <Header title={SITE_TITLE} />
+      <Footer />
+    </div>
   </body>
 </html>

@@ -3,27 +3,30 @@
   https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap");
+
+#mainFrame {
+  position: fixed;
+}
+
+#mainName {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
 
 html,
-body,
-#root {
-  font-family: Verdana, sans-serif;
-  /* margin: auto; */
-  /* padding: 20px; */
-  /* max-width: 65ch; */
+body {
+  font-family: "Josefin Sans", sans-serif;
   text-align: left;
-  background-color: #fff;
+  background-color: #000;
   word-wrap: break-word;
   overflow-wrap: break-word;
   line-height: 1.5;
   color: #444;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* overflow: hidden; */
+  margin: 0;
 }
 h1,
 h2,
@@ -33,7 +36,7 @@ h5,
 h6,
 strong,
 b {
-  color: #222;
+  color: #fdfefe;
 }
 a {
   color: #3273dc;
