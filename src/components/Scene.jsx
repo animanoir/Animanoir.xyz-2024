@@ -8,18 +8,23 @@ function Box(props) {
   const [active, setActive] = useState(false);
   useFrame((state, delta) => (mesh.current.rotation.x += delta));
   return (
-    <mesh
-      {...props}
-      ref={mesh}
-      scale={active ? 1.5 : 1}
-      castShadow
-      onClick={(event) => setActive(!active)}
-      onPointerOver={(event) => setHover(true)}
-      onPointerOut={(event) => setHover(false)}
-    >
-      <boxGeometry args={[1, 1, 1]} />
-      <meshNormalMaterial />
-    </mesh>
+    <>
+      <mesh
+        {...props}
+        ref={mesh}
+        scale={active ? 1.5 : 1}
+        onClick={(event) => setActive(!active)}
+        onPointerOver={(event) => setHover(true)}
+        onPointerOut={(event) => setHover(false)}
+      >
+        <boxGeometry args={[1, 1, 1]} />
+        <meshNormalMaterial />
+      </mesh>
+      <mesh position-x={5}>
+        <sphereGeometry />
+        <meshNormalMaterial />
+      </mesh>
+    </>
   );
 }
 

@@ -11,7 +11,7 @@ export const FiberContainer = () => {
         camera={{ position: [14.4666, 2.0365, 5.556165], fov: 40 }}
       >
         <Scene />
-        <OrbitControls minDistance={1} maxDistance={200} />
+        <OrbitControls autoRotate minDistance={1} maxDistance={200} />
       </Canvas>
     </div>
   );

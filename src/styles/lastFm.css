@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+
+#lastfmContainer {
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.8em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#lastfmContainer p {
+  margin: 0;
+}

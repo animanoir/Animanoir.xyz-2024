@@ -1,12 +1,16 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
 import { SITE_TITLE, TWITTER_PROFILE } from "../consts";
+import LastFm from "./react/LastFm.jsx";
 ---
 
 <header>
-  <h1 id="mainName">
-    {SITE_TITLE}
-  </h1>
+  <div>
+    <h1 id="mainName">
+      {SITE_TITLE}
+    </h1>
+    <LastFm client:load />
+  </div>
   <nav>
     <HeaderLink href="/">Home</HeaderLink>
     <HeaderLink href="/blog">Blog</HeaderLink>
@@ -18,10 +22,28 @@ import { SITE_TITLE, TWITTER_PROFILE } from "../consts";
   </nav>
 </header>
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
+
   header {
-    margin: 0em 0 2em;
+    margin: 1em;
   }
-  h2 {
+
+  #mainName {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+    font-family: "Montserrat", sans-serif;
+  }
+
+  h1 {
     margin: 0.5em 0;
+    color: #fdfefe; /* El color del texto cuando el mouse está encima */
+    transition: color 0.25s ease-out; /* Configura la transición para el color */
+    cursor: pointer;
+  }
+  h1:hover {
+    color: #8b0000; /* El color inicial del texto */
   }
 </style>
