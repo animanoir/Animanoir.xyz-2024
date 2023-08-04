@@ -1,9 +1,8 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import FiberContainer from "../components/fiberCanvas.jsx";
+import FiberContainer from "../components/FiberCanvas.jsx";
 ---
 
 <!DOCTYPE html>
@@ -15,7 +14,7 @@ import FiberContainer from "../components/fiberCanvas.jsx";
     <FiberContainer client:load />
     <div id="mainFrame">
       <Header title={SITE_TITLE} />
-      <Footer />
     </div>
+    <!-- <Footer /> -->
   </body>
 </html>

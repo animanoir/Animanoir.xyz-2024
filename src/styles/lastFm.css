@@ -1,13 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
 
-#lastfmContainer {
+.lastfmContainer {
   font-family: "Open Sans", sans-serif;
   font-size: 0.8em;
   display: flex;
   flex-direction: row;
   align-items: center;
+  cursor: crosshair;
+  user-select: none;
 }
 
-#lastfmContainer p {
+.lastfmContainer p {
   margin: 0;
+}
+
+.albumCover {
+  position: absolute;
+  pointer-events: none;
+  transition: opacity 0.4s ease; /* Transición de 0.5 segundos para el efecto fade */
+  z-index: 100; /* Asegurarse de que la imagen esté por encima de otros elementos */
+  /* box-shadow: 0px 4px 6px rgba(20, 20, 6, 1); */
 }

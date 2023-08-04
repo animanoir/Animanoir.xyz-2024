@@ -1,14 +1,15 @@
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
+import { Float } from "@react-three/drei";
 
 function Box(props) {
   const mesh = useRef();
 
   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
-  useFrame((state, delta) => (mesh.current.rotation.x += delta));
+  // useFrame((state, delta) => (mesh.current.rotation.x += delta));
   return (
-    <>
+    <Float>
       <mesh
         {...props}
         ref={mesh}
@@ -17,14 +18,10 @@ function Box(props) {
         onPointerOver={(event) => setHover(true)}
         onPointerOut={(event) => setHover(false)}
       >
-        <boxGeometry args={[1, 1, 1]} />
+        <boxGeometry args={[2, 2, 2]} />
         <meshNormalMaterial />
       </mesh>
-      <mesh position-x={5}>
-        <sphereGeometry />
-        <meshNormalMaterial />
-      </mesh>
-    </>
+    </Float>
   );
 }
 

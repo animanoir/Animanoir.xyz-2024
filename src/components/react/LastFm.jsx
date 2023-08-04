@@ -3,6 +3,11 @@ import "../../styles/lastFm.css";
 
 export const LastFm = () => {
   const [lfmData, updateLfmData] = useState({});
+  const [albumImageState, setAlbumImageState] = useState({
+    x: 0,
+    y: 0,
+  });
+  const [onMouseEnter, setOnMouseEnter] = useState(false);
 
   useEffect(() => {
     fetch(
@@ -22,6 +27,20 @@ export const LastFm = () => {
       );
   }, []);
 
+  const handleMouseEnter = (albumImage) => {
+    if (albumImage) {
+      setOnMouseEnter(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setOnMouseEnter(false);
+  };
+
+  const handleMouseMove = (e) => {
+    setAlbumImageState({ ...albumImageState, x: e.clientX, y: e.clientY });
+  };
+
   const buildLastFmData = () => {
     const { error } = lfmData;
     const track = lfmData?.recenttracks?.track;
@@ -36,21 +55,44 @@ export const LastFm = () => {
 
     if (!track) {
       return (
-        <div>
+        <div className="lastfmContainer">
           <p>Fetching from Last.FM servers...</p>
         </div>
       );
     }
 
-    const [{ name: songName, artist: { "#text": artistName } = {} } = {}] =
-      track;
+    const [
+      {
+        name: songName,
+        artist: { "#text": artistName },
+        album: { "#text": albumName },
+        image,
+      } = {},
+    ] = track;
+    const albumImage = image?.[image.length - 1]?.["#text"];
 
     return (
-      <div id="lastfmContainer">
-        <p>
-          Listening now to <b>{songName}</b> by <b>{artistName}</b>{" "}
+      <div className="lastfmContainer">
+        <p
+          onMouseEnter={() => handleMouseEnter(albumImage)}
+          onMouseLeave={handleMouseLeave}
+          onMouseMove={handleMouseMove}
+        >
+          Listening now to <b style={{ color: "grey" }}>{songName}</b> by{" "}
+          <b style={{ color: "grey" }}>{artistName}</b>{" "}
           <img src="images/playingBars.gif" alt="Now playing" />
         </p>
+        <div
+          className="albumCover"
+          style={{
+            zIndex: onMouseEnter ? 1 : -1,
+            left: albumImageState.x + 10,
+            top: albumImageState.y + 10,
+            opacity: onMouseEnter ? 1 : 0,
+          }}
+        >
+          <img src={albumImage} alt={albumName} />
+        </div>
       </div>
     );
   };

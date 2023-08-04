@@ -1,40 +1,42 @@
 ---
-import HeaderLink from "./HeaderLink.astro";
-import { SITE_TITLE, TWITTER_PROFILE } from "../consts";
+// import HeaderLink from "./HeaderLink.astro";
+import { SITE_DESCRIPTION } from "../consts";
 import LastFm from "./react/LastFm.jsx";
 ---
 
 <header>
   <div>
-    <h1 id="mainName">
-      {SITE_TITLE}
-    </h1>
+    <a href="/">
+      <h1 id="headerTitle">
+        Óscar A. Montiel | <span id="headerSubtitle">{SITE_DESCRIPTION}</span>
+      </h1>
+    </a>
     <LastFm client:load />
   </div>
-  <nav>
+  <!-- <nav>
     <HeaderLink href="/">Home</HeaderLink>
+    <HeaderLink href="/projects">Projects</HeaderLink>
     <HeaderLink href="/blog">Blog</HeaderLink>
     <HeaderLink href="/about">About</HeaderLink>
     <HeaderLink href={TWITTER_PROFILE} target="_blank">Twitter</HeaderLink>
-    <HeaderLink href="https://github.com/withastro/astro" target="_blank">
-      GitHub
-    </HeaderLink>
-  </nav>
+  </nav> -->
 </header>
+
 <style>
-  @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
-
-  header {
-    margin: 1em;
-  }
-
-  #mainName {
-    font-size: 2rem;
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Raleway&display=swap");
+  #headerTitle {
+    font-size: 1.4rem;
     font-weight: 700;
     margin: 0;
     padding: 0;
     line-height: 1.2;
     font-family: "Montserrat", sans-serif;
+    user-select: none;
+  }
+
+  #headerSubtitle {
+    font-family: "Raleway", sans-serif;
+    font-weight: 400;
   }
 
   h1 {
@@ -44,6 +46,29 @@ import LastFm from "./react/LastFm.jsx";
     cursor: pointer;
   }
   h1:hover {
-    color: #8b0000; /* El color inicial del texto */
+    /* color: #8b0000; El color inicial del texto */
+    color: red;
+  }
+
+  nav {
+    padding-top: 1rem;
+
+    font-size: 1em;
+    font-style: italic;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  nav a {
+    color: #fdfefe;
+  }
+
+  header {
+    margin: 1rem;
+  }
+
+  header a {
+    text-decoration: none;
   }
 </style>

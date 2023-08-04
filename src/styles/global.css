@@ -5,15 +5,19 @@
  */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
 
-@font-face {
-  font-family: "Gotham-Bold";
-  src: url("/fonts/Gotham-Bold.woff") format("woff");
-  font-weight: bold;
-  font-style: normal;
-}
-
 #mainFrame {
   position: fixed;
+  display: flex; /* Habilita la disposición flex */
+  flex-direction: column; /* Organiza los elementos en una columna */
+}
+
+#content {
+  flex-grow: 1; /* Permite que el contenido crezca y ocupe todo el espacio disponible */
+}
+
+footer {
+  padding: 25px;
+  text-align: center;
 }
 
 html,
@@ -56,10 +60,10 @@ content {
 table {
   width: 100%;
 }
-img {
+/* img {
   max-width: 100%;
   height: auto;
-}
+} */
 code {
   padding: 2px 5px;
   background-color: #f2f2f2;
