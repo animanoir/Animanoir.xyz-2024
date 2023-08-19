@@ -5,6 +5,64 @@
  */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
 
+.fadeInQuick {
+  animation: fadeIn ease-out 400ms;
+  -webkit-animation: fadeIn ease-out 400ms;
+  -moz-animation: fadeIn ease-out 400ms;
+  -o-animation: fadeIn ease-out 400ms;
+  -ms-animation: fadeIn ease-out 400ms;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 #mainFrame {
   position: fixed;
   display: flex; /* Habilita la disposición flex */

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/lastFm.css";
+import useLastFmData from "../hooks/useLastFmData";
 
 export const LastFm = () => {
-  const [lfmData, updateLfmData] = useState({});
+  const lfmData = useLastFmData();
   const [albumImageState, setAlbumImageState] = useState({
     x: 0,
     y: 0,
@@ -72,7 +73,7 @@ export const LastFm = () => {
     const albumImage = image?.[image.length - 1]?.["#text"];
 
     return (
-      <div className="lastfmContainer">
+      <div className="lastfmContainer fadeInQuick">
         <p
           onMouseEnter={() => handleMouseEnter(albumImage)}
           onMouseLeave={handleMouseLeave}
