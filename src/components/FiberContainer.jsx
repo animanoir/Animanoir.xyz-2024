@@ -7,7 +7,7 @@ import { Perf } from "r3f-perf";
 import "../styles/fiberCanvas.css";
 import { get } from "../pages/rss.xml";
 
-export const FiberContainer = () => {
+export const FiberCanvas = () => {
   const sceneCreated = ({ gl }) => {
     console.log("Scene created: ", gl);
     gl.setClearColor("black", 1);
@@ -37,4 +37,4 @@ export const FiberContainer = () => {
   );
 };
 
-export default FiberContainer;
+export default FiberCanvas;
