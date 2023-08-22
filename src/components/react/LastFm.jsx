@@ -10,24 +10,6 @@ export const LastFm = () => {
   });
   const [onMouseEnter, setOnMouseEnter] = useState(false);
 
-  useEffect(() => {
-    fetch(
-      `https://ws.audioscrobbler.com/2.0/?method=user.getRecentTracks&user=swoephowx&api_key=8d1394415d95c0771ac9f8247cc7ee17&limit=1&nowplaying=true&format=json`
-    )
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("error");
-      })
-      .then((data) => updateLfmData(data))
-      .catch(() =>
-        updateLfmData({
-          error: "Last.fm servers are unavailable at this moment.",
-        })
-      );
-  }, []);
-
   const handleMouseEnter = (albumImage) => {
     if (albumImage) {
       setOnMouseEnter(true);

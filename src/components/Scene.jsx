@@ -1,11 +1,10 @@
 import * as THREE from "three";
-import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
-import { Float, CameraShake, Text } from "@react-three/drei";
+import { Float, Text } from "@react-three/drei";
+import { Suspense } from "react";
+import { ModelANLogo } from "./ModelANLogo";
 
 export const Scene = () => {
-  const refTrees = useRef();
-
   return (
     <>
       <ambientLight intensity={0.1} />
@@ -16,13 +15,14 @@ export const Scene = () => {
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
       />
-      <Float speed={10}>
-        <Text>Óscar A. Montiel</Text>
-      </Float>
+      <Suspense>
+        <ModelANLogo />
+      </Suspense>
     </>
   );
 };
 
+// <primitive object={logoAnimanoir.scene} position={[0, 0, 0]} />
 // function Box(props) {
 //   const mesh = useRef();
 
