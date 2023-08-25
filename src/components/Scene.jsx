@@ -1,22 +1,25 @@
 import * as THREE from "three";
 import { useRef } from "react";
-import { Float, Text } from "@react-three/drei";
+import { Float, Text, Environment, useHelper } from "@react-three/drei";
 import { Suspense } from "react";
 import { ModelANLogo } from "./ModelANLogo";
 
 export const Scene = () => {
   return (
     <>
-      <ambientLight intensity={0.1} />
+      <Environment background files={"/images/animanoir-xyz-space.hdr"} />
+      // <ambientLight intensity={0.1} />
       <directionalLight
         color={"white"}
-        position={[15, 15, 15]}
+        position={[9, 1, 4]}
         castShadow
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
       />
       <Suspense>
-        <ModelANLogo />
+        <Float speed={5}>
+          <ModelANLogo />
+        </Float>
       </Suspense>
     </>
   );

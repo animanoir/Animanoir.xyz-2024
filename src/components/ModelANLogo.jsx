@@ -8,15 +8,17 @@ import { useGLTF } from "@react-three/drei";
 export function ModelANLogo(props) {
   const { nodes, materials } = useGLTF("./animanoir-logo-3d-v2.glb");
   return (
-    <group {...props} dispose={null}>
+    <>
       <mesh
         geometry={nodes.Curve.geometry}
         material={nodes.Curve.material}
-        position={[-0.009, -0.01, 0.25]}
+        position={[0, -1, 0]}
         rotation={[Math.PI / 2, 0, 0]}
         scale={60}
-      />
-    </group>
+      >
+        <meshStandardMaterial metalness={1} roughness={0.1} color={"#fff"} />
+      </mesh>
+    </>
   );
 }
 
