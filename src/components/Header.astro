@@ -1,17 +1,21 @@
 ---
 // import HeaderLink from "./HeaderLink.astro";
 import { SITE_DESCRIPTION } from "../consts";
+import Navbar from "./Navbar.astro";
 import LastFm from "./react/LastFm.jsx";
 ---
 
 <header>
   <div>
-    <a href="/">
-      <h1 id="headerTitle">
-        Óscar A. Montiel | <span id="headerSubtitle">{SITE_DESCRIPTION}</span>
-      </h1>
-    </a>
-    <LastFm client:load />
+    <div>
+      <a href="/">
+        <h1 id="headerTitle">
+          Óscar A. Montiel | <span id="headerSubtitle">{SITE_DESCRIPTION}</span>
+        </h1>
+      </a>
+      <LastFm client:load />
+    </div>
+    <Navbar />
   </div>
   <!-- <nav>
     <HeaderLink href="/">Home</HeaderLink>
@@ -35,7 +39,6 @@ import LastFm from "./react/LastFm.jsx";
   }
 
   #headerSubtitle {
-    font-family: "Raleway", sans-serif;
     font-weight: 400;
   }
 

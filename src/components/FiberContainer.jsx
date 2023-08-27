@@ -9,6 +9,7 @@ import { get } from "../pages/rss.xml";
 import { useControls } from "leva";
 import { useRef } from "react";
 import * as THREE from "three";
+import { Bloom } from "@react-three/postprocessing";
 
 export const FiberCanvas = () => {
   const sceneCreated = ({ gl }) => {
@@ -33,6 +34,11 @@ export const FiberCanvas = () => {
           maxDistance={100}
         />
         <EffectComposer>
+          <Bloom
+            luminanceThreshold={0.1}
+            luminanceSmoothing={0.9}
+            intensity={2}
+          />
           <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.2} />
         </EffectComposer>
       </Canvas>

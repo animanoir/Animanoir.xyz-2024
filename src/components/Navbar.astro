@@ -1,0 +1,30 @@
+---
+import HeaderLink from "./HeaderLink.astro";
+import { TWITTER_PROFILE } from "../consts";
+---
+
+<navbar>
+  <nav class="navbar">
+    <HeaderLink href="/projects">Projects</HeaderLink>
+    <HeaderLink href="/blog">Blog</HeaderLink>
+    <HeaderLink href="/about">About</HeaderLink>
+    <HeaderLink href={TWITTER_PROFILE} target="_blank">Twitter</HeaderLink>
+  </nav>
+</navbar>
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Raleway&display=swap");
+  .navbar {
+    display: flex;
+    flex-direction: row;
+    font-family: "Raleway", sans-serif;
+  }
+
+  .navbar a {
+    color: #fdfefe; /* El color del texto cuando el mouse está encima */
+  }
+
+  .navbar a:hover {
+    color: red;
+  }
+</style>
