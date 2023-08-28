@@ -25,7 +25,7 @@ export const Scene = () => {
   });
   return (
     <>
-      <Environment background files={"/images/animanoir-xyz-space.hdr"} />
+      <Environment background files={"/images/animanoir-xyz-space-small.hdr"} />
       // <ambientLight intensity={0.1} />
       <directionalLight
         color={"white"}
