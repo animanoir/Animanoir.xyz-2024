@@ -24,9 +24,7 @@ export const FiberCanvas = () => {
         camera={{ position: [0, 0, 3], fov: 100 }}
       >
         <Perf />
-
         <Scene />
-
         <OrbitControls
           autoRotate
           autoRotateSpeed={2}

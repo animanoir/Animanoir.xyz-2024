@@ -20,7 +20,7 @@ export const Scene = () => {
       ringTwoRef.current.rotation.y += delta * -0.4; // Rotar lentamente en el eje Y
     }
     if (ringThreeRef.current) {
-      ringTwoRef.current.rotation.z += delta * -0.5; // Rotar lentamente en el eje Y
+      ringThreeRef.current.rotation.x += delta * -0.5; // Rotar lentamente en el eje Y
     }
   });
   return (
