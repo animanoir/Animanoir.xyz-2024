@@ -1,0 +1,75 @@
+---
+// import HeaderLink from "./HeaderLink.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import Navbar from "./Navbar.astro";
+import LastFm from "./react/LastFm.jsx";
+---
+
+<header>
+  <div>
+    <a href="/">
+      <h1 id="headerTitle">
+        {SITE_TITLE} | <span id="headerSubtitle">{SITE_DESCRIPTION}</span>
+      </h1>
+    </a>
+    <LastFm client:load />
+  </div>
+  <Navbar />
+</header>
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Raleway&display=swap");
+  header {
+    position: inherit;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+    width: -webkit-fill-available;
+  }
+  #headerTitle {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+    font-family: "Montserrat", sans-serif;
+    user-select: none;
+  }
+
+  #headerSubtitle {
+    font-weight: 400;
+  }
+
+  h1 {
+    margin: 0.5em 0;
+    color: #fdfefe;
+    transition: color 0.25s ease-out;
+    cursor: pointer;
+  }
+  h1:hover {
+    color: red;
+  }
+
+  nav {
+    padding-top: 1rem;
+
+    font-size: 1em;
+    font-style: italic;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  nav a {
+    color: #fdfefe;
+  }
+
+  header {
+    margin: 1rem;
+  }
+
+  header a {
+    text-decoration: none;
+  }
+</style>

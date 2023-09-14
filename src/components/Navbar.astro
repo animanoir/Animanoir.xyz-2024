@@ -1,0 +1,31 @@
+---
+import HeaderLink from "./HeaderLink.astro";
+import { TWITTER_PROFILE } from "../consts";
+---
+
+<navbar>
+  <nav class="navbar">
+    <HeaderLink href="/blog">Projects</HeaderLink>
+    <HeaderLink href="/about">About</HeaderLink>
+    <HeaderLink target="_blank" href="https://linktr.ee/animanoir">
+      Contact
+    </HeaderLink>
+  </nav>
+</navbar>
+
+<style>
+  .navbar {
+    display: flex;
+    flex-direction: row;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  .navbar a {
+    color: #fdfefe;
+    font-size: 1.1rem;
+  }
+
+  .navbar a:hover {
+    color: red;
+  }
+</style>

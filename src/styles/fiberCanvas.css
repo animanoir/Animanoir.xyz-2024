@@ -1,0 +1,20 @@
+#fiberCanvas {
+  display: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 5rem;
+  width: fit-content;
+  color: "white";
+  width: 100vw;
+  color: #fdfefe;
+  user-select: none;
+}

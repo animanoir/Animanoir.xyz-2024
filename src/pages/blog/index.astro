@@ -1,0 +1,116 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { getCollection } from "astro:content";
+import FormattedDate from "../../components/FormattedDate.astro";
+import { Image } from "astro:assets";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section>
+        <div>
+          <ul>
+            {
+              posts.map((post) => (
+                <li>
+                  <a href={`/blog/${post.slug}/`}>
+                    <Image
+                      height={360}
+                      width={720}
+                      class="postHeroImg"
+                      src={post.data.heroImage}
+                      alt={post.data.title}
+                    />
+                    <div class="postInfo">
+                      <p class="postTitle">{post.data.title}</p>
+                      <FormattedDate date={post.data.pubDate} />
+                      <ul class="tools">
+                        {post.data.tools.map((tool) => (
+                          <li class="tool">{tool}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+    </main>
+    <Footer />
+    <style>
+      .tools {
+        margin-top: 1rem;
+        color: #fdfefe;
+        background-color: rgba(0, 0, 0, 0.9);
+        font-family: "Montserrat", sans-serif;
+        margin: 0;
+      }
+
+      .tools li {
+        font-size: 0.8em;
+      }
+      ul {
+        list-style-type: none;
+        padding: unset;
+        margin: 8rem;
+        display: grid;
+        grid-template-columns: 2fr 2fr 1fr;
+        grid-gap: 3rem;
+        margin-top: 4rem;
+      }
+
+      ul a:hover {
+        filter: invert(1);
+      }
+
+      ul li {
+        display: flex;
+        flex-direction: column;
+      }
+      ul li :global(time) {
+        flex: 0 0 130px;
+        font-style: italic;
+        color: #595959;
+      }
+
+      .postTitle {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2em;
+        color: #fdfefe;
+        background-color: rgba(0, 0, 0, 0.9);
+        margin-bottom: 0;
+      }
+
+      ul li a {
+        position: relative;
+      }
+      .postInfo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+
+      .postHeroImg {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </body>
+</html>
