@@ -32,13 +32,13 @@ export const FiberCanvas = () => {
           height: "100%",
         }}
         onCreated={sceneCreated}
-        camera={{ position: [0, -1, 5], fov: 90 }}
+        camera={{ position: [0, -1, 5], fov: 95 }}
       >
         <Perf />
         <Scene />
         <OrbitControls
           minDistance={5}
-          maxDistance={8}
+          maxDistance={16}
           autoRotate
           autoRotateSpeed={1}
         />

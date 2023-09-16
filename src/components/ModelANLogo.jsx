@@ -40,7 +40,7 @@ export function ModelANLogo(props) {
         material={nodes.Curve.material}
         position={[0, -1, 0]}
         rotation={[Math.PI / 2, 0, 0]}
-        scale={60}
+        scale={55}
         onPointerOver={(e) => {
           gl.domElement.style.cursor = "pointer";
           mouseOverHandler();
