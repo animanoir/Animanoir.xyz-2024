@@ -22,37 +22,42 @@ const posts = (await getCollection("blog")).sort(
     <main>
       <section>
         <div>
-          <ul>
-            {
-              posts.map((post) => (
-                <li>
-                  <a href={`/blog/${post.slug}/`}>
-                    <Image
-                      height={360}
-                      width={720}
-                      class="postHeroImg"
-                      src={post.data.heroImage}
-                      alt={post.data.title}
-                    />
-                    <div class="postInfo">
-                      <p class="postTitle">{post.data.title}</p>
-                      <FormattedDate date={post.data.pubDate} />
-                      <ul class="tools">
-                        {post.data.tools.map((tool) => (
-                          <li class="tool">{tool}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
+          <div class="projectContainer">
+            <ul style="padding-top: 20vh!important; margin-top: 0;">
+              {
+                posts.map((post) => (
+                  <li>
+                    <a href={`/blog/${post.slug}/`}>
+                      <Image
+                        height={360}
+                        width={720}
+                        class="postHeroImg"
+                        src={post.data.heroImage}
+                        alt={post.data.title}
+                      />
+                      <div class="postInfo">
+                        <p class="postTitle">{post.data.title}</p>
+                        <FormattedDate date={post.data.pubDate} />
+                        <ul class="tools">
+                          {post.data.tools.map((tool) => (
+                            <li class="tool">{tool}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
         </div>
       </section>
     </main>
     <Footer />
     <style>
+      .projectContainer {
+        margin: 0 7rem;
+      }
       .tools {
         margin-top: 1rem;
         color: #fdfefe;
@@ -67,11 +72,9 @@ const posts = (await getCollection("blog")).sort(
       ul {
         list-style-type: none;
         padding: unset;
-        margin: 8rem;
         display: grid;
         grid-template-columns: 2fr 2fr 1fr;
         grid-gap: 3rem;
-        margin-top: 4rem;
       }
 
       ul a:hover {

@@ -11,6 +11,7 @@ export function ModelANLogo(props) {
   const { gl } = useThree();
   const { nodes, materials } = useGLTF("./animanoir-logo-3d-v2.glb");
   const meshRef = useRef();
+  const [clicked, setClicked] = useState(false);
 
   useFrame((state, delta) => {
     if (meshRef.current) {
@@ -19,16 +20,20 @@ export function ModelANLogo(props) {
   });
 
   const clickHandler = () => {
+    setClicked((prev) => !prev);
+    meshRef.current.material.wireframe = !clicked;
+  };
+
+  const mouseOverHandler = () => {
     meshRef.current.material.color.set(
       `hsl(${Math.random() * 360}, 100%, 80%)`
     );
-
-    console.log("click");
   };
 
   return (
     <>
       <mesh
+        onClick={clickHandler}
         ref={meshRef}
         raycast={meshBounds}
         geometry={nodes.Curve.geometry}
@@ -38,7 +43,7 @@ export function ModelANLogo(props) {
         scale={60}
         onPointerOver={(e) => {
           gl.domElement.style.cursor = "pointer";
-          clickHandler();
+          mouseOverHandler();
         }}
         onPointerOut={(e) => {
           gl.domElement.style.cursor = "auto";

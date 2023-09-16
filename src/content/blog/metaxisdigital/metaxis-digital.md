@@ -2,7 +2,7 @@
 title: "Metaxis.Digital"
 description: "Online magazine about futurisms."
 pubDate: "Sep 13 2023"
-heroImage: "oscar-a-montiel-metaxis-digital.jpg"
+heroImage: "../../../../src/pages/blog/oscar-a-montiel-metaxis-digital.jpg"
 tools: ["React", "Gatsby"]
 ---
 

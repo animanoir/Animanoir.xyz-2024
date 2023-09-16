@@ -13,7 +13,7 @@ export const Scene = () => {
   useEffect(() => {
     const newTorusRotationFactors = new Array(torusCount)
       .fill(0)
-      .map(() => Math.random() * 1);
+      .map(() => Math.random() * 0.5);
     setTorusRotationFactors(newTorusRotationFactors);
     torusRefs.current.forEach((ref, i) => {
       if (ref) {

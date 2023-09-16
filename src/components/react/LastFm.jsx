@@ -63,7 +63,7 @@ export const LastFm = () => {
         >
           Listening now to <b style={{ color: "grey" }}>{songName}</b> by{" "}
           <b style={{ color: "grey" }}>{artistName}</b>{" "}
-          <img src="images/playingBars.gif" alt="Now playing" />
+          <img src="../../images/playingBars.gif" alt="Now playing" />
         </p>
         <div
           className="albumCover"

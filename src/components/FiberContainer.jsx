@@ -12,8 +12,6 @@ import * as THREE from "three";
 import { Bloom, DepthOfField } from "@react-three/postprocessing";
 
 export const FiberCanvas = () => {
-  const [highQuality, setHighQuality] = useState(true);
-  const [fps, setFps] = useState(60);
   const mouse = useRef([0, 0]);
 
   const sceneCreated = ({ gl }) => {
@@ -34,15 +32,15 @@ export const FiberCanvas = () => {
           height: "100%",
         }}
         onCreated={sceneCreated}
-        camera={{ position: [0, -1, 7], fov: 90 }}
+        camera={{ position: [0, -1, 5], fov: 90 }}
       >
         <Perf />
         <Scene />
         <OrbitControls
           minDistance={5}
-          maxDistance={10}
+          maxDistance={8}
           autoRotate
-          autoRotateSpeed={2}
+          autoRotateSpeed={1}
         />
 
         <EffectComposer>
