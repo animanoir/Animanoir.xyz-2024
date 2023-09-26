@@ -1,9 +1,9 @@
 ---
-title: "Metaxis.Digital"
-description: "Online magazine about futurisms."
-pubDate: "Sep 13 2023"
-heroImage: "../../../../src/pages/blog/oscar-a-montiel-metaxis-digital.jpg"
-tools: ["React", "Gatsby"]
+title: "Las palabras como ventanas o como muros"
+description: "Interactive sound-atmospheric art piece."
+pubDate: "Oct 12 2023"
+heroImage: "../../../../src/pages/projects/animanoir-oscar-a-montiel-tw.jpg"
+tools: ["Max/MSP"]
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.

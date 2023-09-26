@@ -7,7 +7,7 @@ import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
 import { Image } from "astro:assets";
 
-const posts = (await getCollection("blog")).sort(
+const posts = (await getCollection("projects")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
@@ -27,17 +27,17 @@ const posts = (await getCollection("blog")).sort(
               {
                 posts.map((post) => (
                   <li>
-                    <a href={`/blog/${post.slug}/`}>
+                    <a href={`/projects/${post.slug}/`}>
                       <Image
                         height={360}
                         width={720}
                         class="postHeroImg"
                         src={post.data.heroImage}
                         alt={post.data.title}
+                        quality={"high"}
                       />
                       <div class="postInfo">
                         <p class="postTitle">{post.data.title}</p>
-                        <FormattedDate date={post.data.pubDate} />
                         <ul class="tools">
                           {post.data.tools.map((tool) => (
                             <li class="tool">{tool}</li>
@@ -56,19 +56,9 @@ const posts = (await getCollection("blog")).sort(
     <Footer />
     <style>
       .projectContainer {
-        margin: 0 7rem;
-      }
-      .tools {
-        margin-top: 1rem;
-        color: #fdfefe;
-        background-color: rgba(0, 0, 0, 0.9);
-        font-family: "Montserrat", sans-serif;
-        margin: 0;
+        margin: 0 10rem;
       }
 
-      .tools li {
-        font-size: 0.8em;
-      }
       ul {
         list-style-type: none;
         padding: unset;
@@ -85,18 +75,17 @@ const posts = (await getCollection("blog")).sort(
         display: flex;
         flex-direction: column;
       }
-      ul li :global(time) {
-        flex: 0 0 130px;
-        font-style: italic;
-        color: #595959;
-      }
 
       .postTitle {
         font-family: "Montserrat", sans-serif;
-        font-size: 2em;
+        font-weight: bold;
+        letter-spacing: 0.1rem;
+        font-size: 1rem;
+        padding: 1rem;
         color: #fdfefe;
         background-color: rgba(0, 0, 0, 0.9);
         margin-bottom: 0;
+        line-height: 1.1;
       }
 
       ul li a {
@@ -108,6 +97,14 @@ const posts = (await getCollection("blog")).sort(
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
+      }
+
+      .tools {
+        margin-top: 1rem;
+        color: #fdfefe;
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        font-size: 1em;
       }
 
       .postHeroImg {

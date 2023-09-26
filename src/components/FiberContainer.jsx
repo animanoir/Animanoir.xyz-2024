@@ -1,10 +1,9 @@
 import { useRef, useCallback, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stage, useHelper } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { EffectComposer, Noise } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import { Scene } from "./Scene";
-import { Perf } from "r3f-perf";
 import "../styles/fiberCanvas.css";
 import { get } from "../pages/rss.xml";
 import { useControls } from "leva";
@@ -34,7 +33,6 @@ export const FiberCanvas = () => {
         onCreated={sceneCreated}
         camera={{ position: [0, -1, 5], fov: 95 }}
       >
-        <Perf />
         <Scene />
         <OrbitControls
           minDistance={5}
