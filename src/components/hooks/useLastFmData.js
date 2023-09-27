@@ -17,7 +17,7 @@ const useLastFmData = (username = "swoephowx") => {
       .then((data) => updateLfmData(data))
       .catch(() =>
         updateLfmData({
-          error: "Last.fm servers are unavailable at this moment.",
+          error: "Last.fm servers are unavailable at this moment...",
         })
       );
   }, [username]);
