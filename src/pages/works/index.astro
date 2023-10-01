@@ -4,10 +4,9 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
-import FormattedDate from "../../components/FormattedDate.astro";
 import { Image } from "astro:assets";
 
-const posts = (await getCollection("projects")).sort(
+const posts = (await getCollection("works")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
@@ -27,7 +26,7 @@ const posts = (await getCollection("projects")).sort(
               {
                 posts.map((post) => (
                   <li>
-                    <a href={`/projects/${post.slug}/`}>
+                    <a href={`/works/${post.slug}/`}>
                       <Image
                         height={360}
                         width={720}

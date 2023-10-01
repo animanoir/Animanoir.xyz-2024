@@ -2,7 +2,7 @@
 title: "Las palabras como ventanas o como muros"
 description: "Interactive sound-atmospheric art piece."
 pubDate: "Oct 12 2023"
-heroImage: "../../../../src/pages/projects/animanoir-oscar-a-montiel-tw.jpg"
+heroImage: "../../../../src/pages/works/animanoir-oscar-a-montiel-tw.jpg"
 tools: ["Max/MSP"]
 ---
 
