@@ -8,7 +8,7 @@ tools: ["Max/MSP"]
 
 **Voz y movimiento** es una instalación interactiva encargada por la [Galería Municipal de Querétaro](https://www.instagram.com/galeria.municipal/).
 
-<img class="blog-image" src="../../../../public/óscar-a-montiel-exposición-genesis.jpg" alt="Óscar A. Montiel">
+<img class="blog-image" src="/óscar-a-montiel-exposición-genesis.jpg" alt="Óscar A. Montiel">
 
 La temática de la exposición fue **Génesis**. Se me ocurrió pensar acerca de la **palabra**, las llaves que develan nuevos universos cada que las pensamos, decimos y escuchamos.
 

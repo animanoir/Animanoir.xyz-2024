@@ -12,9 +12,9 @@ La idea surgió desde antes de meterla a una convocatoria ya que me suelo obsesi
 
 También me intriga saber qué tanto pasa en otros espacios en el mismo tiempo.
 
-<img class="blog-image" src="../../../../public/óscar a montiel-flickr-1.png" alt="Óscar A. Montiel">
-<img class="blog-image" src="../../../../public/óscar a montiel-flickr-2.png" alt="Óscar A. Montiel">
-<img class="blog-image" src="../../../../public/óscar a montiel-flickr-3.png" alt="Óscar A. Montiel">
+<img class="blog-image" src="/óscar a montiel-flickr-1.png" alt="Óscar A. Montiel">
+<img class="blog-image" src="/óscar a montiel-flickr-2.png" alt="Óscar A. Montiel">
+<img class="blog-image" src="/óscar a montiel-flickr-3.png" alt="Óscar A. Montiel">
 
 La pieza fue enteramente desarrollada en **React**.
 
