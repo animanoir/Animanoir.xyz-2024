@@ -73,4 +73,20 @@ import LastFm from "./react/LastFm.jsx";
   header a {
     text-decoration: none;
   }
+
+  @media (max-width: 500px) {
+    header {
+      flex-direction: column;
+      align-items: center;
+    }
+    #headerTitle {
+      font-size: 1rem;
+    }
+    #headerSubtitle {
+      font-size: 0.75rem;
+    }
+    nav {
+      font-size: 0.75em;
+    }
+  }
 </style>

@@ -27,4 +27,14 @@ import HeaderLink from "./HeaderLink.astro";
   .navbar a:hover {
     color: red;
   }
+
+  .navbar a:not(:last-child) {
+    margin-right: 1rem;
+  }
+
+  @media (max-width: 500px) {
+    .navbar a:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
 </style>

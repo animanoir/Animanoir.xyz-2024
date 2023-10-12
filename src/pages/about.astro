@@ -26,7 +26,6 @@ import oscar from "@/pages/works/oscar-a-montiel-animanoir-geosmina.jpg";
     </div>
 
     <Footer />
-    <style></style>
     <style>
       .container {
         padding-top: 5rem;
@@ -36,6 +35,19 @@ import oscar from "@/pages/works/oscar-a-montiel-animanoir-geosmina.jpg";
         color: #fdfefe;
         position: relative;
         width: 50%;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          width: 100%;
+        }
+      }
+
+      .heroImage {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
       }
     </style>
   </body>

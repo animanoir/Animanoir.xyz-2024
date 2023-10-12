@@ -105,6 +105,16 @@ const posts = (await getCollection("works")).sort(
         height: 100%;
         width: 100%;
       }
+
+      @media (max-width: 768px) {
+        .projectContainer {
+          margin: 0 2rem;
+        }
+
+        ul {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
   </body>
 </html>
