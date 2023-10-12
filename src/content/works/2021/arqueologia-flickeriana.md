@@ -18,4 +18,4 @@ También me intriga saber qué tanto pasa en otros espacios en el mismo tiempo.
 
 La pieza fue enteramente desarrollada en **React**.
 
-<small>Agradecimientos especiales a Tania por compartirme la convocatoria.</small>
+<small>Agradecimientos especiales a la persona que me compartió la convocatoria.</small>
