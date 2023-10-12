@@ -8,7 +8,7 @@ tools: ["React", "Gatsby"]
 
 <a target="_blank" href="https://arqueologia-flickeriana.vercel.app/">Arqueología Flickeriana</a> es una herramienta que permite explorar fotografías subidas en dado día en cualquier estado de México.
 
-La idea surgió desde antes de meterla a una convocatoria ya que me suelo obsesionar con ver fotografías subidas a aquel servicio. Creo que las fotos allí tienen un aura más natural y humano, más espontáneo, que las fotos subidas a redes sociales ahoras, que las siento suma y completamente actuadas y falsas.
+La idea surgió desde antes de meterla a una convocatoria ya que me suelo obsesionar con ver fotografías subidas en aquel servicio. Creo que las fotos allí tienen un aura más natural y humano, más espontánea, que las fotos subidas a redes sociales—suma y completamente actuadas y falsas. Y todos lo saben, que se me hace lo peor.
 
 También me intriga saber qué tanto pasa en otros espacios en el mismo tiempo.
 
