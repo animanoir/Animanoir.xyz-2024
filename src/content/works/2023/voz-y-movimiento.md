@@ -1,6 +1,6 @@
 ---
 title: "Voz y movimiento"
-description: "Cada vez que hablámos cambiamos el mundo."
+description: "Cada vez que hablamos cambiamos el universo."
 pubDate: "Oct 12 2023"
 heroImage: "@/pages/works/voz-movimiento-cover.jpg"
 tools: ["Max/MSP"]

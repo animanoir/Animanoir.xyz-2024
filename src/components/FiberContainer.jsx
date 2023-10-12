@@ -36,7 +36,7 @@ export const FiberCanvas = () => {
         <Scene />
         <OrbitControls
           minDistance={5}
-          maxDistance={16}
+          maxDistance={12}
           autoRotate
           autoRotateSpeed={1}
         />
