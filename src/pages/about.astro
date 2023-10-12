@@ -1,9 +1,10 @@
 ---
-import CanvasAbout from "../CanvasAbout.jsx";
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { Image } from "astro:assets";
+import oscar from "@/pages/works/oscar-a-montiel-animanoir-geosmina.jpg";
 ---
 
 <html lang="en">
@@ -13,8 +14,29 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 
   <body>
     <Header />
-    <h1>Óscar A. Montiel</h1>
+    <div class="container">
+      <Image
+        height={1024}
+        width={720}
+        src={oscar}
+        alt={"Óscar A. Montiel"}
+        quality={"max"}
+        class="heroImage"
+      />
+    </div>
+
     <Footer />
     <style></style>
+    <style>
+      .container {
+        padding-top: 5rem;
+        padding-bottom: 10rem;
+        margin: 0 auto;
+        font-family: "Open Sans", sans-serif;
+        color: #fdfefe;
+        position: relative;
+        width: 50%;
+      }
+    </style>
   </body>
 </html>
