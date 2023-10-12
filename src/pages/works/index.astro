@@ -20,49 +20,44 @@ const posts = (await getCollection("works")).sort(
     <Header />
     <main>
       <section>
-        <div>
-          <div class="projectContainer">
-            <ul style="padding-top: 20vh!important; margin-top: 0;">
-              {
-                posts.map((post) => (
-                  <li>
-                    <a href={`/works/${post.slug}/`}>
-                      <Image
-                        height={360}
-                        width={720}
-                        class="postHeroImg"
-                        src={post.data.heroImage}
-                        alt={post.data.title}
-                        quality={"high"}
-                      />
-                      <div class="postInfo">
-                        <p class="postTitle">{post.data.title}</p>
-                        <ul class="tools">
-                          {post.data.tools.map((tool) => (
-                            <li class="tool">{tool}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </a>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
+        <div class="projectContainer">
+          <ul
+            style="padding-top: 15vh!important; margin-top: 0; padding-bottom:20vh;"
+          >
+            {
+              posts.map((post) => (
+                <li>
+                  <a href={`/works/${post.slug}/`}>
+                    <Image
+                      height={360}
+                      width={720}
+                      class="postHeroImg"
+                      src={post.data.heroImage}
+                      alt={post.data.title}
+                      quality={"high"}
+                    />
+                    <div class="postInfo">
+                      <p class="postTitle">{post.data.title}</p>
+                    </div>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </section>
     </main>
     <Footer />
     <style>
       .projectContainer {
-        margin: 0 10rem;
+        margin: 0 15rem;
       }
 
       ul {
         list-style-type: none;
         padding: unset;
         display: grid;
-        grid-template-columns: 2fr 2fr 1fr;
+        grid-template-columns: 2fr 2fr;
         grid-gap: 3rem;
       }
 

@@ -6,6 +6,10 @@ heroImage: "@/pages/works/oscar-a-montiel-metaxis-digital.jpg"
 tools: ["React", "Gatsby"]
 ---
 
-<a target="_blank" href="https://metaxis.digital">metaxis.digital</a> is an **online magazine** about **philosophy and futurisms** analyzed in a **metamodern** fashion.
+<a target="_blank" href="https://metaxis.digital">metaxis.digital</a> es una revista en línea sobre filosofía y futurismos analizados de manera metamoderna.
 
-I decided to create it because I believe information about new ideas should be **easily accesible**, **free** and **[collaborative](https://metaxis.digital/Colabora/)**. That's why I'm inviting people to collaborate either with articles or the [source code](https://github.com/animanoir/Metaxis-Digital) itself, made with **React** and **Gatsby**.
+Decidí crearla porque creo que la información sobre nuevas ideas debería ser fácilmente accesible, gratuita y colaborativa. Es por eso que invito a las personas a colaborar ya sea con artículos o con el código fuente en sí, hecho con React y Gatsby.
+
+Continuamente buscamos colaboradores, tanto para redactar, publicar su arte o desarrollar el código—aquí más información:
+
+https://metaxis.digital/Colabora

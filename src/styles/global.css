@@ -102,7 +102,7 @@ b {
   color: #fdfefe;
 }
 a {
-  color: #3273dc;
+  color: #ee5858;
 }
 nav a {
   margin-right: 10px;
@@ -136,7 +136,7 @@ pre > code {
 }
 blockquote {
   border: 1px solid #999;
-  color: #222;
+  color: #f2f2f2;
   padding: 2px 0px 2px 20px;
   margin: 0px;
   font-style: italic;
@@ -202,4 +202,17 @@ blockquote {
   to {
     transform: translate3d(-7rem, 0, 0);
   }
+}
+
+p {
+  padding: 0.5rem 0;
+}
+
+.blog-image {
+  width: 100%;
+}
+
+iframe {
+  width: 100%;
+  padding: 5rem 0;
 }
