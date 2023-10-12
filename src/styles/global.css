@@ -216,3 +216,28 @@ iframe {
   width: 100%;
   padding: 5rem 0;
 }
+
+/* Estilo general del scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Fondo del scrollbar */
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+/* Manija del scrollbar */
+::-webkit-scrollbar-thumb {
+  background: #232323;
+}
+
+/* Cuando pasas el mouse encima de la manija */
+::-webkit-scrollbar-thumb:hover {
+  background: #ee5858;
+}
+
+/* Cuando haces clic en la manija */
+::-webkit-scrollbar-thumb:active {
+  background: #fdfefe;
+}
