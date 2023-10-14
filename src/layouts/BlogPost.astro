@@ -21,12 +21,13 @@ const { title, description, heroImage } = Astro.props;
         {
           heroImage && (
             <Picture
-              height={1024}
-              width={720}
               src={heroImage}
               alt={description}
               quality={"max"}
               class="heroImage"
+              formats={["webp"]}
+              decoding="async"
+              loading="lazy"
             />
           )
         }
