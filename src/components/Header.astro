@@ -1,6 +1,6 @@
 ---
 // import HeaderLink from "./HeaderLink.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { SITE_TITLE } from "../consts";
 import Navbar from "./Navbar.astro";
 import LastFm from "./react/LastFm.jsx";
 ---
@@ -9,7 +9,9 @@ import LastFm from "./react/LastFm.jsx";
   <div>
     <a href="/">
       <h1 id="headerTitle">
-        {SITE_TITLE} | <span id="headerSubtitle">{SITE_DESCRIPTION} [WIP]</span>
+        {SITE_TITLE} | <span id="headerSubtitle"
+          >Creative Software Engineer [WIP]</span
+        >
       </h1>
     </a>
     <LastFm client:load />
