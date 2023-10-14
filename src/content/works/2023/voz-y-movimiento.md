@@ -14,7 +14,7 @@ La temática de la exposición fue **Génesis**. Se me ocurrió pensar acerca de
 
 > "Cuando hablas cambias el universo. Esta obra facilita apreciarlo. Las palabras son como peldaños que vamos construyendo una encima de otra—la base de lo que decimos ahora son las raíces de nuestro futuro… Fractal, recursivo—siendo infinito ¿por dónde quieres comenzar?"
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Py_MafrimKs?si=0h9xLBB-m2SrM0Ej" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="560" height="415" src="https://www.youtube.com/embed/s46Tofa6EAI?si=8pLAAd9V9hdoxorZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 Hice el programa con [**Max/MSP**](https://cycling74.com/products/max). La idea es que a cuando hablas al micrófono, la pieza te responde. Hay un mensaje oculto grabado con mi voz donde leo un fragmento del libro de [**Zhuangzi**](https://www.youtube.com/watch?v=kPLQV25TbRk), filósofo chino que me resulta de suma importancia en mi vida:
 
