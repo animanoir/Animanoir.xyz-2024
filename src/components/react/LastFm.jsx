@@ -56,7 +56,7 @@ export const LastFm = () => {
 
     return (
       <div className="lastfmContainer fadeInQuick">
-        <p
+        <span
           onMouseEnter={() => handleMouseEnter(albumImage)}
           onMouseLeave={handleMouseLeave}
           onMouseMove={handleMouseMove}
@@ -64,7 +64,7 @@ export const LastFm = () => {
           Listening now to <b style={{ color: "grey" }}>{songName}</b> by{" "}
           <b style={{ color: "grey" }}>{artistName}</b>{" "}
           <img src="/images/playingBars.gif" alt="Now playing" />
-        </p>
+        </span>
         <div
           className="albumCover"
           style={{

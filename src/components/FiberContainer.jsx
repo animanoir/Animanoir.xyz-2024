@@ -1,6 +1,6 @@
-import { useRef, useCallback, useEffect, useState } from "react";
+import { useRef, useCallback, useEffect, useState, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Loader } from "@react-three/drei";
 import { EffectComposer, Noise } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import { Scene } from "./Scene";
@@ -46,6 +46,7 @@ export const FiberCanvas = () => {
           <Bloom intensity={0.5} />
         </EffectComposer>
       </Canvas>
+      <Loader />
     </div>
   );
 };

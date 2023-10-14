@@ -4,6 +4,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import oscar from "@/pages/works/oscar-a-montiel-animanoir-geosmina.jpg";
 ---
 
@@ -15,14 +16,14 @@ import oscar from "@/pages/works/oscar-a-montiel-animanoir-geosmina.jpg";
   <body>
     <Header />
     <div class="container">
-      <Image
-        height={1024}
-        width={720}
+      <Picture
         src={oscar}
         alt={"Óscar A. Montiel"}
         quality={"max"}
         class={"heroImage"}
+        formats={["webp"]}
       />
+      <h1>I do Visuals and Programming.</h1>
     </div>
 
     <Footer />
@@ -41,6 +42,13 @@ import oscar from "@/pages/works/oscar-a-montiel-animanoir-geosmina.jpg";
         width: 100%;
         height: auto;
         text-align: center;
+      }
+
+      .fade-in {
+        opacity: 0;
+        animation: fadeIn ease-in 1;
+        animation-fill-mode: forwards;
+        animation-duration: 0.5s;
       }
 
       @media (max-width: 500px) {
