@@ -1,5 +1,6 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
+import { ViewTransitions } from "astro:transitions";
 
 const links = [
   { href: "/works", label: "Works", target: "_self" },
@@ -18,7 +19,20 @@ const links = [
       ))
     }
   </nav>
+  <ViewTransitions />
 </navbar>
+
+<script>
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "1") {
+      window.location.href = "/works";
+    } else if (event.key === "2") {
+      window.location.href = "/about";
+    } else if (event.key === "3") {
+      window.open("https://linktr.ee/animanoir", "_blank");
+    }
+  });
+</script>
 
 <style>
   :root {
@@ -38,6 +52,7 @@ const links = [
     font-family: "Open Sans", sans-serif;
     padding-bottom: 1rem;
     padding-right: 1rem;
+    z-index: 1000;
   }
 
   .navbar a {

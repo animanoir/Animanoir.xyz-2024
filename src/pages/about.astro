@@ -5,6 +5,7 @@ import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { Picture } from "astro:assets";
 import oscar from "@/pages/works/oscar-a-montiel-animanoir-geosmina.jpg";
+import Navbar from "@/components/Navbar.astro";
 ---
 
 <html lang="en">
@@ -14,10 +15,8 @@ import oscar from "@/pages/works/oscar-a-montiel-animanoir-geosmina.jpg";
 
   <body>
     <Header />
+    <Navbar />
     <div class="container">
-      <div class="titleContainer">
-        <h1 class="title">I do Visuals and Programming.</h1>
-      </div>
       <Picture
         src={oscar}
         alt={"Óscar A. Montiel"}
@@ -37,33 +36,16 @@ import oscar from "@/pages/works/oscar-a-montiel-animanoir-geosmina.jpg";
         font-family: "Open Sans", sans-serif;
         color: #fdfefe;
         position: relative;
-        /* width: 50%; */
-      }
-
-      .titleContainer {
-        width: 99vw;
-        height: 100vh;
-      }
-
-      .title {
-        position: relative;
-        top: 25%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 5rem;
       }
 
       .heroImage {
         width: 100%;
         height: auto;
         text-align: center;
-      }
-
-      .fade-in {
         opacity: 0;
         animation: fadeIn ease-in 1;
         animation-fill-mode: forwards;
-        animation-duration: 0.5s;
+        animation-duration: 3s;
       }
 
       @media (max-width: 500px) {
