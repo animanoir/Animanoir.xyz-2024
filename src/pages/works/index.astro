@@ -1,10 +1,10 @@
 ---
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { SITE_TITLE } from "../../consts";
 import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
+import Navbar from "@/components/Navbar.astro";
 
 const posts = (await getCollection("works")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -18,12 +18,11 @@ const posts = (await getCollection("works")).sort(
   </head>
   <body>
     <Header />
+    <Navbar />
     <main>
       <section>
-        <div class="projectContainer">
-          <ul
-            style="padding-top: 15vh!important; margin-top: 0; padding-bottom:20vh;"
-          >
+        <div class="projectsContainer">
+          <ul style="padding-top: 8vh!important; margin-top: 0;">
             {
               posts.map((post) => (
                 <li>
@@ -48,10 +47,9 @@ const posts = (await getCollection("works")).sort(
         </div>
       </section>
     </main>
-    <Footer />
     <style>
-      .projectContainer {
-        margin: 0 15rem;
+      .projectsContainer {
+        margin: 0 22rem;
       }
 
       ul {
@@ -59,7 +57,7 @@ const posts = (await getCollection("works")).sort(
         padding: unset;
         display: grid;
         grid-template-columns: 2fr 2fr;
-        grid-gap: 3rem;
+        grid-gap: 1rem;
       }
 
       ul a:hover {
@@ -72,13 +70,13 @@ const posts = (await getCollection("works")).sort(
       }
 
       .postTitle {
+        background-color: black;
+        color: floralwhite;
         font-family: "Montserrat", sans-serif;
         font-weight: bold;
         letter-spacing: 0.1rem;
-        font-size: 1rem;
+        font-size: 2rem;
         padding: 1rem;
-        color: #fdfefe;
-        background-color: rgba(0, 0, 0, 0.9);
         margin-bottom: 0;
         line-height: 1.1;
       }
@@ -87,6 +85,7 @@ const posts = (await getCollection("works")).sort(
         position: relative;
       }
       .postInfo {
+        mix-blend-mode: exclusion;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -108,7 +107,7 @@ const posts = (await getCollection("works")).sort(
       }
 
       @media (max-width: 768px) {
-        .projectContainer {
+        .projectsContainer {
           margin: 0 2rem;
         }
 

@@ -69,8 +69,8 @@ export const LastFm = () => {
           className="albumCover"
           style={{
             zIndex: onMouseEnter ? 1 : -1,
-            left: albumImageState.x + 10,
-            top: albumImageState.y + 10,
+            left: albumImageState.x,
+            top: 50,
             opacity: onMouseEnter ? 1 : 0,
           }}
         >

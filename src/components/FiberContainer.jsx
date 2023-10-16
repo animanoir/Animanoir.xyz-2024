@@ -35,6 +35,7 @@ export const FiberCanvas = () => {
       >
         <Scene />
         <OrbitControls
+          enableDamping
           minDistance={5}
           maxDistance={12}
           autoRotate
@@ -46,7 +47,7 @@ export const FiberCanvas = () => {
           <Bloom intensity={0.5} />
         </EffectComposer>
       </Canvas>
-      <Loader />
+      <Loader containerStyles={{ backgroundColor: "black" }} />
     </div>
   );
 };

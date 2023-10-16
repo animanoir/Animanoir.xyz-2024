@@ -2,7 +2,7 @@
 
 .lastfmContainer {
   font-family: "Open Sans", sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -17,8 +17,8 @@
 
 .albumCover {
   position: absolute;
-  height: 300px;
-  width: 300px;
+  height: 250px;
+  width: 250px;
   pointer-events: none;
   transition: opacity 0.4s ease;
   z-index: 100;

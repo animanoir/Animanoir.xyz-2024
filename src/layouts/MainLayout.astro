@@ -1,10 +1,10 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import FiberContainer from "../../src/components/FiberContainer.jsx";
 import { SEO } from "astro-seo";
+import Navbar from "@/components/Navbar.astro";
 ---
 
 <!doctype html>
@@ -49,7 +49,7 @@ import { SEO } from "astro-seo";
     <FiberContainer client:load />
     <div id="mainFrame">
       <Header title={SITE_TITLE} />
+      <Navbar />
     </div>
-    <Footer />
   </body>
 </html>

@@ -1,37 +1,35 @@
 ---
 // import HeaderLink from "./HeaderLink.astro";
 import { SITE_TITLE } from "../consts";
-import Navbar from "./Navbar.astro";
 import LastFm from "./react/LastFm.jsx";
 ---
 
 <header>
-  <div>
+  <div class="navigatonContainer">
     <a href="/">
       <h1 id="headerTitle">
-        {SITE_TITLE} | <span id="headerSubtitle"
-          >Creative Software Engineer [WIP]</span
-        >
+        {SITE_TITLE} | <span id="headerSubtitle">Software Engineer</span>
       </h1>
     </a>
     <LastFm client:load />
   </div>
-  <Navbar />
 </header>
 
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Raleway&display=swap");
+
   header {
     position: fixed;
-    z-index: 10;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     padding: 0;
     width: -webkit-fill-available;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.475);
+    width: fit-content;
   }
   #headerTitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 700;
     margin: 0;
     padding: 0;
