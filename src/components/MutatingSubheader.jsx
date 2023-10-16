@@ -6,9 +6,11 @@ import { get } from "@/pages/rss.xml";
 const MutatingSubheader = () => {
   const descriptionArray = [
     "Poet of Existence",
+    "Front-End Developer",
     "Creative developer",
     "Digital Philosopher",
     "Architect of Reality",
+    "Artistic Programmer",
     "Visionary Programmer",
     "Cybernetic Ethicist",
     "Composer of Algorithms",

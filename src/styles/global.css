@@ -83,11 +83,10 @@ html,
 body {
   font-family: "Gotham-Bold";
   text-align: left;
-  background-color: #000;
+  background-color: #060606;
   word-wrap: break-word;
   overflow-wrap: break-word;
   line-height: 1.5;
-  color: #444;
   margin: 0;
   scroll-behavior: smooth;
 }
@@ -135,11 +134,38 @@ pre > code {
   all: unset;
 }
 blockquote {
-  border: 1px solid #999;
-  color: #f2f2f2;
-  padding: 2px 0px 2px 20px;
-  margin: 0px;
-  font-style: italic;
+  position: relative;
+  font-family: "Georgia", serif;
+  font-size: 1.5em;
+  line-height: 1.6;
+  margin: 20px auto;
+  padding: 1.2em 30px 1.2em 75px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+
+blockquote:before {
+  content: open-quote;
+  font-size: 4em;
+  position: absolute;
+  top: 0;
+  left: 10px;
+  color: #fdfefe;
+}
+
+blockquote:after {
+  content: close-quote;
+  font-size: 4em;
+  position: absolute;
+  bottom: -1px;
+  right: 25px;
+  color: #fdfefe;
+}
+
+blockquote cite {
+  font-size: 14px;
+  display: block;
+  margin-top: 5px;
+  text-align: right;
 }
 
 /* Fondo noise (thx to Omar (@OmarOlaes) por encontrar la solución :~)) */
@@ -205,16 +231,19 @@ blockquote {
 }
 
 p {
-  padding: 0.5rem 0;
+  line-height: normal;
+  margin: 0;
+  padding-bottom: 2rem;
 }
 
 .blog-image {
   width: 100%;
+  padding-bottom: 5rem;
 }
 
 iframe {
   width: 100%;
-  padding: 5rem 0;
+  padding-bottom: 2rem;
 }
 
 /* Estilo general del scrollbar */

@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
+import ModifiedHeader from "../components/ModifiedHeader.astro";
 import { Picture } from "astro:assets";
 import Navbar from "../components/Navbar.astro";
 
@@ -15,7 +15,7 @@ const { title, description, heroImage } = Astro.props;
     <BaseHead title={title} description={description} />
   </head>
   <body>
-    <Header />
+    <ModifiedHeader />
     <Navbar />
     <article class="articleContainer">
       <div>
@@ -32,10 +32,10 @@ const { title, description, heroImage } = Astro.props;
             />
           )
         }
-      </div>
-      <div>
         <h1 class="title">{title}</h1>
-        <slot />
+        <div class="articleBody">
+          <slot />
+        </div>
       </div>
     </article>
     <style>
@@ -43,26 +43,35 @@ const { title, description, heroImage } = Astro.props;
         height: 520px;
         object-fit: cover;
         width: 100%;
+        padding-bottom: 2.5rem;
       }
 
-      .articleContainer {
-        padding-top: 7vh !important;
-        padding-bottom: 10rem;
-        margin: 0 auto;
-        font-family: "Open Sans", sans-serif;
-        color: #fdfefe;
-        position: relative;
-        width: 50%;
-      }
       .title {
         margin: 0;
-        padding-top: 2rem;
         padding-bottom: 2rem;
         font-size: 5rem;
         text-align: center;
         font-family: "Montserrat", sans-serif;
         line-height: 1;
       }
+
+      .articleContainer {
+        padding-top: 7vh !important;
+        padding-bottom: 10rem;
+        margin: 0 auto;
+        /* font-family: "Lora", serif; */
+        font-family: "Open Sans", sans-serif;
+        color: #fdfefe;
+        position: relative;
+        width: 50%;
+        line-height: normal;
+      }
+
+      .articleBody {
+        padding: 0 5.5rem;
+        font-size: 1rem;
+      }
+
       hr {
         border-top: 1px solid #ddd;
         margin: 1rem 0;

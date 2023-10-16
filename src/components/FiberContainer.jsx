@@ -47,7 +47,7 @@ export const FiberCanvas = () => {
           <Bloom intensity={0.5} />
         </EffectComposer>
       </Canvas>
-      <Loader containerStyles={{ backgroundColor: "black" }} />
+      <Loader containerStyles={{ backgroundColor: "#060606" }} />
     </div>
   );
 };
