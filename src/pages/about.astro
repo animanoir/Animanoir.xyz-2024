@@ -1,11 +1,10 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { Picture } from "astro:assets";
 import oscar from "@/pages/works/oscar-a-montiel-animanoir-geosmina.jpg";
 import Navbar from "@/components/Navbar.astro";
+import ModifiedHeader from "@/components/ModifiedHeader.astro";
 ---
 
 <html lang="en">
@@ -14,7 +13,7 @@ import Navbar from "@/components/Navbar.astro";
   </head>
 
   <body>
-    <Header />
+    <ModifiedHeader />
     <Navbar />
     <div class="container">
       <Picture
@@ -27,8 +26,6 @@ import Navbar from "@/components/Navbar.astro";
         loading="lazy"
       />
     </div>
-
-    <Footer />
     <style>
       .container {
         padding-bottom: 10rem;

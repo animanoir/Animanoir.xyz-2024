@@ -8,6 +8,11 @@
   align-items: center;
   cursor: crosshair;
   user-select: none;
+  color: rgba(255, 255, 255, 0.224);
+}
+
+.songInfo {
+  color: #fdfefe8f;
 }
 
 .lastfmContainer p {

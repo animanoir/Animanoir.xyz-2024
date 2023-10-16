@@ -1,0 +1,95 @@
+---
+// import HeaderLink from "./HeaderLink.astro";
+import { SITE_TITLE } from "../consts";
+import LastFm from "./react/LastFm.jsx";
+import MutatingSubheader from "./MutatingSubheader.jsx";
+---
+
+<header>
+  <div class="navigatonContainer">
+    <a href="/">
+      <h1 id="headerTitle">
+        {SITE_TITLE} | <span id="headerSubtitle"
+          ><MutatingSubheader client:load /></span
+        >
+      </h1>
+    </a>
+    <LastFm client:load />
+  </div>
+</header>
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Raleway&display=swap");
+
+  header {
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    width: -webkit-fill-available;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.475);
+    width: fit-content;
+  }
+  #headerTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+    font-family: "Montserrat", sans-serif;
+    user-select: none;
+  }
+
+  #headerSubtitle {
+    font-weight: 400;
+  }
+
+  h1 {
+    margin: 0.5em 0;
+    color: #fdfefe;
+    transition: color 0.25s ease-out;
+    cursor: pointer;
+  }
+  h1:hover {
+    color: #ee5858;
+  }
+
+  nav {
+    padding-top: 1rem;
+
+    font-size: 1em;
+    font-style: italic;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  nav a {
+    color: #fdfefe;
+  }
+
+  header {
+    margin: 1rem;
+  }
+
+  header a {
+    text-decoration: none;
+  }
+
+  @media (max-width: 500px) {
+    header {
+      flex-direction: column;
+      align-items: center;
+    }
+    #headerTitle {
+      font-size: 1rem;
+    }
+    #headerSubtitle {
+      font-size: 0.75rem;
+    }
+    nav {
+      font-size: 0.75em;
+    }
+  }
+</style>

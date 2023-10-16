@@ -61,8 +61,8 @@ export const LastFm = () => {
           onMouseLeave={handleMouseLeave}
           onMouseMove={handleMouseMove}
         >
-          Listening now to <b style={{ color: "grey" }}>{songName}</b> by{" "}
-          <b style={{ color: "grey" }}>{artistName}</b>{" "}
+          Listening now to <b className="songInfo">{songName}</b> by{" "}
+          <b className="songInfo">{artistName}</b>{" "}
           <img src="/images/playingBars.gif" alt="Now playing" />
         </span>
         <div
