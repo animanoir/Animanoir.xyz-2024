@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { throttle } from "lodash";
+import _ from "lodash";
+const { throttle } = _;
 import { get } from "@/pages/rss.xml";
 
 const MutatingSubheader = () => {
