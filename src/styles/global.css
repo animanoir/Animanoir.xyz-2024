@@ -253,7 +253,7 @@ iframe {
 
 /* Fondo del scrollbar */
 ::-webkit-scrollbar-track {
-  background: black;
+  background: #060606;
 }
 
 /* Manija del scrollbar */

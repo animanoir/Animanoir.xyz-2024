@@ -9,7 +9,7 @@ import * as THREE from "three";
 
 export function ModelANLogo(props) {
   const { gl } = useThree();
-  const { nodes, materials } = useGLTF("./animanoir-logo-3d-v2.glb");
+  const { nodes, materials } = useGLTF("./animanoir-logo-3d.glb");
   const meshRef = useRef();
   const [clicked, setClicked] = useState(false);
 
@@ -58,4 +58,4 @@ export function ModelANLogo(props) {
   );
 }
 
-useGLTF.preload("/animanoir-logo-3d-v2.glb");
+useGLTF.preload("/animanoir-logo-3d.glb");

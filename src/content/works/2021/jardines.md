@@ -2,7 +2,7 @@
 title: "Jardines 3D Web"
 description: "Float into the otherwordly music of Jardines"
 pubDate: "June 11 2021"
-heroImage: "@/pages/works/jardines-oscar-a-montiel-animanoir-maremoto.png"
+heroImage: "@/images/works/jardines/jardines-oscar-a-montiel-animanoir-maremoto.png"
 tools: ["Three.js"]
 ---
 

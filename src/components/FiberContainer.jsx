@@ -1,47 +1,45 @@
-import { useRef, useCallback, useEffect, useState, Suspense } from "react";
+import { useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Loader } from "@react-three/drei";
-import { EffectComposer, Noise } from "@react-three/postprocessing";
+import { EffectComposer, Noise, Bloom } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import { Scene } from "./Scene";
-import "../styles/fiberCanvas.css";
-import { get } from "../pages/rss.xml";
-import { useControls } from "leva";
+import "@/styles/canvasFiber.css";
 import * as THREE from "three";
-import { Bloom, DepthOfField } from "@react-three/postprocessing";
 
 export const FiberCanvas = () => {
-  const mouse = useRef([0, 0]);
-
   const sceneCreated = ({ gl }) => {
     gl.setClearColor("black", 1);
     gl.toneMapping = THREE.ACESFilmicToneMapping;
     gl.outputColorSpace = THREE.SRGBColorSpace;
     gl.toneMappingExposure = 1;
   };
+
+  const canvasStyle = {
+    display: "block",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+  };
+
+  const cameraProps = {
+    position: [0, -1, 10],
+    fov: 50,
+  };
+
   return (
     <div id="fiberCanvas">
-      <Canvas
-        style={{
-          display: "block",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-        }}
-        onCreated={sceneCreated}
-        camera={{ position: [0, -1, 5], fov: 95 }}
-      >
+      <Canvas onCreated={sceneCreated} camera={cameraProps} style={canvasStyle}>
         <Scene />
         <OrbitControls
           enableDamping
-          minDistance={5}
-          maxDistance={12}
+          minDistance={10}
+          maxDistance={22}
           autoRotate
           autoRotateSpeed={1}
         />
-
         <EffectComposer>
           <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.2} />
           <Bloom intensity={0.5} />

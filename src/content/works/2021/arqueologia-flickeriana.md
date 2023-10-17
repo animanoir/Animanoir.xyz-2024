@@ -2,7 +2,7 @@
 title: "Arqueología Flickeriana"
 description: "Dig deep"
 pubDate: "Nov 11 2021"
-heroImage: "@/pages/works/arqueologia-flickeriana-cover.jpg"
+heroImage: "@/images/works/arqueologia-flickeriana/arqueologia-flickeriana-cover.jpg"
 tools: ["React", "Gatsby"]
 ---
 

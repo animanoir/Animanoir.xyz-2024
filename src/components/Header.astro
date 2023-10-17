@@ -1,11 +1,11 @@
 ---
 // import HeaderLink from "./HeaderLink.astro";
-import { SITE_TITLE } from "../consts";
-import LastFm from "./react/LastFm.jsx";
+import { SITE_TITLE } from "@/consts";
+import LastFm from "@/components/LastFm.jsx";
 ---
 
 <header>
-  <div class="navigatonContainer">
+  <div>
     <a href="/">
       <h1 id="headerTitle">
         {SITE_TITLE} | <span id="headerSubtitle">Software Engineer [WIP]</span>
@@ -24,7 +24,6 @@ import LastFm from "./react/LastFm.jsx";
     display: flex;
     justify-content: space-between;
     padding: 0;
-    width: -webkit-fill-available;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.475);
     width: fit-content;
   }

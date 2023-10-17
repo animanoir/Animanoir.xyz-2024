@@ -1,8 +1,8 @@
 ---
-title: "Visuales"
-description: "Hechos en Max/MSP"
+title: "Visuals"
+description: "A/V experimantations for live acts or processed video."
 pubDate: "Nov 11 2021"
-heroImage: "@/pages/works/visuales-oscar a montiel.jpg"
+heroImage: "@/images/works/visuals/visuals-cover.jpg"
 tools: ["React", "Gatsby"]
 ---
 

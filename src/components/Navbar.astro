@@ -1,36 +1,41 @@
 ---
-import HeaderLink from "./HeaderLink.astro";
+import HeaderLink from "@/components/HeaderLink.astro";
 import { ViewTransitions } from "astro:transitions";
 
 const links = [
   { href: "/works", label: "Works", target: "_self" },
   { href: "/about", label: "About", target: "_self" },
   { href: "https://linktr.ee/animanoir", label: "Contact", target: "_blank" },
+  { href: "https://linktr.ee/animanoir", label: "C.V.", target: "_blank" },
 ];
 ---
 
-<navbar>
-  <nav class="navbar">
-    {
-      links.map((link) => (
-        <HeaderLink href={link.href} target={link.target}>
-          {link.label}
-        </HeaderLink>
-      ))
-    }
-  </nav>
+<nav class="navbar" role="navigation">
+  {
+    links.map((link) => (
+      <HeaderLink href={link.href} target={link.target}>
+        {link.label}
+      </HeaderLink>
+    ))
+  }
   <ViewTransitions />
-</navbar>
+</nav>
 
 <script>
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "1") {
-      window.location.href = "/works";
-    } else if (event.key === "2") {
-      window.location.href = "/about";
-    } else if (event.key === "3") {
-      window.open("https://linktr.ee/animanoir", "_blank");
-    }
+  document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("keydown", function (event) {
+      switch (event.key) {
+        case "1":
+          window.location.href = "/works";
+          break;
+        case "2":
+          window.location.href = "/about";
+          break;
+        case "3":
+          window.open("https://linktr.ee/animanoir", "_blank");
+          break;
+      }
+    });
   });
 </script>
 
@@ -41,6 +46,12 @@ const links = [
     --font-size: 1rem;
     --margin-horizontal: 1rem;
     --margin-vertical: 1rem;
+    --text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.475);
+  }
+
+  .navbar,
+  .navbar a {
+    text-shadow: var(--text-shadow);
   }
 
   .navbar {
@@ -53,13 +64,11 @@ const links = [
     padding-bottom: 1rem;
     padding-right: 1rem;
     z-index: 1000;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.475);
   }
 
   .navbar a {
     color: var(--text-color);
     font-size: var(--font-size);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.475);
   }
 
   .navbar a:hover {

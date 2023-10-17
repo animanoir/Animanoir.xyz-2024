@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "../../styles/lastFm.css";
-import useLastFmData from "../hooks/useLastFmData";
+import "@/styles/lastFm.css";
+import useLastFmData from "@/components/hooks/useLastFmData.js";
 
 export const LastFm = () => {
   const lfmData = useLastFmData();

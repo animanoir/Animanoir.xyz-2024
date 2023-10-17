@@ -1,7 +1,7 @@
 ---
-title: "Voz y movimiento"
+title: "Corporative work"
 description: "Cuando hablas cambias el universo. Esta obra facilita apreciarlo. Las palabras son como peldaños que vamos construyendo una encima de otra—la base de lo que decimos ahora son las raíces de nuestro futuro… Fractal, recursivo—siendo infinito ¿por dónde quieres comenzar"
-pubDate: "Oct 12 2023"
+pubDate: "Jan 1 2020"
 heroImage: "@/images/works/voz-y-movimiento/voz-movimiento-cover.jpg"
 tools: ["Max/MSP"]
 ---

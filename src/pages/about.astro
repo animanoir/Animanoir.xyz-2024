@@ -2,7 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { Picture } from "astro:assets";
-import oscar from "@/pages/works/oscar-a-montiel-animanoir-geosmina.jpg";
+import oscarImg from "@/images/about/oscar-a-montiel-animanoir-geosmina.jpg";
 import Navbar from "@/components/Navbar.astro";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
 ---
@@ -17,7 +17,7 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
     <Navbar />
     <div class="container">
       <Picture
-        src={oscar}
+        src={oscarImg}
         alt={"Óscar A. Montiel"}
         quality={"max"}
         class={"heroImage"}

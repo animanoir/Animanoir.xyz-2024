@@ -1,11 +1,11 @@
 import { Canvas, useLoader, useThree } from "@react-three/fiber";
 import { Box, Environment, Plane, Float, Html } from "@react-three/drei";
 import * as THREE from "three";
-import "./styles/fiberCanvas.css";
+import "@/styles/canvasFiber.css";
 import React, { useEffect, useRef } from "react";
 import { Perf } from "r3f-perf";
 import { OrbitControls } from "@react-three/drei";
-import { SITE_TITLE } from "./consts";
+import { SITE_TITLE } from "../consts";
 
 const CameraControl = () => {
   const { camera } = useThree();
