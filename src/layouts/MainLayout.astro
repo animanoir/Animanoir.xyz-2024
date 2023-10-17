@@ -3,7 +3,6 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import FiberContainer from "../../src/components/FiberContainer.jsx";
-import { SEO } from "astro-seo";
 import Navbar from "@/components/Navbar.astro";
 ---
 
@@ -11,39 +10,6 @@ import Navbar from "@/components/Navbar.astro";
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <SEO
-      title={SITE_TITLE}
-      description="Experienced React Developer specializing in the ReactThreeFiber ecosystem for dynamic 3D web experiences. Expertise in Jest Testing and Storybook UI for robust, scalable applications. Adept at ChatGPT Integration and utilizing AWS Services for cloud-based solutions. Skilled in Three.js Graphics for interactive web content. Proficient in Git Version Control, Yarn Package Manager, and NPM Modules to maintain codebase integrity. Highly experienced in Jira Project Management for streamlined workflows. Capable of creating highly optimized websites through SEO Optimization, Gatsby Static Sites, and Webflow Designer capabilities."
-      openGraph={{
-        basic: {
-          title: "Óscar A. Montiel — Software Engineer",
-          type: "A type.",
-          image: "../../public/animanoir-oscar-a-montiel-tw.jpg",
-        },
-      }}
-      twitter={{
-        creator: "@geosminu",
-      }}
-      extend={{
-        // extending the default link tags
-        link: [{ rel: "icon", href: "/favicon.ico" }],
-        // extending the default meta tags
-        meta: [
-          {
-            name: "twitter:image",
-            content: "../../public/animanoir-oscar-a-montiel-tw.jpg",
-          },
-          {
-            name: "twitter:title",
-            content: "Óscar A. Montiel — Creative Software",
-          },
-          {
-            name: "twitter:description",
-            content: "Óscar A. Montiel — Creative Software",
-          },
-        ],
-      }}
-    />
   </head>
   <body>
     <FiberContainer client:load />
