@@ -108,11 +108,12 @@ const posts = (await getCollection("works")).sort(
 
       @media (max-width: 768px) {
         .projectsContainer {
-          margin: 0 2rem;
+          margin: 0;
         }
 
         ul {
           grid-template-columns: 1fr;
+          grid-gap: 0;
         }
       }
     </style>
