@@ -89,6 +89,8 @@ body {
   line-height: 1.5;
   margin: 0;
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 h1,
 h2,
@@ -136,16 +138,16 @@ pre > code {
 blockquote {
   position: relative;
   font-family: "Georgia", serif;
-  font-size: 1.5em;
+  font-size: 1.5rem;
   line-height: 1.6;
   margin: 20px auto;
-  padding: 1.2em 30px 1.2em 75px;
+  padding: 1.2em 5rem 1.2em 5rem;
   quotes: "\201C""\201D""\2018""\2019";
 }
 
 blockquote:before {
   content: open-quote;
-  font-size: 4em;
+  font-size: 2em;
   position: absolute;
   top: 0;
   left: 10px;
@@ -154,7 +156,7 @@ blockquote:before {
 
 blockquote:after {
   content: close-quote;
-  font-size: 4em;
+  font-size: 2em;
   position: absolute;
   bottom: -1px;
   right: 25px;
@@ -166,68 +168,6 @@ blockquote cite {
   display: block;
   margin-top: 5px;
   text-align: right;
-}
-
-/* Fondo noise (thx to Omar (@OmarOlaes) por encontrar la solución :~)) */
-.foreground {
-  top: -10rem;
-  left: -10rem;
-  filter: brightness(0.3);
-  width: calc(100% + 20rem);
-  height: calc(100% + 20rem);
-  z-index: 0;
-  position: fixed;
-  pointer-events: none;
-  background-position: 50%;
-  background-image: url("images/noise-texture.png");
-  pointer-events: none;
-  animation: foreground 1s steps(2) infinite;
-}
-
-@keyframes foreground {
-  0% {
-    transform: translate3d(0, 9rem, 0);
-  }
-
-  10% {
-    transform: translate3d(-1rem, -4rem, 0);
-  }
-
-  20% {
-    transform: translate3d(-8rem, 2rem, 0);
-  }
-
-  30% {
-    transform: translate3d(9rem, -9rem, 0);
-  }
-
-  40% {
-    transform: translate3d(-2rem, 7rem, 0);
-  }
-
-  50% {
-    transform: translate3d(-9rem, -4rem, 0);
-  }
-
-  60% {
-    transform: translate3d(2rem, 6rem, 0);
-  }
-
-  70% {
-    transform: translate3d(7rem, -8rem, 0);
-  }
-
-  80% {
-    transform: translate3d(-9rem, 1rem, 0);
-  }
-
-  90% {
-    transform: translate3d(6rem, -5rem, 0);
-  }
-
-  to {
-    transform: translate3d(-7rem, 0, 0);
-  }
 }
 
 p {
