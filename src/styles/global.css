@@ -145,6 +145,13 @@ blockquote {
   quotes: "\201C""\201D""\2018""\2019";
 }
 
+@media screen and (max-width: 600px) {
+  blockquote {
+    padding: 1.2em 1.5rem 1.2em 1.5rem;
+    font-size: 1.2rem;
+  }
+}
+
 blockquote:before {
   content: open-quote;
   font-size: 2em;
