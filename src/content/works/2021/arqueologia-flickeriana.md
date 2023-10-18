@@ -3,7 +3,7 @@ title: "Arqueología Flickeriana"
 description: "Dig deep"
 pubDate: "Nov 11 2021"
 heroImage: "@/images/works/arqueologia-flickeriana/arqueologia-flickeriana-cover.jpg"
-tools: ["React", "Gatsby"]
+tools: ["React"]
 ---
 
 <a target="_blank" href="https://arqueologia-flickeriana.vercel.app/">Arqueología Flickeriana</a> es una herramienta que permite explorar fotografías subidas en dado día en cualquier estado de México.

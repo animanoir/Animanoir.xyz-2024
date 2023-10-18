@@ -12,4 +12,4 @@ I founded the platform because I'm deeply committed to the belief that **informa
 
 For those intrigued by the cross-disciplinary explorations we undertake—from ethical algorithms to the futurology of consciousness—know that this platform aims to be more than just a repository of ideas. It's an active community focused on the synthesis of deep thought and actionable insight, all anchored by a metamodern framework that seeks to go beyond mere categorization into an understanding of complex interconnectedness.
 
-For more information on how to become part of this exciting venture, click here: https://metaxis.digital/Colabora
+For more information on how to become part of the project, click here: https://metaxis.digital/Colabora

@@ -1,6 +1,6 @@
 ---
 title: "Voz y movimiento"
-description: "Cuando hablas cambias el universo. Esta obra facilita apreciarlo. Las palabras son como peldaños que vamos construyendo una encima de otra—la base de lo que decimos ahora son las raíces de nuestro futuro… Fractal, recursivo—siendo infinito ¿por dónde quieres comenzar"
+description: "When you speak, you change the universe. This work makes it easier to appreciate that."
 pubDate: "Oct 12 2023"
 heroImage: "@/images/works/voz-y-movimiento/voz-movimiento-cover.jpg"
 tools: ["Max/MSP"]

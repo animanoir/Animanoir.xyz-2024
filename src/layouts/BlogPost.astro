@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar.astro";
 
 type Props = CollectionEntry<"works">["data"];
 
-const { title, description, heroImage } = Astro.props;
+const { title, description, heroImage, tools } = Astro.props;
 ---
 
 <html lang="en">
@@ -36,6 +36,15 @@ const { title, description, heroImage } = Astro.props;
           )
         }
         <h1 class="title">{title}</h1>
+        <div class="tools">
+          {
+            tools?.map((tool, index) => (
+              <span style={{ marginRight: "10px" }} key={index}>
+                {tool}
+              </span>
+            ))
+          }
+        </div>
         <div class="articleBody">
           <slot />
         </div>
@@ -51,11 +60,21 @@ const { title, description, heroImage } = Astro.props;
 
       .title {
         margin: 0;
-        padding-bottom: 4rem;
+        pading-bottom: 0.5rem;
         font-size: 4rem;
         text-align: center;
         font-family: "Montserrat", sans-serif;
         line-height: 1;
+      }
+
+      .tools {
+        display: block;
+        text-align: center;
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.8rem;
+        color: #fdfefe7f;
+        padding-bottom: 2rem;
+        font-style: italic;
       }
 
       .articleContainer {
