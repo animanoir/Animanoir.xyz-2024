@@ -4,6 +4,7 @@ import useLastFmData from "@/components/hooks/useLastFmData.js";
 
 export const LastFm = () => {
   const lfmData = useLastFmData();
+
   const [albumImageState, setAlbumImageState] = useState({
     x: 0,
     y: 0,

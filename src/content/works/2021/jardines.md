@@ -6,16 +6,10 @@ heroImage: "@/images/works/jardines/jardines-oscar-a-montiel-animanoir-maremoto.
 tools: ["Three.js"]
 ---
 
-<a target="_blank" href="https://arqueologia-flickeriana.vercel.app/">Arqueología Flickeriana</a> es una herramienta que permite explorar fotografías subidas en dado día en cualquier estado de México.
+"In a synergistic collaboration with **Emmanuel Martínez** of Maremoto.mx and OTONO Record Label, we embarked on the journey to augment the sonic landscape of Jardines, a talented Mexican artist. Our goal was to provide fans with an [**interactive 3D experience**](https://maremoto.mx/) that would serve as a visual complement to the artist's newly released album.
 
-La idea surgió desde antes de meterla a una convocatoria ya que me suelo obsesionar con ver fotografías subidas en aquel servicio. Creo que las fotos allí tienen un aura más natural y humano, más espontánea, que las fotos subidas a redes sociales—suma y completamente actuadas y falsas. Y todos lo saben, que se me hace lo peor.
+Utilizing the **Three.js library**, we were able to create a real-time 3D environment that users can navigate and float into the sound sources.
 
-También me intriga saber qué tanto pasa en otros espacios en el mismo tiempo.
+Despite the technical challenges, the focus remained on ensuring the highest levels of **user engagement** and **performance optimization**.
 
-<img class="blog-image" src="/óscar a montiel-flickr-1.png" alt="Óscar A. Montiel">
-<img class="blog-image" src="/óscar a montiel-flickr-2.png" alt="Óscar A. Montiel">
-<img class="blog-image" src="/óscar a montiel-flickr-3.png" alt="Óscar A. Montiel">
-
-La pieza fue enteramente desarrollada en **React**.
-
-<small>Agradecimientos especiales a la persona que me compartió la convocatoria.</small>
+This 3D web experience stands as a testament to the power of **cross-disciplinary collaboration** and cutting-edge web technologies in creating novel ways to experience music and art."

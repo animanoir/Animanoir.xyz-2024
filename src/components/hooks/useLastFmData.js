@@ -1,4 +1,3 @@
-// useLastFmData.js
 import { useState, useEffect } from "react";
 
 const useLastFmData = (username = "swoephowx") => {

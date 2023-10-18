@@ -6,7 +6,11 @@ const links = [
   { href: "/works", label: "Works", target: "_self" },
   { href: "/about", label: "About", target: "_self" },
   { href: "https://linktr.ee/animanoir", label: "Contact", target: "_blank" },
-  { href: "https://linktr.ee/animanoir", label: "C.V.", target: "_blank" },
+  {
+    href: "https://docs.google.com/document/d/1eRrPHNTb1v8pJ_SRjGBlDHOacGh0484sESKHYx9onu4/edit?usp=sharing",
+    label: "C.V.",
+    target: "_blank",
+  },
 ];
 ---
 
@@ -33,6 +37,12 @@ const links = [
           break;
         case "3":
           window.open("https://linktr.ee/animanoir", "_blank");
+          break;
+        case "4":
+          window.open(
+            "https://docs.google.com/document/d/1eRrPHNTb1v8pJ_SRjGBlDHOacGh0484sESKHYx9onu4/edit?usp=sharing",
+            "_blank"
+          );
           break;
       }
     });
