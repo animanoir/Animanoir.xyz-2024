@@ -14,11 +14,7 @@ const posts = (await getCollection("works")).sort(
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead
-      title={SITE_TITLE}
-      description={SITE_DESCRIPTION}
-      image="animanoir-oscar-a-montiel-tw.jpg"
-    />
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <body>
     <Header />
@@ -53,7 +49,7 @@ const posts = (await getCollection("works")).sort(
     </main>
     <style>
       .projectsContainer {
-        margin: 0 24rem;
+        margin: 0 25rem;
       }
 
       ul {

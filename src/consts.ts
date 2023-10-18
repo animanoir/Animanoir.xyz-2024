@@ -3,6 +3,6 @@
 
 export const SITE_TITLE = "Óscar A. Montiel";
 export const SITE_DESCRIPTION =
-  "Creative Software Engineer specializing in interactive experiences and seamless web applications.";
+  "Software Engineer Specializing in Crafting Interactive Experiences and Seamless Web Applications.";
 export const TWITTER_PROFILE = "https://twitter.com/geosminu";
 export const GITHUB_PROFILE = "https://github.com/animanoir";

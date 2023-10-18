@@ -6,19 +6,19 @@ heroImage: "@/images/works/voz-y-movimiento/voz-movimiento-cover.jpg"
 tools: ["Max/MSP"]
 ---
 
-**Voz y movimiento** es una instalación interactiva encargada por la [Galería Municipal de Querétaro](https://www.instagram.com/galeria.municipal/).
+**Voz y movimiento** is an interactive installation commissioned by [Municipal Gallery of Querétaro.](https://www.instagram.com/galeria.municipal/).
 
-La temática de la exposición fue **Génesis**. Se me ocurrió pensar acerca de la **palabra**, las llaves que develan nuevos universos cada que las pensamos, decimos y escuchamos.
+The theme of the exhibition was **Genesis**. It occurred to me to think about the **word**, the keys that unveil new universes every time we think, say, or hear them.
 
 <img class="blog-image" src="/images/works/voz-y-movimiento/óscar-a-montiel-exposición-genesis.jpg" alt="Óscar A. Montiel — Galería Municipal de Querétaro">
 
-> "Cuando hablas cambias el universo. Esta obra facilita apreciarlo. Las palabras son como peldaños que vamos construyendo una encima de otra—la base de lo que decimos ahora son las raíces de nuestro futuro… Fractal, recursivo—siendo infinito ¿por dónde quieres comenzar?"
+> When you speak, you change the universe. This work makes it easier to appreciate that. Words are like stepping stones that we build one on top of the other—the basis of what we say now are the roots of our future... Fractal, recursive—being infinite, where do you want to start?
 
 <iframe width="560" height="415" src="https://www.youtube.com/embed/s46Tofa6EAI?si=8pLAAd9V9hdoxorZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 <img class="blog-image" src="/images/works/voz-y-movimiento/oscar-a-montiel-animanoir-creative-software-developer.jpg" alt="Óscar A. Montiel — Galería Municipal de Querétaro">
 
-Hice el programa con [**Max/MSP**](https://cycling74.com/products/max). La idea es que a cuando hablas al micrófono, la pieza te responde. Hay un mensaje oculto grabado con mi voz donde leo un fragmento del libro de [**Zhuangzi**](https://www.youtube.com/watch?v=kPLQV25TbRk), filósofo chino que me resulta de suma importancia en mi vida:
+I programmed it with [**Max/MSP**](https://cycling74.com/products/max). The idea is that when you speak into the microphone, the piece responds to you. There is a hidden message recorded with my voice where I read a passage from the book of [**Zhuangzi**](https://www.youtube.com/watch?v=kPLQV25TbRk), a Chinese philosopher who is of utmost importance in my life:
 
 > La palabra no es como el soplar del viento. El que habla expresa razones, mas estas razones no son algo permanente. ¿Habla realmente? ¿O es que acaso no habla? Imagina que sus palabras son diferentes del piar de un pajarillo. ¿Se distinguen? ¿O acaso no se distinguen?
 > ¿Cómo ha podido ocultarse el Tao hasta el punto de aparecer la distinción entre lo verdadero y lo falso? ¿Cómo se ha podido ocultar la palabra hasta el punto de aparecer la distinción entre el es y el no es? ¿Hay lugar donde el Tao no exista? ¿Será imposible la palabra? El Tao se oculta bajo los pequeños logros, y la palabra bajo la elocuencia florida. Así es como surgen las polémicas entre los letrados de la escuela Ru y los seguidores de Mo. Cada una de estas escuelas afirma lo que la otra niega, y niega lo que la otra afirma. Si queremos afirmar lo que los otros niegan y negar lo que los otros afirman, nada mejor que una mente iluminada.
