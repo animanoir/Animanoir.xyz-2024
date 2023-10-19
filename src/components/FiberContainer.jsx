@@ -36,7 +36,7 @@ export const FiberCanvas = () => {
         <OrbitControls
           enableDamping
           minDistance={10}
-          maxDistance={22}
+          maxDistance={27}
           autoRotate
           autoRotateSpeed={1}
         />
