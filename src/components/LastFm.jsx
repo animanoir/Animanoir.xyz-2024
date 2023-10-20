@@ -71,7 +71,7 @@ export const LastFm = () => {
           style={{
             zIndex: onMouseEnter ? 1 : -1,
             left: albumImageState.x,
-            top: 43,
+            top: 40,
             opacity: onMouseEnter ? 1 : 0,
           }}
         >
