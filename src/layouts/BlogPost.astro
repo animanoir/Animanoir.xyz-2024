@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar.astro";
 
 type Props = CollectionEntry<"works">["data"];
 
-const { title, description, heroImage, tools } = Astro.props;
+const { title, description, heroImage, tools, pubDate } = Astro.props;
 ---
 
 <html lang="en">
@@ -44,6 +44,9 @@ const { title, description, heroImage, tools } = Astro.props;
               </span>
             ))
           }
+        </div>
+        <div class="tools">
+          <span>{pubDate}</span>
         </div>
         <div class="articleBody">
           <slot />

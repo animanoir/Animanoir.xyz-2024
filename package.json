@@ -8,7 +8,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@astrojs/mdx": "^1.0.0",
@@ -37,5 +38,9 @@
     "react-helmet": "^6.1.0",
     "three": "^0.155.0",
     "yet-another-react-lightbox": "^3.14.0"
+  },
+  "devDependencies": {
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0"
   }
 }
