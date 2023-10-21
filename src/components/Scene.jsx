@@ -11,13 +11,13 @@ export const Scene = () => {
 
   useFrame((state, delta) => {
     if (ringOneRef.current) {
-      ringOneRef.current.rotation.x += delta * -0.3;
+      ringOneRef.current.rotation.x += delta * -0.5;
     }
     if (ringTwoRef.current) {
       ringTwoRef.current.rotation.y += delta * -0.4;
     }
     if (ringThreeRef.current) {
-      ringThreeRef.current.rotation.x += delta * -0.5;
+      ringThreeRef.current.rotation.x += delta * -0.3;
     }
   });
 
@@ -33,7 +33,7 @@ export const Scene = () => {
       <directionalLight color={"white"} position={[0, 10, 100]} intensity={1} />
       <mesh ref={ringOneRef}>
         <meshStandardMaterial {...materialProps} />
-        <torusGeometry args={[5, 0.5, 10, 100]} />
+        <torusGeometry args={[5, 0.3, 10, 100]} />
       </mesh>
       <mesh ref={ringTwoRef}>
         <meshStandardMaterial {...materialProps} />
@@ -43,7 +43,7 @@ export const Scene = () => {
         <meshStandardMaterial {...materialProps} />
         <torusGeometry args={[15, 1, 10, 100]} />
       </mesh>
-      <Float speed={3}>
+      <Float speed={5}>
         <ModelANLogo />
       </Float>
     </Fragment>

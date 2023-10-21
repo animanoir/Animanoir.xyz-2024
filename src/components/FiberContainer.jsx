@@ -25,7 +25,7 @@ export const FiberCanvas = () => {
   };
 
   const cameraProps = {
-    position: [0, -1, 11],
+    position: [0, -2, -30],
     fov: 50,
   };
 
@@ -36,9 +36,10 @@ export const FiberCanvas = () => {
         <OrbitControls
           enableDamping
           minDistance={10}
-          maxDistance={27}
+          maxDistance={30}
           autoRotate
-          autoRotateSpeed={1}
+          autoRotateSpeed={-1}
+          target={[0, 0, 0]}
         />
         <EffectComposer>
           <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.2} />
