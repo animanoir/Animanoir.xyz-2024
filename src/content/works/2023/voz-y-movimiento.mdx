@@ -11,6 +11,7 @@ import { Picture } from "astro:assets";
 import img1 from "@/images/works/voz-y-movimiento/oscar-a-montiel-animanoir-creative-software-developer.jpg";
 import img2 from "@/images/works/voz-y-movimiento/óscar-a-montiel-exposición-genesis.jpg";
 import img3 from "@/images/works/voz-y-movimiento/oscar-a-montiel-voz-movimiento-espectador.jpg";
+import img4 from "@/images/works/voz-y-movimiento/oscar-a-montiel-arte-ficha-tecnica.jpg";
 
 > When you speak, you change the universe. This work makes it easier to appreciate that. Words are like stepping stones that we build one on top of the other—the basis of what we say now are the roots of our future... Fractal, recursive—being infinite, where do you want to start?
 
@@ -45,6 +46,16 @@ The piece was commissioned by the [Municipal Gallery of Querétaro](https://www.
 <Picture
   src={img1}
   alt={"Óscar A. Montiel — Exposición Génesis"}
+  quality={"max"}
+  formats={["webp"]}
+  decoding="async"
+  loading="lazy"
+  class="blog-image"
+/>
+
+<Picture
+  src={img4}
+  alt={"Óscar A. Montiel — Galería Municipal de Querétaro"}
   quality={"max"}
   formats={["webp"]}
   decoding="async"
