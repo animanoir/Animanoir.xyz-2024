@@ -25,8 +25,8 @@ export const FiberCanvas = () => {
   };
 
   const cameraProps = {
-    position: [0, -2, -30],
-    fov: 50,
+    position: [0, -5, -30],
+    fov: 60,
   };
 
   return (

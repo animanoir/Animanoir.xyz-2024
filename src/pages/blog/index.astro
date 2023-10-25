@@ -1,0 +1,109 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { getCollection } from "astro:content";
+import Navbar from "@/components/Navbar.astro";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <Navbar />
+    <main>
+      <section>
+        <div class="blogpostsContainer">
+          <ul style=" margin: 0;">
+            {
+              posts.map((post) => (
+                <li>
+                  <small class="postDate">
+                    {new Date(post.data.pubDate).toLocaleDateString()}
+                  </small>
+                  <a href={`/blog/${post.slug}/`}>
+                    <div class="postInfo">
+                      <p class="postTitle">{post.data.title}</p>
+                    </div>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+    </main>
+    <style>
+      .blogpostsContainer {
+        margin: 0 25rem;
+        padding-top: 4rem;
+      }
+      .postDate {
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.8rem;
+        margin: 0;
+        color: #999;
+      }
+      ul {
+        list-style-type: none;
+      }
+
+      ul a:hover {
+        filter: invert(1);
+      }
+
+      ul li {
+        height: 100%;
+        display: block;
+        margin-bottom: 1rem;
+      }
+
+      .postTitle {
+        background-color: black;
+        color: floralwhite;
+        font-family: "Montserrat", sans-serif;
+        font-weight: bold;
+        letter-spacing: 0.1rem;
+        font-size: 1.5rem;
+        padding: 1rem;
+        margin-bottom: 0;
+        line-height: 1.1;
+        width: fit-content;
+      }
+
+      ul li a {
+        position: relative;
+      }
+      .postInfo {
+        mix-blend-mode: exclusion;
+        text-align: center;
+      }
+
+      .tools {
+        margin-top: 1rem;
+        color: #fdfefe;
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        font-size: 1em;
+      }
+
+      @media (max-width: 768px) {
+        .blogpostsContainer {
+          margin: 0;
+        }
+
+        ul {
+          grid-template-columns: 1fr;
+          grid-gap: 0;
+        }
+      }
+    </style>
+  </body>
+</html>

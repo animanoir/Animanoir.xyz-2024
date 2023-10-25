@@ -5,6 +5,7 @@ import { ViewTransitions } from "astro:transitions";
 const links = [
   { href: "/works", label: "Works", target: "_self" },
   { href: "/about", label: "About", target: "_self" },
+  { href: "/blog", label: "Blog", target: "_self" },
   { href: "https://linktr.ee/animanoir", label: "Contact", target: "_blank" },
 ];
 ---
@@ -20,7 +21,7 @@ const links = [
   <ViewTransitions />
 </nav>
 
-<script>
+<!-- <script>
   document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("keydown", function (event) {
       switch (event.key) {
@@ -42,7 +43,7 @@ const links = [
       }
     });
   });
-</script>
+</script> -->
 
 <style>
   :root {

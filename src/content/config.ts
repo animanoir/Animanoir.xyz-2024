@@ -1,5 +1,6 @@
 import { defineCollection, z } from "astro:content";
 
+// Collection of my professional works:
 const works = defineCollection({
   // Type-check frontmatter using a schema
   schema: ({ image }) =>
@@ -20,4 +21,18 @@ const works = defineCollection({
     }),
 });
 
-export const collections = { works };
+// Collection of blog posts:
+const blog = defineCollection({
+  schema: () =>
+    z.object({
+      title: z.string(),
+      summary: z.string().optional(),
+      pubDate: z
+        .string()
+        .or(z.date())
+        .transform((val) => new Date(val)),
+      tags: z.array(z.string()).optional(),
+    }),
+});
+
+export const collections = { works, blog };

@@ -43,7 +43,7 @@ export const Scene = () => {
         <meshStandardMaterial {...materialProps} />
         <torusGeometry args={[15, 1, 10, 100]} />
       </mesh>
-      <Float speed={5}>
+      <Float speed={7}>
         <ModelANLogo />
       </Float>
     </Fragment>

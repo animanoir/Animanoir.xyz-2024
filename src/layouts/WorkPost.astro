@@ -2,46 +2,64 @@
 import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import ModifiedHeader from "../components/ModifiedHeader.astro";
+import { Picture } from "astro:assets";
 import Navbar from "../components/Navbar.astro";
 
-type Props = CollectionEntry<"blog">["data"];
+type Props = CollectionEntry<"works">["data"];
 
-const { title, summary, pubDate } = Astro.props;
+const { title, description, heroImage, tools } = Astro.props;
 ---
 
 <html lang="en">
   <head>
     <BaseHead
       title={`${title} by Óscar A. Montiel | Creative Software Engineer`}
-      description={summary}
+      description={description}
     />
   </head>
   <body>
     <ModifiedHeader />
     <Navbar />
     <article class="articleContainer">
+      {
+        heroImage && (
+          <Picture
+            src={heroImage}
+            alt={description}
+            quality={"max"}
+            class="heroImage"
+            formats={["webp"]}
+            decoding="async"
+            loading="lazy"
+          />
+        )
+      }
       <h1 class="title">{title}</h1>
-      <p class="postDate">
-        {new Date(pubDate).toLocaleDateString()}
-      </p>
+      <div class="tools">
+        {
+          tools?.map((tool, index) => (
+            <span style={{ marginRight: "10px" }} key={index}>
+              {tool}
+            </span>
+          ))
+        }
+      </div>
       <div class="articleBody">
         <slot />
       </div>
     </article>
     <style>
-      .postDate {
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.8rem;
-        margin-top: 0;
-        width: fit-content;
-        margin: 0 auto;
-        color: #999;
+      .heroImage {
+        height: 520px;
+        object-fit: cover;
+        width: 100%;
+        padding-bottom: 2rem;
       }
+
       .title {
         margin: 0;
-        padding-top: 4rem;
         padding-bottom: 0.5rem;
-        font-size: 3rem;
+        font-size: 4rem;
         text-align: center;
         font-family: "Montserrat", sans-serif;
         line-height: 1;

@@ -1,0 +1,99 @@
+---
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<div class="blogPosts-container">
+  <h2 class="postTitle"><span class="alert-circle"></span>Blog:</h2>
+  <ul>
+    {
+      posts.map((posts) => (
+        <li class="postContainer">
+          <small class="postDate">
+            {new Date(posts.data.pubDate).toLocaleDateString()}
+          </small>
+          <h3 class="postTitle">{posts.data.title}</h3>
+          {posts.data.summary && (
+            <p class="postSummary">{posts.data.summary}</p>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .blogPosts-container {
+    position: fixed;
+    left: 0;
+    top: 60vh;
+    padding: 1rem;
+    width: 20%;
+  }
+
+  .postContainer {
+    background-color: #00000019;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .blogPosts-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    line-height: 0 !important;
+  }
+  .postDate {
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.6rem;
+    margin-top: 0;
+    line-height: 1.1;
+    width: fit-content;
+    color: #999;
+  }
+  .postTitle {
+    background-color: black;
+    color: floralwhite;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    font-size: 0.8rem;
+    padding: 0.2rem;
+    margin-bottom: 0;
+    line-height: 1.1;
+    width: fit-content;
+  }
+
+  .postSummary {
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.8rem;
+    padding: 0.2rem;
+    margin-top: 0;
+    line-height: 1.1;
+    color: #fdfefe;
+    width: fit-content;
+  }
+
+  .alert-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: red;
+    opacity: 0;
+    animation: fadeInOut 3s ease-in-out infinite;
+  }
+
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+</style>

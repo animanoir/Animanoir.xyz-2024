@@ -1,0 +1,42 @@
+---
+title: "How to patch a node_module with patch-package"
+summary: "Basically node_module hacking when you know the fix is so damn easy."
+pubDate: "2023-10-23"
+tags: ["node_modules", "frontend"]
+---
+
+import { Picture } from "astro:assets";
+
+One of my focus points with my portfolio was to achieve pristine quality. I wanted to make sure that the code, design and performance were ideal. But sometimes some libraries don't fulfill our expectations. `astro_embed` is one of them.
+
+`astro_embed` is a library that allows you to **embed a video from a platform like YouTube or Vimeo** into Astro-type `mdx` files. It is great since makes it even easier to develop a static website like this one. But it had an important issue, for me, if you want to embed a video from YouTube: The thumbnail it selects is the worst one.
+
+YouTube generates a static thumbnail based on the video—these are the famous _hqdefault_ .jpg files we usually find through image search:
+
+<Picture
+  src="https://i.ytimg.com/vi/ZEMEo9fJ94g/hqdefault.jpg"
+  alt={"Óscar A. Montiel — Galería Municipal de Querétaro"}
+  width={1280}
+  height={720}
+  quality={"max"}
+  formats={["webp"]}
+  decoding="async"
+  loading="lazy"
+  class="blog-image"
+/>
+
+This is the type of image YouTube usually uses, but it also generates a hidden image with a higher resolution called _hq720.jpg_:
+
+<Picture
+  src="https://i.ytimg.com/vi/ZEMEo9fJ94g/hq720.jpg"
+  alt={"Óscar A. Montiel — Galería Municipal de Querétaro"}
+  width={1280}
+  height={720}
+  quality={"max"}
+  formats={["webp"]}
+  decoding="async"
+  loading="lazy"
+  class="blog-image"
+/>
+
+As you can see the quality is much better. The problem is that `astro_embed` uses the first one, which is not ideal. So I decided to fix it myself _hacking_ the library.
