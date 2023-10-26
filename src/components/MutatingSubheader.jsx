@@ -43,7 +43,7 @@ const MutatingSubheader = () => {
     "Pixel Philosopher",
     "Chaos Choreographer",
     "Synaptic Software Engineer",
-    "Marxist",
+    "Socialist Cybernethicist",
     "Taoist Technologist",
     "Space-time Storyteller",
     "Conscious Coder",
