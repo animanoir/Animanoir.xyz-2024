@@ -1,17 +1,75 @@
 ---
-title: "How to patch a node_module with patch-package"
-summary: "Basically node_module hacking when you know the fix is so damn easy."
+title: "How to modify a node_module with patch-package"
+summary: "Unlock the potential of node_module customizations, easily fixing and enhancing your development."
 pubDate: "2023-10-23"
-tags: ["node_modules", "frontend"]
+tags: ["patch-package", "node_modules", "web development", "frontend"]
 ---
 
 import { Picture } from "astro:assets";
+import img3 from "@/images/blog/2023/how-to-patch-a-node-module-pack-package/oscar-a-montiel-patch-package.png";
 
-One of my focus points with my portfolio was to achieve pristine quality. I wanted to make sure that the code, design and performance were ideal. But sometimes some libraries don't fulfill our expectations. `astro_embed` is one of them.
+## How to Seamlessly Modify Node Modules
 
-`astro_embed` is a library that allows you to **embed a video from a platform like YouTube or Vimeo** into Astro-type `mdx` files. It is great since makes it even easier to develop a static website like this one. But it had an important issue, for me, if you want to embed a video from YouTube: The thumbnail it selects is the worst one.
+Sometimes the packages we rely on might not work perfectly for our needs. Today, we'll dive into how you can modify `node_modules` effortlessly using `patch-package`.
 
-YouTube generates a static thumbnail based on the video—these are the famous _hqdefault_ .jpg files we usually find through image search:
+### Step-by-Step Guide:
+
+1. **Identify the Module to Modify:** For this demonstration, I'm adjusting `astro-embed` which resides in the `node_modules` directory. Always ensure you navigate through the module's folders to pinpoint the exact code segment you're looking to modify.
+
+2. **Make Necessary Adjustments:** My objective was simple: change the `src` attribute of the `img` tag to leverage _hq720.jpg_ over _hqdefault.jpg_:
+
+```js
+// Sample code showcasing the modification...
+const posterURL = poster || `https://i.ytimg.com/vi/${videoid}/hq720.jpg`;
+```
+
+3. **Set Up Patch-Package:** Install the required packages:
+
+```bash
+yarn add -D patch-package postinstall-postinstall
+```
+
+4. **Generate a Patch:** Execute the command tailored to the file/module you adjusted:
+
+```bash
+yarn patch-package @astro-community/astro-embed-youtube
+```
+
+This command creates a `patches` folder in your repository, capturing the changes. Rest assured, your existing setup remains unharmed.
+
+<Picture
+  src={img3}
+  alt={"Óscar A. Montiel — Galería Municipal de Querétaro"}
+  width={1280}
+  height={720}
+  quality={"max"}
+  formats={["webp"]}
+  decoding="async"
+  loading="lazy"
+  class="blog-image"
+/>
+
+5. **Deploy with Confidence:** To ensure deployments use the patched version, update your `package.json`:
+
+```json
+{
+  "scripts": {
+    "postinstall": "patch-package"
+  }
+}
+```
+
+There you have it! You're all set to deploy your website with the patched module intact. To explore more on `patch-package`, visit their [official repository](https://www.npmjs.com/package/patch-package).
+
+---
+
+## Pursuing Top Quality
+
+In web development, we always aim for the highest quality, both in coding and design. But sometimes, even the best tools have some flaws.
+
+Take the `astro_embed` library, for example. It's a great tool that lets us **embed videos from sites like YouTube or Vimeo** into Astro's `mdx` files. However, I noticed an issue with the thumbnail quality.
+
+YouTube often uses this _hqdefault_ .jpg thumbnail:
 
 <Picture
   src="https://i.ytimg.com/vi/ZEMEo9fJ94g/hqdefault.jpg"
@@ -25,7 +83,7 @@ YouTube generates a static thumbnail based on the video—these are the famous _
   class="blog-image"
 />
 
-This is the type of image YouTube usually uses, but it also generates a hidden image with a higher resolution called _hq720.jpg_:
+But there's a better quality version, _hq720.jpg_:
 
 <Picture
   src="https://i.ytimg.com/vi/ZEMEo9fJ94g/hq720.jpg"
@@ -39,4 +97,4 @@ This is the type of image YouTube usually uses, but it also generates a hidden i
   class="blog-image"
 />
 
-As you can see the quality is much better. The problem is that `astro_embed` uses the first one, which is not ideal. So I decided to fix it myself _hacking_ the library.
+The second one clearly looks better. However, `astro_embed` uses the first one by default. So, I decided to tweak the library to use the better-quality thumbnail.

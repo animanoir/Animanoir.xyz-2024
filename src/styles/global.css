@@ -135,6 +135,9 @@ pre {
 pre > code {
   all: unset;
 }
+hr {
+  margin-bottom: 2rem;
+}
 blockquote {
   position: relative;
   font-family: "Georgia", serif;
