@@ -61,7 +61,7 @@ const MutatingSubheader = () => {
     "Esoteric Engineer",
     "Harmonic Harmonizer",
     "Digital Druid",
-    "A Monkey",
+    "A Confused Monkey",
     "Cognitive Conductor",
     "Temporal Technician",
     "Sonic Sculptor",
