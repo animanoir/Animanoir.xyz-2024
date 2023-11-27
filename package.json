@@ -36,6 +36,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
+    "smooth-scrollbar": "^8.8.4",
+    "smooth-scrollbar-react": "^2.4.1",
     "three": "^0.155.0",
     "yet-another-react-lightbox": "^3.14.0"
   },
