@@ -108,6 +108,7 @@ def main():
 
     driver.quit()
 
+    # This applies the Cardo font in the generated PDF.
     font_path = './Cardo-Regular.ttf'
     encoded_font = encode_font_to_base64(font_path)
     font_face = f"""
