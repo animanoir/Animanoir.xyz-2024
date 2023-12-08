@@ -1,6 +1,6 @@
 ---
 title: "How to easily create a GPT of yourself"
-summary: "How to reduce yourself and your friends into mere 1s and 0s and talk to them as chatbots"
+summary: "How to reduce yourself and your friends into mere 1s and 0s and talk to them as chatbots."
 pubDate: "2023-12-08"
 tags:
   [
@@ -24,7 +24,6 @@ tags:
 
 import { Picture } from "astro:assets";
 import img1 from "@/images/blog/2023/create-gpt-of-yourself/oscar-a-montiel.jpg";
-import img2 from "@/images/blog/2023/create-gpt-of-yourself/python-selenium-scrap.png";
 
 <Picture
   src={img1}
@@ -49,8 +48,6 @@ This was incredibly easy to achieve:
 2. I couldn't just copy/paste everything, so I just scrapped the text using **Python** with the **Selenium** library, and then convert it to a PDF so <a href="https://youtu.be/tBTL2Porphg?si=h-HV8x2Ni0CqVlOQ&t=22" target="_blank">ᏖᏂᏋ ᎷᏗፈᏂᎥᏁᏋ</a> could read and learn from it.
 
 Here is the code (I need to use **pdfkit** to convert it into a PDF and some encoding stuff to make sure the font is correctly embedded in the PDF as UTF-8):
-
-````python
 
 ```python
 from selenium import webdriver
@@ -126,7 +123,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-````
+```
 
 At the end I simply uploaded the PDF into a custom GPT and told <a href="https://www.youtube.com/watch?v=Mkd7LbQnfIQ" target="_blank">ɘᴎiʜɔɒM ɘʜT</a> to act as me. Sadly, OpenAI doesn't likes fun and it was kind of difficult for it to _interpret_ as myself, so it ended being a simple chatbot with my writings as a base. Still fun, tho!
 
