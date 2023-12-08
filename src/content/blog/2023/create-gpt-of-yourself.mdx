@@ -24,6 +24,7 @@ tags:
 
 import { Picture } from "astro:assets";
 import img1 from "@/images/blog/2023/create-gpt-of-yourself/oscar-a-montiel.jpg";
+import img2 from "@/images/blog/2023/create-gpt-of-yourself/blog.jpg";
 
 <Picture
   src={img1}
@@ -124,6 +125,18 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+<Picture
+  src={img2}
+  alt={"Óscar A. Montiel — How to easily create a GPT of yourself"}
+  width={1280}
+  height={720}
+  quality={"high"}
+  formats={["webp"]}
+  decoding="async"
+  loading="lazy"
+  class="blog-image"
+/>
 
 At the end I simply uploaded the PDF into a custom GPT and told <a href="https://www.youtube.com/watch?v=Mkd7LbQnfIQ" target="_blank">ɘᴎiʜɔɒM ɘʜT</a> to act as me. Sadly, OpenAI doesn't likes fun and it was kind of difficult for it to _interpret_ as myself, so it ended being a simple chatbot with my writings as a base. Still fun, tho!
 
