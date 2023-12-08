@@ -131,6 +131,7 @@ code {
 }
 pre {
   padding: 1rem;
+  margin-bottom: 3rem;
   font-size: 0.9rem;
 }
 pre > code {
