@@ -48,7 +48,7 @@ This was incredibly easy to achieve:
 
 2. I couldn't just copy/paste everything, so I just scrapped the text using **Python** with the **Selenium** library, and then convert it to a PDF so <a href="https://www.youtube.com/watch?v=vvnkwYCXO5o" target="_blank">ᏖᏂᏋ ᎷᏗፈᏂᎥᏁᏋ</a> could read and learn from it.
 
-Here is the code (I needed to use **pdfkit** to convert it into a PDF and some encoding stuff to make sure the font is correctly embedded in the PDF as UTF-8):
+Here is the code (I needed to use **pdfkit** to convert it into a PDF and some encoding stuff to make sure the font is correctly embedded in the PDF as UTF-8. Also, you'll probably need the `wkhtmltopdf` binary):
 
 ```python
 from selenium import webdriver
@@ -127,7 +127,7 @@ if __name__ == "__main__":
     main()
 ```
 
-Execute this in a terminal with `python main.py` and voilá! (also, if you ever wondered why many website ask you if "you're a human" is because scripts like this 😉):
+Execute this in a terminal with `python main.py` and voilá! (also, if you ever wondered why many websites ask you if "you're a human" is because scripts like this 😉):
 
 ##### Generated PDF (of course much bigger than this, but you get the idea—probably its knowledge cap is like 2 weeks ago or something):
 
