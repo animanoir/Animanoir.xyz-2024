@@ -21,6 +21,8 @@ const baseSiteURL = new URL(Astro.site);
 const fullImageURL = image.startsWith("http")
   ? image
   : new URL(image, baseSiteURL).href;
+
+console.info(fullImageURL);
 ---
 
 <!-- Global Metadata -->
@@ -42,7 +44,7 @@ const fullImageURL = image.startsWith("http")
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={fullImageURL} />
+<meta property="og:image" content={`https://www.animanoir.xyz${image}`} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
@@ -50,6 +52,6 @@ const fullImageURL = image.startsWith("http")
 <meta property="twitter:url" content={Astro.url} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={fullImageURL} />
+<meta property="twitter:image" content={`https://www.animanoir.xyz/${image}`} />
 
 <ViewTransitions />
