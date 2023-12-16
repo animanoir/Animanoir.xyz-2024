@@ -12,8 +12,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const {
   title,
   description,
-  image = "animanoir-oscar-a-montiel-tw.jpg",
+  image = "images/animanoir-oscar-a-montiel-tw.jpg",
 } = Astro.props;
+
+const baseSiteURL = new URL(Astro.site);
+
+// Ensure image is an absolute URL
+const fullImageURL = image.startsWith("http")
+  ? image
+  : new URL(image, baseSiteURL).href;
 ---
 
 <!-- Global Metadata -->
@@ -35,7 +42,7 @@ const {
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={image} />
+<meta property="og:image" content={fullImageURL} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
@@ -43,6 +50,6 @@ const {
 <meta property="twitter:url" content={Astro.url} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={image} />
+<meta property="twitter:image" content={fullImageURL} />
 
 <ViewTransitions />
