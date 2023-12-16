@@ -139,6 +139,7 @@ pre > code {
 }
 hr {
   margin-bottom: 2rem;
+  width: 100%;
 }
 blockquote {
   position: relative;
