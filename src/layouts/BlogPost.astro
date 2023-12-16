@@ -14,12 +14,13 @@ const { title, summary, pubDate, heroImage } = Astro.props;
     <BaseHead
       title={`${title} by Óscar A. Montiel | Creative Software Engineer`}
       description={summary}
-      image={heroImage.src}
+      image={heroImage}
     />
   </head>
   <body>
     <ModifiedHeader />
     <Navbar />
+    <!-- <img src={heroImage} alt={title} width="100%" /> -->
     <article class="articleContainer">
       <h1 class="title">{title}</h1>
       <p class="postDate">
