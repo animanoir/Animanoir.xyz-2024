@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar.astro";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, summary, pubDate } = Astro.props;
+const { title, summary, pubDate, heroImage } = Astro.props;
 ---
 
 <html lang="en">
@@ -14,6 +14,7 @@ const { title, summary, pubDate } = Astro.props;
     <BaseHead
       title={`${title} by Óscar A. Montiel | Creative Software Engineer`}
       description={summary}
+      image={heroImage}
     />
   </head>
   <body>

@@ -23,7 +23,7 @@ const works = defineCollection({
 
 // Collection of blog posts:
 const blog = defineCollection({
-  schema: () =>
+  schema: ({ image }) =>
     z.object({
       title: z.string(),
       summary: z.string().optional(),
@@ -31,6 +31,7 @@ const blog = defineCollection({
         .string()
         .or(z.date())
         .transform((val) => new Date(val)),
+      heroImage: image().optional(),
       tags: z.array(z.string()).optional(),
     }),
 });
