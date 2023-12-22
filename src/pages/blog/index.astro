@@ -28,7 +28,7 @@ const posts = (await getCollection("blog")).sort(
                   <small class="postDate">
                     {new Date(post.data.pubDate).toLocaleDateString()}
                   </small>
-                  <a href={`/blog/${post.slug}/`}>
+                  <a data-astro-prefetch href={`/blog/${post.slug}/`}>
                     <div class="postInfo">
                       <p class="postTitle">{post.data.title}</p>
                     </div>
