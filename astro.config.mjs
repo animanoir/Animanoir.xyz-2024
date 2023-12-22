@@ -7,4 +7,5 @@ import react from "@astrojs/react";
 export default defineConfig({
   site: "https://animanoir.xyz",
   integrations: [mdx(), sitemap(), react()],
+  prefetch: true,
 });
