@@ -12,10 +12,10 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@astrojs/mdx": "2.0.2",
-    "@astrojs/react": "3.0.8",
-    "@astrojs/rss": "4.0.1",
-    "@astrojs/sitemap": "3.0.3",
+    "@astrojs/mdx": "^2.0.5",
+    "@astrojs/react": "^3.0.9",
+    "@astrojs/rss": "^4.0.2",
+    "@astrojs/sitemap": "^3.0.5",
     "@react-three/drei": "^9.80.0",
     "@react-three/fiber": "^8.13.5",
     "@react-three/postprocessing": "^2.15.0",
@@ -25,7 +25,7 @@
     "@types/react": "^18.2.16",
     "@types/react-dom": "^18.2.7",
     "@types/three": "^0.155.0",
-    "astro": "4.0.7",
+    "astro": "^4.2.0",
     "astro-embed": "^0.5.1",
     "astro-seo": "^0.8.0",
     "gsap": "^3.12.2",
