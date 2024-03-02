@@ -28,7 +28,7 @@
 }
 
 .about-info p {
-  font-size: 0.9rem;
+  font-size: 1rem;
   line-height: 1.5;
 }
 
@@ -40,9 +40,5 @@
 
   .about-info h1 {
     font-size: 1.5rem;
-  }
-
-  .about-info p {
-    font-size: 1.1rem;
   }
 }
