@@ -118,6 +118,25 @@ const MutatingSubheader = () => {
     "Dancing Chango",
     "Winephiliac",
     "Sarcastic Ontologist",
+    "Galactic Game Guru",
+    "Virtual Visionary",
+    "Circuit Satirist",
+    "Neural Network Nurturer",
+    "Ethereal Ethicist",
+    "Cosmic Comedian",
+    "Silicon Sorcerer",
+    "Interstellar Ironist",
+    "Cryptographic Clown",
+    "Meme Mechanic",
+    "Data Druid",
+    "Robotic Raconteur",
+    "Surreal System Specialist",
+    "Cloud Computing Clown",
+    "Blockchain Buffoon",
+    "Witty Widget Wizard",
+    "Hyperdrive Humorist",
+    "AI Agitator",
+    "Eco-friendly Electron Enthusiast",
   ];
 
   const getRandomWord = (words) => {
@@ -152,7 +171,7 @@ const MutatingSubheader = () => {
       if (Math.abs(beta) > 20 || Math.abs(gamma) > 20) {
         setDescription(getRandomWord(descriptionArray));
       }
-    }, 500),
+    }, 50),
     []
   );
 
