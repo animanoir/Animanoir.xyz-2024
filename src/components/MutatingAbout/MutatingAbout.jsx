@@ -66,7 +66,7 @@ const MutatingAbout = () => {
         eternity?
       </h3>
       <p>
-        Honestly, I don't know. The only think I know is that I <i>need</i> to{" "}
+        Honestly, I don't know. The only thing I know is that I <i>need</i> to{" "}
         <i>Be</i> whatever I want (or can) to <i>truly</i> exist. If I like to
         make{" "}
         <a href="https://soundcloud.com/geos_mina" target="_blank">
@@ -78,7 +78,7 @@ const MutatingAbout = () => {
         </a>
         , does that makes me an artist? If I like to create{" "}
         <a href="https://metaxis.digital/" target="_blank">
-          fun websites
+          fun websites & cool stuff
         </a>
         , does that makes me interesting?
       </p>
