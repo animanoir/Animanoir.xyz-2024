@@ -58,8 +58,8 @@ const MutatingAbout = () => {
         love for me I'm the platonic soul. For others I'm a co-worker, a
         payroll. Also a student, a master, an idiot. For the government I'm a
         number, for the bank I'm a debtor. In the future I could be a father,
-        even a hobo, or maybe a doctor. Before I was born I was an angel. And,
-        when I die, I'll be death!{" "}
+        even a hobo (thanks AI), or maybe a doctor. Before I was born I was an
+        angel. And, when I die, I'll be death!{" "}
       </p>
       <h3>
         So, have I been, and will be, <i>someone</i> or <i>something</i> for all
