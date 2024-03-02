@@ -1,0 +1,44 @@
+.about-info small {
+  display: block;
+  margin-top: 20px;
+  font-size: 0.7rem;
+}
+
+.about-info {
+  width: 60%;
+  text-align: center;
+  margin: 10vh auto;
+  margin-top: 5vh;
+}
+
+.about-info h3 {
+  margin:0;
+  padding-bottom: 2rem;
+}
+
+.about-info h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-family: "Montserrat", sans-serif;
+  height: 150px; /* Ajusta este valor según el tamaño máximo del texto */
+  display: flex;
+  align-items: center; /* Centra el texto verticalmente */
+  justify-content: center; /* Centra el texto horizontalmente, útil si decides cambiar el 'text-align' */
+  overflow: hidden; /* Oculta cualquier desbordamiento, por si acaso */
+}
+
+.about-info p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .about-info {
+    width: 90%;
+    z-index: 1;
+  }
+
+  .about-info h1 {
+    font-size: 1.5rem;
+  }
+}

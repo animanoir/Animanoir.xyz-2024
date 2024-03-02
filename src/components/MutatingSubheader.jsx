@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import _ from "lodash";
 const { throttle } = _;
-import { get } from "@/pages/rss.xml";
 
 const MutatingSubheader = () => {
   const descriptionArray = [
@@ -130,7 +129,7 @@ const MutatingSubheader = () => {
 
   const updateScrollPosition = useCallback(
     throttle(() => {
-      setScrollY(window.pageYOffset);
+      setScrollY(window.scrollY);
     }, 50),
     []
   );

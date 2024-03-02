@@ -5,12 +5,13 @@ import { Picture } from "astro:assets";
 import oscarImg from "@/images/about/oscar-a-montiel-animanoir-geosmina.jpg";
 import Navbar from "@/components/Navbar.astro";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
+import MutatingAbout from "@/components/MutatingAbout/MutatingAbout.jsx";
 ---
 
 <html lang="en">
   <head>
     <BaseHead
-      title={SITE_TITLE}
+      title={"Hola, dicen que soy Óscar"}
       description={SITE_DESCRIPTION}
       image="/images/about/óscar-a-montiel-animanoir-geosmina.jpg"
     />
@@ -20,22 +21,37 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
     <ModifiedHeader />
     <Navbar />
     <div class="container">
-      <Picture
-        src={oscarImg}
-        alt={"Óscar A. Montiel"}
-        quality={"high"}
-        class={"heroImage"}
-        formats={["webp"]}
-        decoding="async"
-        loading="lazy"
-      />
+      <div class="about-photo">
+        <Picture
+          loading="eager"
+          src={oscarImg}
+          alt={"Óscar A. Montiel"}
+          quality={"high"}
+          class={"heroImage"}
+          formats={["webp"]}
+          decoding="async"
+          loading="lazy"
+        />
+      </div>
+      <div class="about-info">
+        <MutatingAbout client:load />
+      </div>
     </div>
     <style>
       .container {
         margin: 0 auto;
-        font-family: "Open Sans", sans-serif;
         color: #fdfefe;
         position: relative;
+        display: flex;
+        position: relative;
+        font-family: "Open Sans", sans-serif;
+      }
+
+      .about-photo {
+        width: 40%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
       }
 
       .heroImage {
@@ -51,6 +67,13 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
       @media (max-width: 500px) {
         .container {
           width: 100%;
+          flex-direction: column-reverse;
+        }
+        .about-photo {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          filter: brightness(0.5);
         }
       }
     </style>
