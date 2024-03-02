@@ -124,7 +124,7 @@ const MutatingSubheader = () => {
     return words[Math.floor(Math.random() * words.length)];
   };
 
-  const [description, setDescrpition] = useState("I don't know what I am yet");
+  const [description, setDescription] = useState("I don't know what I am yet");
   const [scrollY, setScrollY] = useState(0);
 
   const updateScrollPosition = useCallback(
@@ -143,7 +143,7 @@ const MutatingSubheader = () => {
 
   useEffect(() => {
     let newDescrìption = getRandomWord(descriptionArray);
-    setDescrpition(newDescrìption);
+    setDescription(newDescrìption);
   }, [scrollY]);
 
   const handleOrientationChange = useCallback(
