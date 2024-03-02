@@ -7,7 +7,7 @@
 .about-info {
   width: 60%;
   text-align: center;
-  margin: 10vh auto;
+  margin-left: 32%;
   margin-top: 5vh;
 }
 
@@ -36,6 +36,9 @@
   .about-info {
     width: 90%;
     z-index: 1;
+    /* margin: 10vh; */
+    margin-left: 5%;
+
   }
 
   .about-info h1 {

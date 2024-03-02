@@ -50,7 +50,7 @@ import MutatingAbout from "@/components/MutatingAbout/MutatingAbout.jsx";
       .about-photo {
         width: 40%;
         height: 100%;
-        position: relative;
+        position: fixed;
         overflow: hidden;
       }
 
@@ -67,12 +67,11 @@ import MutatingAbout from "@/components/MutatingAbout/MutatingAbout.jsx";
       @media (max-width: 500px) {
         .container {
           width: 100%;
-          flex-direction: column-reverse;
         }
         .about-photo {
           width: 100%;
           height: 100%;
-          position: absolute;
+          position: fixed;
           filter: brightness(0.5);
         }
       }
