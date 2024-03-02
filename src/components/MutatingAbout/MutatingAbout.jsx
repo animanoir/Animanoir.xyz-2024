@@ -54,12 +54,12 @@ const MutatingAbout = () => {
       <p>
         It's <b>metaphisically</b> hard to describe myself—I believe those who
         think they "truly" know themselves are lying! For some I am a son, a
-        brother, a friend. For the ex-gf I'm the ex-bf, for those with
-        unrequited love for me I'm the platonic soul. For others I'm a
-        co-worker, a payroll. A student, a master, an idiot. For the government
-        I'm a number, for the bank I'm a debtor. In the future I could be a
-        father, even a hobo, or maybe a doctor. Before I was born I was an
-        angel. And, when I die, I'll be death!{" "}
+        brother, a friend. For the ex-gf I'm the ex-bf—for those with unrequited
+        love for me I'm the platonic soul. For others I'm a co-worker, a
+        payroll. Also a student, a master, an idiot. For the government I'm a
+        number, for the bank I'm a debtor. In the future I could be a father,
+        even a hobo, or maybe a doctor. Before I was born I was an angel. And,
+        when I die, I'll be death!{" "}
       </p>
       <h3>
         So, have I been, and will be, <i>someone</i> or <i>something</i> for all
@@ -67,7 +67,24 @@ const MutatingAbout = () => {
       </h3>
       <p>
         Honestly, I don't know. The only think I know is that I <i>need</i> to{" "}
-        <i>Be</i> whatever I want (or can) to <i>truly</i> exist.
+        <i>Be</i> whatever I want (or can) to <i>truly</i> exist. If I like to
+        make{" "}
+        <a href="https://soundcloud.com/geos_mina" target="_blank">
+          music
+        </a>
+        , does that makes me a musician? If I like to do{" "}
+        <a href="https://www.animanoir.xyz/works/2021/visuals/" target="_blank">
+          video-poems
+        </a>
+        , does that makes me an artist? If I like to create{" "}
+        <a href="https://metaxis.digital/" target="_blank">
+          fun websites
+        </a>
+        , does that makes me interesting?
+      </p>
+      <p>
+        Probably the world is a just giant Theater with simultaneous plays and
+        actors everywhere.
       </p>
       <hr></hr>
       <p>
@@ -79,7 +96,22 @@ const MutatingAbout = () => {
           target="_blank"
         >
           utility card
-        </a>{" "}
+        </a>
+        .
+      </p>
+      <hr></hr>
+      <p>
+        If you're interested in <i>me</i>, please,{" "}
+        <a href="https://linktr.ee/animanoir" target="_blank">
+          experience myself
+        </a>
+        , and{" "}
+        <a
+          href="mailto:?subject=I%20want%20you%20to%20experience%20myself%20too%2C%20%C3%93scar"
+          target="_blank"
+        >
+          I may experience yourself too
+        </a>
         .
       </p>
       <small>
