@@ -146,6 +146,23 @@ const MutatingSubheader = () => {
     setDescrpition(newDescrìption);
   }, [scrollY]);
 
+  const handleOrientationChange = useCallback(
+    throttle((event) => {
+      const { alpha, beta, gamma } = event;
+      if (Math.abs(beta) > 20 || Math.abs(gamma) > 20) {
+        setDescription(getRandomWord(descriptionArray));
+      }
+    }, 500),
+    []
+  );
+
+  useEffect(() => {
+    window.addEventListener("deviceorientation", handleOrientationChange);
+    return () => {
+      window.removeEventListener("deviceorientation", handleOrientationChange);
+    };
+  }, [handleOrientationChange]);
+
   return <span>{description}</span>;
 };
 
