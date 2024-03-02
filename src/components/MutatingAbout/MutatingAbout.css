@@ -2,6 +2,8 @@
   display: block;
   margin-top: 20px;
   font-size: 0.7rem;
+  margin-bottom: 10rem;
+
 }
 
 .about-info {
@@ -44,4 +46,5 @@
   .about-info h1 {
     font-size: 1.5rem;
   }
+
 }
