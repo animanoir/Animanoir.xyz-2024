@@ -121,7 +121,10 @@ const MutatingAbout = () => {
       </p>
       <small>
         Photo by{" "}
-        <a href="https://www.instagram.com/caudillophoto/">Mario Cruz</a>.
+        <a href="https://www.instagram.com/caudillophoto/" target="_blank">
+          Mario Cruz
+        </a>
+        .
       </small>
     </div>
   );
