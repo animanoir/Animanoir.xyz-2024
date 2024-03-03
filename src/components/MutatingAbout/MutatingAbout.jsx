@@ -93,7 +93,7 @@ const MutatingAbout = () => {
       <hr></hr>
       <p>
         For Capitalism, I'm a <strike>another proletariat</strike>{" "}
-        <b>software engineer, specialized in web full-stack development</b>—if
+        <b>software engineer, specialized in full-stack web development</b>—if
         you're interested on my services, please take a look at my{" "}
         <a
           href="https://www.animanoir.xyz/cv/Oscar-A-Montiel-CV-2024v4.pdf"
