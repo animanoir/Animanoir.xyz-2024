@@ -52,7 +52,7 @@ const MutatingAbout = () => {
       <h1 id="aboutName">{title}</h1>
       <p>
         It's <b>metaphysically</b> hard to describe myself—I believe those who
-        think they "truly" know themselves are lying! For some I am a son, a
+        say they "truly" know themselves are lying! For some I am a son, a
         brother, a friend. For the ex-gf I'm the ex-bf—for those with unrequited
         love for me I'm the platonic soul. For others I'm a co-worker, a
         payroll. Also a student, a master, an idiot. For the government I'm a
