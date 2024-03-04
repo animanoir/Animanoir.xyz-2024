@@ -58,12 +58,7 @@ const MutatingAbout = () => {
         payroll. Also a student, a master, an idiot. For the government I'm a
         number, for the bank I'm a debtor. In the future I could be a father,
         even a hobo (thanks AI), or maybe a doctor. Before I was born I was an
-        angel. And, when I die, I'll be dead! Sometimes I like to think of
-        myself as a{" "}
-        <a href="https://www.youtube.com/watch?v=uPbCEZnLkOU" target="_blank">
-          <i>Dancing Chango</i>
-        </a>
-        .
+        angel. And, when I die, I'll be dead!.
       </p>
       <h3>
         So, have I been, and will be, <i>someone</i> or <i>something</i> for all
