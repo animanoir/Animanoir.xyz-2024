@@ -81,10 +81,10 @@ const MutatingAbout = () => {
         </a>
         , does that makes me interesting?
       </p>
-      <p>
+      <h3>
         Probably the world is a just giant Theater with simultaneous plays and
         actors everywhere.
-      </p>
+      </h3>
       <hr></hr>
       <p>
         For Capitalism, I'm a <strike>another proletariat</strike>{" "}
@@ -111,7 +111,23 @@ const MutatingAbout = () => {
         >
           I may experience yourself too
         </a>
-        .
+        . I really like to know new things each day—I keep track of some of it
+        in form of books or films in this Notion page:{" "}
+        <a
+          href="https://animanoir.notion.site/Filotecas-39b5af036df34a1482164c00c4826a3b?pvs=4"
+          target="_blank"
+        >
+          Filotecas
+        </a>
+        . Also, please feel free to explore what the Internet should have been
+        in my{" "}
+        <a
+          href="https://www.are.na/degrees-degrees-bullet-period/channels"
+          target="_blank"
+        >
+          Are.na
+        </a>{" "}
+        site.
       </p>
       <small>
         Photo by{" "}
