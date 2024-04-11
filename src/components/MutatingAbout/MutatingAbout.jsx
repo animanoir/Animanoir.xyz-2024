@@ -122,7 +122,7 @@ const MutatingAbout = () => {
         . Also, please feel free to explore what the Internet should have been
         in my{" "}
         <a
-          href="https://www.are.na/degrees-degrees-bullet-period/channels"
+          href="https://www.are.na/tilde-colon-pipe-degrees-degrees-bullet-period-pipe-colon-tilde/channels"
           target="_blank"
         >
           Are.na
