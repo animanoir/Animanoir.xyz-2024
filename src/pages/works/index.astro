@@ -16,6 +16,7 @@ const posts = (await getCollection("works")).sort(
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
+
   <body>
     <Header />
     <Navbar />
@@ -25,7 +26,7 @@ const posts = (await getCollection("works")).sort(
           <ul style=" margin: 0;">
             {
               posts.map((post) => (
-                <li>
+                <li class="project">
                   <a href={`/works/${post.slug}/`}>
                     <Picture
                       class="postHeroImg"
@@ -34,12 +35,17 @@ const posts = (await getCollection("works")).sort(
                       quality={"high"}
                       formats={["webp"]}
                       decoding="async"
-                      loading="lazy"
+                      loading="eager"
                     />
                     <div class="postInfo">
                       <p class="postTitle">{post.data.title}</p>
                     </div>
                   </a>
+                  <ul class="toolsContainer">
+                    {(post.data.tools ?? []).map((tool) => (
+                      <li class="tool">{tool}</li>
+                    ))}
+                  </ul>
                 </li>
               ))
             }
@@ -47,20 +53,48 @@ const posts = (await getCollection("works")).sort(
         </div>
       </section>
     </main>
+    <!-- <script is:inline type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function () {
+        const projects = document.querySelectorAll(".project");
+        projects.forEach((project) => {
+          project.addEventListener("mouseenter", function () {
+            this.style.transform = "scale(1.1)";
+            this.style.zIndex = "10"; // Ensure the scaled element is above others
+          });
+          project.addEventListener("mouseleave", function () {
+            this.style.transform = "scale(1)";
+            this.style.zIndex = "1"; // Reset z-index
+          });
+        });
+      });
+    </script> -->
+
     <style>
       .projectsContainer {
-        margin: 0 25rem;
+        width: 42%;
+        margin: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
 
       ul {
         list-style-type: none;
         padding: unset;
         display: grid;
-        grid-template-columns: 2fr 2fr;
+        grid-template-columns: repeat(2, 1fr); /* Two columns by default */
+        gap: 0.5rem;
+        overflow: hidden;
+      }
+
+      ul a {
+        filter: hue-rotate(0deg);
+        transition: filter 0.5s ease-in-out;
       }
 
       ul a:hover {
-        filter: invert(1);
+        filter: hue-rotate(180deg);
       }
 
       ul li {
@@ -68,51 +102,77 @@ const posts = (await getCollection("works")).sort(
         flex-direction: column;
       }
 
+      .project {
+        position: relative;
+        display: block;
+        /* transition: transform 0.5s ease; 
+        transform-origin: center center;  */
+      }
+
+      /* .project:hover {
+        transition: grid-column 10.5s ease;
+      } */
+
       .postTitle {
-        background-color: black;
         color: floralwhite;
         font-family: "Montserrat", sans-serif;
         font-weight: bold;
         letter-spacing: 0.1rem;
-        font-size: 2rem;
+        font-size: 1.8rem;
         padding: 1rem;
         margin-bottom: 0;
         line-height: 1.1;
       }
 
-      ul li a {
-        position: relative;
-      }
       .postInfo {
-        mix-blend-mode: exclusion;
+        /* mix-blend-mode: exclusion; */
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
+        display: none;
       }
 
-      .tools {
-        margin-top: 1rem;
+      .project:hover .postInfo {
+        display: block; /* Show the title on hover */
+      }
+      .toolsContainer {
+        position: absolute;
+        bottom: 0;
         color: #fdfefe;
         font-family: "Open Sans", sans-serif;
+        font-style: italic;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .tool {
+        font-size: 0.8rem;
+        background-color: #060606;
+        padding: 0.5rem;
         margin: 0;
-        font-size: 1em;
       }
 
       .postHeroImg {
         height: 100%;
         width: 100%;
+        object-fit: cover;
       }
 
       @media (max-width: 768px) {
         .projectsContainer {
           margin: 0;
+          width: 100%;
         }
 
         ul {
           grid-template-columns: 1fr;
           grid-gap: 0;
+        }
+
+        .postInfo {
+          display: block;
         }
       }
     </style>

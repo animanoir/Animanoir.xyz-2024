@@ -30,17 +30,15 @@ const { title, description, heroImage, tools } = Astro.props;
             class="heroImage"
             formats={["webp"]}
             decoding="async"
-            loading="lazy"
+            loading="eager"
           />
         )
       }
       <h1 class="title">{title}</h1>
       <div class="tools">
         {
-          tools?.map((tool, index) => (
-            <span style={{ marginRight: "10px" }} key={index}>
-              {tool}
-            </span>
+          tools?.map((tool) => (
+            <span style={{ marginRight: "10px" }}>{tool}</span>
           ))
         }
       </div>
@@ -72,7 +70,7 @@ const { title, description, heroImage, tools } = Astro.props;
         font-size: 0.8rem;
         color: #fdfefe7f;
         padding-bottom: 2rem;
-        font-style: italic;
+        font-style: bold;
       }
 
       .articleContainer {

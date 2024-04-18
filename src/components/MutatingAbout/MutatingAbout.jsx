@@ -100,7 +100,15 @@ const MutatingAbout = () => {
       </p>
       <hr></hr>
       <p>
-        If you're interested in <i>me</i>, please,{" "}
+        I really like to know new things each day—I keep track of some of them
+        in this Notion page:{" "}
+        <a
+          href="https://animanoir.notion.site/Filotecas-39b5af036df34a1482164c00c4826a3b?pvs=4"
+          target="_blank"
+        >
+          Filotecas
+        </a>
+        . If you're interested in <i>me</i>, please,{" "}
         <a href="https://linktr.ee/animanoir" target="_blank">
           experience myself
         </a>
@@ -111,30 +119,13 @@ const MutatingAbout = () => {
         >
           I may experience yourself too
         </a>
-        . I really like to know new things each day—I keep track of some of it
-        in form of books or films in this Notion page:{" "}
-        <a
-          href="https://animanoir.notion.site/Filotecas-39b5af036df34a1482164c00c4826a3b?pvs=4"
-          target="_blank"
-        >
-          Filotecas
-        </a>
-        . Also, please feel free to explore what the Internet should have been
-        in my{" "}
-        <a
-          href="https://www.are.na/tilde-colon-pipe-degrees-degrees-bullet-period-pipe-colon-tilde/channels"
-          target="_blank"
-        >
-          Are.na
-        </a>{" "}
-        site.
+        .
       </p>
       <small>
         Photo by{" "}
         <a href="https://www.instagram.com/caudillophoto/" target="_blank">
           Mario Cruz
         </a>
-        .
       </small>
     </div>
   );
