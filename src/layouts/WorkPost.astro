@@ -36,9 +36,13 @@ const { title, description, heroImage, tools } = Astro.props;
       }
       <h1 class="title">{title}</h1>
       <div class="tools">
+        Tools used:
         {
-          tools?.map((tool) => (
-            <span style={{ marginRight: "10px" }}>{tool}</span>
+          tools?.map((tool, index) => (
+            <span>
+              {tool}
+              {index !== tools.length - 1 && ","}
+            </span>
           ))
         }
       </div>
@@ -71,6 +75,10 @@ const { title, description, heroImage, tools } = Astro.props;
         color: #fdfefe7f;
         padding-bottom: 2rem;
         font-style: bold;
+      }
+
+      .tools span {
+        font-style: italic;
       }
 
       .articleContainer {

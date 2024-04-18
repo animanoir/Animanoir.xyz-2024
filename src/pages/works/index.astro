@@ -90,7 +90,7 @@ const posts = (await getCollection("works")).sort(
 
       ul a {
         filter: hue-rotate(0deg);
-        transition: filter 0.5s ease-in-out;
+        transition: filter 0.3s ease-in-out;
       }
 
       ul a:hover {
@@ -137,6 +137,7 @@ const posts = (await getCollection("works")).sort(
       .project:hover .postInfo {
         display: block; /* Show the title on hover */
       }
+
       .toolsContainer {
         position: absolute;
         bottom: 0;
@@ -148,9 +149,9 @@ const posts = (await getCollection("works")).sort(
       }
 
       .tool {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         background-color: #060606;
-        padding: 0.5rem;
+        padding: 0.4rem;
         margin: 0;
       }
 
