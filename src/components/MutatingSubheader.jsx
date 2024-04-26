@@ -137,6 +137,36 @@ const MutatingSubheader = () => {
     "Hyperdrive Humorist",
     "AI Agitator",
     "Eco-friendly Electron Enthusiast",
+    "Dimensional Dreamer",
+    "Synaptic Sojourner",
+    "Cyber Shaman",
+    "Matrix Maestro",
+    "Simulation Sculptor",
+    "Digital Dervish",
+    "Fractal Forger",
+    "Emergent Explorer",
+    "Noetic Necromancer",
+    "Transdimensional Transmuter",
+    "Metaversal Magician",
+    "Techno-Transcendentalist",
+    "Holographic Harlequin",
+    "Ontological Orchestrator",
+    "Meme Machinist",
+    "Circuit Shintoist",
+    "Neurofuturist Naïf",
+    "Qubit Quixote",
+    "Bitstream Bard",
+    "Holonic Hierophant",
+    "Noospheric Navigator",
+    "Geodesic Grokker",
+    "Network Nomad",
+    "Metaphrastic Mechanic",
+    "Akashic Architect",
+    "Pentaversal Poet",
+    "Simulacra Scribe",
+    "Cyberdelic Catalyst",
+    "Virtuosomatic Voyager",
+    "Technopagan Tinkerer",
   ];
 
   const getRandomWord = (words) => {
@@ -167,7 +197,7 @@ const MutatingSubheader = () => {
 
   const handleOrientationChange = useCallback(
     throttle((event) => {
-      const { alpha, beta, gamma } = event;
+      const { beta, gamma } = event;
       if (Math.abs(beta) > 20 || Math.abs(gamma) > 20) {
         setDescription(getRandomWord(descriptionArray));
       }

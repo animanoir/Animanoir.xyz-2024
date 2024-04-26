@@ -9,13 +9,14 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "check": "astro check"
   },
   "dependencies": {
-    "@astrojs/mdx": "^2.1.1",
-    "@astrojs/react": "^3.0.10",
+    "@astrojs/mdx": "^2.3.1",
+    "@astrojs/react": "^3.3.1",
     "@astrojs/rss": "^4.0.5",
-    "@astrojs/sitemap": "^3.0.5",
+    "@astrojs/sitemap": "^3.1.4",
     "@react-three/drei": "^9.80.0",
     "@react-three/fiber": "^8.13.5",
     "@react-three/postprocessing": "^2.15.0",
@@ -25,9 +26,12 @@
     "@types/react": "^18.2.16",
     "@types/react-dom": "^18.2.7",
     "@types/three": "^0.155.0",
-    "astro": "^4.4.0",
+    "accessible-astro-components": "^2.3.6",
+    "astro": "^4.7.0",
     "astro-embed": "^0.5.1",
     "astro-seo": "^0.8.0",
+    "glsl-noise": "^0.0.0",
+    "glslify": "^7.1.1",
     "gsap": "^3.12.2",
     "leva": "^0.9.35",
     "lodash": "^4.17.21",
@@ -36,12 +40,14 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
+    "sharp": "^0.33.3",
     "smooth-scrollbar": "^8.8.4",
     "smooth-scrollbar-react": "^2.4.1",
     "three": "^0.155.0",
     "yet-another-react-lightbox": "^3.14.0"
   },
   "devDependencies": {
+    "babel-plugin-glsl": "^1.0.0",
     "patch-package": "^8.0.0",
     "postinstall-postinstall": "^2.1.0"
   }
