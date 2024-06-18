@@ -22,6 +22,7 @@ const MutatingSubheader = () => {
     "Technological Oracle",
     "Soulful Analyst",
     "Abstract Architect",
+    "Interactive Software Developer",
     "Reality Sculptor",
     "Harmony Hacker",
     "Existential Engineer",

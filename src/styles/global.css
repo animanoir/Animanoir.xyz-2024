@@ -146,7 +146,6 @@ blockquote {
   font-family: "Georgia", serif;
   font-size: 1.5rem;
   line-height: 1.6;
-  margin: 20px auto;
   padding: 1.2em 5rem 1.2em 5rem;
   quotes: "\201C""\201D""\2018""\2019";
 }
@@ -184,7 +183,7 @@ blockquote:after {
 blockquote cite {
   font-size: 14px;
   display: block;
-  margin-top: 5px;
+
   text-align: right;
 }
 

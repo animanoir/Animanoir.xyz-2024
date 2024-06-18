@@ -3,7 +3,7 @@ title: "Jardines 3D Web"
 description: "Float into the otherwordly music of Jardines"
 pubDate: "June 11 2021"
 heroImage: "@/images/works/jardines/jardines-oscar-a-montiel-animanoir-maremoto.png"
-tools: ["Three.js"]
+tools: ["Three.js", "Web"]
 ---
 
 In a synergistic collaboration with **Emmanuel Martínez** of Maremoto.mx and OTONO Record Label, we embarked on the journey to augment the sonic landscape of Jardines, a talented Mexican artist. Our goal was to provide fans with an [**interactive 3D experience**](https://maremoto.mx/) that would serve as a visual complement to the artist's newly released album.

@@ -4,7 +4,9 @@ import { SITE_DESCRIPTION } from "../consts";
 import Navbar from "@/components/Navbar.astro";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
 import MutatingAbout from "@/components/MutatingAbout/MutatingAbout.jsx";
-import AboutImageScene from "@/components/AboutImageShader.jsx";
+// import AboutImageScene from "@/components/AboutImageShader.jsx";
+import { Picture } from "astro:assets";
+import oscarImg from "@/images/about/oscar-a-montiel-animanoir-geosmina.jpg";
 ---
 
 <html lang="en">
@@ -21,7 +23,7 @@ import AboutImageScene from "@/components/AboutImageShader.jsx";
     <Navbar />
     <div class="container">
       <div class="about-photo">
-        <!-- <Picture
+        <Picture
           loading="eager"
           src={oscarImg}
           alt={"Óscar A. Montiel"}
@@ -30,8 +32,8 @@ import AboutImageScene from "@/components/AboutImageShader.jsx";
           formats={["webp"]}
           decoding="async"
           loading="lazy"
-        /> -->
-        <AboutImageScene client:only />
+        />
+        <!-- <AboutImageScene client:only /> -->
       </div>
       <div class="about-info">
         <MutatingAbout client:load />

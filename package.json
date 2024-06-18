@@ -13,10 +13,10 @@
     "check": "astro check"
   },
   "dependencies": {
-    "@astrojs/mdx": "^2.3.1",
-    "@astrojs/react": "^3.3.1",
-    "@astrojs/rss": "^4.0.5",
-    "@astrojs/sitemap": "^3.1.4",
+    "@astrojs/mdx": "^3.1.1",
+    "@astrojs/react": "^3.6.0",
+    "@astrojs/rss": "^4.0.6",
+    "@astrojs/sitemap": "^3.1.6",
     "@react-three/drei": "^9.80.0",
     "@react-three/fiber": "^8.13.5",
     "@react-three/postprocessing": "^2.15.0",
@@ -27,7 +27,7 @@
     "@types/react-dom": "^18.2.7",
     "@types/three": "^0.155.0",
     "accessible-astro-components": "^2.3.6",
-    "astro": "^4.7.0",
+    "astro": "^4.10.3",
     "astro-embed": "^0.5.1",
     "astro-seo": "^0.8.0",
     "glsl-noise": "^0.0.0",
