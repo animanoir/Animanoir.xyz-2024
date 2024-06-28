@@ -13,4 +13,9 @@ export default defineConfig({
   experimental: {
     clientPrerender: true,
   },
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/noop'
+  },
+}
 });
