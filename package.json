@@ -8,8 +8,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "postinstall": "patch-package"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/mdx": "^2.1.1",
@@ -42,8 +41,5 @@
     "three": "^0.155.0",
     "yet-another-react-lightbox": "^3.14.0"
   },
-  "devDependencies": {
-    "patch-package": "^8.0.0",
-    "postinstall-postinstall": "^2.1.0"
-  }
+  "devDependencies": {}
 }
