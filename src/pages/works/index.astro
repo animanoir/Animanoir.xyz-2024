@@ -41,11 +41,11 @@ const posts = (await getCollection("works")).sort(
                       <p class="postTitle">{post.data.title}</p>
                     </div>
                   </a>
-                  <ul class="toolsContainer">
+                  {/* <ul class="toolsContainer">
                     {(post.data.tools ?? []).map((tool) => (
                       <li class="tool">{tool}</li>
                     ))}
-                  </ul>
+                  </ul> */}
                 </li>
               ))
             }
@@ -71,18 +71,18 @@ const posts = (await getCollection("works")).sort(
 
     <style>
       .projectsContainer {
-        width: 42%;
-        margin: auto;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        width: 40%;
+        margin: 0 auto;
+        /* position: absolute; */
+        /* top: 50%; */
+        /* left: 50%; */
+        /* transform: translate(-50%, -50%); */
       }
 
       ul {
         list-style-type: none;
         padding: unset;
-        display: grid;
+        /* display: grid; */
         grid-template-columns: repeat(2, 1fr); /* Two columns by default */
         gap: 0.5rem;
         overflow: hidden;
@@ -90,7 +90,7 @@ const posts = (await getCollection("works")).sort(
 
       ul a {
         filter: hue-rotate(0deg);
-        transition: filter 0.3s ease-in-out;
+        transition: filter 0.5s ease-in-out;
       }
 
       ul a:hover {
@@ -117,8 +117,7 @@ const posts = (await getCollection("works")).sort(
         color: floralwhite;
         font-family: "Montserrat", sans-serif;
         font-weight: bold;
-        letter-spacing: 0.1rem;
-        font-size: 1.8rem;
+        font-size: 3rem;
         padding: 1rem;
         margin-bottom: 0;
         line-height: 1.1;
