@@ -15,6 +15,7 @@
 
 lite-youtube {
   margin: 0.83em !important;
+  max-width: 100% !important;
 }
 
 @keyframes fadeIn {
