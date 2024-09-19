@@ -34,25 +34,14 @@ const { title, description, heroImage, tools } = Astro.props;
           />
         )
       }
-      <h1 class="title">{title}</h1>
-      <div class="tools">
-        Tools used:
-        {
-          tools?.map((tool, index) => (
-            <span>
-              {tool}
-              {index !== tools.length - 1 && ","}
-            </span>
-          ))
-        }
-      </div>
       <div class="articleBody">
+        <h1 class="title">{title}</h1>
         <slot />
       </div>
     </article>
     <style>
       .heroImage {
-        height: 520px;
+        height: 420px;
         object-fit: cover;
         width: 100%;
         padding-bottom: 2rem;
@@ -60,25 +49,22 @@ const { title, description, heroImage, tools } = Astro.props;
 
       .title {
         margin: 0;
-        padding-bottom: 0.5rem;
-        font-size: 4rem;
-        text-align: center;
+        padding-bottom: 1rem;
+        font-size: 3.5rem;
+        /* text-align: center; */
         font-family: "Montserrat", sans-serif;
         line-height: 1;
+        text-align: end;
       }
 
       .tools {
         display: block;
         text-align: center;
         font-family: "Open Sans", sans-serif;
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         color: #fdfefe7f;
         padding-bottom: 2rem;
         font-style: bold;
-      }
-
-      .tools span {
-        font-style: italic;
       }
 
       .articleContainer {
@@ -91,8 +77,12 @@ const { title, description, heroImage, tools } = Astro.props;
       .articleBody {
         font-family: "Open Sans", sans-serif;
         color: #fdfefe;
-        padding: 0 6rem;
+        padding: 0 4rem;
         font-size: 1rem;
+      }
+
+      .articleContainer h1 {
+        padding: 2rem;
       }
 
       hr {

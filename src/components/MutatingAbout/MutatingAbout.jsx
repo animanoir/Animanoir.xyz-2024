@@ -53,11 +53,11 @@ const MutatingAbout = () => {
       <p>
         It's <b>metaphysically</b> hard to describe myself—I believe those who
         say they "truly" know themselves are lying! For some I am a son, a
-        brother, a friend. For the ex-gf I'm the ex-bf—for those with unrequited
+        brother, a friend. For the ex-gf, I'm the ex-bf—for those with unrequited
         love for me I'm the platonic soul. For others I'm a co-worker, a
-        payroll. Also a student, a master, an idiot. For the government I'm a
-        number, for the bank I'm a debtor. In the future I could be a father,
-        even a hobo (thanks AI), or maybe a doctor. Before I was born I was an
+        payroll. Also a student, a master, an idiot. For the government, I'm a
+        number; for the bank I'm a debtor. In the future I could be a father,
+        even a hobo (thanks AI) or maybe a doctor. Before I was born I was an
         angel. And, when I die, I'll be dead!
       </p>
       <h3>
@@ -71,11 +71,11 @@ const MutatingAbout = () => {
         <a href="https://soundcloud.com/geos_mina" target="_blank">
           music
         </a>
-        , does that makes me a musician? If I like to do{" "}
+        , does that make me a musician? If I like to do{" "}
         <a href="https://www.animanoir.xyz/works/2021/visuals/" target="_blank">
           video-poems
         </a>
-        , does that makes me an artist? If I like to create{" "}
+        , does that make me an artist? If I like to create{" "}
         <a href="https://metaxis.digital/" target="_blank">
           fun websites & cool stuff
         </a>
@@ -87,9 +87,9 @@ const MutatingAbout = () => {
       </h3>
       <hr></hr>
       <p>
-        For Capitalism, I'm a <strike>another proletariat</strike>{" "}
-        <b>software engineer, specialized in full-stack web development</b>—if
-        you're interested on my services, please take a look at my{" "}
+        For Capitalism, I'm <strike>another proletariat</strike>{" "}
+        <b>software engineer, specialized in front-end web development</b>—if
+        you're interested in my services, please take a look at my{" "}
         <a
           href="https://www.animanoir.xyz/cv/Oscar-A-Montiel-CV-2024v4.pdf"
           target="_blank"
@@ -110,14 +110,14 @@ const MutatingAbout = () => {
         </a>
         . If you're interested in <i>me</i>, please,{" "}
         <a href="https://linktr.ee/animanoir" target="_blank">
-          experience myself
+          experience me
         </a>
         , and{" "}
         <a
           href="mailto:?subject=I%20want%20you%20to%20experience%20myself%20too%2C%20%C3%93scar"
           target="_blank"
         >
-          I may experience yourself too
+          I may experience you too
         </a>
         .
       </p>

@@ -13,6 +13,10 @@
   -ms-animation: fadeIn ease-out 400ms;
 }
 
+lite-youtube {
+  margin: 0.83em !important;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -71,7 +75,8 @@
 }
 
 #content {
-  flex-grow: 1; /* Permite que el contenido crezca y ocupe todo el espacio disponible */
+  flex-grow: 1;
+  /* Allows the content to grow and take up all available space */
 }
 
 footer {
@@ -92,6 +97,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 h1,
 h2,
 h3,
@@ -102,25 +108,32 @@ strong,
 b {
   color: #fdfefe;
 }
+
 a {
   color: #ee5858;
 }
+
 nav a {
   margin-right: 10px;
 }
+
 textarea {
   width: 100%;
   font-size: 16px;
 }
+
 input {
   font-size: 16px;
 }
+
 content {
   line-height: 1.6;
 }
+
 table {
   width: 100%;
 }
+
 /* img {
   max-width: 100%;
   height: auto;
@@ -129,18 +142,22 @@ code {
   padding: 2px 5px;
   background-color: #272727;
 }
+
 pre {
   padding: 1rem;
   margin-bottom: 3rem;
   font-size: 0.9rem;
 }
-pre > code {
+
+pre>code {
   all: unset;
 }
+
 hr {
   margin-bottom: 2rem;
   width: 50%;
 }
+
 blockquote {
   position: relative;
   font-family: "Georgia", serif;
@@ -148,7 +165,7 @@ blockquote {
   line-height: 1.6;
   margin: 20px auto;
   padding: 1.2em 5rem 1.2em 5rem;
-  quotes: "\201C""\201D""\2018""\2019";
+  quotes: "\201C" "\201D" "\2018" "\2019";
 }
 
 ul {
@@ -191,7 +208,7 @@ blockquote cite {
 p {
   line-height: normal;
   margin: 0;
-  padding-bottom: 2rem;
+  padding: 2rem 1rem;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -208,27 +225,31 @@ iframe {
   width: 100%;
 }
 
-/* Estilo general del scrollbar */
+/* General scrollbar style */
 ::-webkit-scrollbar {
   width: 12px;
 }
 
-/* Fondo del scrollbar */
+/* Scrollbar background */
 ::-webkit-scrollbar-track {
   background: #060606;
 }
 
-/* Manija del scrollbar */
+/* Scrollbar handle */
 ::-webkit-scrollbar-thumb {
   background: #232323;
 }
 
-/* Cuando pasas el mouse encima de la manija */
+/* When you hover over the handle */
 ::-webkit-scrollbar-thumb:hover {
   background: #ee5858;
 }
 
-/* Cuando haces clic en la manija */
+/* When you click on the handle */
 ::-webkit-scrollbar-thumb:active {
   background: #fdfefe;
+}
+
+.blog-image {
+  padding-bottom: 0;
 }

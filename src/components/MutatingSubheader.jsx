@@ -48,6 +48,7 @@ const MutatingSubheader = () => {
     "Conscious Coder",
     "Innovative Introspector",
     "Philosophical Programmer",
+    "Creative Software Engineer",
     "Majestic Modeler",
     "Holistic Hacker",
     "Psychonautic Coder",

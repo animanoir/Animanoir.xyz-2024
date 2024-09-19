@@ -1,6 +1,6 @@
 ---
 // import HeaderLink from "./HeaderLink.astro";
-import { SITE_TITLE } from "@/consts";
+import { SITE_TITLE, SITE_SUBTITLE } from "@/consts";
 import LastFm from "@/components/LastFm.jsx";
 ---
 
@@ -8,9 +8,7 @@ import LastFm from "@/components/LastFm.jsx";
   <div>
     <a href="/">
       <h1 id="headerTitle">
-        {SITE_TITLE} | <span id="headerSubtitle"
-          >Creative Software Engineer</span
-        >
+        {SITE_TITLE} | <span id="headerSubtitle">{SITE_SUBTITLE}</span>
       </h1>
     </a>
     <LastFm client:load />
