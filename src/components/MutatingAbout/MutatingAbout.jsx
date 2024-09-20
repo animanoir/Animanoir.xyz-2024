@@ -91,7 +91,7 @@ const MutatingAbout = () => {
         <b>software engineer, specialized in front-end web development</b>—if
         you're interested in my services, please take a look at my{" "}
         <a
-          href="https://www.animanoir.xyz/cv/Oscar-A-Montiel-CV-2024v4.pdf"
+          href="https://www.animanoir.xyz/cv/OscarAMontiel-MidFrontEndDeveloper-2023Q3.pdf"
           target="_blank"
         >
           utility card
