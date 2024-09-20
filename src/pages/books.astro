@@ -1,0 +1,209 @@
+---
+import { getDatabase } from "../../notion.js";
+import { SITE_TITLE } from "../consts";
+import BaseHead from "../components/BaseHead.astro";
+import Navbar from "@/components/Navbar.astro";
+import ModifiedHeader from "@/components/ModifiedHeader.astro";
+
+// Define the custom type for post
+interface Post {
+  id: string;
+  cover: {
+    file: {
+      url: string;
+    };
+  };
+  properties: {
+    Name: {
+      title: {
+        text: {
+          content: string;
+        };
+      }[];
+    };
+    ["Autor(es)"]: {
+      multi_select: {
+        name: string;
+      }[];
+    };
+    ["Año de publicación (original)"]: {
+      number: number;
+    };
+  };
+  public_url: string;
+}
+
+const databaseId = process.env.NOTION_PAGE_ID;
+const rawPosts = await getDatabase(databaseId);
+const posts: Post[] = rawPosts.map((post: any) => ({
+  id: post.id,
+  cover: post.cover,
+  properties: {
+    Name: post.properties.Name,
+    ["Autor(es)"]: post.properties["Autor(es)"],
+    ["Año de publicación (original)"]:
+      post.properties["Año de publicación (original)"],
+  },
+  public_url: post.public_url,
+}));
+---
+
+<html lang="es">
+  <head>
+    <BaseHead
+      title={SITE_TITLE}
+      description={"Books I like to read"}
+      image="/images/about/óscar-a-montiel-animanoir-geosmina.jpg"
+    />
+  </head>
+
+  <body>
+    <ModifiedHeader />
+    <Navbar />
+    <div class="bookGridContainer">
+      <div class="booksWelcome">
+        <p>
+          Here is a list of some books I'm interacting with at the moment. For
+          the full list
+
+          <a
+            href="https://animanoir.notion.site/Mi-biblioteca-digital-06dfea2aa5e048bba145b85d5395c68f"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            visit my Notion page
+          </a>, which is constantly updated.
+          <p>
+            By clicking on the book cover you will be redirected to the book
+            individual Notion page which includes more information and,
+            probably, some notes I've taken of it.
+          </p>
+          <p>
+            I'll be happy to discuss any of these books with you, so feel free
+            to <a
+              href="mailto:?subject=I%20want%20you%20to%20experience%20me%20too%2C%20%C3%93scar"
+              target="_blank"
+              style="pointer-events: auto;"
+              rel="noopener noreferrer">reach out to me</a
+            >.
+          </p>
+        </p>
+      </div>
+      {
+        posts.map((post: Post) => (
+          <div class="card" key={post.id}>
+            <a href={post.public_url} target="_blank" rel="noopener noreferrer">
+              <img
+                src={post.cover?.file?.url || "default-image-url.jpg"}
+                alt={
+                  post.properties.Name?.title?.[0]?.text?.content || "No title"
+                }
+              />
+            </a>
+            <h3>
+              {post.properties.Name?.title?.[0]?.text?.content || "No title"}
+              <p>
+                {post.properties["Año de publicación (original)"]?.number ||
+                  null}
+              </p>
+            </h3>
+            <p>
+              {post.properties["Autor(es)"]?.multi_select
+                ?.map((author: any) => author.name)
+                .join(", ") || "No author"}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+    <style>
+      .booksWelcome {
+        font-size: 1rem;
+        margin: 0;
+        color: whitesmoke;
+        line-height: 1.5;
+        /* padding: 1rem; */
+      }
+      .bookPubYear {
+        font-size: 0.8rem;
+        color: #7a7a7a;
+        padding: 0;
+      }
+      .bookGridContainer {
+        width: 50vw;
+        padding: 5vh 0;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 5.5rem;
+        font-family: "Montserrat", sans-serif;
+        line-height: 1.2;
+      }
+      .card {
+        padding-bottom: 1rem;
+      }
+      .card img {
+        width: 100%;
+        height: 420px;
+        border-radius: 8px;
+        object-fit: cover;
+        padding-bottom: 1rem;
+      }
+
+      .card h3 {
+        font-size: 1.2rem;
+        margin: 0.1rem 0;
+      }
+
+      .card p {
+        font-size: 0.8rem;
+        color: #7a7a7a;
+        padding: 0;
+      }
+      /* Add hover effect to .card a */
+      .card a {
+        display: block;
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .card a:hover {
+        filter: invert(1);
+      }
+      /* Media query for mobile devices */
+      @media (max-width: 600px) {
+        .booksWelcome {
+          font-size: 0.9rem;
+          padding: 2rem;
+        }
+
+        .bookPubYear {
+          font-size: 0.7rem;
+        }
+
+        .bookGridContainer {
+          width: 80vw;
+          grid-template-columns: 1fr; /* Single column layout */
+          gap: 0.25rem;
+        }
+
+        .card {
+          width: 100%; /* Ensure each card takes full width */
+        }
+
+        .card img {
+          width: 100%;
+          height: 300px; /* Adjust image height to maintain aspect ratio */
+        }
+
+        .card h3 {
+          font-size: 1rem;
+        }
+
+        .card p {
+          font-size: 0.7rem;
+        }
+      }
+    </style>
+  </body>
+</html>

@@ -100,13 +100,11 @@ const MutatingAbout = () => {
       </p>
       <hr></hr>
       <p>
-        I really like to know new things each day—I keep track of some of them
-        in this Notion page:{" "}
+        I really like to know new things each day—
         <a
-          href="https://animanoir.notion.site/Filotecas-39b5af036df34a1482164c00c4826a3b?pvs=4"
-          target="_blank"
+          href="/books"
         >
-          Filotecas
+        I keep track of some of the books I'm currently interested here
         </a>
         . If you're interested in <i>me</i>, please,{" "}
         <a href="https://linktr.ee/animanoir" target="_blank">
@@ -114,7 +112,7 @@ const MutatingAbout = () => {
         </a>
         , and{" "}
         <a
-          href="mailto:?subject=I%20want%20you%20to%20experience%20myself%20too%2C%20%C3%93scar"
+          href="mailto:?subject=I%20want%20you%20to%20experience%20me%20too%2C%20%C3%93scar"
           target="_blank"
         >
           I may experience you too
