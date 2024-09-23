@@ -19,8 +19,14 @@ export default defineConfig({
   image: {
     domains: ["astro.build"],
     remotePatterns: [{ protocol: "https" }],
-    service: {
-      entrypoint: 'astro/assets/services/noop'
-    },
+    service: sharpImageService({
+      quality: 80,
+      formats: ['jpeg', 'webp'],
+      maxWidth: 1920,
+      maxHeight: 1080,
+      fit: 'cover',
+      position: 'center',
+      background: { r: 255, g: 255, b: 255, alpha: 1 }
+    })
   }
 });

@@ -37,7 +37,6 @@ const posts = (await getCollection("works")).sort(
                       class="postHeroImg"
                       src={post.data.heroImage}
                       alt={`${post.data.title} by Óscar A. Montiel`}
-                      quality={"high"}
                       formats={["webp"]}
                       decoding="async"
                       loading="eager"
