@@ -6,6 +6,7 @@ const MutatingSubheader = () => {
   const descriptionArray = [
     "Poet of Existence",
     "Front-End Developer",
+    "Generative Art/Software & Philosophy",
     "Creative developer",
     "Digital Philosopher",
     "Architect of Reality",

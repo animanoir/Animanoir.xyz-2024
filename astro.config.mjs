@@ -17,16 +17,26 @@ export default defineConfig({
     clientPrerender: true,
   },
   image: {
-    domains: ["astro.build"],
-    remotePatterns: [{ protocol: "https" }],
+    domains: ["notion.so"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "notion.so",
+        port: "",
+        pathname: "/**"
+      }
+    ],
     service: sharpImageService({
       quality: 80,
-      formats: ['jpeg', 'webp'],
+      formats: ['jpg','webp'],
       maxWidth: 1920,
       maxHeight: 1080,
       fit: 'cover',
       position: 'center',
       background: { r: 255, g: 255, b: 255, alpha: 1 }
     })
-  }
+  },
+  prefetch: {
+    prefetchAll: true
+}
 });
