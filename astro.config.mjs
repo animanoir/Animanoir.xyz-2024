@@ -1,8 +1,8 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, sharpImageService } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -17,8 +17,10 @@ export default defineConfig({
     clientPrerender: true,
   },
   image: {
+    domains: ["astro.build"],
+    remotePatterns: [{ protocol: "https" }],
     service: {
       entrypoint: 'astro/assets/services/noop'
-  },
-}
+    },
+  }
 });
