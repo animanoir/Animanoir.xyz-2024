@@ -1,0 +1,28 @@
+---
+title: "Sharp image service errors"
+summary: "How to solve the annoying 'Could not find Sharp' error in Astro for local and deployment environments."
+pubDate: "2024-06-27"
+tags: ["frontend", "node_modules", "web development", "Astro", "Sharp", "error", "solution"]
+---
+
+---
+
+## Solution:
+
+Use `bun` instead of `yarn` to install your dependencies... And _voilá_! Everything worked again. 
+
+---
+
+
+While trying to optimize your images using the Sharp service in Astro, you might encounter the following errorr:
+
+```bash
+Could not process image request: TypeError: A string was expected at
+```
+```bash
+Could not find Sharp.
+```
+
+And despite knowing that you indeed installed Sharp, and also you verified that a `string` was passed to where it was expected, this damned motherfucker still won't work! What could be happening?
+
+It may be too complicated to explain, but what matters is *how to solve it*. It seems the problem resides withing `yarn` (yes, everything coming from Facebook tends to zuck). Somewhere I read that using `yarn` required an specific install process—so yeah, no thanks. 
