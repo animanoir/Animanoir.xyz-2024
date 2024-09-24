@@ -102,7 +102,7 @@ const MutatingAbout = () => {
       <p>
         I really like to know new things each day—
         <a
-          href="/books"
+          href="https://animanoir.notion.site/Mi-biblioteca-digital-06dfea2aa5e048bba145b85d5395c68f"
         >
         I keep track of some of the books I'm currently interested here
         </a>
