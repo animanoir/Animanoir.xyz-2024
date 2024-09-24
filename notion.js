@@ -7,7 +7,13 @@ const notion = new Client({
 export async function getDatabase(databaseId){
   const response = await notion.databases.query({
     database_id: databaseId,
-    page_size: 13
+    page_size: 13,
+    sorts: [
+      {
+        timestamp: 'last_edited_time',
+        direction: 'descending'
+      }
+    ]
   })
   return response.results
 }
