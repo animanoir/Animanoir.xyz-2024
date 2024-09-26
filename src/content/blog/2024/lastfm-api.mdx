@@ -1,0 +1,52 @@
+---
+title: "Last.fm API"
+summary: "How to fetch the track you're listening to from Last.fm API using React."
+pubDate: "2024-09-25"
+tags: ["Last.fm", "API", "React", "JavaScript", "Music", "Scrobbling"]
+---
+
+import { Picture } from "astro:assets";
+import LastFm from "@/components/LastFm";
+import img1 from "@/images/blog/2024/lastfm-api/lastfm-api-img-1.jpg";
+import img2 from "@/images/blog/2024/lastfm-api/lastfm-api-img-2.jpg";
+
+
+# I need  music.
+
+In fact, I think it was my first platonic love, in the sense that I wanted so much to hear the most precious combination of sounds, knowing that it might not exist—ethereal being. **And that's a good thing!**
+
+<Picture
+  src={img1}
+  alt={"Took this photo when Nadja came to my city."}
+  width={1280}
+  height={720}
+  formats={["webp"]}
+  decoding="async"
+  loading="lazy"
+  class="blog-image"
+/>
+
+That's the reason I constantly have music playing from anywhere. I do have a vast digital collection of music on this [channel in Are.na](https://www.are.na/tilde-colon-pipe-degrees-degrees-bullet-period-pipe-colon-tilde/dimensions-in-music-sounds) to archive the music I find & love. But sometimes, in fact most of the time, I'm unable to _catch_ the music I'm hearing at the moment, and it makes me feel as if I just lost the sight (in this case, the sound) of a shooting star...
+
+That's why I decided to open a Last.fm account, back in 2011. I wanted to keep track of the music I was listening to and by "scrobbling" the music I could have a record of it available for me and whoever finds my profile. After that, I started to use the Last.fm API to fetch the music I was listening to and display it on this webplace.
+
+<LastFm showAlbumCover={false} customStyle={{
+  fontSize: "3rem",
+  width: "auto",
+  left: "0"
+}} client:load/>
+
+Cute! Doesn't it? The lil' animated bars do the trick! The above version is a simplified version of the component, configured via `props`, like to show or not show the album cover (if you hover on the text in the component under my name, you'll see the album cover).
+
+<Picture
+  src={img2}
+  alt={"Took this photo when Nadja came to my city."}
+  width={1280}
+  height={720}
+  formats={["webp"]}
+  decoding="async"
+  loading="lazy"
+  class="blog-image"
+/>
+
+So I only wanted to explain how I do this—probably in the future I'll do more creative stuff with it :).

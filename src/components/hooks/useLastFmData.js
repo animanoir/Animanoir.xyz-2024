@@ -5,7 +5,7 @@ const useLastFmData = (username = "swoephowx") => {
 
   useEffect(() => {
     fetch(
-      `https://ws.audioscrobbler.com/2.0/?method=user.getRecentTracks&user=${username}&api_key=8d1394415d95c0771ac9f8247cc7ee17&limit=1&nowplaying=true&format=json`
+      `https://ws.audioscrobbler.com/2.0/?method=user.getRecentTracks&user=${username}&api_key=${import.meta.env.PUBLIC_LASTFM_API}&limit=1&nowplaying=true&format=json`
     )
       .then((response) => {
         if (response.ok) {

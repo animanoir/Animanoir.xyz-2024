@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "@/styles/lastFm.css";
 import useLastFmData from "@/components/hooks/useLastFmData.js";
 
-export const LastFm = () => {
+export const LastFm = ({customStyle, showAlbumCover = true}) => {
   const lfmData = useLastFmData();
 
   const [albumImageState, setAlbumImageState] = useState({
@@ -56,7 +56,7 @@ export const LastFm = () => {
     const albumImage = image?.[image.length - 1]?.["#text"];
 
     return (
-      <div className="lastfmContainer fadeInQuick">
+      <div style={customStyle} className="lastfmContainer fadeInQuick">
         <span
           onMouseEnter={() => handleMouseEnter(albumImage)}
           onMouseLeave={handleMouseLeave}
@@ -64,19 +64,26 @@ export const LastFm = () => {
         >
           Listening now to <b className="songInfo">{songName}</b> by{" "}
           <b className="songInfo">{artistName}</b>{" "}
-          <img src="/images/playingBars.gif" alt="Now playing" />
+          <a href="/blog/2024/lastfm-api/">
+            <img src="/images/playingBars.gif" alt="Now playing" />
+          </a>
         </span>
-        <div
-          className="albumCover"
-          style={{
-            zIndex: onMouseEnter ? 1 : -1,
-            left: albumImageState.x,
-            top: 40,
-            opacity: onMouseEnter ? 1 : 0,
-          }}
-        >
-          <img src={albumImage} alt={albumName} />
-        </div>
+        {
+          showAlbumCover && (
+            <div 
+              className="albumCover"
+              style={{
+                zIndex: onMouseEnter ? 1 : -1,
+                left: albumImageState.x,
+                top: 40,
+                opacity: onMouseEnter ? 1 : 0,
+              }}
+            >
+              <img src={albumImage} alt={albumName} />
+          </div>
+          )
+        }
+
       </div>
     );
   };
