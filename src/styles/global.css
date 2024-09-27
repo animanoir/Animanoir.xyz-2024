@@ -20,6 +20,7 @@ h3 {
   font-style: normal;
   font-size: 1.4rem;
   line-height: 1.8;
+  padding: 5rem !important;
 }
 
 .merriweather-regular {
@@ -215,7 +216,7 @@ pre>code {
 }
 
 hr {
-  margin: 1rem 0;
+  margin: 3rem auto;
   width: 50%;
 }
 
