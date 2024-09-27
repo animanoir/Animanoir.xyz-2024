@@ -49,7 +49,7 @@ const MutatingAbout = () => {
 
   return (
     <div className="about-info">
-      <h1 id="aboutName">{title}</h1>
+      <h3 id="aboutName" style={{fontSize: '2rem', fontWeight: 'bold'}}>{title}</h3>
       <p>
         It's <b>metaphysically</b> hard to describe myself—I believe those who
         say they "truly" know themselves are lying! For some I am a son, a
