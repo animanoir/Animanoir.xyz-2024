@@ -102,9 +102,9 @@ const MutatingAbout = () => {
       <p>
         I really like to know new things each day—
         <a
-          href="https://animanoir.notion.site/Mi-biblioteca-digital-06dfea2aa5e048bba145b85d5395c68f"
+          href="https://animanoir.notion.site/Filotecas-39b5af036df34a1482164c00c4826a3b"
         >
-        I keep track of some of the books I'm currently interested here
+        I keep track of some of the books and films I'm currently interested here
         </a>
         . If you're interested in <i>me</i>, please,{" "}
         <a href="https://linktr.ee/animanoir" target="_blank">
