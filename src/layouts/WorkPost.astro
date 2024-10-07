@@ -5,9 +5,18 @@ import ModifiedHeader from "../components/ModifiedHeader.astro";
 import { Picture } from "astro:assets";
 import Navbar from "../components/Navbar.astro";
 
-type Props = CollectionEntry<"works">["data"];
+type HeroImage = {
+  src: string;
+  width: number;
+  height: number;
+  format: "png" | "jpg" | "jpeg" | "tiff" | "webp" | "gif" | "svg" | "avif";
+};
 
-const { title, description, heroImage, tools } = Astro.props;
+type Props = CollectionEntry<"works">["data"] & {
+  heroImage: HeroImage;
+};
+
+const { title, description, heroImage } = Astro.props;
 ---
 
 <html lang="en">
@@ -15,6 +24,7 @@ const { title, description, heroImage, tools } = Astro.props;
     <BaseHead
       title={`${title} by Óscar A. Montiel | Creative Software Engineer`}
       description={description}
+      image={heroImage.src}
     />
   </head>
   <body>
