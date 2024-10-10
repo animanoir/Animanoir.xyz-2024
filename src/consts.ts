@@ -4,6 +4,6 @@
 export const SITE_TITLE = "Óscar A. Montiel";
 export const SITE_SUBTITLE = "Multimedia Software Engineer";
 export const SITE_DESCRIPTION =
-  "Generative Art/Software & Philosophy";
+  "Multimedia Software Engineer";
 export const TWITTER_PROFILE = "https://twitter.com/geosminu";
 export const GITHUB_PROFILE = "https://github.com/animanoir";

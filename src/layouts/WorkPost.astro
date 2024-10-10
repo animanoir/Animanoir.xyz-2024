@@ -17,12 +17,14 @@ type Props = CollectionEntry<"works">["data"] & {
 };
 
 const { title, description, heroImage } = Astro.props;
+
+console.log(heroImage);
 ---
 
 <html lang="en">
   <head>
     <BaseHead
-      title={`${title} by Óscar A. Montiel | Creative Software Engineer`}
+      title={`${title} by Óscar A. Montiel | Multimedia Software Engineer`}
       description={description}
       image={heroImage.src}
     />

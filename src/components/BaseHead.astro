@@ -21,8 +21,6 @@ const baseSiteURL = new URL(Astro.site);
 const fullImageURL = image.startsWith("http")
   ? image
   : new URL(image, baseSiteURL).href;
-
-console.info(fullImageURL);
 ---
 
 <!-- Global Metadata -->
