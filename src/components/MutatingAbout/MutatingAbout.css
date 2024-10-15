@@ -14,19 +14,24 @@
 }
 
 .about-info h3 {
-  margin:0;
-  padding-bottom: 2rem;
+  margin: 0;
+  height: 2rem;
+  overflow: hidden;
 }
 
 .about-info h1 {
   font-size: 2rem;
   margin-bottom: 20px;
   font-family: "Montserrat", sans-serif;
-  height: 150px; /* Ajusta este valor según el tamaño máximo del texto */
+  height: 150px;
+  /* Ajusta este valor según el tamaño máximo del texto */
   display: flex;
-  align-items: center; /* Centra el texto verticalmente */
-  justify-content: center; /* Centra el texto horizontalmente, útil si decides cambiar el 'text-align' */
-  overflow: hidden; /* Oculta cualquier desbordamiento, por si acaso */
+  align-items: center;
+  /* Centra el texto verticalmente */
+  justify-content: center;
+  /* Centra el texto horizontalmente, útil si decides cambiar el 'text-align' */
+  overflow: hidden;
+  /* Oculta cualquier desbordamiento, por si acaso */
 }
 
 .about-info p {

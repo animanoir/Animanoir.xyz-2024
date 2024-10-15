@@ -9,11 +9,11 @@ import Navbar from "@/components/Navbar.astro";
 const posts = (await getCollection("works")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
-// Fisher-Yates shuffle algorithm to randomize the posts
-// for (let i = posts.length - 1; i > 0; i--) {
-//   const j = Math.floor(Math.random() * (i + 1));
-//   [posts[i], posts[j]] = [posts[j], posts[i]];
-// }
+//Fisher-Yates shuffle algorithm to randomize the posts
+for (let i = posts.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [posts[i], posts[j]] = [posts[j], posts[i]];
+}
 ---
 
 <!doctype html>
@@ -21,7 +21,6 @@ const posts = (await getCollection("works")).sort(
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
-
   <body>
     <Header />
     <Navbar />
@@ -43,13 +42,13 @@ const posts = (await getCollection("works")).sort(
                     />
                     <div class="postInfo">
                       <p class="postTitle">{post.data.title}</p>
+                      {post.data.year ? (
+                        <p class="year">{post.data.year}</p>
+                      ) : (
+                        <p class="year">on-going</p>
+                      )}
                     </div>
                   </a>
-                  {/* <ul class="toolsContainer">
-                    {(post.data.tools ?? []).map((tool) => (
-                      <li class="tool">{tool}</li>
-                    ))}
-                  </ul> */}
                 </li>
               ))
             }
@@ -125,7 +124,7 @@ const posts = (await getCollection("works")).sort(
         font-family: "Montserrat", sans-serif;
         /* font-weight: bold; */
         font-size: 2.3rem;
-        padding: 1rem;
+        padding: 0.8rem;
         margin-bottom: 0;
         line-height: 1;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Subtle shadow for the letters */
@@ -145,22 +144,15 @@ const posts = (await getCollection("works")).sort(
         display: block; /* Show the title on hover */
       }
 
-      /* .toolsContainer {
-        position: absolute;
-        bottom: 0;
-        color: #fdfefe;
-        font-family: "Open Sans", sans-serif;
-        font-style: italic;
-        display: flex;
-        flex-wrap: wrap;
-      } */
-
-      /* .tool {
-        font-size: 0.7rem;
-        background-color: #060606;
-        padding: 0.4rem;
+      .year {
+        color: floralwhite;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Subtle shadow for the letters */
+        font-size: 1rem;
         margin: 0;
-      } */
+        font-family: "Montserrat", sans-serif;
+        padding: 0;
+        text-align: center;
+      }
 
       .postHeroImg {
         height: 100%;

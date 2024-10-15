@@ -23,6 +23,7 @@ const MutatingAbout = () => {
     "Hallo, hulle sê ek is Óscar ", // Afrikaans
     "Ahoj, říkají, že jsem Óscar ", // Czech
     "Witaj, mówią, że jestem Óscar ", // Polish
+    "नमस्ते, वे कहते हैं कि मैं ओस्कर हूँ", // Hindi
   ];
 
   const [title, setTitle] = useState(titles[0]);
@@ -49,7 +50,7 @@ const MutatingAbout = () => {
 
   return (
     <div className="about-info">
-      <h3 id="aboutName" style={{fontSize: '2rem', fontWeight: 'bold'}}>{title}</h3>
+      <h3 id="aboutName" style={{fontWeight: 'bold', fontSize: '1.5rem'}}>{title}</h3>
       <p>
         It's <b>metaphysically</b> hard to describe myself—I believe those who
         say they "truly" know themselves are lying! For some I am a son, a
