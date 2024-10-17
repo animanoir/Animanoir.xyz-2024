@@ -31,26 +31,27 @@ const { title, description, heroImage } = Astro.props;
     <ModifiedHeader />
     <Navbar />
     <article class="articleContainer">
-      {
-        heroImage && (
-          <Picture
-            src={heroImage}
-            alt={description}
-            class="heroImage"
-            formats={["webp"]}
-            decoding="async"
-            loading="eager"
-          />
-        )
-      }
       <div class="articleBody">
         <h1 class="title">{title}</h1>
+        {
+          heroImage && (
+            <Picture
+              src={heroImage}
+              alt={description}
+              class="heroImage"
+              formats={["webp"]}
+              decoding="async"
+              loading="eager"
+              quality={90}
+            />
+          )
+        }
         <slot />
       </div>
     </article>
     <style>
       .heroImage {
-        height: 420px;
+        height: 500px;
         object-fit: cover;
         width: 100%;
         padding-bottom: 2rem;
@@ -59,8 +60,7 @@ const { title, description, heroImage } = Astro.props;
       .title {
         margin: 0;
         padding-bottom: 1rem;
-        font-size: 3.5rem;
-        /* text-align: center; */
+        font-size: 4rem;
         font-family: "Montserrat", sans-serif;
         line-height: 1;
         text-align: end;
@@ -87,12 +87,13 @@ const { title, description, heroImage } = Astro.props;
       .articleBody {
         font-family: "Open Sans", sans-serif;
         color: #fdfefe;
-        padding: 0 4rem;
+        padding: 0 6rem;
         font-size: 1rem;
       }
 
       .articleContainer h1 {
         padding: 2rem;
+        padding-top: 0;
       }
 
       hr {

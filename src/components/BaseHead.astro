@@ -52,4 +52,15 @@ const fullImageURL = image.startsWith("http")
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={`https://www.animanoir.xyz${image}`} />
 
+<script>
+  import { handleAllImages } from "../scripts/imageLoader";
+
+  // Ejecutar cuando el DOM está listo
+  document.addEventListener("DOMContentLoaded", handleAllImages);
+
+  // Ejecutar después de las transiciones de página
+  document.addEventListener("astro:page-load", handleAllImages);
+  document.addEventListener("astro:after-swap", handleAllImages);
+</script>
+
 <ViewTransitions />

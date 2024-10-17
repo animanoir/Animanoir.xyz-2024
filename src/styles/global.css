@@ -15,12 +15,12 @@
 }
 
 h3 {
-  font-family: "Merriweather", serif;
+  font-family: "Montserrat", serif;
   font-weight: 300;
   font-style: normal;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   line-height: 1.8;
-  padding: 5rem !important;
+  /* padding: 5rem !important; */
 }
 
 .merriweather-regular {

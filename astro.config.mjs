@@ -27,7 +27,7 @@ export default defineConfig({
       }
     ],
     service: sharpImageService({
-      quality: 80,
+      quality: 90,
       formats: ['jpg','webp'],
       maxWidth: 1920,
       maxHeight: 1080,

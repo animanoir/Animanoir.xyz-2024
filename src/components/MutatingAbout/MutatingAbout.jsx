@@ -63,7 +63,7 @@ const MutatingAbout = () => {
           <a href="https://animanoir.notion.site/Mi-biblioteca-digital-06dfea2aa5e048bba145b85d5395c68f" target="_blank">these books.</a>
         </p>
         <p>
-          At the moment working as a <b>front-end developer</b> (it just pays!), but always open to actually have fun or more money.
+          At the moment working as a <b>front-end developer</b> (it just pays!), but always open to actually have fun & more money.
         </p>
         <p>
           {funnyText}
