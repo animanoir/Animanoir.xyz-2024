@@ -10,7 +10,7 @@ export function handleImageLoad(img) {
 
 // Función para manejar todas las imágenes en la página
 export function handleAllImages() {
-  const images = document.querySelectorAll('.postHeroImg');
+  const images = document.querySelectorAll('.postHeroImg, .heroImage');
   images.forEach(img => handleImageLoad(img));
 }
 
