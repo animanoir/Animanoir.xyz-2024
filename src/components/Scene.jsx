@@ -1,5 +1,4 @@
-import * as THREE from "three";
-import { useState, useEffect, Fragment, useRef } from "react";
+import { Fragment, useRef } from "react";
 import { Float, Environment } from "@react-three/drei";
 import { ModelANLogo } from "./ModelANLogo";
 import { useFrame } from "@react-three/fiber";

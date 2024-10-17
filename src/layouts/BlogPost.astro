@@ -22,39 +22,53 @@ const { title, summary, pubDate, heroImage } = Astro.props;
     <Navbar />
     <!-- <img src={heroImage} alt={title} width="100%" /> -->
     <article class="articleContainer">
-      <h1 class="title">{title}</h1>
+      <div class="articleBody">
+        <h1 class="title">{title}</h1>
+        <slot />
+      </div>
       <p class="postDate">
         {new Date(pubDate).toLocaleDateString()}
       </p>
-      <div class="articleBody">
-        <slot />
-      </div>
     </article>
     <style>
-      .postDate {
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.8rem;
-        margin-top: 0;
-        width: fit-content;
-        margin: 0 auto;
-        color: #999;
+      :root {
+        --font-montserrat: "Montserrat", sans-serif;
+        --font-open-sans: "Open Sans", sans-serif;
+        --color-light: #fdfefe;
+        --color-light-faded: #fdfefe7f;
+        --color-gray: #999;
+        --font-size-small: 0.8rem;
+        --font-size-large: 3rem;
+        --font-size-medium: 1rem;
       }
+
+      .postDate,
+      .tools,
+      .articleBody {
+        font-family: var(--font-open-sans);
+      }
+
+      .postDate {
+        font-size: var(--font-size-small);
+        margin: 0 auto;
+        color: var(--color-gray);
+        width: fit-content;
+      }
+
       .title {
         margin: 0;
-        padding-top: 5rem;
-        padding-bottom: 0.5rem;
-        font-size: 3.5rem;
-        text-align: right;
-        font-family: "Montserrat", sans-serif;
+        padding: 5rem 0 3rem;
+        font-size: var(--font-size-large);
+        text-align: start;
+        font-family: var(--font-montserrat);
         line-height: 1;
       }
 
       .tools {
         display: block;
         text-align: center;
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.8rem;
-        color: #fdfefe7f;
+        font-size: var(--font-size-small);
+        color: var(--color-light-faded);
         padding-bottom: 2rem;
         font-style: italic;
       }
@@ -67,10 +81,9 @@ const { title, summary, pubDate, heroImage } = Astro.props;
       }
 
       .articleBody {
-        font-family: "Open Sans", sans-serif;
-        color: #fdfefe;
+        color: var(--color-light);
         padding: 0 6rem;
-        font-size: 1rem;
+        font-size: var(--font-size-medium);
       }
 
       hr {
@@ -81,12 +94,15 @@ const { title, summary, pubDate, heroImage } = Astro.props;
       @media (max-width: 768px) {
         .title {
           font-size: 2.5rem;
+          text-align: center;
         }
         .articleContainer {
           width: 100%;
         }
         .articleBody {
           padding: 0 1rem;
+          font-size: large;
+          padding-bottom: 50%;
         }
       }
     </style>

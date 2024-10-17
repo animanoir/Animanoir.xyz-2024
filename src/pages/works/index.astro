@@ -38,7 +38,7 @@ for (let i = posts.length - 1; i > 0; i--) {
                       alt={`${post.data.title} by Óscar A. Montiel`}
                       formats={["webp"]}
                       decoding="async"
-                      loading="eager"
+                      loading="lazy"
                     />
                     <div class="postInfo">
                       <p class="postTitle">{post.data.title}</p>
@@ -56,23 +56,6 @@ for (let i = posts.length - 1; i > 0; i--) {
         </div>
       </section>
     </main>
-
-    <!-- <script is:inline type="text/javascript">
-      document.addEventListener("DOMContentLoaded", function () {
-        const projects = document.querySelectorAll(".project");
-        projects.forEach((project) => {
-          project.addEventListener("mouseenter", function () {
-            this.style.transform = "scale(1.1)";
-            this.style.zIndex = "10"; // Ensure the scaled element is above others
-          });
-          project.addEventListener("mouseleave", function () {
-            this.style.transform = "scale(1)";
-            this.style.zIndex = "1"; // Reset z-index
-          });
-        });
-      });
-    </script> -->
-
     <style>
       .projectsContainer {
         width: 50vw;
@@ -164,6 +147,7 @@ for (let i = posts.length - 1; i > 0; i--) {
         .projectsContainer {
           margin: 0;
           width: 100%;
+          padding: 0;
         }
 
         ul {
