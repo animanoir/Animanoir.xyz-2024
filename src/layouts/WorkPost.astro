@@ -121,6 +121,24 @@ const { title, description, heroImage } = Astro.props;
           max-width: 1200px;
         }
       }
+
+      @media (max-width: 480px) {
+        .title {
+          font-size: 2rem;
+          text-align: center;
+        }
+        .articleContainer {
+          width: 100%;
+          padding-top: 10vh;
+          padding-bottom: 20vh;
+        }
+        .articleBody {
+          padding: 0 0.5rem;
+        }
+        .heroImage {
+          height: 300px;
+        }
+      }
     </style>
   </body>
 </html>
