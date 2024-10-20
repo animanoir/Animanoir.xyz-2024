@@ -46,6 +46,53 @@
   white-space: nowrap;
 }
 
+@keyframes glitchEffect {
+  0% {
+
+  }
+  20% {
+    color: #ff00ff;
+  }
+  40% {
+    color: #00ffff;
+  }
+  60% {
+    color: #ffff00;
+  }
+  80% {
+    color: #00ff00;
+  }
+  100% {
+  }
+}
+
+.youtubeWelcome {
+  margin: 0;
+  color: whitesmoke;
+}
+
+.youtubeWelcome p {
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.1rem;
+  padding: 5rem;
+  animation: glitchEffect 0.5s infinite;
+  text-shadow: 2px 2px #ff0000, -2px -2px #0000ff;
+  overflow: hidden;
+}
+
+.youtubeWelcome:hover p {
+  animation: none;
+  transform: none;
+  color: inherit;
+  text-shadow: none;
+}
+
+@media (min-width: 1920px) {
+  .youtubeWelcome p {
+    font-size: 2rem;
+  }
+
 @media (max-width: 1200px) {
   .youtube-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -70,22 +117,10 @@
   }
   .youtube-grid-item img {
     opacity: 1;
-    height: auto; /* Ensure the height is auto to maintain aspect ratio */
-    aspect-ratio: 1 / 1; /* Make the image a square */
+    height: auto;
+    aspect-ratio: 1 / 1;
 
   }
   
 }
 
-.youtubeWelcome {
-  margin: 0;
-  color: whitesmoke;
-  line-height: 1.5;
-}
-
-.youtubeWelcome p {
-  text-align: center;
-  font-family: "Montserrat", sans-serif;
-  font-size: 1.5rem;
-  padding: 5rem;
-}
