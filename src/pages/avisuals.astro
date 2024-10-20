@@ -1,0 +1,19 @@
+---
+import { YouTubeGrid } from "@/components/YouTubeGrid/YoutubeGrid.jsx";
+import BaseHead from "@/components/BaseHead.astro";
+import Header from "@/components/Header.astro";
+import Navbar from "@/components/Navbar.astro";
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={'A/Visuals'} description={'Óscar A. Montiel'} />
+  </head>
+  <body>
+    <Header />
+    <Navbar />
+    <main>
+      <YouTubeGrid client:load count={11} />
+    </main>
+  </body>
+</html>

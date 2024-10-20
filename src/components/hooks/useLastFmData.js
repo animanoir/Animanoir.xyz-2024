@@ -13,14 +13,17 @@ const useLastFmData = (username = "swoephowx") => {
         }
         throw new Error("error");
       })
-      .then((data) => updateLfmData(data))
+      .then((data) => {
+        const track = data?.recenttracks?.track?.[0];
+        const trackUrl = track?.url;
+        updateLfmData({ ...data, trackUrl });
+      })
       .catch(() =>
         updateLfmData({
           error: "Last.fm servers are unavailable at this moment...",
         })
       );
   }, [username]);
-
   return lfmData;
 };
 

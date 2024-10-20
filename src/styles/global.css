@@ -74,6 +74,14 @@ h3 {
   -ms-animation: fadeIn ease-out 400ms;
 }
 
+.fadeInSlow {
+  animation: fadeIn ease-in 9s;
+  -webkit-animation: fadeIn ease-in 9s;
+  -moz-animation: fadeIn ease-in 9s;
+  -o-animation: fadeIn ease-in 9s;
+  -ms-animation: fadeIn ease-in 9s;
+}
+
 lite-youtube {
   margin: 0.83em !important;
   max-width: 100% !important;

@@ -26,7 +26,7 @@ export const LastFm = ({customStyle, showAlbumCover = true}) => {
   };
 
   const buildLastFmData = () => {
-    const { error } = lfmData;
+    const { error, trackUrl } = lfmData;
     const track = lfmData?.recenttracks?.track;
 
     if (error) {
@@ -64,7 +64,7 @@ export const LastFm = ({customStyle, showAlbumCover = true}) => {
         >
           Listening now to <b className="songInfo">{songName}</b> by{" "}
           <b className="songInfo">{artistName}</b>{" "}
-          <a href="/blog/2024/lastfm-api/">
+          <a href={trackUrl} target="_blank">
             <img src="/images/playingBars.gif" alt="Now playing" />
           </a>
         </span>
