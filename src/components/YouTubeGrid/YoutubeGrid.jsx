@@ -66,7 +66,7 @@ export function YouTubeGrid({ count = 6 }) {
       <div className="youtubeWelcome">
         <div className="youtubeWelcome-content">
           <p className="fadeInSlow">
-            For the full list of videos, visit my{' '}
+            Animations made with Blender & Max/MSP. For the full list of videos, visit my{' '}
             <a href={`https://www.youtube.com/playlist?list=${PLAYLIST_ID}`} target="_blank" rel="noopener noreferrer">
               YouTube playlist
             </a>
