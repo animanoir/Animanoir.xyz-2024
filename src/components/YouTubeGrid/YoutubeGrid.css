@@ -46,6 +46,23 @@
   white-space: nowrap;
 }
 
+.youtubeWelcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.youtubeWelcome-content {
+  text-align: center;
+}
+
+.youtubeWelcome p {
+  margin: 0;
+  padding: 0;
+}
+
 @keyframes glitchEffect {
   0% {
 
@@ -90,7 +107,7 @@
 
 @media (min-width: 1920px) {
   .youtubeWelcome p {
-    font-size: 2rem;
+    font-size: 1.45rem;
   }
 
 @media (max-width: 1200px) {

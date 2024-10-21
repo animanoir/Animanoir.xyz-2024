@@ -64,7 +64,15 @@ export function YouTubeGrid({ count = 6 }) {
         </div>
       ))}
       <div className="youtubeWelcome">
-        <p className="fadeInSlow">For the full list of videos, visit my <a href={`https://www.youtube.com/playlist?list=${PLAYLIST_ID}`} target="_blank" rel="noopener noreferrer">YouTube playlist</a>.</p>
+        <div className="youtubeWelcome-content">
+          <p className="fadeInSlow">
+            For the full list of videos, visit my{' '}
+            <a href={`https://www.youtube.com/playlist?list=${PLAYLIST_ID}`} target="_blank" rel="noopener noreferrer">
+              YouTube playlist
+            </a>
+            .
+          </p>
+        </div>
       </div>
     </div>
   );
