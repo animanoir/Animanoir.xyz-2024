@@ -4,7 +4,7 @@
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap");
 
 .merriweather-light {
   font-family: "Merriweather", serif;
@@ -64,7 +64,6 @@ h3 {
   font-weight: 900;
   font-style: italic;
 }
-
 
 .fadeInQuick {
   animation: fadeIn ease-out 400ms;
@@ -219,7 +218,7 @@ pre {
   font-size: 0.9rem;
 }
 
-pre>code {
+pre > code {
   all: unset;
 }
 
@@ -235,7 +234,7 @@ blockquote {
   line-height: 1.6;
   margin: 20px auto;
   padding: 1.2em 5rem 1.2em 5rem;
-  quotes: "\201C" "\201D" "\2018" "\2019";
+  quotes: "\201C""\201D""\2018""\2019";
 }
 
 ul {
@@ -278,7 +277,8 @@ blockquote cite {
 p {
   line-height: normal;
   margin: 0;
-  padding: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

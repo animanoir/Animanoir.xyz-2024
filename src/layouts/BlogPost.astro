@@ -12,7 +12,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
 <html lang="en">
   <head>
     <BaseHead
-      title={`${title} by Óscar A. Montiel | Creative Software Engineer`}
+      title={`${title} by Óscar A. Montiel | Multimedia Software Engineer`}
       description={summary ?? "Blog post by Óscar A. Montiel."}
       image={heroImage}
     />
@@ -24,11 +24,12 @@ const { title, summary, pubDate, heroImage } = Astro.props;
     <article class="articleContainer">
       <div class="articleBody">
         <h1 class="title">{title}</h1>
+        <h2 class="summary">{summary}</h2>
+        <p class="postDate">
+          {new Date(pubDate).toLocaleDateString()}
+        </p>
         <slot />
       </div>
-      <p class="postDate">
-        {new Date(pubDate).toLocaleDateString()}
-      </p>
     </article>
     <style>
       :root {
@@ -50,18 +51,28 @@ const { title, summary, pubDate, heroImage } = Astro.props;
 
       .postDate {
         font-size: var(--font-size-small);
-        margin: 0 auto;
+        margin: 0 0 0 auto;
         color: var(--color-gray);
         width: fit-content;
+        text-align: right;
       }
 
       .title {
         margin: 0;
-        padding: 5rem 0 3rem;
+        padding: 4rem 0 1rem;
         font-size: var(--font-size-large);
         text-align: start;
         font-family: var(--font-montserrat);
         line-height: 1;
+      }
+
+      .summary {
+        font-size: var(--font-size-summary);
+        color: var(--color-light-faded);
+        margin: 1rem 0;
+        padding: 0 1rem;
+        text-align: start;
+        font-family: var(--font-open-sans);
       }
 
       .tools {
@@ -84,6 +95,10 @@ const { title, summary, pubDate, heroImage } = Astro.props;
         color: var(--color-light);
         padding: 0 6rem;
         font-size: var(--font-size-medium);
+      }
+
+      .articleBody p {
+        padding: 0 !important;
       }
 
       hr {
