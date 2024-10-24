@@ -37,7 +37,7 @@
     "sharp": "^0.33.4",
     "smooth-scrollbar": "^8.8.4",
     "smooth-scrollbar-react": "^2.4.1",
-    "three": "^0.155.0",
+    "three": "^0.169.0",
     "typescript": "^5.6.2"
   },
   "devDependencies": {}
