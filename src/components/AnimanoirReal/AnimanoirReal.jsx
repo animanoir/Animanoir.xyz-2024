@@ -32,7 +32,7 @@ const AndrosOne = () => {
   }, [fbx]);
 
   useFrame((state, delta) => {
-    mixer.current.update(delta*1.5);
+    mixer.current.update(delta*1.8);
     // fbx.rotation.y += delta * 0.05;
   });
 

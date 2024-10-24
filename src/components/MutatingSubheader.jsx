@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import _ from "lodash";
 const { throttle } = _;
 
-const MutatingSubheader = () => {
+const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
   const descriptionArray = [
     "Poet of Existence",
     "Front-End Developer",
@@ -183,6 +183,17 @@ const MutatingSubheader = () => {
       window.removeEventListener("deviceorientation", handleOrientationChange);
     };
   }, [handleOrientationChange]);
+
+  useEffect(() => {
+    if (goWild) {
+      const interval = setInterval(() => {
+        descriptionArray.sort(() => Math.random() - 0.5);
+        setDescription(getRandomWord(descriptionArray));
+      }, sortSpeed);
+
+      return () => clearInterval(interval);
+    }
+  }, [goWild, sortSpeed]);
 
   return <span>{description}</span>;
 };

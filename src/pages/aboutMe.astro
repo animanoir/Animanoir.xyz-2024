@@ -18,14 +18,14 @@ import AnimanoirReal from "@/components/AnimanoirReal/AnimanoirReal.jsx";
   </head>
 
   <body>
-    <ModifiedHeader />
+    <ModifiedHeader goWild={true} sortSpeed={100.0} />
     <Navbar />
     <div class="container">
       <div class="aboutMe-fiberCanvas">
         <div class="aboutMe-info">
           <!-- <h1>Óscar A. Montiel</h1> -->
           <p>
-            <b>Software developer</b>, multidisciplinary <b>visual & sound artist</b>—most of the time everything at once.
+            <b>Software developer</b>, multidisciplinary <b>visual & sound artist</b>—most of the time everything & nothing at once.
           </p>
           <p>
             Absolute <b>philosophy</b> freak—currently reading <a href="https://animanoir.notion.site/Mi-biblioteca-digital-06dfea2aa5e048bba145b85d5395c68f" target="_blank">these books</a>.
@@ -46,7 +46,7 @@ import AnimanoirReal from "@/components/AnimanoirReal/AnimanoirReal.jsx";
 
       .aboutMe-info {
         position: absolute;
-        top: 60vh;
+        top: 55vh;
         left: 2%;
         z-index: 10;
         width: 30%;

@@ -2,6 +2,8 @@
 import { SITE_TITLE } from "@/consts";
 import LastFm from "@/components/LastFm.jsx";
 import MutatingSubheader from "@/components/MutatingSubheader.jsx";
+
+const { goWild = false, sortSpeed = 0 } = Astro.props;
 ---
 
 <header>
@@ -9,7 +11,7 @@ import MutatingSubheader from "@/components/MutatingSubheader.jsx";
     <a href="/">
       <h1 id="headerTitle">
         {SITE_TITLE} | <span id="headerSubtitle"
-          ><MutatingSubheader client:load /></span
+          ><MutatingSubheader goWild={goWild} sortSpeed={sortSpeed} client:load /></span
         >
       </h1>
     </a>
