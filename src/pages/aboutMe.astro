@@ -72,23 +72,27 @@ import AnimanoirReal from "@/components/AnimanoirReal/AnimanoirReal.jsx";
       }
 
       @media (max-width: 500px) {
-        .container {
-          width: 100%;
-        }
-        .about-info {
-          margin-top: 0;
-        }
-        .aboutMe-fiberCanvas {
-          width: 100%;
-          height: 100%;
-          filter: brightness(0.5);
-        }
-        .heroImage {
-          width: 100vw;
-          height: 100vh;
-          object-fit: cover;
-        }
+      .container {
+        width: 100%;
       }
+      .aboutMe-info {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        text-align: center;
+      }
+      .aboutMe-fiberCanvas {
+        width: 100%;
+        height: 100%;
+      }
+      .heroImage {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+      }
+    }
 
       @media (min-width: 2000px) {
           .aboutMe-info {
