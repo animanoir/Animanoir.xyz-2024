@@ -1,15 +1,13 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import { SITE_DESCRIPTION } from "../consts";
-import { Picture } from "astro:assets";
-import oscarImg1 from "@/images/about/oscar-a-montiel-animanoir-geosmina-1.jpg";
-import oscarImg2 from "@/images/about/oscar-a-montiel-animanoir-geosmina-2.jpg";
 import Navbar from "@/components/Navbar.astro";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
 import MutatingAbout from "@/components/MutatingAbout/MutatingAbout.jsx";
+import AnimanoirReal from "@/components/AnimanoirReal/AnimanoirReal.jsx";
+import LastFm from "@/components/LastFm.jsx";
 
-const images = [oscarImg1, oscarImg2];
-const randomImage = images[Math.floor(Math.random() * images.length)];
+// Remove the image imports and randomImage selection
 ---
 
 <html lang="en">
@@ -26,17 +24,10 @@ const randomImage = images[Math.floor(Math.random() * images.length)];
     <Navbar />
     <div class="container">
       <div class="about-photo">
-        <Picture
-          src={randomImage}
-          alt={"Óscar A. Montiel"}
-          class={"heroImage"}
-          formats={["webp"]}
-          decoding="async"
-          loading="eager"
-        />
+        <AnimanoirReal client:load />
       </div>
-      <MutatingAbout client:load />
     </div>
+    <LastFm client:load />
     <style>
       .container {
         color: #fdfefe;
@@ -45,7 +36,7 @@ const randomImage = images[Math.floor(Math.random() * images.length)];
       }
 
       .about-photo {
-        width: 40%;
+        width: 100%;
         height: 100%;
         position: fixed;
         overflow: hidden;
