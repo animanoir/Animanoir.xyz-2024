@@ -38,5 +38,12 @@ export default defineConfig({
   },
   prefetch: {
     prefetchAll: true
-}
+  },
+  vite: {
+    resolve: {
+      alias: {
+        'three/examples/jsm': 'three/examples/jsm',
+      },
+    },
+  },
 });
