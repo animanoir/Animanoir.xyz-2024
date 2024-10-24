@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Loader } from "@react-three/drei";
-import { EffectComposer, Noise, Bloom } from "@react-three/postprocessing";
+import { EffectComposer, Noise, Bloom, Vignette } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import { Scene } from "./Scene";
 import "@/styles/canvasFiber.css";
@@ -42,7 +42,8 @@ export const FiberCanvas = () => {
           target={[0, 0, 0]}
         />
         <EffectComposer>
-          <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.2} />
+          <Vignette darkness={0.4} />
+          <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.25} />
           <Bloom intensity={0.5} />
         </EffectComposer>
       </Canvas>

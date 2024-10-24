@@ -3,9 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import { SITE_DESCRIPTION } from "../consts";
 import Navbar from "@/components/Navbar.astro";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
-import MutatingAbout from "@/components/MutatingAbout/MutatingAbout.jsx";
 import AnimanoirReal from "@/components/AnimanoirReal/AnimanoirReal.jsx";
-import LastFm from "@/components/LastFm.jsx";
 
 // Remove the image imports and randomImage selection
 ---
@@ -23,7 +21,19 @@ import LastFm from "@/components/LastFm.jsx";
     <ModifiedHeader />
     <Navbar />
     <div class="container">
-      <div class="about-photo">
+      <div class="aboutMe-fiberCanvas">
+        <div class="aboutMe-info">
+          <!-- <h1>Óscar A. Montiel</h1> -->
+          <p>
+            <b>Software developer</b>, multidisciplinary <b>visual & sound artist</b>—most of the time everything at once.
+          </p>
+          <p>
+            Absolute <b>philosophy</b> freak—currently reading <a href="https://animanoir.notion.site/Mi-biblioteca-digital-06dfea2aa5e048bba145b85d5395c68f" target="_blank">these books</a>.
+          </p>
+          <p>
+            At the moment working as a <b>front-end developer</b> (it just pays!), but always <a href="mailto:etherealflux94@gmail.com">open</a> to actually have fun & more money.
+          </p>
+        </div>
         <AnimanoirReal client:load />
       </div>
     </div>
@@ -34,7 +44,17 @@ import LastFm from "@/components/LastFm.jsx";
         font-family: "Open Sans", sans-serif;
       }
 
-      .about-photo {
+      .aboutMe-info {
+        position: absolute;
+        top: 60vh;
+        left: 2%;
+        z-index: 10;
+        width: 30%;
+        font-size: 1.2rem;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .aboutMe-fiberCanvas {
         width: 100%;
         height: 100%;
         position: fixed;
@@ -58,7 +78,7 @@ import LastFm from "@/components/LastFm.jsx";
         .about-info {
           margin-top: 0;
         }
-        .about-photo {
+        .aboutMe-fiberCanvas {
           width: 100%;
           height: 100%;
           filter: brightness(0.5);
@@ -67,6 +87,18 @@ import LastFm from "@/components/LastFm.jsx";
           width: 100vw;
           height: 100vh;
           object-fit: cover;
+        }
+      }
+
+      @media (min-width: 2000px) {
+          .aboutMe-info {
+          position: absolute;
+          top: 65vh;
+          left: 2%;
+          z-index: 10;
+          width: 30%;
+          font-size: 1.5rem;
+          text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
       }
     </style>

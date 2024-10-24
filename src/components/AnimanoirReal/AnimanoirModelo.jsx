@@ -30,13 +30,17 @@ export function AnimanoirModelo(props) {
       const albumImageUrl = lfmData.recenttracks.track[0].image[3]['#text'];
       const textureLoader = new THREE.TextureLoader();
       textureLoader.load(albumImageUrl, (texture) => {
-        const material = new THREE.MeshStandardMaterial({
+        const material = new THREE.MeshToonMaterial({
           map: texture,
           metalness: 1,
           roughness: 0.1,
         });
         meshRef.current.material = material;
       });
+    } else if (meshRef.current) {
+      // Change to a basic color material if no image is available
+      const basicMaterial = new THREE.MeshToon({ color: 0x000000 });
+      meshRef.current.material = basicMaterial;
     }
   }, [lfmData]);
 
@@ -45,17 +49,6 @@ export function AnimanoirModelo(props) {
       meshRef.current.rotation.z += delta * -0.3;
     }
   });
-
-  const clickHandler = () => {
-    setClicked((prev) => !prev);
-    meshRef.current.material.wireframe = !clicked;
-  };
-
-  const mouseOverHandler = () => {
-    meshRef.current.material.color.set(
-      `hsl(${Math.random() * 360}, 100%, 80%)`
-    );
-  };
 
   return (
     <group ref={group} {...props} dispose={null}>
@@ -67,13 +60,6 @@ export function AnimanoirModelo(props) {
         position={[0, -1, 0]}
         rotation={[Math.PI / 2, 0, 0]}
         scale={20}
-        onPointerOver={(e) => {
-          gl.domElement.style.cursor = "zoom-in";
-          mouseOverHandler();
-        }}
-        onPointerOut={(e) => {
-          gl.domElement.style.cursor = "auto";
-        }}
       >
       </mesh>
     </group>
