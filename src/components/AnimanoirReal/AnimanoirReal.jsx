@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, Suspense } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useFBX, Environment, Float, Html, useProgress, Loader  } from '@react-three/drei';
+import { useFBX, Environment, Float, Loader  } from '@react-three/drei';
 import { EffectComposer, Noise, Vignette } from '@react-three/postprocessing';
 import { BlendFunction } from "postprocessing";
 import * as THREE from 'three';
@@ -60,52 +60,16 @@ const DrunkenCamera = ({ fovModulation }) => {
   return null;
 };
 
-// const AnimatedLight = ({ 
-//   intensity = 100.0,
-//   position = [5, 5, 5],
-//   speedMultiplier = 10,
-//   saturation = 1.0,
-//   lightness = 0.5
-// }) => {
-//   const lightRef = useRef();
-//   const hueRef = useRef(0);
-
-//   useFrame((state, delta) => {
-//     if (!lightRef.current) return;
-    
-//     // Update hue smoothly
-//     hueRef.current += delta * speedMultiplier;
-    
-//     // Calculate smooth color transitions using sin waves
-//     const hue = (Math.sin(hueRef.current) * 0.5 + 0.5);
-    
-//     // Apply the color to the light
-//     lightRef.current.color.setHSL(
-//       hue,
-//       saturation,
-//       lightness
-//     );
-//   });
-
-//   return (
-//     <directionalLight
-//       ref={lightRef}
-//       position={position}
-//       intensity={intensity}
-//     />
-//   );
-// };
-
-
 const AnimanoirReal = () => {
   const sceneCreated = ({ gl }) => {
-    gl.setClearColor("black", 1);
+    gl.setClearColor("#060606", 1);
     gl.toneMapping = THREE.ACESFilmicToneMapping;
     gl.outputColorSpace = THREE.SRGBColorSpace;
     gl.toneMappingExposure = 1;
   };
   return (
     <>
+    <Loader containerStyles={{ backgroundColor: "#060606" }} />
       <Canvas
         onCreated={sceneCreated}
         camera={{ position: [0, 0, 10], fov: 100 }}
