@@ -48,7 +48,7 @@ const DrunkenCamera = ({ isDrunk, fovModulation }) => {
   const fovFrequency = 0.0023;
 
   useFrame(() => {
-    if (isDrunk) {
+    if (true) {
       const time = Date.now() * drunkSpeed;
       camera.rotation.x = Math.sin(time) * drunkMagnitude;
       camera.rotation.y = Math.cos(time * 0.5) * drunkMagnitude;
