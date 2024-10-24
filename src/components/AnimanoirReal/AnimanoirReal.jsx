@@ -1,11 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass';
 import useLastFmData from '../hooks/useLastFmData';
+import { Environment, Float, Html } from '@react-three/drei';
+
 
 const AnimanoirReal = () => {
   const mountRef = useRef(null);
@@ -18,7 +20,7 @@ const AnimanoirReal = () => {
   const composerRef = useRef(null);
   const cameraRef = useRef(null);
   const [isDrunk, setIsDrunk] = useState(true);
-  const [fovModulation, setFovModulation] = useState(0);
+  const [fovModulation, setFovModulation] = useState(0.05);
 
   useEffect(() => {
     // Set up scene, camera, and renderer
@@ -33,11 +35,11 @@ const AnimanoirReal = () => {
     renderer.setClearColor('#060606'); // Set background color
     mountRef.current.appendChild(renderer.domElement);
 
-    // Add OrbitControls
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controlsRef.current = controls;
-    controls.enableDamping = true; // Add smooth damping effect
-    controls.dampingFactor = 0.05;
+    // // Add OrbitControls
+    // const controls = new OrbitControls(camera, renderer.domElement);
+    // controlsRef.current = controls;
+    // controls.enableDamping = true; // Add smooth damping effect
+    // controls.dampingFactor = 0.05;
 
     // Create a plane instead of a cube
     const geometry = new THREE.PlaneGeometry(10, 10);
@@ -69,7 +71,7 @@ const AnimanoirReal = () => {
     });
 
     // Set up lighting
-    const light = new THREE.PointLight(0xffffff, 1000, 5000); // Increase intensity and range
+    const light = new THREE.PointLight(0xffffff, 100, 1000); // Increase intensity and range
     light.position.set(0, 0, 5);
     scene.add(light);
 
@@ -93,18 +95,18 @@ const AnimanoirReal = () => {
     const drunkSpeed = 0.0035;
 
     // FOV modulation parameters
-    const baseFOV = 100;
-    const fovAmplitude = 20; // Adjust this to change the intensity of the effect
-    const fovFrequency = 0.001; // Adjust this to change the speed of the effect
+    const baseFOV = 80;
+    const fovAmplitude = 220; // Adjust this to change the intensity of the effect
+    const fovFrequency = 0.0023; // Adjust this to change the speed of the effect
 
     // Animation loop
     const animate = () => {
       requestAnimationFrame(animate);
       
       // Update controls only when not drunk
-      if (!isDrunk && controlsRef.current) {
-        controlsRef.current.update();
-      }
+      // if (!isDrunk && controlsRef.current) {
+      //   controlsRef.current.update();
+      // }
 
       // Update mixer
       if (mixerRef.current) {
@@ -113,7 +115,7 @@ const AnimanoirReal = () => {
 
       // Rotate the plane slowly
       if (planeRef.current) {
-        planeRef.current.rotation.y += 0.001;
+        planeRef.current.rotation.y += 0.01;
       }
 
       // Apply drunken camera effect

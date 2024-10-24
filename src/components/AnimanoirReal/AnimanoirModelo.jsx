@@ -75,7 +75,6 @@ export function AnimanoirModelo(props) {
           gl.domElement.style.cursor = "auto";
         }}
       >
-        {/* Remove the meshStandardMaterial here */}
       </mesh>
     </group>
   );
