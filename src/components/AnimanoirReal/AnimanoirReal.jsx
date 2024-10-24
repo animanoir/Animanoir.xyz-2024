@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from 'react';
-import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
-import { useFBX, Loader, Environment, Float } from '@react-three/drei';
+import React, { useRef, useEffect, Suspense } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { useFBX, Environment, Float, Html, useProgress, Loader  } from '@react-three/drei';
 import { EffectComposer, Noise, Vignette } from '@react-three/postprocessing';
 import { BlendFunction } from "postprocessing";
 import * as THREE from 'three';
@@ -19,7 +19,7 @@ const AndrosOne = () => {
 
     const newMaterial = new THREE.MeshStandardMaterial({
       color: 0x000000,
-      metalness: 0.8, // Adjust metalness
+      metalness: 1.3, // Adjust metalness
       roughness: 0.1, // Adjust roughness
     });
     fbx.traverse((child) => {
@@ -38,24 +38,6 @@ const AndrosOne = () => {
 
   return <primitive object={fbx} />;
 };
-
-// const Plane = ({ albumImageUrl }) => {
-//   const meshRef = useRef();
-//   const texture = useLoader(TextureLoader, albumImageUrl);
-
-//   useFrame(() => {
-//     if (meshRef.current) {
-//       meshRef.current.rotation.y += 0.01;
-//     }
-//   });
-
-//   return (
-//     <mesh ref={meshRef} position={[0, 0, -10]}>
-//       <planeGeometry args={[10, 10]} />
-//       <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
-//     </mesh>
-//   );
-// };
 
 const DrunkenCamera = ({ isDrunk, fovModulation }) => {
   const { camera } = useThree();
@@ -81,66 +63,68 @@ const DrunkenCamera = ({ isDrunk, fovModulation }) => {
   return null;
 };
 
-const AnimatedLight = ({ 
-  intensity = 100.0,
-  position = [5, 5, 5],
-  speedMultiplier = 10,
-  saturation = 1.0,
-  lightness = 0.5
-}) => {
-  const lightRef = useRef();
-  const hueRef = useRef(0);
+// const AnimatedLight = ({ 
+//   intensity = 100.0,
+//   position = [5, 5, 5],
+//   speedMultiplier = 10,
+//   saturation = 1.0,
+//   lightness = 0.5
+// }) => {
+//   const lightRef = useRef();
+//   const hueRef = useRef(0);
 
-  useFrame((state, delta) => {
-    if (!lightRef.current) return;
+//   useFrame((state, delta) => {
+//     if (!lightRef.current) return;
     
-    // Update hue smoothly
-    hueRef.current += delta * speedMultiplier;
+//     // Update hue smoothly
+//     hueRef.current += delta * speedMultiplier;
     
-    // Calculate smooth color transitions using sin waves
-    const hue = (Math.sin(hueRef.current) * 0.5 + 0.5);
+//     // Calculate smooth color transitions using sin waves
+//     const hue = (Math.sin(hueRef.current) * 0.5 + 0.5);
     
-    // Apply the color to the light
-    lightRef.current.color.setHSL(
-      hue,
-      saturation,
-      lightness
-    );
-  });
+//     // Apply the color to the light
+//     lightRef.current.color.setHSL(
+//       hue,
+//       saturation,
+//       lightness
+//     );
+//   });
 
-  return (
-    <directionalLight
-      ref={lightRef}
-      position={position}
-      intensity={intensity}
-    />
-  );
-};
+//   return (
+//     <directionalLight
+//       ref={lightRef}
+//       position={position}
+//       intensity={intensity}
+//     />
+//   );
+// };
+
 
 const AnimanoirReal = () => {
+  const sceneCreated = ({ gl }) => {
+    gl.setClearColor("black", 1);
+    gl.toneMapping = THREE.ACESFilmicToneMapping;
+    gl.outputColorSpace = THREE.SRGBColorSpace;
+    gl.toneMappingExposure = 1;
+  };
   return (
     <>
       <Canvas
+        onCreated={sceneCreated}
         camera={{ position: [0, 0, 10], fov: 100 }}
         style={{ width: '100%', height: '100%' }}
-        >
+      >
           <Environment backgroundRotation={new THREE.Euler(0, 21, 0)} environmentIntensity={50.0} background files={"/images/animanoir-xyz-space-small.hdr"} />
           <color attach="background" args={['#060606']} />
-          <AnimatedLight 
-            intensity={10}
-            speedMultiplier={0.3}
-          />
-          <DrunkenCamera isDrunk fovModulation={0.06} />
+          <DrunkenCamera fovModulation={0.06} />
           <Float speed={7}>
             <AndrosOne />
           </Float>
           <EffectComposer>
-          <Vignette darkness={0.5} />
-          <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.25} />
-        </EffectComposer>
+            <Vignette darkness={0.5} />
+            <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.25} />
+          </EffectComposer>
       </Canvas>
-     
-
     </>
   );
 };
