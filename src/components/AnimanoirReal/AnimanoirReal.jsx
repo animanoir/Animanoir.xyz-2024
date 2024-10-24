@@ -45,7 +45,7 @@ const DrunkenCamera = ({ fovModulation }) => {
   const drunkSpeed = 0.0035;
   const baseFOV = 80;
   const fovAmplitude = 220;
-  const fovFrequency = 0.0023;
+  const fovFrequency = 0.0015;
 
   useFrame(() => {
     const time = Date.now() * drunkSpeed;
