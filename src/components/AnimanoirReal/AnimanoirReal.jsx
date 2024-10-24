@@ -39,7 +39,7 @@ const AndrosOne = () => {
   return <primitive object={fbx} />;
 };
 
-const DrunkenCamera = ({ isDrunk, fovModulation }) => {
+const DrunkenCamera = ({ fovModulation }) => {
   const { camera } = useThree();
   const drunkMagnitude = 0.09;
   const drunkSpeed = 0.0035;
@@ -48,13 +48,10 @@ const DrunkenCamera = ({ isDrunk, fovModulation }) => {
   const fovFrequency = 0.0023;
 
   useFrame(() => {
-    if (true) {
-      const time = Date.now() * drunkSpeed;
-      camera.rotation.x = Math.sin(time) * drunkMagnitude;
-      camera.rotation.y = Math.cos(time * 0.5) * drunkMagnitude;
-      camera.rotation.z = Math.sin(time * 0.5) * drunkMagnitude * 2.5;
-    }
-
+    const time = Date.now() * drunkSpeed;
+    camera.rotation.x = Math.sin(time) * drunkMagnitude;
+    camera.rotation.y = Math.cos(time * 0.5) * drunkMagnitude;
+    camera.rotation.z = Math.sin(time * 0.5) * drunkMagnitude * 2.5;
     const newFOV = baseFOV + Math.sin(Date.now() * fovFrequency) * fovAmplitude * fovModulation;
     camera.fov = newFOV;
     camera.updateProjectionMatrix();
