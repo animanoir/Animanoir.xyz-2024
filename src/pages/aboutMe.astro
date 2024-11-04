@@ -22,13 +22,20 @@ import AnimanoirReal from "@/components/AnimanoirReal/AnimanoirReal.jsx";
       <div class="aboutMe-fiberCanvas">
         <div class="aboutMe-info">
           <p>
-            <b>Software developer</b>, multidisciplinary <b>visual & sound artist</b>—most of the time everything & nothing at once.
+            <b>Software developer</b>, multidisciplinary <b
+              >visual & sound artist</b
+            >—most of the time everything & nothing at once.
           </p>
           <p>
-            Absolute <b>philosophy</b> freak—currently reading <a href="https://animanoir.notion.site/Mi-biblioteca-digital-06dfea2aa5e048bba145b85d5395c68f" target="_blank">these books</a>.
+            Absolute <b>philosophy</b> freak—currently reading <a
+              href="https://animanoir.notion.site/Mi-biblioteca-digital-06dfea2aa5e048bba145b85d5395c68f"
+              target="_blank">these books</a
+            >. I do believe nothing we say is real.
           </p>
           <p>
-            At the moment working as a <b>front-end developer</b> (it just pays!), but always <a href="mailto:etherealflux94@gmail.com">open</a> to actually have fun & more money.
+            At the moment working as a <b>front-end developer</b> (it just pays!),
+            but always <a href="mailto:etherealflux94@gmail.com">open</a> to actually
+            have fun & more money.
           </p>
         </div>
         <AnimanoirReal client:load />
@@ -69,30 +76,30 @@ import AnimanoirReal from "@/components/AnimanoirReal/AnimanoirReal.jsx";
       }
 
       @media (max-width: 500px) {
-      .container {
-        width: 100%;
+        .container {
+          width: 100%;
+        }
+        .aboutMe-info {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 80%;
+          text-align: center;
+        }
+        .aboutMe-fiberCanvas {
+          width: 100%;
+          height: 100%;
+        }
+        .heroImage {
+          width: 100vw;
+          height: 100vh;
+          object-fit: cover;
+        }
       }
-      .aboutMe-info {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 80%;
-        text-align: center;
-      }
-      .aboutMe-fiberCanvas {
-        width: 100%;
-        height: 100%;
-      }
-      .heroImage {
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover;
-      }
-    }
 
       @media (min-width: 2000px) {
-          .aboutMe-info {
+        .aboutMe-info {
           position: absolute;
           top: 65vh;
           left: 2%;
