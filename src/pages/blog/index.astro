@@ -42,7 +42,7 @@ const posts = (await getCollection("blog")).sort(
     </main>
     <style>
       .blogpostsContainer {
-        margin: 0 25rem;
+        margin: 0 40rem;
         padding-top: 4rem;
       }
       .postDate {
@@ -53,6 +53,7 @@ const posts = (await getCollection("blog")).sort(
       }
       ul {
         list-style-type: none;
+        padding: 0;
       }
 
       ul a:hover {
@@ -93,7 +94,16 @@ const posts = (await getCollection("blog")).sort(
         margin: 0;
         font-size: 1em;
       }
-
+      @media (min-width: 1520px) {
+        .blogpostsContainer {
+          margin: 0 30rem;
+        }
+      }
+      @media (min-width: 1900px) {
+        .blogpostsContainer {
+          margin: 0 43rem;
+        }
+      }
       @media (max-width: 768px) {
         .blogpostsContainer {
           margin: 0;

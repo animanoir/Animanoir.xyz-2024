@@ -39,7 +39,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
         --color-light-faded: #fdfefe7f;
         --color-gray: #999;
         --font-size-small: 0.8rem;
-        --font-size-large: 3rem;
+        --font-size-large: 3.4rem;
         --font-size-medium: 1rem;
       }
 
@@ -63,7 +63,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
         font-size: var(--font-size-large);
         text-align: start;
         font-family: var(--font-montserrat);
-        line-height: 1;
+        line-height: 1.2;
       }
 
       .summary {
@@ -93,7 +93,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
 
       .articleBody {
         color: var(--color-light);
-        padding: 0 6rem;
+        padding: 0 10rem;
         font-size: var(--font-size-medium);
       }
 
@@ -118,6 +118,16 @@ const { title, summary, pubDate, heroImage } = Astro.props;
           padding: 0 1rem;
           font-size: large;
           padding-bottom: 50%;
+        }
+      }
+      @media (min-width: 1520px) {
+        .articleBody {
+          padding: 0 6rem;
+        }
+      }
+      @media (min-width: 1900px) {
+        .articleBody {
+          padding: 0 10rem;
         }
       }
     </style>

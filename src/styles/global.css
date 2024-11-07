@@ -218,7 +218,7 @@ pre {
   font-size: 0.9rem;
 }
 
-pre > code {
+pre>code {
   all: unset;
 }
 
@@ -234,7 +234,7 @@ blockquote {
   line-height: 1.6;
   margin: 20px auto;
   padding: 1.2em 5rem 1.2em 5rem;
-  quotes: "\201C""\201D""\2018""\2019";
+  quotes: "\201C" "\201D" "\2018" "\2019";
 }
 
 ul {
@@ -288,7 +288,8 @@ p {
 .blog-image {
   width: 100%;
   height: auto;
-  padding-bottom: 3rem;
+  margin: 2rem 0;
+
 }
 
 iframe {
@@ -318,8 +319,4 @@ iframe {
 /* When you click on the handle */
 ::-webkit-scrollbar-thumb:active {
   background: #fdfefe;
-}
-
-.blog-image {
-  padding-bottom: 0;
 }
