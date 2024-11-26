@@ -21,21 +21,26 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
       <div class="aboutMe-fiberCanvas">
         <div class="aboutMe-info">
           <p>
-            <b>Software developer</b>, multidisciplinary <b
+            <p class="rotatedText180">Programmer</p>, multidisciplinary <b
               >visual & sound artist</b
-            >—most of the time everything & nothing at once.
+            >.<p class="rotatedText90">
+              <b>Most of the time everything & nothing at once.</b>
+            </p>
+          </p>
+          <p style="letter-spacing: 1rem;">
+            Absolute <b>philosophy</b>/whatever re-destroys my mind
+            freak—currently reading: <p class="rotatedText270">
+              <a
+                href="https://animanoir.notion.site/Mi-biblioteca-digital-06dfea2aa5e048bba145b85d5395c68f"
+                target="_blank">these books.</a
+              >
+            </p>
           </p>
           <p>
-            Absolute <b>philosophy</b>/mind-bending ideas freak—currently
-            reading <a
-              href="https://animanoir.notion.site/Mi-biblioteca-digital-06dfea2aa5e048bba145b85d5395c68f"
-              target="_blank">these books</a
+            For collabarations, commissions, or just to say hi, <a
+              href="mailto:etherealflux94@gmail.com"
+              target="_blank">contact me</a
             >.
-          </p>
-          <p>
-            At the moment working as a <b>front-end developer</b> (it just pays!),
-            but always <a href="mailto:etherealflux94@gmail.com">open</a> to actually
-            have fun & more money.
           </p>
         </div>
       </div>
@@ -60,6 +65,9 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
         text-align: center; /* Center text */
       }
 
+      .aboutMe-info p {
+      }
+
       .aboutMe-fiberCanvas {
         width: 100%;
         height: 100%;
@@ -75,6 +83,34 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
         animation: fadeIn ease-in 1;
         animation-fill-mode: forwards;
         animation-duration: 2s;
+      }
+
+      .rotatedText90 {
+        rotate: 90deg !important;
+        margin: 0;
+        padding: 0;
+      }
+      .rotatedText180 {
+        rotate: 180deg !important;
+        margin: 0;
+        padding: 0;
+      }
+      .rotatedText270 {
+        rotate: 270deg !important;
+        margin: 0;
+        padding: 0;
+      }
+
+      .rotatedText180::selection {
+        background-color: #ffcc00; /* Example color for rotatedText180 */
+      }
+
+      .rotatedText90::selection {
+        background-color: #00ccff; /* Example color for rotatedText90 */
+      }
+
+      .rotatedText270::selection {
+        background-color: #cc00ff; /* Example color for rotatedText270 */
       }
 
       @media (max-width: 500px) {

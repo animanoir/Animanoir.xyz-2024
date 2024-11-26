@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar.astro";
   <head>
     <BaseHead
       title={"A/Visuals by Óscar A. Montiel"}
-      description={"Animations & visual effects I do mostly with Blender & Max/MSP."}
+      description={"Animations & A/Visual art."}
       image="/images/oscar-a-montiel-avisuals.jpg"
     />
   </head>
@@ -18,6 +18,31 @@ import Navbar from "@/components/Navbar.astro";
     <Navbar />
     <main>
       <YouTubeGrid client:load count={20} />
+      <div class="avisualText">
+        <p>
+          Visual work I do. <a
+            href="https://www.youtube.com/@animanoir"
+            target="_blank">Full gallery</a
+          >.
+        </p>
+      </div>
     </main>
-  </body>
+  </body><style>
+    .avisualText {
+      display: flex;
+      position: absolute;
+      text-align: center;
+      font-size: 5rem;
+      color: #fdfefe;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .avisualText p {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      overflow: hidden;
+      rotate: 180deg;
+    }
+  </style>
 </html>
