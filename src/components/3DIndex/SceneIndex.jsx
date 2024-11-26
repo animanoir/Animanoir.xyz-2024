@@ -2,7 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Loader } from "@react-three/drei";
 import { EffectComposer, Noise, Bloom, Vignette } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
-import { AnimanoirLogo } from "./AnimanoirLogo";
+import { AnimanoirLogoScene } from "./AnimanoirLogoScene";
 import "@/styles/canvasFiber.css";
 import * as THREE from "three";
 
@@ -31,7 +31,7 @@ export const SceneIndex = () => {
   return (
     <div id="fiberCanvas">
       <Canvas onCreated={sceneCreated} camera={cameraProps} style={canvasStyle}>
-        <AnimanoirLogo />
+        <AnimanoirLogoScene />
         <OrbitControls
           enableDamping
           minDistance={10}
