@@ -2,7 +2,7 @@
 import BaseHead from "@/components/BaseHead.astro";
 import Header from "@/components/Header.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
-import FiberContainer from "@/components/FiberContainer.jsx";
+import SceneIndex from "@/components/3DIndex/SceneIndex.jsx";
 import Navbar from "@/components/Navbar.astro";
 ---
 
@@ -16,7 +16,7 @@ import Navbar from "@/components/Navbar.astro";
     />
   </head>
   <body>
-    <FiberContainer client:load />
+    <SceneIndex client:load />
     <div id="mainFrame">
       <Header title={SITE_TITLE} />
       <Navbar />

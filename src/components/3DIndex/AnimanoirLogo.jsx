@@ -3,7 +3,7 @@ import { Float, Environment } from "@react-three/drei";
 import { ModelANLogo } from "./ModelANLogo";
 import { useFrame } from "@react-three/fiber";
 
-export const Scene = () => {
+export const AnimanoirLogo = () => {
   const ringOneRef = useRef();
   const ringTwoRef = useRef();
   const ringThreeRef = useRef();

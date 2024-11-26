@@ -3,7 +3,6 @@ import BaseHead from "../components/BaseHead.astro";
 import { SITE_DESCRIPTION } from "../consts";
 import Navbar from "@/components/Navbar.astro";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
-import AnimanoirReal from "@/components/AnimanoirReal/AnimanoirReal.jsx";
 ---
 
 <html lang="en">
@@ -39,7 +38,6 @@ import AnimanoirReal from "@/components/AnimanoirReal/AnimanoirReal.jsx";
             have fun & more money.
           </p>
         </div>
-        <AnimanoirReal client:load />
       </div>
     </div>
     <style>
@@ -47,16 +45,19 @@ import AnimanoirReal from "@/components/AnimanoirReal/AnimanoirReal.jsx";
         color: #fdfefe;
         display: flex;
         font-family: "Open Sans", sans-serif;
+        justify-content: center; /* Center horizontally */
+        min-height: 100vh; /* Full viewport height */
       }
 
       .aboutMe-info {
         position: absolute;
-        top: 55vh;
-        left: 2%;
+        top: 50%; /* Center vertically */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -50%); /* Perfect centering */
         z-index: 10;
         width: 30%;
         font-size: 1.2rem;
-        text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        text-align: center; /* Center text */
       }
 
       .aboutMe-fiberCanvas {
@@ -101,9 +102,9 @@ import AnimanoirReal from "@/components/AnimanoirReal/AnimanoirReal.jsx";
 
       @media (min-width: 2000px) {
         .aboutMe-info {
-          position: absolute;
-          top: 65vh;
-          left: 2%;
+          top: 50%; /* Center vertically */
+          left: 50%; /* Center horizontally */
+          transform: translate(-50%, -50%);
           z-index: 10;
           width: 30%;
           font-size: 1.5rem;

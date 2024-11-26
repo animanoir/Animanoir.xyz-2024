@@ -1,13 +1,12 @@
-import { useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Loader } from "@react-three/drei";
 import { EffectComposer, Noise, Bloom, Vignette } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
-import { Scene } from "./Scene";
+import { AnimanoirLogo } from "./AnimanoirLogo";
 import "@/styles/canvasFiber.css";
 import * as THREE from "three";
 
-export const FiberCanvas = () => {
+export const SceneIndex = () => {
   const sceneCreated = ({ gl }) => {
     gl.setClearColor("black", 1);
     gl.toneMapping = THREE.ACESFilmicToneMapping;
@@ -32,7 +31,7 @@ export const FiberCanvas = () => {
   return (
     <div id="fiberCanvas">
       <Canvas onCreated={sceneCreated} camera={cameraProps} style={canvasStyle}>
-        <Scene />
+        <AnimanoirLogo />
         <OrbitControls
           enableDamping
           minDistance={10}
@@ -52,4 +51,4 @@ export const FiberCanvas = () => {
   );
 };
 
-export default FiberCanvas;
+export default SceneIndex;
