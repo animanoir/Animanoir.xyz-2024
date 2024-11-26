@@ -4,7 +4,7 @@ import './YoutubeGrid.css';
 const PLAYLIST_ID = 'PLNgUiXAsdpaVbq6BO8H0ZVS20h0A_o_2F';
 const API_KEY = import.meta.env.PUBLIC_YOUTUBE_API;
 
-export function YouTubeGrid({ count = 6 }) {
+export function YouTubeGrid({ count = 1 }) {
   const [videos, setVideos] = useState([]);
   const [error, setError] = useState(null);
 
@@ -63,17 +63,6 @@ export function YouTubeGrid({ count = 6 }) {
           </a>
         </div>
       ))}
-      <div className="youtubeWelcome">
-        <div className="youtubeWelcome-content">
-          <p className="fadeInSlow">
-            Animations made with Blender & Max/MSP. For the full list of videos, visit my{' '}
-            <a href={`https://www.youtube.com/playlist?list=${PLAYLIST_ID}`} target="_blank" rel="noopener noreferrer">
-              YouTube playlist
-            </a>
-            .
-          </p>
-        </div>
-      </div>
     </div>
   );
 }

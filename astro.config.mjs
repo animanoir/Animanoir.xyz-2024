@@ -17,11 +17,11 @@ export default defineConfig({
     clientPrerender: true,
   },
   image: {
-    domains: ["notion.so"],
+    domains: ["youtube.com"],
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "notion.so",
+        hostname: "youtube.com",
         port: "",
         pathname: "/**"
       }

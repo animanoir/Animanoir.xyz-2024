@@ -1,9 +1,8 @@
 .youtube-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 5fr);
   width: 100vw;
   height: 100vh;
-  /* overflow: hidden; */
 }
 
 .youtube-grid-item {
@@ -64,23 +63,25 @@
 }
 
 @keyframes glitchEffect {
-  0% {
+  0% {}
 
-  }
   20% {
     color: #ff00ff;
   }
+
   40% {
     color: #00ffff;
   }
+
   60% {
     color: #ffff00;
   }
+
   80% {
     color: #00ff00;
   }
-  100% {
-  }
+
+  100% {}
 }
 
 .youtubeWelcome {
