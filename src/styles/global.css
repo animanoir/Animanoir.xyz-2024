@@ -7,6 +7,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap");
 
 
+.image-post {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 p::selection {
   color: red;
 }
@@ -291,10 +297,11 @@ p {
 }
 
 .blog-image {
-  width: 100%;
-  height: auto;
-  margin: 2rem 0;
-
+  width: 80%;
+  display: block;
+  margin: 0 auto;
+  padding: 2rem 0;
+  height: 80%;
 }
 
 iframe {
