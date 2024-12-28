@@ -2,8 +2,6 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 
 export const SITE_TITLE = "Óscar A. Montiel";
-export const SITE_SUBTITLE = "Multimedia Software Engineer";
+export const SITE_SUBTITLE = "Multidisciplinary Media Artist";
 export const SITE_DESCRIPTION =
-  "Multimedia Software Engineer";
-export const TWITTER_PROFILE = "https://twitter.com/geosminu";
-export const GITHUB_PROFILE = "https://github.com/animanoir";
+  "Software Engineer by profession—Multidisciplinary Media Artist by choice. Most of the time everything & nothing at once. Just like a poet, I tend to rhyme without knowing. Unleashed and boundless, just like you!";

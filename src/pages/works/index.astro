@@ -1,7 +1,7 @@
 ---
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { SITE_TITLE } from "../../consts";
 import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
 import Navbar from "@/components/Navbar.astro";
@@ -21,7 +21,7 @@ for (let i = posts.length - 1; i > 0; i--) {
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead title={SITE_TITLE} description={"Works"} />
   </head>
   <body>
     <Header />
