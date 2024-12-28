@@ -11,13 +11,12 @@ import { Picture } from "astro:assets";
 import img1 from "@/images/works/arqueologia-flickeriana/óscar a montiel-flickr-1.png";
 import img2 from "@/images/works/arqueologia-flickeriana/óscar a montiel-flickr-2.png";
 import img3 from "@/images/works/arqueologia-flickeriana/óscar a montiel-flickr-3.png";
+import img4 from "@/images/works/arqueologia-flickeriana/imagen-territorio-logo.png";
 
-<h3 style="padding: 0 3rem 3rem 3rem;">[**Arqueología Flickeriana**](https://arqueologia-flickeriana.vercel.app/) is a tool designed to explore photographs uploaded at a specific date across various states in Mexico.</h3>
-
-
+<h3 style="padding: 3rem;font-weight:bold;">[**Arqueología Flickeriana**](https://arqueologia-flickeriana.vercel.app/) is a tool designed to explore photographs uploaded at a specific date across various states in Mexico.</h3>
 
 <Picture
-  src={img1}
+  src={img4}
   alt={
     "Óscar A. Montiel — Arqueología Flickeriana: A Digital Lens Into Mexico's Daily Photographic Pulse "
   }
@@ -26,6 +25,7 @@ import img3 from "@/images/works/arqueologia-flickeriana/óscar a montiel-flickr
   loading="lazy"
   class="blog-image"
 />
+
 
 The inspiration for this tool predates its submission to a public call for projects. I find myself captivated by the allure of photos uploaded to this service, believing them to hold a more natural and human essence, significantly more spontaneous than the overly curated and often artificial images found on mainstream social media platforms. To me, the genuine quality of these images contrasts sharply with the pretense prevalent in social media photos.
 
@@ -54,3 +54,14 @@ Moreover, I'm intrigued by the concept of simultaneity, the idea of multiple eve
 />
 
 In a world increasingly defined by filtered experiences, "Arqueología Flickeriana" serves as a refreshing counterpoint, inviting us to ponder the complexities and simplicities of human existence, one photograph at a time.
+
+<Picture
+  src={img1}
+  alt={
+    "Óscar A. Montiel — Arqueología Flickeriana: A Digital Lens Into Mexico's Daily Photographic Pulse "
+  }
+  formats={["webp"]}
+  decoding="async"
+  loading="lazy"
+  class="blog-image"
+/>

@@ -31,7 +31,7 @@ const { title, description, heroImage } = Astro.props;
     <ModifiedHeader />
     <Navbar />
     <article class="articleContainer">
-      <div class="articleBody">
+      <div class="top-section">
         {
           heroImage && (
             <Picture
@@ -46,27 +46,48 @@ const { title, description, heroImage } = Astro.props;
           )
         }
         <h1 class="title">{title}</h1>
+      </div>
+      <div class="articleBody">
         <slot />
       </div>
     </article>
     <style>
+      body {
+        margin: 0;
+      }
+
+      .top-section {
+        display: flex;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+      }
+
       .heroImage {
         height: 500px;
+        width: 99vw;
         object-fit: cover;
-        width: 100%;
-        padding-bottom: 2rem;
+        padding-bottom: 3rem;
+        filter: brightness(0.8);
       }
-      .heroImage.loaded {
-        opacity: 1;
-      }
+
       .title {
+        width: 100%;
         margin: 0;
-        padding-bottom: 1rem;
-        font-size: 4rem;
+        font-size: 5rem;
         font-family: "Montserrat", sans-serif;
-        line-height: 1;
-        text-align: end;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        text-shadow:
+          2px 2px 4px rgba(0, 0, 0, 0.8),
+          -1px -1px 0 rgba(0, 0, 0, 0.4);
+        color: #ffffff;
+        z-index: 2;
       }
+
       .tools {
         display: block;
         text-align: center;
@@ -76,27 +97,40 @@ const { title, description, heroImage } = Astro.props;
         padding-bottom: 2rem;
         font-style: bold;
       }
+
       .articleContainer {
-        padding-top: 8vh;
+        padding-top: 10vh;
         padding-bottom: 40vh;
         margin: 0 auto;
         position: relative;
         width: 50%;
       }
+
       .articleBody {
-        font-family: "Open Sans", sans-serif;
+        font-family: "Lora", serif;
         color: #fdfefe;
-        padding: 0 6rem;
-        font-size: 1rem;
+        font-size: 1.1rem;
+        width: 70%;
+        margin: 0 auto;
       }
+
       .articleContainer h1 {
         padding: 2rem;
         padding-top: 0;
       }
+
       hr {
         border-top: 1px solid #ddd;
         margin: 1rem 0;
       }
+
+      @media (max-width: 1920px) {
+        .articleContainer {
+          width: 60%;
+          max-width: 1200px;
+        }
+      }
+
       @media (max-width: 768px) {
         .title {
           font-size: 2.5rem;
@@ -108,12 +142,7 @@ const { title, description, heroImage } = Astro.props;
           padding: 0 1rem;
         }
       }
-      @media (max-width: 1920px) {
-        .articleContainer {
-          width: 60%;
-          max-width: 1200px;
-        }
-      }
+
       @media (max-width: 480px) {
         .title {
           font-size: 2rem;
