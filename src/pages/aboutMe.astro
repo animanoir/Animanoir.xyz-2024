@@ -21,25 +21,14 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
       <div class="canvas">
         <main class="content">
           <p>
-            <b>Software engineer</b> by profession, multidisciplinary <b
-              >visual & sound artist</b
-            > by choice. Most of the time everything & nothing at once. Just like
-            a poet, I tend to rhyme without knowing.
+            <b>Software Engineer</b> by profession—<b
+              >Multidisciplinary Media Artist</b
+            > by choice. <i>Most of the time everything & nothing at once</i>.
+            Just like a poet, I tend to rhyme without knowing. <span
+              style="letter-spacing: 1rem;">Unleashed and boundless</span
+            >, <b>just like you!</b>
           </p>
-          <p>
-            Proficient in coming up with <b>creative ideas</b> with the adequate
-            mediums of expression—unleashed and boundless, <b>just like you!</b>
-          </p>
-          <p>
-            One of my greatest achievements is to be alive, everything else is
-            just an emergent consequence—seems inevitable, can't control it.
-          </p>
-          <p>
-            And despite everyhing, it seems <b
-              >I'm always, <i>always</i> learning</b
-            >...
-          </p>
-          <p>
+          <p style="font-size: 0.8rem;">
             For collaborations, commissions, or <b>just to say hi</b>,
             <a href="mailto:etherealflux94@gmail.com" target="_blank"
               >contact me</a
@@ -47,10 +36,20 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
           </p>
           <p style="text-align:center;font-size:2rem;">
             <a
-              style="text-decoration: none; color: inherit;"
+              style="text-decoration: none; color: inherit; display: inline-block; animation: rotate 4s linear infinite;"
               href="https://www.youtube.com/watch?v=mqqx9LCo36Q">☯</a
             >
           </p>
+          <style>
+            @keyframes rotate {
+              from {
+                transform: rotate(0deg);
+              }
+              to {
+                transform: rotate(360deg);
+              }
+            }
+          </style>
         </main>
       </div>
     </div>
@@ -77,7 +76,7 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
-        width: 30%;
+        width: 40%;
         z-index: 10;
         text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
       }
@@ -85,6 +84,7 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
       .content p {
         font-size: 1.3rem;
         padding: 1rem;
+        line-height: 2.3rem;
       }
 
       @media (max-width: 500px) {
