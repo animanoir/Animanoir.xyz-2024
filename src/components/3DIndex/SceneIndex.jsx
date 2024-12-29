@@ -1,12 +1,15 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Loader } from "@react-three/drei";
-import { EffectComposer, Noise, Bloom, Vignette } from "@react-three/postprocessing";
+import { EffectComposer, Noise, Bloom, Vignette, DepthOfField } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import { AnimanoirLogoScene } from "./AnimanoirLogoScene";
 import "@/styles/canvasFiber.css";
 import * as THREE from "three";
 
+
 export const SceneIndex = () => {
+
+
   const sceneCreated = ({ gl }) => {
     gl.setClearColor("black", 1);
     gl.toneMapping = THREE.ACESFilmicToneMapping;
@@ -28,6 +31,7 @@ export const SceneIndex = () => {
     fov: 70,
   };
 
+
   return (
     <div id="fiberCanvas">
       <Canvas onCreated={sceneCreated} camera={cameraProps} style={canvasStyle}>
@@ -41,9 +45,15 @@ export const SceneIndex = () => {
           target={[0, 0, 0]}
         />
         <EffectComposer>
-          <Vignette darkness={0.4} />
+          <Vignette eskil={false} offset={0.1} darkness={0.7}  />
+          <DepthOfField
+            focusDistance={0.5}    // Move focus point to scene center
+            focalLength={10.0}      // Increase for stronger focus effect
+            bokehScale={50}         // More pronounced bokeh effect
+            height={720}  
+          />
           <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.25} />
-          <Bloom intensity={0.5} />
+          <Bloom intensity={0.8} />
         </EffectComposer>
       </Canvas>
       <Loader containerStyles={{ backgroundColor: "#060606" }} />
