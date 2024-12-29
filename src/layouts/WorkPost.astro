@@ -69,6 +69,11 @@ const { title, description, heroImage } = Astro.props;
         object-fit: cover;
         padding-bottom: 3rem;
         filter: brightness(0.8);
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+      .heroImage.loaded {
+        opacity: 1;
       }
 
       .title {
