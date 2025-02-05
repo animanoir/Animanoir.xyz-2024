@@ -21,21 +21,22 @@ import { Picture } from "astro:assets";
     <div class="container">
       <div class="canvas">
         <main class="content">
-          <!--           <p>
-            <b>Software Engineer</b> by profession—<b
-              >Multidisciplinary Media Artist</b
-            > by choice. <i>Most of the time everything & nothing at once</i>.
-            Just like a poet, I tend to rhyme without knowing. <span
-              style="letter-spacing: 1rem;">Unleashed and boundless</span
-            >, <b>just like you!</b>
-          </p>
-          <p style="font-size: 0.8rem;">
-            For collaborations, commissions, or <b>just to say hi</b>,
-            <a href="mailto:etherealflux94@gmail.com" target="_blank"
-              >contact me</a
-            >.
-          </p>
-          -->
+          <div class="text-overlay">
+            <p>
+              <b>Software Engineer</b> by profession—<b
+                >Multidisciplinary Media Artist</b
+              > by choice. <i>Most of the time everything & nothing at once</i>.
+              Just like a poet, I tend to rhyme without knowing. <span
+                style="letter-spacing: 1rem;">Unleashed and boundless</span
+              >, <b>just like you!</b>
+            </p>
+            <p style="font-size: 0.8rem;">
+              For collaborations, commissions, or <b>just to say hi</b>,
+              <a href="mailto:etherealflux94@gmail.com" target="_blank"
+                >contact me</a
+              >.
+            </p>
+          </div>
           <Picture
             src={gif1}
             alt={"Óscar A. Montiel"}
@@ -45,7 +46,7 @@ import { Picture } from "astro:assets";
             loading="eager"
             quality={100}
           />
-          <p style="text-align:center;font-size:2rem;">
+          <p style="text-align:center;font-size:2rem; padding-top: 1rem;">
             <a
               style="text-decoration: none; color: inherit; display: inline-block; animation: rotate 4s linear infinite;"
               href="https://www.youtube.com/watch?v=mqqx9LCo36Q">☯</a
@@ -63,6 +64,43 @@ import { Picture } from "astro:assets";
         to {
           transform: rotate(360deg);
         }
+      }
+
+      .text-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        padding: 1rem;
+        box-sizing: border-box;
+      }
+
+      .content:hover .text-overlay {
+        opacity: 1;
+        z-index: 20;
+      }
+
+      .content:hover .heroImage {
+        opacity: 0.3;
+      }
+
+      .heroImage {
+        transition: opacity 0.4s ease;
+      }
+
+      .text-overlay p {
+        font-size: 1rem;
+        padding: 1.5rem;
+        line-height: 2rem !important;
+        color: #fdfefe;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
       }
       .container {
         color: #fdfefe;
@@ -82,28 +120,31 @@ import { Picture } from "astro:assets";
         z-index: 10;
         text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
       }
-
-      /*       .content p {
-        font-size: 1.3rem;
-        padding: 1rem;
-        line-height: 2.3rem;
-      } */
-
       @media (max-width: 500px) {
         .content {
           width: 80%;
+          z-index: 10;
+        }
+
+        .text-overlay p {
+          font-size: 1rem;
+          padding: 0.5rem;
+          line-height: 1.5rem;
         }
       }
+
       @media (max-width: 1920px) {
         .content p {
           font-size: 1rem;
         }
       }
+
       @media (max-width: 500px) {
         .content {
           width: 90%;
           z-index: 10;
         }
+
         .heroImage {
           width: 100%;
           top: 50;
