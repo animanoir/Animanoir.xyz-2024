@@ -1,6 +1,5 @@
 ---
 import "@/styles/global.css";
-import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -48,12 +47,10 @@ const {
 <script>
   import { handleAllImages } from "../scripts/imageLoader";
 
-  // Ejecutar cuando el DOM está listo
+  // Runs when DOM is ready.
   document.addEventListener("DOMContentLoaded", handleAllImages);
 
-  // Ejecutar después de las transiciones de página
+  // Executes after page transition.
   document.addEventListener("astro:page-load", handleAllImages);
   document.addEventListener("astro:after-swap", handleAllImages);
 </script>
-
-<ViewTransitions />
