@@ -3,6 +3,8 @@ import { YouTubeGrid } from "@/components/YouTubeGrid/YoutubeGrid.jsx";
 import BaseHead from "@/components/BaseHead.astro";
 import Header from "@/components/Header.astro";
 import Navbar from "@/components/Navbar.astro";
+import { Picture } from "astro:assets";
+import heroImage from "@/images/works/visuals/visuals-cover.jpg";
 ---
 
 <html lang="en">
@@ -10,13 +12,26 @@ import Navbar from "@/components/Navbar.astro";
     <BaseHead
       title={"A/Visuals by Óscar A. Montiel"}
       description={"Animations & A/Visual art."}
-      image="/images/oscar-a-montiel-avisuals.jpg"
+      image={heroImage}
     />
   </head>
   <body>
     <Header />
     <Navbar />
-    <main>
+    <main class="articleContainer">
+      <div class="top-section">
+        <Picture
+          src={heroImage}
+          alt={"3D A/Vision by Óscar A. Montiel"}
+          class="heroImage"
+          formats={["webp"]}
+          decoding="async"
+          loading="eager"
+          quality={100}
+        />
+        )
+        <h1 class="title">{"3D/A/Visual"}</h1>
+      </div>
       <YouTubeGrid client:load count={20} />
       <div class="avisualText">
         <p>
@@ -28,6 +43,50 @@ import Navbar from "@/components/Navbar.astro";
       </div>
     </main>
   </body><style>
+    .articleContainer {
+      padding-top: 10vh;
+      padding-bottom: 40vh;
+      margin: 0 auto;
+      position: relative;
+      width: 50%;
+    }
+    body {
+      margin: 0;
+    }
+    .top-section {
+      display: flex;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+    }
+    .heroImage {
+      height: 500px;
+      width: 99vw;
+      object-fit: cover;
+      padding-bottom: 3rem;
+      filter: brightness(0.9);
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    .heroImage.loaded {
+      opacity: 1;
+    }
+    .title {
+      width: 100%;
+      margin: 0;
+      font-size: 5rem;
+      font-family: "Montserrat", sans-serif;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      text-shadow:
+        2px 2px 4px rgba(0, 0, 0, 0.8),
+        -1px -1px 0 rgba(0, 0, 0, 0.4);
+      color: #ffffff;
+      z-index: 2;
+    }
     .avisualText {
       display: flex;
       position: absolute;

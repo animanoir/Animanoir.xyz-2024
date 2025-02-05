@@ -3,4 +3,4 @@
 
 export const SITE_TITLE = "Óscar A. Montiel";
 export const SITE_SUBTITLE = "Multidisciplinary Media Artist";
-export const SITE_DESCRIPTION = "Multidisplinary Media Artist—A/visuals & Interactive Art.";
+export const SITE_DESCRIPTION = "Multidisciplinary Media Artist—A/visuals & Interactive Art.";

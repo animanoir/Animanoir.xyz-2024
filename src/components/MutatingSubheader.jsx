@@ -108,6 +108,8 @@ const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
     "Code Conjurer",
     "Metaverse Mapper",
     "Quantum Quester",
+    "Software Engineer",
+
     "Astral Architect",
     "Phantasmal Programmer",
     "Nano Networker",
@@ -142,6 +144,9 @@ const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
     "Poet of Systems",
     "Front-End Futurist",
     "Generative Guide",
+    "Web Engineer",
+    "Friend",
+    "Human",
     "Creative Alchemist",
     "Digital Architect",
     "Artistic Strategist",

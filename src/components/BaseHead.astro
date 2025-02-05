@@ -14,13 +14,6 @@ const {
   description,
   image = "images/animanoir-oscar-a-montiel-tw.jpg",
 } = Astro.props;
-
-const baseSiteURL = new URL(Astro.site);
-
-// Ensure image is an absolute URL
-const fullImageURL = image.startsWith("http")
-  ? image
-  : new URL(image, baseSiteURL).href;
 ---
 
 <!-- Global Metadata -->
