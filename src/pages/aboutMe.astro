@@ -2,6 +2,8 @@
 import BaseHead from "../components/BaseHead.astro";
 import Navbar from "@/components/Navbar.astro";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
+import gif1 from "@/images/about/oscar-a-montiel.gif";
+import { Picture } from "astro:assets";
 ---
 
 <html lang="en">
@@ -19,7 +21,7 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
     <div class="container">
       <div class="canvas">
         <main class="content">
-          <p>
+          <!--           <p>
             <b>Software Engineer</b> by profession—<b
               >Multidisciplinary Media Artist</b
             > by choice. <i>Most of the time everything & nothing at once</i>.
@@ -33,27 +35,35 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
               >contact me</a
             >.
           </p>
+          -->
+          <Picture
+            src={gif1}
+            alt={"Óscar A. Montiel"}
+            class="heroImage"
+            formats={["gif"]}
+            decoding="async"
+            loading="eager"
+            quality={100}
+          />
           <p style="text-align:center;font-size:2rem;">
             <a
               style="text-decoration: none; color: inherit; display: inline-block; animation: rotate 4s linear infinite;"
               href="https://www.youtube.com/watch?v=mqqx9LCo36Q">☯</a
             >
           </p>
-          <style>
-            @keyframes rotate {
-              from {
-                transform: rotate(0deg);
-              }
-              to {
-                transform: rotate(360deg);
-              }
-            }
-          </style>
         </main>
       </div>
     </div>
 
     <style>
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
       .container {
         color: #fdfefe;
         display: flex;
@@ -94,6 +104,18 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
       @media (max-width: 1920px) {
         .content p {
           font-size: 1rem;
+        }
+      }
+      @media (max-width: 500px) {
+        .content {
+          width: 90%;
+          z-index: 10;
+        }
+        .heroImage {
+          width: 100%;
+          top: 50;
+          object-fit: cover;
+          z-index: -1;
         }
       }
     </style>
