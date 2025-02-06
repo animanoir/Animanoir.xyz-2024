@@ -4,14 +4,67 @@
 }
 
 .heading {
-  font-size: 4.2rem;
+  font-size: 4.5;
   line-height: 1.2;
   min-height: 180px;
   transition: opacity 0.3s ease;
   margin: 0;
 }
 
-@media (max-width: 768px) {
+/* Large Desktop */
+@media (min-width: 1200px) {
+  .heading {
+    font-size: 4.5rem;
+    min-height: 200px;
+  }
+
+  .headingContainer {
+    height: 220px;
+    padding: 0 6rem;
+  }
+}
+
+/* Desktop */
+@media (max-width: 1199px) and (min-width: 992px) {
+  .heading {
+    font-size: 4rem;
+    min-height: 180px;
+  }
+
+  .headingContainer {
+    height: 200px;
+    padding: 0 5rem;
+  }
+}
+
+/* Tablet */
+@media (max-width: 991px) and (min-width: 768px) {
+  .heading {
+    font-size: 3.5rem;
+    min-height: 160px;
+  }
+
+  .headingContainer {
+    height: 180px;
+    padding: 0 4rem;
+  }
+}
+
+/* Mobile Large */
+@media (max-width: 767px) and (min-width: 576px) {
+  .heading {
+    font-size: 2.5rem;
+    min-height: 120px;
+  }
+
+  .headingContainer {
+    height: 140px;
+    padding: 0 3rem;
+  }
+}
+
+/* Mobile Small */
+@media (max-width: 575px) {
   .heading {
     font-size: 2rem;
     min-height: 100px;

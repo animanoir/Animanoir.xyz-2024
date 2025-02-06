@@ -138,17 +138,73 @@ import img9 from "@/images/works/visuals/visuals-9.jpg";
     </div>
   </body><style>
     .top-link {
-      /* position: fixed; */
       display: flex;
       justify-content: center;
       cursor: pointer;
     }
     .images-container {
-      padding-top: 15vh;
+      padding-top: 32vh;
+    }
+
+    /* QHD - 2560x1440 */
+    @media (min-width: 2560px) {
+      .images-container {
+        padding-top: 32vh;
+      }
+      .articleContainer {
+        width: 70%;
+        max-width: 2000px;
+        padding-top: 5vh;
+      }
+    }
+
+    /* Large Desktop */
+    @media (min-width: 1200px) and (max-width: 2559px) {
+      .images-container {
+        padding-top: 28vh;
+      }
+      .articleContainer {
+        width: 75%;
+      }
+    }
+
+    /* Desktop */
+    @media (max-width: 1199px) and (min-width: 992px) {
+      .images-container {
+        padding-top: 25vh;
+      }
+    }
+
+    /* Tablet */
+    @media (max-width: 991px) and (min-width: 768px) {
+      .images-container {
+        padding-top: 22vh;
+      }
+    }
+
+    /* Mobile Large */
+    @media (max-width: 767px) and (min-width: 576px) {
+      .images-container {
+        padding-top: 18vh;
+      }
+      .articleContainer {
+        width: 90%;
+      }
+    }
+
+    /* Mobile Small */
+    @media (max-width: 575px) {
+      .images-container {
+        padding-top: 15vh;
+      }
+      .articleContainer {
+        width: 95%;
+        padding-top: 15vh;
+      }
     }
 
     .articleContainer {
-      padding-top: 20vh;
+      padding-top: 25vh;
       padding-bottom: 20vh;
       margin: 0 auto;
       position: relative;
