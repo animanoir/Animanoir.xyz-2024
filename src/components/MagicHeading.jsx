@@ -12,8 +12,8 @@ export default function MagicHeading() {
     { __html: "My works are best understood when in <b>drukqs</b>."},
     { __html: "Somewhere between <b>meta-glitch art</b> and <b>wet dreams</b>." },
     { __html: "Powered by <b>mind-altering</b> acts & <b>esoteric software</b>." },
-    { __html: "Embracing new ways to <b>break</b> your <b>mind</b>." },
-    { __html: "Most of my work comes from the music I listen to." }
+    { __html: "Embracing <b>new ways</b> to <b>break</b> your <b>mind</b>." },
+    { __html: "Most of my work comes from the <b>music</b> I listen to." }
 
   ];
 
