@@ -4,7 +4,7 @@ import BaseHead from "@/components/BaseHead.astro";
 import Header from "@/components/Header.astro";
 import Navbar from "@/components/Navbar.astro";
 import { Picture } from "astro:assets";
-import { onMount } from "astro/client";
+import MagicHeading from "@/components/MagicHeading.jsx";
 import heroImage from "@/images/works/visuals/visuals-cover.jpg";
 import img1 from "@/images/works/visuals/visuals-1.jpg";
 import img2 from "@/images/works/visuals/visuals-6.png";
@@ -28,84 +28,94 @@ import img8 from "@/images/works/visuals/visuals-8.jpg";
     <Navbar />
     <YouTubeGrid client:load count={20} />
     <main class="articleContainer">
-      <h3
+      <!--       <h3
         id="text"
         style="font-size: 4.5rem;line-height: 1; transform: rotate(0deg);"
       >
         Animations that evoke a sense of <b>dreams</b> and <b>confusion</b>.
-      </h3>
-      <Picture
-        src={heroImage}
-        alt={"3D A/Vision by Óscar A. Montiel"}
-        class="heroImage"
-        formats={["webp"]}
-        decoding="async"
-        loading="eager"
-        quality={90}
-      />
-      <Picture
-        src={img7}
-        alt={"3D A/Vision by Óscar A. Montiel"}
-        class="heroImage"
-        formats={["webp"]}
-        decoding="async"
-        loading="eager"
-        quality={90}
-      />
-      <Picture
-        src={img1}
-        alt={"3D A/Vision by Óscar A. Montiel"}
-        class="heroImage"
-        formats={["webp"]}
-        decoding="async"
-        loading="eager"
-        quality={90}
-      />
-      <Picture
-        src={img8}
-        alt={"3D A/Vision by Óscar A. Montiel"}
-        class="heroImage"
-        formats={["webp"]}
-        decoding="async"
-        loading="eager"
-        quality={90}
-      />
-      <Picture
-        src={img3}
-        alt={"3D A/Vision by Óscar A. Montiel"}
-        class="heroImage"
-        formats={["webp"]}
-        decoding="async"
-        loading="eager"
-        quality={90}
-      />
-      <Picture
-        src={img2}
-        alt={"3D A/Vision by Óscar A. Montiel"}
-        class="heroImage"
-        formats={["webp"]}
-        decoding="async"
-        loading="eager"
-        quality={90}
-      />
-      <Picture
-        src={img4}
-        alt={"3D A/Vision by Óscar A. Montiel"}
-        class="heroImage"
-        formats={["webp"]}
-        decoding="async"
-        loading="eager"
-        quality={90}
-      />
-      <Picture
-        src={img5}
-        alt={"3D A/Vision by Óscar A. Montiel"}
-        class="heroImage"
-        formats={["webp"]}
-        decoding="async"
-        loading="eager"
-        quality={90}
-      />
+      </h3> -->
+      <MagicHeading client:visible />
+      <div class="images-container">
+        <Picture
+          src={heroImage}
+          alt={"3D A/Vision by Óscar A. Montiel"}
+          class="heroImage"
+          formats={["webp"]}
+          decoding="async"
+          loading="eager"
+          quality={90}
+        />
+        <Picture
+          src={img7}
+          alt={"3D A/Vision by Óscar A. Montiel"}
+          class="heroImage"
+          formats={["webp"]}
+          decoding="async"
+          loading="eager"
+          quality={90}
+        />
+        <Picture
+          src={img1}
+          alt={"3D A/Vision by Óscar A. Montiel"}
+          class="heroImage"
+          formats={["webp"]}
+          decoding="async"
+          loading="eager"
+          quality={90}
+        />
+        <Picture
+          src={img8}
+          alt={"3D A/Vision by Óscar A. Montiel"}
+          class="heroImage"
+          formats={["webp"]}
+          decoding="async"
+          loading="eager"
+          quality={90}
+        />
+        <Picture
+          src={img3}
+          alt={"3D A/Vision by Óscar A. Montiel"}
+          class="heroImage"
+          formats={["webp"]}
+          decoding="async"
+          loading="eager"
+          quality={90}
+        />
+        <Picture
+          src={img2}
+          alt={"3D A/Vision by Óscar A. Montiel"}
+          class="heroImage"
+          formats={["webp"]}
+          decoding="async"
+          loading="eager"
+          quality={90}
+        />
+        <Picture
+          src={img4}
+          alt={"3D A/Vision by Óscar A. Montiel"}
+          class="heroImage"
+          formats={["webp"]}
+          decoding="async"
+          loading="eager"
+          quality={90}
+        />
+        <Picture
+          src={img5}
+          alt={"3D A/Vision by Óscar A. Montiel"}
+          class="heroImage"
+          formats={["webp"]}
+          decoding="async"
+          loading="eager"
+          quality={90}
+        />
+      </div>
+      <a
+        class="top-link"
+        href="#"
+        onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
+      >
+        <h3>Go to the top</h3>
+      </a>
     </main>
     <div class="avisualText">
       <p>
@@ -116,9 +126,19 @@ import img8 from "@/images/works/visuals/visuals-8.jpg";
       </p>
     </div>
   </body><style>
+    .top-link {
+      /* position: fixed; */
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .images-container {
+      padding-top: 15vh;
+    }
+
     .articleContainer {
-      padding-top: 10vh;
-      padding-bottom: 40vh;
+      padding-top: 20vh;
+      padding-bottom: 20vh;
       margin: 0 auto;
       position: relative;
       width: 65%;
