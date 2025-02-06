@@ -125,7 +125,7 @@ import img9 from "@/images/works/visuals/visuals-9.jpg";
         href="#"
         onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
       >
-        <h3>Go to the top. Read the text again.</h3>
+        <h3>Go to the top—read the text again.</h3>
       </a>
     </main>
     <div class="avisualText">
@@ -141,6 +141,17 @@ import img9 from "@/images/works/visuals/visuals-9.jpg";
       display: flex;
       justify-content: center;
       cursor: pointer;
+      opacity: 0.6;
+      color: #666;
+      transition: all 0.3s ease;
+      width: fit-content;
+      margin: 0 auto;
+      margin-top: 5rem;
+    }
+
+    .top-link:hover {
+      opacity: 1;
+      color: #000;
     }
     .images-container {
       padding-top: 32vh;
