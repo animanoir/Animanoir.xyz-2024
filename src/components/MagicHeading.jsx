@@ -8,6 +8,9 @@ export default function MagicHeading() {
     { __html: "Visual poetry in <b>motion</b> and <b>stillness</b>." },
     { __html: "<b>Blender</b>, <b>Max/MSP</b>, <b>shaders</b>, whatever tbh..." },
     { __html: "My works are best understood when in <b>drukqs</b>."},
+    { __html: "Somewhere between <b>meta-glitch art</b> and <b>wet dreams</b>." },
+    { __html: "Powered by <b>LSD</b> and <b>esoteric software</b>." },
+    { __html: "Embracing new ways to <b>break</b> your <b>mind</b>." }
   ];
 
   useEffect(() => {
