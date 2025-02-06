@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import styles from './MagicHeading.module.css';
+
 
 export default function MagicHeading() {
   const ref = useRef(null);
@@ -9,7 +11,7 @@ export default function MagicHeading() {
     { __html: "<b>Blender</b>, <b>Max/MSP</b>, <b>shaders</b>, whatever tbh..." },
     { __html: "My works are best understood when in <b>drukqs</b>."},
     { __html: "Somewhere between <b>meta-glitch art</b> and <b>wet dreams</b>." },
-    { __html: "Powered by <b>LSD</b> and <b>esoteric software</b>." },
+    { __html: "Powered by <b>mind-altering</b> acts & <b>esoteric software</b>." },
     { __html: "Embracing new ways to <b>break</b> your <b>mind</b>." },
     { __html: "Most of my work comes from the music I listen to." }
 
@@ -29,18 +31,10 @@ export default function MagicHeading() {
   }, []);
 
   return (
-    <div style={{ 
-      height: "200px", // Fixed container height
-    }}>
+    <div className={styles.headingContainer}>
       <h3
         ref={ref}
-        style={{ 
-          fontSize: "4.2rem",
-          lineHeight: "1.2",
-          minHeight: "180px", // Minimum height to prevent jumps
-          transition: "opacity 0.3s ease",
-          margin: 0
-        }}
+        className={styles.heading}
         dangerouslySetInnerHTML={texts[currentIndex]}
       />
     </div>
