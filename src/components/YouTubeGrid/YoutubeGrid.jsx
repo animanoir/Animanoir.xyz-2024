@@ -52,17 +52,22 @@ export function YouTubeGrid({ count = 1 }) {
 
   return (
     <div className="youtube-grid">
-      {videos.map((video) => (
+      {videos.map((video) => {
+      
+      const randomDelay = Math.random() * 5; // up to 5s delay
+      
+      return (
         <div key={video.id} className="youtube-grid-item">
           <a href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank">
             <img 
-              className="youtube-grid-item-img" 
+              className="youtube-grid-item-img random-fade" 
+              style={{ '--random-delay': randomDelay }}
               src={video.snippet.thumbnails.maxres?.url || video.snippet.thumbnails.high.url} 
               alt={video.snippet.title}
             />
           </a>
         </div>
-      ))}
+      )})}
     </div>
   );
 }
