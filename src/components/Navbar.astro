@@ -1,6 +1,6 @@
 ---
 import HeaderLink from "@/components/HeaderLink.astro";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 
 const links = [
   { href: "/works", label: "Works", target: "_self" },
@@ -23,33 +23,8 @@ const links = [
       </HeaderLink>
     ))
   }
-  <ViewTransitions />
+  <ClientRouter />
 </nav>
-
-<!-- <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    document.addEventListener("keydown", function (event) {
-      switch (event.key) {
-        case "1":
-          window.location.href = "/works";
-          break;
-        case "2":
-          window.location.href = "/about";
-          break;
-        case "3":
-          window.open("https://linktr.ee/animanoir", "_blank");
-          break;
-        case "4":
-          window.open(
-            "https://docs.google.com/document/d/1eRrPHNTb1v8pJ_SRjGBlDHOacGh0484sESKHYx9onu4/edit?usp=sharing",
-            "_blank"
-          );
-          break;
-      }
-    });
-  });
-</script> -->
-
 <style>
   :root {
     --text-color: #fdfefe;
