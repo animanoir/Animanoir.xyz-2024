@@ -15,6 +15,8 @@ import img5 from "@/images/works/visuals/visuals-5.jpg";
 import img7 from "@/images/works/visuals/visuals-7.jpg";
 import img8 from "@/images/works/visuals/visuals-8.jpg";
 import img9 from "@/images/works/visuals/visuals-9.jpg";
+import RandomVideo from "@/components/RandomVideo/RandomVideo.jsx";
+
 ---
 
 <html lang="en">
@@ -28,14 +30,9 @@ import img9 from "@/images/works/visuals/visuals-9.jpg";
   <body>
     <Header />
     <Navbar />
+    <RandomVideo client:load />
     <YouTubeGrid client:load count={20} />
     <main class="articleContainer">
-      <!--       <h3
-        id="text"
-        style="font-size: 4.5rem;line-height: 1; transform: rotate(0deg);"
-      >
-        Animations that evoke a sense of <b>dreams</b> and <b>confusion</b>.
-      </h3> -->
       <MagicHeading client:visible />
       <div class="images-container">
         <Picture
@@ -125,18 +122,14 @@ import img9 from "@/images/works/visuals/visuals-9.jpg";
         href="#"
         onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
       >
-        <h3>Go to the top—read the text again.</h3>
+        <h3>Go to the top.</h3>
       </a>
     </main>
-    <div class="avisualText">
-      <p>
-        3D/A/Visual work I do. <a
-          href="https://www.youtube.com/@animanoir"
-          target="_blank">Full gallery</a
-        >.
-      </p>
-    </div>
   </body><style>
+    .hero-video {
+      width: 100%;
+      100vh;
+    }
     .top-link {
       display: flex;
       justify-content: center;
@@ -147,6 +140,9 @@ import img9 from "@/images/works/visuals/visuals-9.jpg";
       width: fit-content;
       margin: 0 auto;
       margin-top: 5rem;
+    }
+    .top-link h3 {
+      font-size: 1rem;
     }
 
     .top-link:hover {
@@ -235,46 +231,6 @@ import img9 from "@/images/works/visuals/visuals-9.jpg";
     }
     .heroImage.loaded {
       opacity: 1;
-    }
-    /* .title {
-      width: 100%;
-      margin: 0;
-      font-size: 5rem;
-      font-family: "Montserrat", sans-serif;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      text-shadow:
-        2px 2px 4px rgba(0, 0, 0, 0.8),
-        -1px -1px 0 rgba(0, 0, 0, 0.4);
-      color: #ffffff;
-      z-index: 2;
-    } */
-    .avisualText {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      font-size: 1.8rem;
-      color: #fdfefe;
-      font-family: "Montserrat", sans-serif;
-      /* background-color: #060606; */
-      /* padding: 0.5rem; */
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
-    }
-
-    .avisualText p {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      overflow: hidden;
-      text-align: center;
     }
     @media (max-width: 768px) {
       .articleContainer {

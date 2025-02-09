@@ -68,6 +68,14 @@ export function YouTubeGrid({ count = 1 }) {
           </a>
         </div>
       )})}
+          <div className="avisualText">
+      <p>
+        3D/A/Visual work I do. <a
+          href="https://www.youtube.com/@animanoir"
+          target="_blank">Full gallery</a
+        >.
+      </p>
+    </div>
     </div>
   );
 }
