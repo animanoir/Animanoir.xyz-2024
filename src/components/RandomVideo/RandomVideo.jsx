@@ -10,17 +10,14 @@ import styles from "./RandomVideo.module.css";
 
 export default function RandomVideo() {
   const [isLoading, setIsLoading] = useState(true);
-  const [videoElement, setVideoElement] = useState(null);
   const videos = [vid1, vid2, vid3, vid4, vid5, vid6, vid8];
-  const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+  const [videoSrc, setVideoSrc] = useState(videos[0]); // Start with a default video
 
   useEffect(() => {
-    if (videoElement) {
-      if (videoElement.readyState >= 3) {
-        setIsLoading(false);
-      }
-    }
-  }, [videoElement]);
+    // Select random video only on client-side
+    const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+    setVideoSrc(randomVideo);
+  }, []);
 
   const handleLoadedData = () => {
     setIsLoading(false);
@@ -34,7 +31,7 @@ export default function RandomVideo() {
         </div>
       )}
       <video
-        ref={setVideoElement}
+        key={videoSrc} // Add key to force re-render when source changes
         autoPlay
         muted
         loop
@@ -42,7 +39,7 @@ export default function RandomVideo() {
         onLoadedData={handleLoadedData}
         className={`${styles.video} ${isLoading ? styles.hidden : styles.visible}`}
       >
-        <source src={randomVideo} type="video/webm" />
+        <source src={videoSrc} type="video/webm" />
         Your browser does not support the video tag.
       </video>
     </div>
