@@ -3,13 +3,14 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 import dotenv from "dotenv";
+import lenis from "astro-lenis";
 
 dotenv.config();
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://animanoir.xyz",
-  integrations: [mdx(), sitemap(), react()],
+  integrations: [mdx(), sitemap(), react(), lenis()],
   prefetch: {
     defaultStrategy: "viewport",
   },
