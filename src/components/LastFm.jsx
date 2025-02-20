@@ -62,7 +62,7 @@ export const LastFm = ({customStyle, showAlbumCover = true}) => {
           onMouseLeave={handleMouseLeave}
           onMouseMove={handleMouseMove}
         >
-          Listening now to <b className="songInfo">{songName}</b> by{" "}
+          (I'm) Listening now to <b className="songInfo">{songName}</b> by{" "}
           <b className="songInfo">{artistName}</b>{" "}
           <a href={trackUrl} target="_blank">
             <img src="/images/playingBars.gif" alt="Now playing" />
