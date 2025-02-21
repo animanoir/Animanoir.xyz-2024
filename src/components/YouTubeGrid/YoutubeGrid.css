@@ -16,9 +16,10 @@
 .avisualText p {
   margin: 0;
   padding: 0;
-  width: 100%;
+  /* width: 100%; */
   overflow: hidden;
   text-align: center;
+  cursor: grab;
 }
 
 .youtube-grid {

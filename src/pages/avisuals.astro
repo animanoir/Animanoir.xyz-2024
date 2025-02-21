@@ -16,6 +16,7 @@ import img7 from "@/images/works/visuals/visuals-7.jpg";
 import img8 from "@/images/works/visuals/visuals-8.jpg";
 import img9 from "@/images/works/visuals/visuals-9.jpg";
 import RandomVideo from "@/components/RandomVideo/RandomVideo.jsx";
+import * as motion from "motion/react-client"; 
 
 ---
 
@@ -33,17 +34,24 @@ import RandomVideo from "@/components/RandomVideo/RandomVideo.jsx";
     <RandomVideo client:load />
     <YouTubeGrid client:load count={20} />
     <main class="articleContainer">
+      <motion.div
+      initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1 } }}
+      client:visible
+      >
       <MagicHeading client:visible />
+    </motion.div>
       <div class="images-container">
-        <Picture
-          src={heroImage}
-          alt={"3D A/Vision by Óscar A. Montiel"}
-          class="heroImage"
-          formats={["webp"]}
-          decoding="async"
-          loading="eager"
-          quality={90}
-        />
+
+          <Picture
+            src={heroImage}
+            alt={"3D A/Vision by Óscar A. Montiel"}
+            class="heroImage"
+            formats={["webp"]}
+            decoding="async"
+            loading="eager"
+            quality={90}
+          />
+
         <Picture
           src={img7}
           alt={"3D A/Vision by Óscar A. Montiel"}

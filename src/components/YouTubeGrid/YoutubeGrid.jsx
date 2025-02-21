@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './YoutubeGrid.css';
+import * as motion from "motion/react-client"; 
 
 const PLAYLIST_ID = 'PLNgUiXAsdpaVbq6BO8H0ZVS20h0A_o_2F';
 const API_KEY = import.meta.env.PUBLIC_YOUTUBE_API;
@@ -51,7 +52,7 @@ export function YouTubeGrid({ count = 1 }) {
   }
 
   return (
-    <div className="youtube-grid">
+    <div className="youtube-grid" >
       {videos.map((video) => {
       
       const randomDelay = Math.random() * 5; // up to 5s delay
@@ -68,13 +69,16 @@ export function YouTubeGrid({ count = 1 }) {
           </a>
         </div>
       )})}
-          <div className="avisualText">
-      <p>
+      <div className="avisualText" >
+      <motion.p
+        initial={{ opacity: 0 }} dragConstraints={{ top: -300, bottom: 300, left: -300, right: 300 }} drag animate={{ opacity: 1, transition: { duration: 1 } }}
+        client:visible
+      >
         3D/A/Visual work I do. <a
           href="https://www.youtube.com/@animanoir"
           target="_blank">Full gallery</a
         >.
-      </p>
+      </motion.p>
     </div>
     </div>
   );
