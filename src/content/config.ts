@@ -19,6 +19,7 @@ const works = defineCollection({
       heroImage: image(),
       year: z.number().optional(),
       tools: z.array(z.string()).optional(),
+      workType: z.array(z.string())
     }),
 });
 

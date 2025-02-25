@@ -6,6 +6,7 @@ import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
 import Navbar from "@/components/Navbar.astro";
 import avisualsCover from "@/images/works/visuals/visuals-cover.jpg";
+import * as motion from "motion/react-client";
 
 const posts = (await getCollection("works")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -29,24 +30,156 @@ for (let i = posts.length - 1; i > 0; i--) {
     <main>
       <section>
         <div class="projectsContainer">
-          <ul>
-            <li class="project">
-              <a href="/avisuals">
-                <Picture
-                  class="postHeroImg"
-                  src={avisualsCover}
-                  alt="A/visuals by Óscar A. Montiel"
-                  formats={["webp"]}
-                  quality={100}
-                  decoding="async"
-                  loading="lazy"
-                />
-                <div class="postInfo">
-                  <p class="postTitle">3D/A/visuals</p>
-                  <p class="year">on-going</p>
-                </div>
-              </a>
-            </li>
+          <div class="listContainer">
+            <h2 class="workType">A/Visual 3D</h2>
+            <ul>
+              <li class="project">
+                <a href="/avisuals">
+                  <Picture
+                    class="postHeroImg"
+                    src={avisualsCover}
+                    alt="A/visuals by Óscar A. Montiel"
+                    formats={["webp"]}
+                    quality={100}
+                    decoding="async"
+                    loading="lazy"
+                  />
+                  <div class="postInfo">
+                    <p class="postTitle">3D/A/visuals</p>
+                    <p class="year">on-going</p>
+                  </div>
+                </a>
+              </li>
+              {
+                posts.map((post) => {
+                  const { workType } = post.data;
+                  const audioVisual3dWork = workType.find(
+                    (work) => work === "3D"
+                  );
+                  if (audioVisual3dWork) {
+                    return (
+                      <li class="project">
+                        <a href={`/works/${post.slug}/`}>
+                          <Picture
+                            class="postHeroImg"
+                            src={post.data.heroImage}
+                            alt={`${post.data.title} by Óscar A. Montiel`}
+                            formats={["webp"]}
+                            decoding="async"
+                            loading="lazy"
+                          />
+                          <div class="postInfo">
+                            <p class="postTitle">{post.data.title}</p>
+                            <p class="year">{post.data.year || "on-going"}</p>
+                          </div>
+                        </a>
+                      </li>
+                    );
+                  }
+                })
+              }
+            </ul>
+          </div>
+          <div class="listContainer">
+            <h2 class="workType">Interactive Art</h2>
+            <ul>
+              {
+                posts.map((post) => {
+                  const { workType } = post.data;
+                  const interactiveArtWork = workType.find(
+                    (work) => work === "Interactive Art"
+                  );
+                  if (interactiveArtWork) {
+                    return (
+                      <li class="project">
+                        <a href={`/works/${post.slug}/`}>
+                          <Picture
+                            class="postHeroImg"
+                            src={post.data.heroImage}
+                            alt={`${post.data.title} by Óscar A. Montiel`}
+                            formats={["webp"]}
+                            decoding="async"
+                            loading="lazy"
+                          />
+                          <div class="postInfo">
+                            <p class="postTitle">{post.data.title}</p>
+                            <p class="year">{post.data.year || "on-going"}</p>
+                          </div>
+                        </a>
+                      </li>
+                    );
+                  }
+                })
+              }
+            </ul>
+          </div>
+          <div class="listContainer">
+            <h2 class="workType">Web Development</h2>
+            <ul>
+              {
+                posts.map((post) => {
+                  const { workType } = post.data;
+                  const webDevelopmentWork = workType.find(
+                    (work) => work === "Web Development"
+                  );
+                  if (webDevelopmentWork) {
+                    return (
+                      <li class="project">
+                        <a href={`/works/${post.slug}/`}>
+                          <Picture
+                            class="postHeroImg"
+                            src={post.data.heroImage}
+                            alt={`${post.data.title} by Óscar A. Montiel`}
+                            formats={["webp"]}
+                            decoding="async"
+                            loading="lazy"
+                          />
+                          <div class="postInfo">
+                            <p class="postTitle">{post.data.title}</p>
+                            <p class="year">{post.data.year || "on-going"}</p>
+                          </div>
+                        </a>
+                      </li>
+                    );
+                  }
+                })
+              }
+            </ul>
+          </div>
+          <div class="listContainer">
+            <h2 class="workType">Projects</h2>
+            <ul>
+              {
+                posts.map((post) => {
+                  const { workType } = post.data;
+                  const projectWork = workType.find(
+                    (work) => work === "Project"
+                  );
+                  if (projectWork) {
+                    return (
+                      <li class="project">
+                        <a href={`/works/${post.slug}/`}>
+                          <Picture
+                            class="postHeroImg"
+                            src={post.data.heroImage}
+                            alt={`${post.data.title} by Óscar A. Montiel`}
+                            formats={["webp"]}
+                            decoding="async"
+                            loading="lazy"
+                          />
+                          <div class="postInfo">
+                            <p class="postTitle">{post.data.title}</p>
+                            <p class="year">{post.data.year || "on-going"}</p>
+                          </div>
+                        </a>
+                      </li>
+                    );
+                  }
+                })
+              }
+            </ul>
+          </div>
+          <!-- <ul>
             {
               posts.map((post) => (
                 <li class="project">
@@ -67,7 +200,7 @@ for (let i = posts.length - 1; i > 0; i--) {
                 </li>
               ))
             }
-          </ul>
+          </ul> -->
         </div>
       </section>
     </main>
@@ -75,7 +208,13 @@ for (let i = posts.length - 1; i > 0; i--) {
       .projectsContainer {
         width: 50vw;
         margin: 0 auto;
-        padding: 4rem 15rem;
+        padding-top: 5rem;
+      }
+
+      .listContainer {
+        padding-bottom: 5rem;
+        display: block;
+        overflow: hidden;
       }
 
       ul {
@@ -89,7 +228,7 @@ for (let i = posts.length - 1; i > 0; i--) {
 
       ul a {
         filter: hue-rotate(0deg);
-        transition: filter 0.5s ease-in-out;
+        transition: filter 0.8s ease-in-out;
         height: -webkit-fill-available;
       }
 
@@ -103,8 +242,7 @@ for (let i = posts.length - 1; i > 0; i--) {
       }
 
       .project {
-        position: relative;
-        display: block;
+        /* height: 50vh; */
       }
 
       .postTitle,
@@ -115,6 +253,19 @@ for (let i = posts.length - 1; i > 0; i--) {
         margin: 0;
         text-align: center;
         padding: 0;
+      }
+
+      .workType {
+        font-size: 3rem;
+        font-family: "Montserrat", sans-serif;
+        color: floralwhite;
+        line-height: 1;
+        padding-top: 0;
+        z-index: 1;
+        margin: 0;
+        padding-bottom: 1rem;
+        /* position: absolute;
+        rotate: -90deg; */
       }
 
       .postTitle {
