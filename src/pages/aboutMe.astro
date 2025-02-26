@@ -3,7 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Navbar from "@/components/Navbar.astro";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
 import gif1 from "@/images/about/oscar-a-montiel.gif";
-import { Picture } from "astro:assets";
+import { Image } from "astro:assets";
 ---
 
 <html lang="en">
@@ -37,14 +37,14 @@ import { Picture } from "astro:assets";
               >.
             </p>
           </div>
-          <Picture
+          <Image
             src={gif1}
             alt={"Óscar A. Montiel"}
             class="heroImage"
-            formats={["gif"]}
+            decoding="async"
             decoding="async"
             loading="eager"
-            quality={100}
+            quality={50}
           />
           <p style="text-align:center;font-size:2rem; padding-top: 1rem;">
             <a
