@@ -54,6 +54,7 @@ const { title, description, heroImage } = Astro.props;
     <style>
       body {
         margin: 0;
+        overflow-x: hidden; /* Prevent horizontal scrolling */
       }
 
       .top-section {
@@ -61,11 +62,12 @@ const { title, description, heroImage } = Astro.props;
         position: relative;
         justify-content: center;
         align-items: center;
+        width: 100%;
       }
 
       .heroImage {
         height: 500px;
-        width: 99vw;
+        width: 100%; /* Changed from 99vw to 100% */
         object-fit: cover;
         padding-bottom: 3rem;
         filter: brightness(0.9);
@@ -106,16 +108,17 @@ const { title, description, heroImage } = Astro.props;
       .articleContainer {
         padding-bottom: 40vh;
         margin: 0 auto;
-        position: flex;
-        flex-direction: row;
-        /* width: 50%; */
+        display: flex; /* Changed from position: flex (invalid property) */
+        flex-direction: column; /* Changed to column for proper article flow */
+        width: 100%; /* Full width container */
       }
 
       .articleBody {
         font-family: "Lora", serif;
         color: #fdfefe;
         font-size: 1.1rem;
-        width: 70%;
+        width: 65%; /* Thinner than hero image */
+        max-width: 900px; /* Add maximum width for very large screens */
         margin: 0 auto;
       }
 
