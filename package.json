@@ -11,10 +11,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "4.0.8",
-    "@astrojs/react": "4.2.0",
+    "@astrojs/mdx": "4.2.2",
+    "@astrojs/react": "4.2.2",
     "@astrojs/rss": "4.0.11",
-    "@astrojs/sitemap": "3.2.1",
+    "@astrojs/sitemap": "3.3.0",
     "@notionhq/client": "^2.2.15",
     "@react-three/drei": "^9.80.0",
     "@react-three/fiber": "^8.13.5",
@@ -22,7 +22,7 @@
     "@types/react": "^18.2.16",
     "@types/react-dom": "^18.2.7",
     "@types/three": "^0.155.0",
-    "astro": "5.3.0",
+    "astro": "5.5.5",
     "astro-embed": "^0.5.1",
     "astro-lenis": "^1.0.0",
     "astro-seo": "^0.8.0",

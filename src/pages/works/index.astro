@@ -17,6 +17,13 @@ for (let i = posts.length - 1; i > 0; i--) {
   const j = Math.floor(Math.random() * (i + 1));
   [posts[i], posts[j]] = [posts[j], posts[i]];
 }
+
+// Random rotation of the posts
+function randomRotation() {
+  let theta = Math.random() * -180.0;
+
+  return theta;
+}
 ---
 
 <!doctype html>
@@ -31,7 +38,14 @@ for (let i = posts.length - 1; i > 0; i--) {
       <section>
         <div class="projectsContainer">
           <div class="listContainer">
-            <h2 class="workType">A/Visual 3D</h2>
+            <h2
+              style={{
+                transform: `rotate(${randomRotation()}deg)`,
+              }}
+              class="workType"
+            >
+              A/Visual 3D
+            </h2>
             <ul>
               <li class="project">
                 <a href="/avisuals">
@@ -81,7 +95,14 @@ for (let i = posts.length - 1; i > 0; i--) {
             </ul>
           </div>
           <div class="listContainer">
-            <h2 class="workType">Interactive Art</h2>
+            <h2
+              style={{
+                transform: `rotate(${randomRotation()}deg)`,
+              }}
+              class="workType"
+            >
+              Interactive Art
+            </h2>
             <ul>
               {
                 posts.map((post) => {
@@ -114,7 +135,14 @@ for (let i = posts.length - 1; i > 0; i--) {
             </ul>
           </div>
           <div class="listContainer">
-            <h2 class="workType">Web Development</h2>
+            <h2
+              style={{
+                transform: `rotate(${randomRotation()}deg)`,
+              }}
+              class="workType"
+            >
+              Web Development
+            </h2>
             <ul>
               {
                 posts.map((post) => {
@@ -147,7 +175,14 @@ for (let i = posts.length - 1; i > 0; i--) {
             </ul>
           </div>
           <div class="listContainer">
-            <h2 class="workType">Projects</h2>
+            <h2
+              style={{
+                transform: `rotate(${randomRotation()}deg)`,
+              }}
+              class="workType"
+            >
+              Projects
+            </h2>
             <ul>
               {
                 posts.map((post) => {
@@ -205,35 +240,55 @@ for (let i = posts.length - 1; i > 0; i--) {
       </section>
     </main>
     <style>
+      /* Layout */
       .projectsContainer {
         width: 50vw;
         margin: 0 auto;
-        padding-top: 5rem;
+        padding-top: 10rem;
       }
 
       .listContainer {
-        padding-bottom: 5rem;
-        display: block;
-        overflow: hidden;
+        padding-bottom: 10rem;
       }
 
+      /* Typography */
+      .postTitle,
+      .year,
+      .workType {
+        font-family: "Montserrat", sans-serif;
+        color: floralwhite;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        display: block;
+        position: relative;
+      }
+
+      .workType {
+        font-size: 4rem;
+        z-index: 100;
+      }
+
+      .postTitle {
+        font-size: 2.3rem;
+        padding: 0.8rem 0.8rem 0;
+        line-height: 1;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      }
+
+      .year {
+        font-size: 1rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Grid layout */
       ul {
         list-style-type: none;
-        padding: unset;
+        padding: 0;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 0.5rem;
         overflow: hidden;
-      }
-
-      ul a {
-        filter: hue-rotate(0deg);
-        transition: filter 0.8s ease-in-out;
-        height: -webkit-fill-available;
-      }
-
-      ul a:hover {
-        filter: hue-rotate(180deg);
       }
 
       ul li {
@@ -241,56 +296,28 @@ for (let i = posts.length - 1; i > 0; i--) {
         flex-direction: column;
       }
 
+      /* Project elements */
       .project {
-        /* height: 50vh; */
+        height: 50vh;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        position: relative;
       }
 
-      .postTitle,
-      .year {
-        color: floralwhite;
-        font-family: "Montserrat", sans-serif;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        margin: 0;
-        text-align: center;
-        padding: 0;
+      .project:hover {
+        opacity: 1;
       }
 
-      .workType {
-        font-size: 2rem;
-        font-family: "Montserrat", sans-serif;
-        color: floralwhite;
-        line-height: 1;
-        padding-top: 0;
-        z-index: 1;
-        margin: 0;
-        padding-bottom: 1rem;
-        /* position: absolute;
-        rotate: -90deg; */
+      /* Links and images */
+      ul a {
+        filter: hue-rotate(0deg);
+        transition: filter 0.8s ease-in-out;
+        height: 100%;
+        position: relative;
       }
 
-      .postTitle {
-        font-size: 2.3rem;
-        padding: 0.8rem;
-        padding-bottom: 0;
-        margin-bottom: 0;
-        line-height: 1;
-      }
-
-      .year {
-        font-size: 1rem;
-      }
-
-      .postInfo {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        display: none;
-      }
-
-      .project:hover .postInfo {
-        display: block;
+      ul a:hover {
+        filter: hue-rotate(180deg);
       }
 
       .postHeroImg {
@@ -305,20 +332,66 @@ for (let i = posts.length - 1; i > 0; i--) {
         opacity: 1;
       }
 
+      /* Post info overlay */
+      .postInfo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        display: none;
+        z-index: 10;
+        width: 90%;
+      }
+
+      .project:hover .postInfo {
+        display: block;
+      }
+
+      /* Responsive layout */
       @media (max-width: 768px) {
         .projectsContainer {
-          margin: 0;
           width: 100%;
-          padding: 0;
+          margin: 0;
+          padding-top: 5rem;
+        }
+
+        .listContainer {
+          padding-bottom: 5rem;
         }
 
         ul {
           grid-template-columns: 1fr;
-          grid-gap: 0;
+          /* gap: 1.5rem; */
         }
 
+        .workType {
+          font-size: 3rem !important;
+          padding-bottom: 2rem;
+          /* Override the inline rotation style for mobile */
+          transform: none !important;
+        }
+
+        /* Fix opacity issues on mobile */
+        .project {
+          opacity: 1;
+          height: 40vh;
+        }
+
+        .postHeroImg {
+          opacity: 0.7;
+        }
+
+        /* Always show post info on mobile */
         .postInfo {
           display: block;
+          background-color: rgba(0, 0, 0, 0.5);
+          padding: 0.5rem;
+          border-radius: 4px;
+        }
+
+        .postTitle {
+          font-size: 1.8rem;
         }
       }
     </style>
