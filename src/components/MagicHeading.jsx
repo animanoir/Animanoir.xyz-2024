@@ -8,7 +8,7 @@ export default function MagicHeading() {
   const texts = [
     { __html: "Animations that evoke a sense of <b>dreams</b> and <b>confusion</b>." },
     { __html: "Visual poetry in <b>motion</b> and <b>stillness</b>." },
-    { __html: "<b>Blender</b>, <b>Max/MSP</b>, <b>shaders</b>, whatever tbh..." },
+    { __html: "<b>Blender</b>, <b>Max/MSP</b>, <b>shaders</b>, Three.js, etc." },
     { __html: "My works are best understood when in <b>drukqs</b>."},
     { __html: "Somewhere between <b>meta-glitch art</b> and <b>wet dreams</b>." },
     { __html: "Powered by <b>mind-altering</b> acts & <b>esoteric software</b>." },

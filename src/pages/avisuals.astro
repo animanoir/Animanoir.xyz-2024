@@ -17,6 +17,7 @@ import img8 from "@/images/works/visuals/visuals-8.jpg";
 import img9 from "@/images/works/visuals/visuals-9.jpg";
 import RandomVideo from "@/components/RandomVideo/RandomVideo.jsx";
 import * as motion from "motion/react-client"; 
+import { YouTube } from "astro-embed";
 
 ---
 
@@ -40,8 +41,12 @@ import * as motion from "motion/react-client";
       >
       <MagicHeading client:visible />
     </motion.div>
-      <div class="images-container">
 
+    <YouTube id="https://www.youtube.com/watch?v=hk-sb9owrtc" />
+    <YouTube id="https://www.youtube.com/watch?v=cmZvYDwjtcc" />
+    <YouTube id="https://www.youtube.com/watch?v=EiEBZUccdR8" />
+    <YouTube id="https://www.youtube.com/watch?v=52EWlBICt0g" />
+      <div class="images-container">
           <Picture
             src={heroImage}
             alt={"3D A/Vision by Óscar A. Montiel"}
