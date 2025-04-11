@@ -47,88 +47,19 @@ import { YouTube } from "astro-embed";
     <YouTube id="https://www.youtube.com/watch?v=EiEBZUccdR8" />
     <YouTube id="https://www.youtube.com/watch?v=52EWlBICt0g" />
       <div class="images-container">
-          <Picture
-            src={heroImage}
-            alt={"3D A/Vision by Óscar A. Montiel"}
-            class="heroImage"
-            formats={["webp"]}
-            decoding="async"
-            loading="eager"
-            quality={90}
-          />
-
-        <Picture
-          src={img7}
-          alt={"3D A/Vision by Óscar A. Montiel"}
-          class="heroImage"
-          formats={["webp"]}
-          decoding="async"
-          loading="eager"
-          quality={90}
-        />
-        <Picture
-          src={img1}
-          alt={"3D A/Vision by Óscar A. Montiel"}
-          class="heroImage"
-          formats={["webp"]}
-          decoding="async"
-          loading="eager"
-          quality={90}
-        />
-        <Picture
-          src={img8}
-          alt={"3D A/Vision by Óscar A. Montiel"}
-          class="heroImage"
-          formats={["webp"]}
-          decoding="async"
-          loading="eager"
-          quality={90}
-        />
-        <Picture
-          src={img9}
-          alt={"3D A/Vision by Óscar A. Montiel"}
-          class="heroImage"
-          formats={["webp"]}
-          decoding="async"
-          loading="eager"
-          quality={90}
-        />
-        <Picture
-          src={img3}
-          alt={"3D A/Vision by Óscar A. Montiel"}
-          class="heroImage"
-          formats={["webp"]}
-          decoding="async"
-          loading="eager"
-          quality={90}
-        />
-        <Picture
-          src={img2}
-          alt={"3D A/Vision by Óscar A. Montiel"}
-          class="heroImage"
-          formats={["webp"]}
-          decoding="async"
-          loading="eager"
-          quality={90}
-        />
-        <Picture
-          src={img4}
-          alt={"3D A/Vision by Óscar A. Montiel"}
-          class="heroImage"
-          formats={["webp"]}
-          decoding="async"
-          loading="eager"
-          quality={90}
-        />
-        <Picture
-          src={img5}
-          alt={"3D A/Vision by Óscar A. Montiel"}
-          class="heroImage"
-          formats={["webp"]}
-          decoding="async"
-          loading="eager"
-          quality={90}
-        />
+        {[heroImage, img7, img1, img8, img9, img3, img2, img4, img5].map((image, index) => (
+          <a href={image.src} target="_blank" class="image-grid-item" aria-label={`View full size image ${index + 1}`}>
+            <Picture
+              src={image}
+              alt={"3D A/Vision by Óscar A. Montiel"}
+              class="heroImage"
+              formats={["webp"]}
+              decoding="async"
+              loading="eager"
+              quality={90}
+            />
+          </a>
+        ))}
       </div>
       <a
         class="top-link"
@@ -138,7 +69,23 @@ import { YouTube } from "astro-embed";
         <h3>Go to the top.</h3>
       </a>
     </main>
-  </body><style>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const images = document.querySelectorAll('.heroImage');
+        
+        images.forEach(image => {
+          if (image.complete) {
+            image.classList.add('loaded');
+          } else {
+            image.addEventListener('load', () => {
+              image.classList.add('loaded');
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+  <style>
     .hero-video {
       width: 100%;
       100vh;
@@ -164,6 +111,48 @@ import { YouTube } from "astro-embed";
     }
     .images-container {
       padding-top: 32vh;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-gap: 1rem;
+    }
+
+    .image-grid-item {
+      display: block;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .image-grid-item:hover {
+      transform: scale(1.02);
+    }
+
+    .heroImage {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      margin: 0 !important;
+      filter: brightness(1);
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out, transform 0.3s ease;
+    }
+
+    .heroImage.loaded {
+      opacity: 1;
+    }
+
+    /* Add responsive grid adjustments */
+    @media (max-width: 768px) {
+      .images-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-gap: 0.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .images-container {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* QHD - 2560x1440 */
@@ -232,18 +221,6 @@ import { YouTube } from "astro-embed";
     }
     body {
       margin: 0;
-    }
-    .heroImage {
-      height: 50%;
-      width: 100%;
-      object-fit: cover;
-      margin: 0 !important;
-      filter: brightness(1);
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-    }
-    .heroImage.loaded {
-      opacity: 1;
     }
     @media (max-width: 768px) {
       .articleContainer {
