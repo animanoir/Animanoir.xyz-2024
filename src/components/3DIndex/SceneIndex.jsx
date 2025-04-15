@@ -47,9 +47,9 @@ export const SceneIndex = () => {
         <EffectComposer>
           <Vignette eskil={false} offset={0.1} darkness={0.7}  />
           <DepthOfField
-            focusDistance={0.5}    // Move focus point to scene center
-            focalLength={10.0}      // Increase for stronger focus effect
-            bokehScale={50}         // More pronounced bokeh effect
+            focusDistance={0.5}
+            focalLength={10.0}    
+            bokehScale={50}        
             height={720}  
           />
           <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.25} />

@@ -49,10 +49,16 @@ export function ModelANLogo(props) {
           gl.domElement.style.cursor = "auto";
         }}
       >
-        <meshStandardMaterial
-          metalness={1}
-          roughness={0.1}
-        ></meshStandardMaterial>
+<meshPhysicalMaterial
+  metalness={0.9}
+  roughness={0.05}
+  transmission={1.0}
+  thickness={0.5}
+  ior={2.417}
+  clearcoat={1}
+  clearcoatRoughness={0.1}
+  envMapIntensity={1}
+/>
       </mesh>
     </>
   );
