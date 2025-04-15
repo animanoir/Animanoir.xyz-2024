@@ -50,7 +50,7 @@ export function ModelANLogo(props) {
         }}
       >
 <meshPhysicalMaterial
-  metalness={0.9}
+  metalness={0.0}
   roughness={0.05}
   transmission={1.0}
   thickness={0.5}
