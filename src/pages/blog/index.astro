@@ -56,6 +56,10 @@ const posts = (await getCollection("blog")).sort(
         padding: 0;
       }
 
+      ul a {
+        text-decoration: none;
+      }
+
       ul a:hover {
         filter: invert(1);
       }
@@ -70,12 +74,10 @@ const posts = (await getCollection("blog")).sort(
         background-color: black;
         color: floralwhite;
         font-family: "Montserrat", sans-serif;
-        font-weight: bold;
-        letter-spacing: 0.1rem;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         padding: 1rem;
         margin-bottom: 0;
-        line-height: 1.1;
+        line-height: 1;
         width: fit-content;
       }
 
