@@ -1,14 +1,69 @@
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Loader } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { useRef } from "react";
+import { Loader } from "@react-three/drei";
 import { EffectComposer, Noise, Bloom, Vignette, DepthOfField } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import { AnimanoirLogoScene } from "./AnimanoirLogoScene";
 import "@/styles/canvasFiber.css";
 import * as THREE from "three";
 
+// Floating camera effect component
+const FloatingCamera = ({ intensity = 0.15, speed = 0.3 }) => {
+  const timeRef = useRef(0);
+  const initialCameraPos = useRef(null);
+  
+  // Create noise vectors for smoother movement
+  const noiseOffsets = useRef({
+    x1: Math.random() * 100,
+    x2: Math.random() * 100,
+    y1: Math.random() * 100,
+    y2: Math.random() * 100,
+    z1: Math.random() * 100,
+  });
+  
+  useFrame(({ camera }, delta) => {
+    // Store initial camera position
+    if (!initialCameraPos.current) {
+      initialCameraPos.current = camera.position.clone();
+    }
+    
+    // Increment time
+    timeRef.current += delta * speed;
+    
+    // Generate perlin-like noise
+    const t = timeRef.current;
+    const { x1, x2, y1, y2, z1 } = noiseOffsets.current;
+    
+    // Using multiple sine waves at different frequencies creates a complex,
+    // non-repeating pattern similar to perlin noise
+    const noiseX = (
+      Math.sin(t * 0.5 + x1) * 0.5 + 
+      Math.sin(t * 1.1 + x2) * 0.3
+    ) * intensity;
+    
+    const noiseY = (
+      Math.sin(t * 0.6 + y1) * 0.5 + 
+      Math.sin(t * 1.3 + y2) * 0.3
+    ) * intensity;
+    
+    const noiseZ = (
+      Math.sin(t * 0.7 + z1) * 0.3
+    ) * intensity;
+    
+    // Apply noise to camera position
+    camera.position.x = initialCameraPos.current.x + noiseX;
+    camera.position.y = initialCameraPos.current.y + noiseY;
+    camera.position.z = initialCameraPos.current.z + noiseZ * 2.0;
+    
+    // Subtle camera rotation for enhanced drunk effect
+    camera.rotation.x = Math.sin(t * 0.5 + x1) * 0.01 * intensity;
+    camera.rotation.y = Math.sin(t * 0.6 + y1) * 0.01 * intensity;
+  });
+  
+  return null;
+};
 
 export const SceneIndex = () => {
-
 
   const sceneCreated = ({ gl }) => {
     gl.setClearColor("black", 1);
@@ -27,33 +82,30 @@ export const SceneIndex = () => {
   };
 
   const cameraProps = {
-    position: [0, -0, -12],
-    fov: 70,
+    position: [0, 0, 8],
+    fov: 85,
   };
-
 
   return (
     <div id="fiberCanvas">
       <Canvas onCreated={sceneCreated} camera={cameraProps} style={canvasStyle}>
-        <AnimanoirLogoScene />
-        <OrbitControls
-          enableDamping
-          minDistance={10}
-          maxDistance={30}
-          autoRotate
-          autoRotateSpeed={-1}
-          target={[0, 0, 0]}
-        />
+        <AnimanoirLogoScene client:only="react"/>
+        <FloatingCamera intensity={1.0} speed={1.0} />
         <EffectComposer>
-          <Vignette eskil={false} offset={0.1} darkness={0.7}  />
-          <DepthOfField
-            focusDistance={0.5}
-            focalLength={10.0}    
-            bokehScale={50}        
-            height={720}  
+          <Bloom
+            intensity={2.0}
+            luminanceThreshold={0.9}
+            luminanceSmoothing={0.9}
+            mipmapBlur
           />
+          {/* <DepthOfField
+            target={[0, 0, 0]} // Set focus target to the center [x, y, z]
+            focalLength={0.5} // Adjust focal length for blur amount
+            bokehScale={5} // Adjust bokeh size
+            height={720}
+          /> */}
           <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.25} />
-          <Bloom intensity={0.8} />
+          <Vignette eskil={false} offset={0.1} darkness={0.7}  />
         </EffectComposer>
       </Canvas>
       <Loader containerStyles={{ backgroundColor: "#060606" }} />
