@@ -69,7 +69,7 @@ export const SceneIndex = () => {
     gl.setClearColor("black", 1);
     gl.toneMapping = THREE.ACESFilmicToneMapping;
     gl.outputColorSpace = THREE.SRGBColorSpace;
-    gl.toneMappingExposure = 1;
+    gl.toneMappingExposure = 2.5;
   };
 
   const canvasStyle = {
@@ -105,7 +105,7 @@ export const SceneIndex = () => {
             height={720}
           /> */}
           <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.25} />
-          <Vignette eskil={false} offset={0.1} darkness={0.7}  />
+          <Vignette eskil={false} offset={0.1} darkness={0.2}  />
         </EffectComposer>
       </Canvas>
       <Loader containerStyles={{ backgroundColor: "#060606" }} />
