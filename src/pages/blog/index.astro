@@ -96,13 +96,20 @@ const posts = (await getCollection("blog")).sort(
         margin: 0;
         font-size: 1em;
       }
+
+      @media (min-width: 1521px) and (max-width: 1920px) {
+        .blogpostsContainer {
+          margin: 0 30rem !important;
+        }
+      }
+
       @media (max-width: 1520px) {
         .blogpostsContainer {
-          margin: 0 25rem!important;
-	}
-	ul li{
-		margin-bottom: 0;
-	}
+          margin: 0 25rem !important;
+        }
+        ul li {
+          margin-bottom: 0;
+        }
       }
       @media (max-width: 768px) {
         .blogpostsContainer {
