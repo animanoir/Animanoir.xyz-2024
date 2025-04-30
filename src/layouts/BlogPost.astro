@@ -93,7 +93,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
 
       .articleBody {
         color: var(--color-light);
-        padding: 0 10rem;
+        padding: 0 5rem;
         font-size: var(--font-size-medium);
       }
 
@@ -120,16 +120,11 @@ const { title, summary, pubDate, heroImage } = Astro.props;
           padding-bottom: 50%;
         }
       }
-      @media (min-width: 1020px) {
+      @media (max-width: 1360px) {
         .articleBody {
-          padding: 0 6rem;
+          padding: 0!important;
         }
       }
-      @media (min-width: 1900px) {
-        .articleBody {
-          padding: 0 10rem;
-        }
-      }
-    </style>
+	</style>
   </body>
 </html>
