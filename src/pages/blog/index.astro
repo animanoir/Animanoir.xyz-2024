@@ -42,7 +42,7 @@ const posts = (await getCollection("blog")).sort(
     </main>
     <style>
       .blogpostsContainer {
-        margin: 0 40rem;
+        margin: 0 40rem; /* Default for large screens > 1920px */
         padding-top: 4rem;
       }
       .postDate {
@@ -97,30 +97,45 @@ const posts = (await getCollection("blog")).sort(
         font-size: 1em;
       }
 
-      @media (min-width: 1521px) and (max-width: 1920px) {
+      /* Standard Desktops / Large Laptops */
+      @media (max-width: 1920px) {
         .blogpostsContainer {
-          margin: 0 30rem !important;
+          margin: 0 30rem;
         }
       }
 
-      @media (max-width: 1520px) {
+      /* Laptops / Large Tablets */
+      @media (max-width: 1440px) {
         .blogpostsContainer {
-          margin: 0 25rem !important;
-        }
-        ul li {
-          margin-bottom: 0;
+          margin: 0 20rem;
         }
       }
+
+      /* Tablets / Small Laptops */
+      @media (max-width: 1024px) {
+        .blogpostsContainer {
+          margin: 0 10rem;
+        }
+        ul li {
+          margin-bottom: 0; /* Adjust list item margin for smaller screens */
+        }
+      }
+
+      /* Mobile Devices */
       @media (max-width: 768px) {
         .blogpostsContainer {
-          margin: 0;
+          margin: 0 1rem; /* Add a small margin for mobile */
         }
         .postTitle {
           font-size: 1.2rem;
         }
         ul {
-          grid-template-columns: 1fr;
-          grid-gap: 0;
+          /* Removed grid styles as they might conflict */
+          /* grid-template-columns: 1fr; */
+          /* grid-gap: 0; */
+        }
+        ul li {
+          margin-bottom: 0.5rem; /* Add some space between items on mobile */
         }
       }
     </style>
