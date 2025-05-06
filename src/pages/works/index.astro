@@ -36,16 +36,16 @@ function randomRotation() {
     <Header />
     <Navbar />
     <main>
+      <div class="mainQuote-div">
+        <h1 class="mainQuote">
+          <b>Software engineer</b> specialized in <b>web development</b>, <b
+            >game programming</b
+          >
+          & <b>3D/multimedia interactive art</b>.
+        </h1>
+      </div>
       <section>
         <div class="projectsContainer">
-          <div>
-            <h1 class="mainQuote">
-              <b>Software engineer</b> specialized in <b>web development</b>, <b
-                >game programming</b
-              >
-              & <b>3D/multimedia interactive art</b>.
-            </h1>
-          </div>
           <div class="listContainer">
             <h2
               style={{
@@ -265,6 +265,24 @@ function randomRotation() {
         font-size: 3rem;
         line-height: 1.3;
         font-weight: normal;
+        margin: 0;
+        max-width: 80%;
+      }
+      .mainQuote-div {
+        width: 99vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        box-sizing: border-box;
+      }
+
+      /* For larger screens (beyond HD) */
+      @media (min-width: 1921px) {
+        .mainQuote {
+          font-size: 4rem;
+        }
       }
 
       /* Typography */
