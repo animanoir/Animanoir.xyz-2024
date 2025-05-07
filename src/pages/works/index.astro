@@ -6,7 +6,6 @@ import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
 import Navbar from "@/components/Navbar.astro";
 import avisualsCover from "@/images/works/visuals/visuals-cover.jpg";
-import * as motion from "motion/react-client";
 
 const posts = (await getCollection("works")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()

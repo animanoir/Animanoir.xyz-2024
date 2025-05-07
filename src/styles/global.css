@@ -97,10 +97,16 @@ p {
   text-align: justify;
 }
 
-p::selection {
-  color: red;
+/* Replace the existing p::selection rule with these general selection rules */
+::selection {
+  background-color: transparent;
+  color: #060606;
 }
 
+::-moz-selection {
+  background-color: transparent;
+  color: #060606;
+}
 
 /* Animations */
 .fadeInQuick {
