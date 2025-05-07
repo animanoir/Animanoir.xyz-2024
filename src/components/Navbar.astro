@@ -16,15 +16,76 @@ const links = [
 ---
 
 <nav class="navbar" role="navigation">
-  {
-    links.map((link) => (
-      <HeaderLink href={link.href} target={link.target}>
-        {link.label}
-      </HeaderLink>
-    ))
-  }
+  <button class="menu-toggle" aria-label="Toggle navigation menu">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+  <div class="nav-links">
+    {
+      links.map((link) => (
+        <HeaderLink href={link.href} target={link.target}>
+          {link.label}
+        </HeaderLink>
+      ))
+    }
+  </div>
   <ClientRouter />
 </nav>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+
+    if (!menuToggle || !navLinks) {
+      console.error("Menu elements not found");
+      return;
+    }
+
+    // Clean handler function to reuse
+    const toggleMenu = (e) => {
+      e.stopPropagation(); // Prevent event bubbling
+      menuToggle.classList.toggle("active");
+      navLinks.classList.toggle("active");
+      document.body.classList.toggle("menu-open");
+    };
+
+    // Remove any existing listeners to prevent duplicates
+    menuToggle.removeEventListener("click", toggleMenu);
+    // Add the click listener
+    menuToggle.addEventListener("click", toggleMenu);
+
+    // Close menu when clicking a link
+    document.querySelectorAll(".nav-links a").forEach((link) => {
+      if (!link) return;
+
+      const closeMenu = () => {
+        menuToggle.classList.remove("active");
+        navLinks.classList.remove("active");
+        document.body.classList.remove("menu-open");
+      };
+
+      // Remove existing and add new
+      link.removeEventListener("click", closeMenu);
+      link.addEventListener("click", closeMenu);
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener("click", (e) => {
+      if (
+        navLinks.classList.contains("active") &&
+        !navLinks.contains(e.target) &&
+        e.target !== menuToggle
+      ) {
+        menuToggle.classList.remove("active");
+        navLinks.classList.remove("active");
+        document.body.classList.remove("menu-open");
+      }
+    });
+  });
+</script>
+
 <style>
   :root {
     --text-color: #fdfefe;
@@ -33,6 +94,8 @@ const links = [
     --margin-horizontal: 1rem;
     --margin-vertical: 1rem;
     --text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.475);
+    --transition-speed: 0.3s;
+    --bg-color: rgba(6, 6, 6, 0.95);
   }
 
   .navbar,
@@ -64,15 +127,90 @@ const links = [
     margin-right: var(--margin-horizontal);
   }
 
-  @media (max-width: 500px) {
-    .navbar {
+  /* Hamburger Menu Button */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 2rem;
+    height: 1.5rem;
+    background: transparent;
+    border: none;
+    padding: 0;
+    z-index: 1001;
+    margin-right: 1rem;
+    margin-top: 2rem;
+  }
+
+  .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-color);
+    transition: all var(--transition-speed) ease;
+  }
+
+  /* Mobile Navigation */
+  @media (max-width: 768px) {
+    .menu-toggle {
+      display: flex;
+    }
+
+    .nav-links {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      height: 100vh;
+      background-color: var(--bg-color);
+      display: flex;
       flex-direction: column;
-      padding-bottom: 0;
-      padding-right: 0;
-      align-items: flex-end;
+      justify-content: center;
+      align-items: center;
+      transition: right var(--transition-speed) ease;
+      z-index: 1000;
     }
+
+    .nav-links.active {
+      right: 0;
+      animation: fadeIn ease-out 400ms;
+    }
+
+    .navbar a {
+      margin: 1.5rem 0;
+      font-size: 1.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+    }
+
     .navbar a:not(:last-child) {
-      margin-bottom: 0;
+      margin-right: 0;
     }
+
+    .nav-links.active a {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.2s;
+    }
+
+    /* Animated hamburger to X */
+    .menu-toggle.active .bar:nth-child(1) {
+      transform: translateY(10px) rotate(45deg);
+    }
+
+    .menu-toggle.active .bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active .bar:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+  }
+
+  /* Prevent body scroll when menu is open */
+  :global(body.menu-open) {
+    overflow: hidden;
   }
 </style>
