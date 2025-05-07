@@ -18,7 +18,7 @@ import img9 from "@/images/works/visuals/visuals-9.jpg";
 import RandomVideo from "@/components/RandomVideo/RandomVideo.jsx";
 import * as motion from "motion/react-client"; 
 import { YouTube } from "astro-embed";
-
+import Footer from "@/components/Footer.astro";
 ---
 
 <html lang="en">
@@ -32,6 +32,7 @@ import { YouTube } from "astro-embed";
   <body>
     <Header />
     <Navbar />
+    <Footer />
     <RandomVideo client:load />
     <YouTubeGrid client:load  count={20} />
     <main class="articleContainer">

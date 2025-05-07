@@ -188,11 +188,6 @@ p {
   /* Allows the content to grow and take up all available space */
 }
 
-footer {
-  padding: 25px;
-  text-align: center;
-}
-
 .image-post {
   display: flex;
   flex-direction: column;

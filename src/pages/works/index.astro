@@ -6,6 +6,7 @@ import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
 import Navbar from "@/components/Navbar.astro";
 import avisualsCover from "@/images/works/visuals/visuals-cover.jpg";
+import Footer from "@/components/Footer.astro";
 
 const posts = (await getCollection("works")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -34,6 +35,7 @@ function randomRotation() {
   <body>
     <Header />
     <Navbar />
+    <Footer />
     <main>
       <div class="mainQuote-div">
         <h1 class="mainQuote">

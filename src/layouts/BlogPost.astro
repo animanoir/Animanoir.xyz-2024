@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import ModifiedHeader from "../components/ModifiedHeader.astro";
 import Navbar from "../components/Navbar.astro";
+import Footer from "@/components/Footer.astro";
 
 type Props = CollectionEntry<"blog">["data"];
 
@@ -20,6 +21,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
   <body>
     <ModifiedHeader />
     <Navbar />
+    <Footer />
     <!-- <img src={heroImage} alt={title} width="100%" /> -->
     <article class="articleContainer">
       <div class="articleBody">
