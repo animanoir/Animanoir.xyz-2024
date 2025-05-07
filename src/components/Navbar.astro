@@ -33,59 +33,6 @@ const links = [
   <ClientRouter />
 </nav>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const menuToggle = document.querySelector(".menu-toggle");
-    const navLinks = document.querySelector(".nav-links");
-
-    if (!menuToggle || !navLinks) {
-      console.error("Menu elements not found");
-      return;
-    }
-
-    // Clean handler function to reuse
-    const toggleMenu = (e) => {
-      e.stopPropagation(); // Prevent event bubbling
-      menuToggle.classList.toggle("active");
-      navLinks.classList.toggle("active");
-      document.body.classList.toggle("menu-open");
-    };
-
-    // Remove any existing listeners to prevent duplicates
-    menuToggle.removeEventListener("click", toggleMenu);
-    // Add the click listener
-    menuToggle.addEventListener("click", toggleMenu);
-
-    // Close menu when clicking a link
-    document.querySelectorAll(".nav-links a").forEach((link) => {
-      if (!link) return;
-
-      const closeMenu = () => {
-        menuToggle.classList.remove("active");
-        navLinks.classList.remove("active");
-        document.body.classList.remove("menu-open");
-      };
-
-      // Remove existing and add new
-      link.removeEventListener("click", closeMenu);
-      link.addEventListener("click", closeMenu);
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener("click", (e) => {
-      if (
-        navLinks.classList.contains("active") &&
-        !navLinks.contains(e.target) &&
-        e.target !== menuToggle
-      ) {
-        menuToggle.classList.remove("active");
-        navLinks.classList.remove("active");
-        document.body.classList.remove("menu-open");
-      }
-    });
-  });
-</script>
-
 <style>
   :root {
     --text-color: #fdfefe;
@@ -112,6 +59,7 @@ const links = [
     padding-top: 1rem;
     padding-right: 1rem;
     z-index: 1000;
+    margin-top: 1rem;
   }
 
   .navbar a {
@@ -150,7 +98,7 @@ const links = [
   }
 
   /* Mobile Navigation */
-  @media (max-width: 768px) {
+  /* @media (max-width: 768px) {
     .menu-toggle {
       display: flex;
     }
@@ -207,7 +155,7 @@ const links = [
     .menu-toggle.active .bar:nth-child(3) {
       transform: translateY(-10px) rotate(-45deg);
     }
-  }
+  } */
 
   /* Prevent body scroll when menu is open */
   :global(body.menu-open) {
