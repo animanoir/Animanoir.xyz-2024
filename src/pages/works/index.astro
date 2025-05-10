@@ -56,6 +56,9 @@ function randomRotation() {
             >
               A/Visual 3D
             </h2>
+            <h3>
+              Animations & interactive 3D experiences for your eyes and soul.
+            </h3>
             <ul>
               <li class="project">
                 <a href="/avisuals">
@@ -113,6 +116,9 @@ function randomRotation() {
             >
               Interactive Art
             </h2>
+            <h3>
+              Playing the <b>Play Metaphysics</b> to create art you can <i>Be</i>.
+            </h3>
             <ul>
               {
                 posts.map((post) => {
@@ -144,7 +150,7 @@ function randomRotation() {
               }
             </ul>
           </div>
-          <div class="listContainer">
+          <!-- <div class="listContainer">
             <h2
               style={{
                 transform: `rotate(${randomRotation()}deg)`,
@@ -153,6 +159,9 @@ function randomRotation() {
             >
               Web Development
             </h2>
+            <h3>
+              Currently learning Go because JS fucking sucks!
+            </h3>
             <ul>
               {
                 posts.map((post) => {
@@ -183,7 +192,7 @@ function randomRotation() {
                 })
               }
             </ul>
-          </div>
+</div> -->
           <div class="listContainer">
             <h2
               style={{
@@ -193,6 +202,9 @@ function randomRotation() {
             >
               Projects
             </h2>
+            <h3>
+              Assortment of passion projects made with pain, blood and fun.
+            </h3>
             <ul>
               {
                 posts.map((post) => {
@@ -301,7 +313,6 @@ function randomRotation() {
 
       .workType {
         font-size: 4rem;
-        padding-bottom: 2rem;
         z-index: 100;
         font-weight: normal;
       }
@@ -335,7 +346,7 @@ function randomRotation() {
 
       /* Project elements */
       .project {
-        height: 50vh;
+        height: 40vh;
       }
 
       /* Links and images */
@@ -362,7 +373,6 @@ function randomRotation() {
         opacity: 1;
       }
 
-      /* Post info overlay */
       .postInfo {
         position: absolute;
         top: 50%;
@@ -408,7 +418,6 @@ function randomRotation() {
           transform: none !important;
         }
 
-        /* Fix opacity issues on mobile */
         .project {
           opacity: 1;
           height: 40vh;
@@ -429,6 +438,11 @@ function randomRotation() {
         .postTitle {
           font-size: 1.8rem;
         }
+      }
+      .projectsContainer h3 {
+        text-align: center;
+        margin-block-start: 0!important;
+        margin-bottom: 2rem;
       }
     </style>
   </body>
