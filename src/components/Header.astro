@@ -8,7 +8,7 @@ import LastFm from "@/components/LastFm.jsx";
   <div>
     <a href="/">
       <h1 id="headerTitle">
-        {SITE_TITLE} | <span id="headerSubtitle">{SITE_SUBTITLE}</span>
+        {SITE_TITLE} <span id="headerSubtitle">· {SITE_SUBTITLE}</span>
       </h1>
     </a>
     <LastFm client:load customStyle={{}} />
@@ -25,6 +25,8 @@ import LastFm from "@/components/LastFm.jsx";
 
   header {
     position: fixed;
+    margin-top: 1rem;
+    margin-left: 1rem;
     z-index: 1000;
     display: flex;
     justify-content: space-between;

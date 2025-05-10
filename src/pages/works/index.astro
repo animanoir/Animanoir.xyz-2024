@@ -39,10 +39,10 @@ function randomRotation() {
     <main>
       <div class="mainQuote-div">
         <h1 class="mainQuote">
-          <b>Software engineer</b> specialized in <b>web development</b>, <b
-            >game programming</b
+          <b class="animated-gradient-text">Software engineer</b> specialized in <b>web development</b>, <b
+            class="animated-gradient-text">game programming</b
           >
-          & <b>3D/multimedia interactive art</b>.
+          & <b class="animated-gradient-text">3D/multimedia interactive art</b>.
         </h1>
       </div>
       <section>
@@ -203,7 +203,7 @@ function randomRotation() {
               Projects
             </h2>
             <h3>
-              Assortment of passion projects made with pain, blood and fun.
+              Assortment of passion projects made with pain, blood and soul-crushing fun.
             </h3>
             <ul>
               {
@@ -444,6 +444,19 @@ function randomRotation() {
         margin-block-start: 0!important;
         margin-bottom: 2rem;
       }
+        .animated-gradient-text {
+            background-image: linear-gradient(90deg, #ec4899, #f97316, #eab308, #84cc16, #22c55e, #14b8a6, #0ea5e9, #6366f1, #a855f7, #ec4899);
+            background-size: 200% auto; /* Wider gradient for animation */
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient-flow 5s linear infinite;
+            cursor: default;
+        }
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
     </style>
   </body>
 </html>
