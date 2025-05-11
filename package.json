@@ -25,6 +25,7 @@
     "astro": "5.7.9",
     "astro-embed": "^0.5.1",
     "astro-lenis": "^1.0.0",
+    "astro-particles": "^2.10.0",
     "astro-seo": "^0.8.0",
     "dotenv": "^16.4.5",
     "gsap": "^3.12.2",
