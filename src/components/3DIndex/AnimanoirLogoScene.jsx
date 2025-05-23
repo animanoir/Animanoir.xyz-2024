@@ -7,9 +7,8 @@ import * as THREE from "three";
 export const AnimanoirLogoScene = () => {
 
   const particlesRef = useRef();
-  // Use a simple counter for rotation instead of Euler object
   const [rotation, setRotation] = useState(0);
-
+  const groupRef = useRef()
   // Create particles
   const particlesCount = 100;
   const { positions, colors } = useMemo(() => {
@@ -32,9 +31,10 @@ export const AnimanoirLogoScene = () => {
   }, []);
 
   useFrame((state, delta) => {
-
-    setRotation((prev) => prev + delta * 0.2); // Slower rotation
-
+    if (groupRef.current){
+      groupRef.current.rotation.y += delta * 0.1;
+    }
+    setRotation((prev) => prev + delta * 0.05);
     // Particle animation
     if (particlesRef.current) {
       const posArray = particlesRef.current.geometry.attributes.position.array;
@@ -42,7 +42,7 @@ export const AnimanoirLogoScene = () => {
       const time = state.clock.elapsedTime;
 
       for (let i = 0; i < posArray.length; i += 3) {
-        posArray[i] += Math.sin(time + i * 0.1) * 0.005; // Reduced movement further
+        posArray[i] += Math.sin(time + i * 0.1) * 0.005; 
         posArray[i + 1] += Math.cos(time + i * 0.1) * 0.005;
         posArray[i + 2] += Math.sin(time + i * 0.1) * 0.005;
 
@@ -51,7 +51,7 @@ export const AnimanoirLogoScene = () => {
         colArray[i + 2] = (Math.sin(time * 0.2 + i * 0.4) + 1) / 2; // Blue channel
       }
       particlesRef.current.geometry.attributes.position.needsUpdate = true;
-      particlesRef.current.geometry.attributes.color.needsUpdate = true; // Flag color attribute for update
+      particlesRef.current.geometry.attributes.color.needsUpdate = true; 
     }
   });
 
@@ -59,11 +59,11 @@ export const AnimanoirLogoScene = () => {
     <Fragment>
       <Environment
         files={"/images/animanoir-xyz-space-small.hdr"}
-        backgroundRotation={[0, 0, rotation]} // [x, y, z] rotation
-        background // Keep background commented if you only want reflections
-        backgroundIntensity={0.1} // Lower intensity if background is enabled
+        backgroundRotation={[rotation, rotation, rotation]} 
+        backgroundIntensity={0.1}
+        background
       />
-      {/* <ambientLight color={"white"} position={[0, 0, 0]} intensity={200} /> */}
+      <group ref={groupRef}>
       <points ref={particlesRef}>
         <bufferGeometry>
           <bufferAttribute
@@ -89,6 +89,7 @@ export const AnimanoirLogoScene = () => {
           depthWrite={false} // Often needed for transparent particles
         />
       </points>
+      </group>
       <Float rotationIntensity={10} speed={0.5}>
         <AndrosFetal />
       </Float>

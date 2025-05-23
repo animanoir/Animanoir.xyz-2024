@@ -7,12 +7,10 @@ import { AnimanoirLogoScene } from "./AnimanoirLogoScene";
 import "@/styles/canvasFiber.css";
 import * as THREE from "three";
 
-// Floating camera effect component
 const FloatingCamera = ({ intensity = 0.15, speed = 0.3 }) => {
   const timeRef = useRef(0);
   const initialCameraPos = useRef(null);
   
-  // Create noise vectors for smoother movement
   const noiseOffsets = useRef({
     x1: Math.random() * 100,
     x2: Math.random() * 100,
@@ -22,20 +20,15 @@ const FloatingCamera = ({ intensity = 0.15, speed = 0.3 }) => {
   });
   
   useFrame(({ camera }, delta) => {
-    // Store initial camera position
     if (!initialCameraPos.current) {
       initialCameraPos.current = camera.position.clone();
     }
     
-    // Increment time
     timeRef.current += delta * speed;
     
-    // Generate perlin-like noise
     const t = timeRef.current;
     const { x1, x2, y1, y2, z1 } = noiseOffsets.current;
     
-    // Using multiple sine waves at different frequencies creates a complex,
-    // non-repeating pattern similar to perlin noise
     const noiseX = (
       Math.sin(t * 0.5 + x1) * 0.5 + 
       Math.sin(t * 1.1 + x2) * 0.3
@@ -67,9 +60,9 @@ export const SceneIndex = () => {
 
   const sceneCreated = ({ gl }) => {
     gl.setClearColor("black", 1);
-    gl.toneMapping = THREE.ACESFilmicToneMapping;
+    gl.toneMapping = THREE.AgXToneMapping;
     gl.outputColorSpace = THREE.SRGBColorSpace;
-    gl.toneMappingExposure = 2.5;
+    gl.toneMappingExposure = 1.0;
   };
 
   const canvasStyle = {
@@ -98,13 +91,7 @@ export const SceneIndex = () => {
             luminanceSmoothing={0.9}
             mipmapBlur
           />
-          {/* <DepthOfField
-            target={[0, 0, 0]} // Set focus target to the center [x, y, z]
-            focalLength={0.5} // Adjust focal length for blur amount
-            bokehScale={5} // Adjust bokeh size
-            height={720}
-          /> */}
-          <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.25} />
+          <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.15} />
           <Vignette eskil={false} offset={0.1} darkness={0.2}  />
         </EffectComposer>
       </Canvas>

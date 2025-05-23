@@ -38,7 +38,7 @@ export function ModelANLogo(props) {
         raycast={meshBounds}
         geometry={nodes.Curve.geometry}
         material={nodes.Curve.material}
-        position={[0, -1, 0]}
+        position={[0, 0, 0]}
         rotation={[Math.PI / 2, 0, 0]}
         scale={55}
         onPointerOver={(e) => {
@@ -49,16 +49,16 @@ export function ModelANLogo(props) {
           gl.domElement.style.cursor = "auto";
         }}
       >
-<meshPhysicalMaterial
-  metalness={0.0}
-  roughness={0.2}
-  transmission={1.0}
-  thickness={0.5}
-  ior={2.417}
-  clearcoat={1}
-  clearcoatRoughness={0.1}
-  envMapIntensity={1}
-/>
+      <meshPhysicalMaterial
+        metalness={0.0}
+        roughness={0.2}
+        transmission={1.0}
+        thickness={0.5}
+        ior={2.417}
+        clearcoat={1}
+        clearcoatRoughness={0.1}
+        envMapIntensity={1}
+      />
       </mesh>
     </>
   );
