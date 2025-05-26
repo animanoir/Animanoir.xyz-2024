@@ -11,7 +11,7 @@ import Footer from "@/components/Footer.astro";
   <head>
     <BaseHead
       title="Hola, dicen que soy Óscar"
-      description={"About"}
+      description={"Software engineer specialized in web development, game programming & 3D/multimedia interactive art."}
       image="/images/about/óscar-a-montiel-animanoir-geosmina.jpg"
     />
   </head>
@@ -21,137 +21,83 @@ import Footer from "@/components/Footer.astro";
     <Navbar />
     <Footer />
     <div class="container">
-      <div class="canvas">
-        <main class="content">
-          <div class="text-overlay">
-            <p>
-              <b>Software Engineer</b> by profession—<b
-                >Multidisciplinary Media Artist</b
-              > by choice. <i>Most of the time everything & nothing at once</i>.
-              Just like a poet, I tend to rhyme without knowing. <span
-                style="letter-spacing: 1rem;">Unleashed and boundless</span
-              >, <b>just like you!</b>
-            </p>
-            <p style="font-size: 0.8rem;">
-              For collaborations, commissions, or <b>just to say hi</b>,
-              <a href="mailto:etherealflux94@gmail.com" target="_blank"
-                >contact me</a
-              >.
-            </p>
-          </div>
-          <Image
-            src={gif1}
-            alt={"Óscar A. Montiel"}
-            class="heroImage"
-            decoding="async"
-            decoding="async"
-            loading="eager"
-            quality={50}
-          />
-          <p style="text-align:center;font-size:2rem; padding-top: 1rem;">
-            <a
-              style="text-decoration: none; color: inherit; display: inline-block; animation: rotate 4s linear infinite;"
-              href="https://www.youtube.com/watch?v=mqqx9LCo36Q">☯</a
-            >
+      <Image
+        class="main_image"
+        src={gif1}
+        width="500"
+        alt={"Óscar A. Montiel"}
+        class="heroImage"
+        decoding="async"
+        decoding="async"
+        loading="eager"
+        quality={90}
+        />
+        <div class="main_text">
+          <p>
+            <b>Software Engineer</b> by profession—<b
+              >Multidisciplinary Media Artist</b
+            > by choice. <i>Most of the time everything & nothing at once</i>.
+            Just like a poet, I tend to rhyme without knowing. <span
+            style="letter-spacing: 1rem;">Unleashed and boundless,</span
+            ><b>just like you!</b>
           </p>
-        </main>
+        <p style="font-size: 0.8rem; text-align: center;">
+            For collaborations, commissions, or <b>just to say hi</b>,
+            <a href="mailto:etherealflux94@gmail.com" target="_blank"
+              >contact me</a
+            >.
+          </p>
+        </div>
       </div>
-    </div>
-
     <style>
-      @keyframes rotate {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      .text-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        padding: 1rem;
-        box-sizing: border-box;
-      }
-
-      .content:hover .text-overlay {
-        opacity: 1;
-        z-index: 20;
-      }
-
-      .content:hover .heroImage {
-        opacity: 0.3;
-      }
-
-      .heroImage {
-        transition: opacity 0.4s ease;
-      }
-
-      .text-overlay p {
-        font-size: 1rem;
-        padding: 1.5rem;
-        line-height: 2rem !important;
-        color: #fdfefe;
-        text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      }
       .container {
-        color: #fdfefe;
-        display: flex;
-        font-family: "Open Sans", sans-serif;
-        justify-content: center;
-        min-height: 100vh;
-      }
-
-      .content {
-        position: absolute;
+        margin: 0 auto;
         top: 50%;
         left: 50%;
+        position: absolute;
         transform: translate(-50%, -50%);
-        text-align: center;
+        color: #fdfefe;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        font-family: "Open Sans", sans-serif;
+        justify-content: center;
         width: 40%;
-        z-index: 10;
-        text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
       }
-      @media (max-width: 500px) {
-        .content {
-          width: 80%;
-          z-index: 10;
-        }
-
-        .text-overlay p {
-          font-size: 1rem;
-          padding: 0.5rem;
-          line-height: 1.5rem;
-        }
+      .main_image{
+        width: 40%!important;
       }
-
-      @media (max-width: 1920px) {
-        .content p {
-          font-size: 1rem;
-        }
+      .main_text{
+        font-size: 1rem;
       }
-
-      @media (max-width: 500px) {
-        .content {
+      
+      @media (max-width: 768px) {
+        .container {
           width: 90%;
-          z-index: 10;
+          padding: 1rem;
         }
-
-        .heroImage {
-          width: 100%;
-          top: 50;
-          object-fit: cover;
-          z-index: -1;
+        .main_image {
+          width: 80%!important;
+        }
+        .main_text {
+          font-size: 0.9rem;
+          text-align: center;
+        }
+      }
+      @media (max-width: 500px) {
+        .container {
+          width: 95%;
+          padding: 0.5rem;
+        }
+        .main_image {
+          width: 90%!important;
+        }
+        .main_text {
+          font-size: 1rem;
+        }
+        .main_text p {
+          line-height: 1.5;
+          margin-bottom: 1rem;
         }
       }
     </style>
