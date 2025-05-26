@@ -2,7 +2,6 @@
 import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import ModifiedHeader from "../components/ModifiedHeader.astro";
-import Navbar from "../components/Navbar.astro";
 import Footer from "@/components/Footer.astro";
 
 type Props = CollectionEntry<"blog">["data"];
@@ -20,8 +19,6 @@ const { title, summary, pubDate, heroImage } = Astro.props;
   </head>
   <body>
     <ModifiedHeader />
-    <Navbar />
-    <Footer />
     <!-- <img src={heroImage} alt={title} width="100%" /> -->
     <article class="articleContainer">
       <div class="articleBody">
@@ -33,6 +30,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
         <slot />
       </div>
     </article>
+    <Footer />
     <style>
       :root {
         --font-montserrat: "Montserrat", sans-serif;
@@ -114,7 +112,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
           text-align: center;
         }
         .articleContainer {
-          width: 100%;
+          width: 90%;
         }
         .articleBody {
           padding: 0 1rem;

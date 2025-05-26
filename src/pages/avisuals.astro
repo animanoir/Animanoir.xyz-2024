@@ -2,7 +2,6 @@
 import { YouTubeGrid } from "@/components/YouTubeGrid/YoutubeGrid.jsx";
 import BaseHead from "@/components/BaseHead.astro";
 import Header from "@/components/Header.astro";
-import Navbar from "@/components/Navbar.astro";
 import { Picture } from "astro:assets";
 import MagicHeading from "@/components/MagicHeading.jsx";
 import visualsCover from "@/images/works/visuals/visuals-main-cover.jpg";
@@ -31,7 +30,6 @@ import Footer from "@/components/Footer.astro";
   </head>
   <body>
     <Header />
-    <Navbar />
     <Footer />
     <RandomVideo client:load />
     <YouTubeGrid client:load  count={20} />

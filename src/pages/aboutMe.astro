@@ -18,21 +18,20 @@ import Footer from "@/components/Footer.astro";
 
   <body>
     <ModifiedHeader goWild={true} sortSpeed={80.0} />
-    <Navbar />
-    <Footer />
     <div class="container">
       <Image
         class="main_image"
         src={gif1}
-        width="500"
         alt={"Óscar A. Montiel"}
         class="heroImage"
-        decoding="async"
+        widths={[240, 540, 720, gif1.width]}
+        sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${gif1.width}px`}
         decoding="async"
         loading="eager"
         quality={90}
         />
         <div class="main_text">
+        <h1>Óscar A. Montiel</h1>
           <p>
             <b>Software Engineer</b> by profession—<b
               >Multidisciplinary Media Artist</b
@@ -41,13 +40,21 @@ import Footer from "@/components/Footer.astro";
             style="letter-spacing: 1rem;">Unleashed and boundless,</span
             ><b>just like you!</b>
           </p>
+        <h2>Current interests</h2>
+        <p>
+          As of now, I'm particularly interested in pragmatic philosophy, 
+          particularly in the pedagogic power of games/videogames, therefore, 
+          I'm currently into "Play Metaphysics", learning to use <b>Godot</b> to achieve some of this.
+        </p>
+        <p>I also like to learn constantly about many topics—here's a gallery of some books I'm reading/studying at the moment.</p>
         <p style="font-size: 0.8rem; text-align: center;">
             For collaborations, commissions, or <b>just to say hi</b>,
             <a href="mailto:etherealflux94@gmail.com" target="_blank"
               >contact me</a
             >.
           </p>
-        </div>
+      </div>
+     <Footer />
       </div>
     <style>
       .container {
@@ -61,45 +68,69 @@ import Footer from "@/components/Footer.astro";
         align-items: center;
         flex-direction: column;
         font-family: "Open Sans", sans-serif;
-        justify-content: center;
+        justify-content: flex-start;
+        max-height: 90vh;
         width: 40%;
+      }
+      .container h1{
+        text-align: center;
+        font-family: "Montserrat", serif;
+      }
+      .container h2, h3{
+        font-weight: bold;
+      }
+      .container p{
+        padding-top: 1rem!important;
       }
       .main_image{
         width: 40%!important;
       }
       .main_text{
         font-size: 1rem;
-      }
-      
+      }      
       @media (max-width: 768px) {
         .container {
           width: 90%;
-          padding: 1rem;
+          padding: 2rem 1rem; /* Increased vertical padding */
+        }
+        .container h1 {
+          font-size: 1.8rem; /* Responsive heading size */
+        }
+        .container h2 {
+          font-size: 1.4rem; /* Responsive heading size */
         }
         .main_image {
-          width: 80%!important;
+          width: 50% !important; /* Adjusted image size */
         }
         .main_text {
-          font-size: 0.9rem;
-          text-align: center;
+          font-size: 0.95rem; /* Adjusted font size */
+          text-align: left; /* Align text left for better readability */
         }
       }
       @media (max-width: 500px) {
         .container {
           width: 95%;
-          padding: 0.5rem;
+          padding: 1.5rem 0.5rem; /* Adjusted padding */
+        }
+        .container h1 {
+          font-size: 1.6rem; /* Smaller heading for very small screens */
+        }
+        .container h2 {
+          font-size: 1.2rem; /* Smaller heading for very small screens */
         }
         .main_image {
-          width: 90%!important;
+          width: 50% !important; /* Consistent image size relative to container */
         }
         .main_text {
-          font-size: 1rem;
+          font-size: 0.9rem; /* Adjusted font size */
+          text-align: left; /* Align text left for better readability */
         }
         .main_text p {
-          line-height: 1.5;
+          line-height: 1.6; /* Improved line height */
           margin-bottom: 1rem;
         }
       }
+
     </style>
   </body>
 </html>

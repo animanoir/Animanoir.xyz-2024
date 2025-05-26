@@ -4,7 +4,6 @@ import Header from "../../components/Header.astro";
 import { SITE_TITLE } from "../../consts";
 import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
-import Navbar from "@/components/Navbar.astro";
 import avisualsCover from "@/images/works/visuals/visuals-cover.jpg";
 import Footer from "@/components/Footer.astro";
 import { motion } from "motion/react"
@@ -35,8 +34,6 @@ function randomRotation() {
   </head>
   <body>
     <Header />
-    <Navbar />
-    <Footer />
     <main>
       <motion.div
         client:idle
@@ -203,12 +200,13 @@ function randomRotation() {
         </div>
       </section>
     </main>
+    <Footer />
     <style>
       .mainQuote {
         font-family: "Montserrat", sans-serif;
-        font-size: 3rem;
-        line-height: 1.3;
-        font-weight: normal;
+        font-size: 3.25rem; /* Adjusted size */
+        line-height: 1.35; /* Slightly increased for readability */
+        font-weight: 500; /* Added weight for emphasis */
         margin: 0;
         max-width: 80%;
       }
@@ -224,7 +222,7 @@ function randomRotation() {
 
 
       .projectsContainer {
-        width: 50vw;
+        width: 40vw;
         margin: 0 auto;
         padding-top: 3rem;
       }
@@ -241,27 +239,24 @@ function randomRotation() {
         color: floralwhite;
         margin: 0;
         padding: 0;
-        text-align: center;
-        display: block;
-        position: relative;
       }
-
       .workType {
-        font-size: 4rem;
+        font-size: 3.75rem; /* Adjusted size */
         z-index: 100;
-        font-weight: normal;
+        font-weight: 600; /* Increased weight */
+        line-height: 1.2; /* Added line-height */
       }
-
       .postTitle {
-        font-size: 2.3rem;
-        padding: 0.8rem 0.8rem 0;
-        line-height: 1;
+        font-size: 2rem;
+        line-height: 1.25;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        font-weight: 500;
       }
 
       .year {
-        font-size: 1rem;
+        font-size: 0.9rem; 
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        font-weight: 400;
       }
 
       ul {
@@ -324,8 +319,9 @@ function randomRotation() {
           font-size: 2rem;
         }
         .projectsContainer {
-          width: 100%;
+          width: 90%;
           margin: 0;
+          margin: 0 auto;
           padding-top: 5rem;
         }
 
@@ -335,13 +331,11 @@ function randomRotation() {
 
         ul {
           grid-template-columns: 1fr;
-          /* gap: 1.5rem; */
         }
 
         .workType {
-          font-size: 3rem !important;
+          font-size: 2.75rem;           
           padding-bottom: 2rem;
-          /* Override the inline rotation style for mobile */
           transform: none !important;
         }
 
@@ -363,13 +357,16 @@ function randomRotation() {
         }
 
         .postTitle {
-          font-size: 1.8rem;
+          font-size: 1.6rem;
         }
       }
       .projectsContainer h3 {
-        text-align: center;
-        margin-block-start: 0!important;
-        margin-bottom: 2rem;
+        margin-block-start: 0 !important; /* Retained important if necessary */
+        margin-bottom: 2.5rem; /* Increased bottom margin */
+        font-size: 1.25rem; /* Added font size */
+        font-weight: 400; /* Added font weight */
+        line-height: 1.6; /* Added line height */
+        color: #e0e0e0; /* Slightly softer color for subtitle */
       }
       .animated-gradient-text {
           background-image: linear-gradient(90deg, #ec4899, #f97316, #eab308, #84cc16, #22c55e, #14b8a6, #0ea5e9, #6366f1, #a855f7, #ec4899);

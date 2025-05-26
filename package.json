@@ -35,6 +35,8 @@
     "lottie-react": "^2.4.1",
     "motion": "^12.4.0",
     "postprocessing": "^6.32.2",
+    "prettier": "^3.5.3",
+    "prettier-plugin-astro": "^0.14.1",
     "r3f-perf": "^7.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

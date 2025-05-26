@@ -2,6 +2,7 @@
 import { SITE_TITLE } from "@/consts";
 import LastFm from "@/components/LastFm.jsx";
 import MutatingSubheader from "@/components/MutatingSubheader.jsx";
+import Navbar from "@/components/Navbar.astro"
 
 const { goWild = false, sortSpeed = 0 } = Astro.props;
 ---
@@ -11,25 +12,31 @@ const { goWild = false, sortSpeed = 0 } = Astro.props;
     <a href="/">
       <h1 id="headerTitle">
         {SITE_TITLE} | <span id="headerSubtitle"
-          ><MutatingSubheader goWild={goWild} sortSpeed={sortSpeed} client:load /></span
+          ><MutatingSubheader client:load /></span
         >
       </h1>
     </a>
     <LastFm client:load />
   </div>
+  <Navbar />
 </header>
 
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Raleway&display=swap");
-
   header {
-    position: fixed;
+    position: relative;
     z-index: 1000;
     display: flex;
+    position: fixed;
     justify-content: space-between;
-    padding: 0;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.475);
-    width: fit-content;
+    width: 95%;
+    margin-top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  header a {
+    text-decoration: none;
   }
   #headerTitle {
     font-size: 1rem;
@@ -53,15 +60,6 @@ const { goWild = false, sortSpeed = 0 } = Astro.props;
   }
   h1:hover {
     color: #ee5858;
-  }
-
-  header {
-    margin: 1rem;
-    margin-top: 0.5rem;
-  }
-
-  header a {
-    text-decoration: none;
   }
 
   @media (max-width: 500px) {
