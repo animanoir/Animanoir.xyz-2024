@@ -4,14 +4,16 @@ import { SITE_TITLE } from "../consts";
 import BaseHead from "../components/BaseHead.astro";
 import Navbar from "@/components/Navbar.astro";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
+import { Picture, inferRemoteSize } from "astro:assets"
 
-// Define the custom type for post
 interface Post {
   id: string;
   cover: {
     file: {
       url: string;
     };
+    width?: number;
+    height?: number;
   };
   properties: {
     Name: {
@@ -35,31 +37,48 @@ interface Post {
 
 const databaseId = process.env.NOTION_PAGE_ID;
 const rawPosts = await getDatabase(databaseId);
-const posts: Post[] = rawPosts.map((post: any) => ({
-  id: post.id,
-  cover: post.cover,
-  properties: {
-    Name: post.properties.Name,
-    ["Autor(es)"]: post.properties["Autor(es)"],
-    ["Año de publicación (original)"]:
-      post.properties["Año de publicación (original)"],
-  },
-  public_url: post.public_url,
-}));
+const posts: Post[] = await Promise.all(
+  rawPosts.map(async (post: any) => {
+    let coverWidth, coverHeight;
+    if (post.cover?.file?.url) {
+      try {
+        const dimensions = await inferRemoteSize(post.cover.file.url);
+        coverWidth = dimensions.width;
+        coverHeight = dimensions.height;
+      } catch (e) {
+        console.error(`Failed to infer size for ${post.cover.file.url}`, e);
+      }
+    }
+    return {
+      id: post.id,
+      cover: {
+        ...post.cover,
+        width: coverWidth,
+        height: coverHeight,
+      },
+      properties: {
+        Name: post.properties.Name,
+        ["Autor(es)"]: post.properties["Autor(es)"],
+        ["Año de publicación (original)"]:
+          post.properties["Año de publicación (original)"],
+      },
+      public_url: post.public_url,
+    };
+  })
+);
 ---
 
 <html lang="es">
   <head>
     <BaseHead
       title={SITE_TITLE}
-      description={"Books I like to read."}
+      description={"Books I like"}
       image="/images/about/óscar-a-montiel-animanoir-geosmina.jpg"
     />
   </head>
 
   <body>
     <ModifiedHeader />
-    <Navbar />
     <div class="bookGridContainer">
       <div class="booksWelcome">
         <p>
@@ -93,25 +112,23 @@ const posts: Post[] = rawPosts.map((post: any) => ({
         posts.map((post: Post) => (
           <div class="card" key={post.id}>
             <a href={post.public_url} target="_blank" rel="noopener noreferrer">
-              <img
+              <Picture
                 src={post.cover?.file?.url || "default-image-url.jpg"}
-                alt={
-                  post.properties.Name?.title?.[0]?.text?.content || "No title"
-                }
+                width={post.cover?.width}
+                height={post.cover?.height}
+                alt={post.properties.Name?.title?.[0]?.text?.content || "No title"}
               />
             </a>
             <h3>
               {post.properties.Name?.title?.[0]?.text?.content || "No title"}
               <p>
                 {post.properties["Año de publicación (original)"]?.number ||
-                  null}
-              </p>
-            </h3>
-            <p>
-              {post.properties["Autor(es)"]?.multi_select
+                  null} — 
+                {post.properties["Autor(es)"]?.multi_select
                 ?.map((author: any) => author.name)
                 .join(", ") || "No author"}
-            </p>
+              </p>
+            </h3>
           </div>
         ))
       }
@@ -160,7 +177,6 @@ const posts: Post[] = rawPosts.map((post: any) => ({
         color: #7a7a7a;
         padding: 0;
       }
-      /* Add hover effect to .card a */
       .card a {
         display: block;
         color: inherit;
@@ -183,17 +199,17 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 
         .bookGridContainer {
           width: 80vw;
-          grid-template-columns: 1fr; /* Single column layout */
+          grid-template-columns: 1fr;
           gap: 0.25rem;
         }
 
         .card {
-          width: 100%; /* Ensure each card takes full width */
+          width: 100%;
         }
 
         .card img {
           width: 100%;
-          height: 300px; /* Adjust image height to maintain aspect ratio */
+          height: 300px;
         }
 
         .card h3 {
