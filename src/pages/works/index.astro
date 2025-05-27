@@ -6,7 +6,7 @@ import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
 import avisualsCover from "@/images/works/visuals/visuals-cover.jpg";
 import Footer from "@/components/Footer.astro";
-import { motion } from "motion/react"
+import { motion } from "motion/react";
 
 const posts = (await getCollection("works")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -39,15 +39,17 @@ function randomRotation() {
         client:idle
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 , ease: "easeOut" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
-       <div class="mainQuote-div">
-        <h1 class="mainQuote">
-          <b class="animated-gradient-text">Software engineer</b> specialized in <b>web development</b>, <b
-            class="animated-gradient-text">game programming</b
-          >
-          & <b class="animated-gradient-text">3D/multimedia interactive art</b>.
-        </h1>
+        <div class="mainQuote-div">
+          <h1 class="mainQuote">
+            <b class="animated-gradient-text">Software engineer</b> specialized in
+            <b>web development</b>, <b class="animated-gradient-text"
+              >game programming</b
+            >
+            & <b class="animated-gradient-text">3D/multimedia interactive art</b
+            >.
+          </h1>
         </div>
       </motion.div>
       <section>
@@ -55,17 +57,16 @@ function randomRotation() {
           <motion.div
             client:idle
             initial={{ opacity: 0, x: 30 }}
-            whileInView={{opacity: 1, x: 0}}
-            viewport={{once:true, amount: 0.5}}
-            transition={{ duration: 0.6 , ease: "easeOut" }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <div class="listContainer">
               <div class="category">
-                <h2 class="workType">
-                  A/Visual 3D
-                </h2>
+                <h2 class="workType">A/Visual 3D</h2>
                 <h3>
-                  Animations & interactive 3D experiences for your eyes and soul.
+                  Animations & interactive 3D experiences for your eyes and
+                  soul.
                 </h3>
               </div>
               <ul>
@@ -115,108 +116,106 @@ function randomRotation() {
                   })
                 }
               </ul>
-              </div>
+            </div>
           </motion.div>
           <motion.div
             client:idle
             initial={{ opacity: 0, x: -30 }}
-            whileInView={{opacity: 1, x: 0}}
-            viewport={{once:true, amount: 0.5}}
-            transition={{ duration: 0.6 , ease: "easeOut" }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
-          <div class="listContainer lc-row-reverse">
-            <div class="category">
-            <h2 class="workType">
-              Interactive Art
-            </h2>
-            <h3>
-              Playing the <b>Play Metaphysics</b> to create art you can <i>Be</i>.
-            </h3>
-            </div>
-            <ul>
-              {
-                posts.map((post) => {
-                  const { workType } = post.data;
-                  const interactiveArtWork = workType.find(
-                    (work) => work === "Interactive Art"
-                  );
-                  if (interactiveArtWork) {
-                    return (
-                      <li class="project">
-                        <a href={`/works/${post.slug}/`}>
-                          <Picture
-                            class="postHeroImg"
-                            src={post.data.heroImage}
-                            alt={`${post.data.title} by Óscar A. Montiel`}
-                            formats={["webp"]}
-                            decoding="async"
-                            loading="lazy"
-                          />
-                          <div class="postInfo">
-                            <p class="postTitle">{post.data.title}</p>
-                            <p class="year">{post.data.year || "on-going"}</p>
-                          </div>
-                        </a>
-                      </li>
+            <div class="listContainer lc-row-reverse">
+              <div class="category">
+                <h2 class="workType">Interactive Art</h2>
+                <h3>
+                  Playing the <b>Play Metaphysics</b> to create art you can <i
+                    >Be</i
+                  >.
+                </h3>
+              </div>
+              <ul>
+                {
+                  posts.map((post) => {
+                    const { workType } = post.data;
+                    const interactiveArtWork = workType.find(
+                      (work) => work === "Interactive Art"
                     );
-                  }
-                })
-              }
-            </ul>
-          </div>
+                    if (interactiveArtWork) {
+                      return (
+                        <li class="project">
+                          <a href={`/works/${post.slug}/`}>
+                            <Picture
+                              class="postHeroImg"
+                              src={post.data.heroImage}
+                              alt={`${post.data.title} by Óscar A. Montiel`}
+                              formats={["webp"]}
+                              decoding="async"
+                              loading="lazy"
+                            />
+                            <div class="postInfo">
+                              <p class="postTitle">{post.data.title}</p>
+                              <p class="year">{post.data.year || "on-going"}</p>
+                            </div>
+                          </a>
+                        </li>
+                      );
+                    }
+                  })
+                }
+              </ul>
+            </div>
           </motion.div>
-           <motion.div
+          <motion.div
             client:idle
             initial={{ opacity: 0, x: 30 }}
-            whileInView={{opacity: 1, x: 0}}
-            viewport={{once:true, amount: 0.5}}
-            transition={{ duration: 0.6 , ease: "easeOut" }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
-         <div class="listContainer">
-            <div class="category" > 
-            <h2 class="workType">
-              Projects
-            </h2>
-            <h3>
-              Assortment of passion projects made with pain, blood and soul-crushing fun.
-            </h3>
+            <div class="listContainer">
+              <div class="category">
+                <h2 class="workType">Projects</h2>
+                <h3>
+                  Assortment of passion projects made with pain, blood and
+                  soul-crushing fun.
+                </h3>
               </div>
-            <ul>
-              {
-                posts.map((post) => {
-                  const { workType } = post.data;
-                  const projectWork = workType.find(
-                    (work) => work === "Project"
-                  );
-                  if (projectWork) {
-                    return (
-                      <li class="project">
-                        <a href={`/works/${post.slug}/`}>
-                          <Picture
-                            class="postHeroImg"
-                            src={post.data.heroImage}
-                            alt={`${post.data.title} by Óscar A. Montiel`}
-                            formats={["webp"]}
-                            decoding="async"
-                            loading="lazy"
-                          />
-                          <div class="postInfo">
-                            <p class="postTitle">{post.data.title}</p>
-                            <p class="year">{post.data.year || "on-going"}</p>
-                          </div>
-                        </a>
-                      </li>
+              <ul>
+                {
+                  posts.map((post) => {
+                    const { workType } = post.data;
+                    const projectWork = workType.find(
+                      (work) => work === "Project"
                     );
-                  }
-                })
-              }
-            </ul>
-          </div>
+                    if (projectWork) {
+                      return (
+                        <li class="project">
+                          <a href={`/works/${post.slug}/`}>
+                            <Picture
+                              class="postHeroImg"
+                              src={post.data.heroImage}
+                              alt={`${post.data.title} by Óscar A. Montiel`}
+                              formats={["webp"]}
+                              decoding="async"
+                              loading="lazy"
+                            />
+                            <div class="postInfo">
+                              <p class="postTitle">{post.data.title}</p>
+                              <p class="year">{post.data.year || "on-going"}</p>
+                            </div>
+                          </a>
+                        </li>
+                      );
+                    }
+                  })
+                }
+              </ul>
+            </div>
           </motion.div>
         </div>
       </section>
     </main>
-    <Footer />
     <style>
       .mainQuote {
         font-family: "Montserrat", sans-serif;
@@ -226,7 +225,7 @@ function randomRotation() {
         margin: 0;
         max-width: 80%;
       }
-       .mainQuote-div {
+      .mainQuote-div {
         width: 99vw;
         height: 100vh;
         display: flex;
@@ -235,7 +234,7 @@ function randomRotation() {
         padding: 1rem;
         box-sizing: border-box;
       }
-      .category{
+      .category {
         //margin-right: 6rem;
         width: 40%;
       }
@@ -251,8 +250,8 @@ function randomRotation() {
         display: flex;
         justify-content: space-between;
       }
-      .lc-row-reverse{
-        flex-direction: row-reverse!important;
+      .lc-row-reverse {
+        flex-direction: row-reverse !important;
       }
       .postTitle,
       .year,
@@ -263,7 +262,7 @@ function randomRotation() {
         padding: 0;
       }
       .workType {
-        font-size: 4rem; 
+        font-size: 4rem;
         z-index: 100;
         font-weight: 600;
         line-height: 1.2;
@@ -277,7 +276,7 @@ function randomRotation() {
       }
 
       .year {
-        font-size: 0.9rem; 
+        font-size: 0.9rem;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         font-weight: 400;
       }
@@ -339,7 +338,7 @@ function randomRotation() {
         display: block;
       }
       @media (max-width: 760px) {
-        .mainQuote{
+        .mainQuote {
           font-size: 2rem;
         }
         .projectsContainer {
@@ -389,17 +388,33 @@ function randomRotation() {
         color: #e0e0e0;
       }
       .animated-gradient-text {
-          background-image: linear-gradient(90deg, #ec4899, #f97316, #eab308, #84cc16, #22c55e, #14b8a6, #0ea5e9, #6366f1, #a855f7, #ec4899);
-          background-size: 200% auto; /* Wider gradient for animation */
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-          animation: gradient-flow 5s linear infinite;
-          cursor: default;
+        background-image: linear-gradient(
+          90deg,
+          #ec4899,
+          #f97316,
+          #eab308,
+          #84cc16,
+          #22c55e,
+          #14b8a6,
+          #0ea5e9,
+          #6366f1,
+          #a855f7,
+          #ec4899
+        );
+        background-size: 200% auto; /* Wider gradient for animation */
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: gradient-flow 5s linear infinite;
+        cursor: default;
       }
       @keyframes gradient-flow {
-          0% { background-position: 0% 50%; }
-          100% { background-position: 200% 50%; }
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 200% 50%;
+        }
       }
       /* For larger screens (beyond HD) */
       @media (min-width: 1921px) {
