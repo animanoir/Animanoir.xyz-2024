@@ -52,77 +52,87 @@ function randomRotation() {
       </motion.div>
       <section>
         <div class="projectsContainer">
-          <div class="listContainer">
-            <div>
-              <h2
-                class="workType"
-              >
-                A/Visual 3D
-              </h2>
-              <h3>
-                Animations & interactive 3D experiences for your eyes and soul.
-              </h3>
-            </div>
-            <ul>
-              <li class="project">
-                <a href="/avisuals">
-                  <Picture
-                    class="postHeroImg"
-                    src={avisualsCover}
-                    alt="A/visuals by Óscar A. Montiel"
-                    formats={["webp"]}
-                    quality={100}
-                    decoding="async"
-                    loading="lazy"
-                  />
-                  <div class="postInfo">
-                    <p class="postTitle">3D/A/visuals</p>
-                    <p class="year">on-going</p>
-                  </div>
-                </a>
-              </li>
-              {
-                posts.map((post) => {
-                  const { workType } = post.data;
-                  const audioVisual3dWork = workType.find(
-                    (work) => work === "3D"
-                  );
-                  if (audioVisual3dWork) {
-                    return (
-                      <li class="project">
-                        <a href={`/works/${post.slug}/`}>
-                          <Picture
-                            class="postHeroImg"
-                            src={post.data.heroImage}
-                            alt={`${post.data.title} by Óscar A. Montiel`}
-                            formats={["webp"]}
-                            decoding="async"
-                            loading="lazy"
-                          />
-                          <div class="postInfo">
-                            <p class="postTitle">{post.data.title}</p>
-                            <p class="year">{post.data.year || "on-going"}</p>
-                          </div>
-                        </a>
-                      </li>
+          <motion.div
+            client:idle
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{opacity: 1, x: 0}}
+            viewport={{once:true, amount: 0.5}}
+            transition={{ duration: 0.6 , ease: "easeOut" }}
+          >
+            <div class="listContainer">
+              <div class="category">
+                <h2 class="workType">
+                  A/Visual 3D
+                </h2>
+                <h3>
+                  Animations & interactive 3D experiences for your eyes and soul.
+                </h3>
+              </div>
+              <ul>
+                <li class="project">
+                  <a href="/avisuals">
+                    <Picture
+                      class="postHeroImg"
+                      src={avisualsCover}
+                      alt="A/visuals by Óscar A. Montiel"
+                      formats={["webp"]}
+                      quality={100}
+                      decoding="async"
+                      loading="lazy"
+                    />
+                    <div class="postInfo">
+                      <p class="postTitle">3D/A/visuals</p>
+                      <p class="year">on-going</p>
+                    </div>
+                  </a>
+                </li>
+                {
+                  posts.map((post) => {
+                    const { workType } = post.data;
+                    const audioVisual3dWork = workType.find(
+                      (work) => work === "3D"
                     );
-                  }
-                })
-              }
-            </ul>
-          </div>
-          <div class="listContainer">
-            <h2
-              style={{
-                transform: `rotate(${randomRotation()}deg)`,
-              }}
-              class="workType"
-            >
+                    if (audioVisual3dWork) {
+                      return (
+                        <li class="project">
+                          <a href={`/works/${post.slug}/`}>
+                            <Picture
+                              class="postHeroImg"
+                              src={post.data.heroImage}
+                              alt={`${post.data.title} by Óscar A. Montiel`}
+                              formats={["webp"]}
+                              decoding="async"
+                              loading="lazy"
+                            />
+                            <div class="postInfo">
+                              <p class="postTitle">{post.data.title}</p>
+                              <p class="year">{post.data.year || "on-going"}</p>
+                            </div>
+                          </a>
+                        </li>
+                      );
+                    }
+                  })
+                }
+              </ul>
+              </div>
+          </motion.div>
+          <motion.div
+            client:idle
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{opacity: 1, x: 0}}
+            viewport={{once:true, amount: 0.5}}
+            transition={{ duration: 0.6 , ease: "easeOut" }}
+          >
+          <div class="listContainer lc-row-reverse">
+            <div class="category">
+            <h2 class="workType">
               Interactive Art
             </h2>
             <h3>
               Playing the <b>Play Metaphysics</b> to create art you can <i>Be</i>.
             </h3>
+            </div>
             <ul>
               {
                 posts.map((post) => {
@@ -154,18 +164,23 @@ function randomRotation() {
               }
             </ul>
           </div>
+          </motion.div>
+           <motion.div
+            client:idle
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{opacity: 1, x: 0}}
+            viewport={{once:true, amount: 0.5}}
+            transition={{ duration: 0.6 , ease: "easeOut" }}
+          >
          <div class="listContainer">
-            <h2
-              style={{
-                transform: `rotate(${randomRotation()}deg)`,
-              }}
-              class="workType"
-            >
+            <div class="category" > 
+            <h2 class="workType">
               Projects
             </h2>
             <h3>
               Assortment of passion projects made with pain, blood and soul-crushing fun.
             </h3>
+              </div>
             <ul>
               {
                 posts.map((post) => {
@@ -197,6 +212,7 @@ function randomRotation() {
               }
             </ul>
           </div>
+          </motion.div>
         </div>
       </section>
     </main>
@@ -204,9 +220,9 @@ function randomRotation() {
     <style>
       .mainQuote {
         font-family: "Montserrat", sans-serif;
-        font-size: 3.25rem; /* Adjusted size */
-        line-height: 1.35; /* Slightly increased for readability */
-        font-weight: 500; /* Added weight for emphasis */
+        font-size: 3.25rem;
+        line-height: 1.35;
+        font-weight: 500;
         margin: 0;
         max-width: 80%;
       }
@@ -219,19 +235,25 @@ function randomRotation() {
         padding: 1rem;
         box-sizing: border-box;
       }
-
-
+      .category{
+        //margin-right: 6rem;
+        width: 40%;
+      }
       .projectsContainer {
-        width: 40vw;
+        width: 70vw;
         margin: 0 auto;
         padding-top: 3rem;
       }
 
       .listContainer {
-        padding-bottom: 10rem;
+        padding-bottom: 15rem;
         width: 100%;
+        display: flex;
+        justify-content: space-between;
       }
-
+      .lc-row-reverse{
+        flex-direction: row-reverse!important;
+      }
       .postTitle,
       .year,
       .workType {
@@ -241,10 +263,11 @@ function randomRotation() {
         padding: 0;
       }
       .workType {
-        font-size: 3.75rem; /* Adjusted size */
+        font-size: 4rem; 
         z-index: 100;
-        font-weight: 600; /* Increased weight */
-        line-height: 1.2; /* Added line-height */
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
       }
       .postTitle {
         font-size: 2rem;
@@ -266,6 +289,7 @@ function randomRotation() {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.5rem;
         overflow: hidden;
+        width: 50%;
       }
 
       ul li {
@@ -274,7 +298,7 @@ function randomRotation() {
       }
 
       .project {
-        height: 40vh;
+        height: 100%;
       }
 
       ul a {
@@ -329,12 +353,8 @@ function randomRotation() {
           padding-bottom: 5rem;
         }
 
-        ul {
-          grid-template-columns: 1fr;
-        }
-
         .workType {
-          font-size: 2.75rem;           
+          font-size: 2.75rem;
           padding-bottom: 2rem;
           transform: none !important;
         }
@@ -361,12 +381,12 @@ function randomRotation() {
         }
       }
       .projectsContainer h3 {
-        margin-block-start: 0 !important; /* Retained important if necessary */
-        margin-bottom: 2.5rem; /* Increased bottom margin */
-        font-size: 1.25rem; /* Added font size */
-        font-weight: 400; /* Added font weight */
-        line-height: 1.6; /* Added line height */
-        color: #e0e0e0; /* Slightly softer color for subtitle */
+        margin-block-start: 0 !important;
+        margin-bottom: 2.5rem;
+        font-size: 1.25rem;
+        font-weight: 400;
+        line-height: 1.6;
+        color: #e0e0e0;
       }
       .animated-gradient-text {
           background-image: linear-gradient(90deg, #ec4899, #f97316, #eab308, #84cc16, #22c55e, #14b8a6, #0ea5e9, #6366f1, #a855f7, #ec4899);
@@ -381,7 +401,6 @@ function randomRotation() {
           0% { background-position: 0% 50%; }
           100% { background-position: 200% 50%; }
       }
-      
       /* For larger screens (beyond HD) */
       @media (min-width: 1921px) {
         .mainQuote {
