@@ -221,13 +221,6 @@ const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
   );
 
   useEffect(() => {
-    window.addEventListener("deviceorientation", handleOrientationChange);
-    return () => {
-      window.removeEventListener("deviceorientation", handleOrientationChange);
-    };
-  }, [handleOrientationChange]);
-
-  useEffect(() => {
     if (goWild) {
       const interval = setInterval(() => {
         descriptionArray.sort(() => Math.random() - 0.5);
