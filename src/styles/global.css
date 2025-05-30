@@ -126,14 +126,7 @@ p {
 }
 
 /* Layout */
-#mainFrame {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  top: 0;
-  left: 0;
-}
+
 
 #content {
   flex-grow: 1;
