@@ -2,14 +2,15 @@
 // import HeaderLink from "./HeaderLink.astro";
 import { SITE_TITLE, SITE_SUBTITLE } from "@/consts";
 import LastFm from "@/components/LastFm.jsx";
-import Navbar from "@/components/Navbar.astro"
+import Navbar from "@/components/Navbar.astro";
 ---
 
 <header>
   <div>
     <a href="/">
       <h1 id="headerTitle">
-        {SITE_TITLE} <span id="headerSubtitle">· {SITE_SUBTITLE}</span>
+        {SITE_TITLE}
+        <span id="headerSubtitle">· {SITE_SUBTITLE}</span>
       </h1>
     </a>
     <LastFm client:load customStyle={{}} />
@@ -18,8 +19,6 @@ import Navbar from "@/components/Navbar.astro"
 </header>
 
 <style>
-  @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Raleway&display=swap");
-
   header {
     position: relative;
     z-index: 1000;
