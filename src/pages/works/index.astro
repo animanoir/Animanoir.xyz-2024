@@ -17,14 +17,6 @@ for (let i = posts.length - 1; i > 0; i--) {
   const j = Math.floor(Math.random() * (i + 1));
   [posts[i], posts[j]] = [posts[j], posts[i]];
 }
-
-// Random rotation of the posts
-function randomRotation() {
-  //let theta = Math.random() * -180.0;
-  let theta = 0.0;
-
-  return theta;
-}
 ---
 
 <!doctype html>
@@ -36,7 +28,7 @@ function randomRotation() {
     <Header />
     <main>
       <motion.div
-        client:idle
+        client:load
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -57,7 +49,7 @@ function randomRotation() {
       <section>
         <div class="projectsContainer">
           <motion.div
-            client:idle
+            client:load
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.5 }}
@@ -127,7 +119,7 @@ function randomRotation() {
             </div>
           </motion.div>
           <motion.div
-            client:idle
+            client:load
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.5 }}
@@ -182,7 +174,7 @@ function randomRotation() {
             </div>
           </motion.div>
           <motion.div
-            client:idle
+            client:load
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.5 }}
@@ -271,7 +263,7 @@ function randomRotation() {
         font-family: "Open Sans", sans-serif !important;
         font-style: normal;
         font-weight: normal;
-        font-size: 1rem;
+        font-size: 0.9rem;
         text-align: justify;
         color: #e0e0e0;
         line-height: 1.5;
@@ -285,6 +277,7 @@ function randomRotation() {
       .lc-row-reverse {
         flex-direction: row-reverse !important;
       }
+
       .postTitle,
       .year,
       .workType {
@@ -294,17 +287,27 @@ function randomRotation() {
         padding: 0;
       }
       .workType {
-        font-size: 4rem;
+        font-size: 3.5rem;
         z-index: 100;
         font-weight: 600;
         line-height: 1.2;
         margin-bottom: 1.5rem;
       }
+      .postInfo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+        z-index: 10;
+        width: 70%;
+      }
       .postTitle {
-        font-size: 2rem;
+        font-size: 1.5rem;
         line-height: 1.25;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         font-weight: 500;
+        text-align: initial;
       }
 
       .year {
@@ -329,6 +332,7 @@ function randomRotation() {
 
       .project {
         height: 100%;
+        width: 100%;
       }
 
       ul a {
@@ -352,17 +356,6 @@ function randomRotation() {
 
       .postHeroImg.loaded {
         opacity: 1;
-      }
-
-      .postInfo {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        display: none;
-        z-index: 10;
-        width: 90%;
       }
 
       .project:hover .postInfo {
