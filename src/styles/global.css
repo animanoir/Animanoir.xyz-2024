@@ -77,13 +77,19 @@ b {
   color: #fdfefe;
 }
 
+h4 {
+  font-family: "Open Sans", serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.0rem;
+  text-align: justify;
+  color: #E0E0E0;
+  line-height: 1.5;
+}
 h3 {
   font-family: "Montserrat", serif;
-  font-weight: 300;
   font-style: normal;
-  font-size: 1.2rem;
-  line-height: 1.8;
-  /* padding: 5rem !important; */
+  font-size: 1.3rem;
 }
 
 p {

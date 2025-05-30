@@ -3,7 +3,6 @@ import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import ModifiedHeader from "../components/ModifiedHeader.astro";
 import { Picture } from "astro:assets";
-import Footer from "@/components/Footer.astro";
 type HeroImage = {
   src: string;
   width: number;
@@ -28,7 +27,6 @@ const { title, description, heroImage } = Astro.props;
   </head>
   <body>
     <ModifiedHeader />
-    <Footer />
     <article class="articleContainer">
       <div class="top-section">
         {
@@ -40,7 +38,7 @@ const { title, description, heroImage } = Astro.props;
               formats={["webp"]}
               decoding="async"
               loading="eager"
-              quality={100}
+              quality={80}
             />
           )
         }
@@ -61,12 +59,12 @@ const { title, description, heroImage } = Astro.props;
         position: relative;
         justify-content: center;
         align-items: center;
-        width: 100%;
+        margin-top: 5rem;
       }
 
       .heroImage {
         height: 500px;
-        width: 100vw;
+        width: 50vw;
         object-fit: cover;
         padding-bottom: 3rem;
         filter: brightness(0.9);
@@ -123,8 +121,8 @@ const { title, description, heroImage } = Astro.props;
       }
 
       .articleContainer h1 {
-        padding: 2rem;
-        padding-top: 0;
+        font-size: 4rem;
+        width: 50%;
       }
 
       hr {

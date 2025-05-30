@@ -5,7 +5,6 @@ import { SITE_TITLE } from "../../consts";
 import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
 import avisualsCover from "@/images/works/visuals/visuals-cover.jpg";
-import Footer from "@/components/Footer.astro";
 import { motion } from "motion/react";
 
 const posts = (await getCollection("works")).sort(
@@ -62,12 +61,15 @@ function randomRotation() {
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <div class="listContainer">
-              <div class="category">
+              <div class="section-title">
                 <h2 class="workType">A/Visual 3D</h2>
                 <h3>
                   Animations & interactive 3D experiences for your eyes and
                   soul.
                 </h3>
+                <h4>I'm particularly fond of using <b>Max/MSP, Blender, Three.js and Godot</b> for my experiments and amusement.
+                    Though, I'm always open to employ and learn new techniques.
+                </h4>
               </div>
               <ul>
                 <li class="project">
@@ -126,13 +128,17 @@ function randomRotation() {
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <div class="listContainer lc-row-reverse">
-              <div class="category">
+              <div class="section-title">
                 <h2 class="workType">Interactive Art</h2>
                 <h3>
                   Playing the <b>Play Metaphysics</b> to create art you can <i
                     >Be</i
                   >.
                 </h3>
+                <h4>Oh, yeah... That's right... <b>I'm an Artist!</b> A true one, of course. And such my duty is to explain my own version of our reality in the most
+                  simple ways possible. If you're curious about my inspirations, I normally take it from how fucked up society is and 
+                  <a  href="/books">some nice theory</a>.
+                </h4>
               </div>
               <ul>
                 {
@@ -174,12 +180,18 @@ function randomRotation() {
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <div class="listContainer">
-              <div class="category">
+              <div class="section-title">
                 <h2 class="workType">Projects</h2>
                 <h3>
                   Assortment of passion projects made with pain, blood and
                   soul-crushing fun.
                 </h3>
+                <h4> As a human being with emotions and qualia, it happens that I don't "identify" 
+                  with my career so I have the freedom to pursue whatever the fuck I want to do. 
+                  So apart from being whatever I do, I also like to do music as <b>Geosmina</b> 
+                  and write as <b>Óscar A. Montiel</b>. In fact, I just do fun things for the sake of it.
+                  Honestly, what else is there to live for?
+                </h4>
               </div>
               <ul>
                 {
@@ -234,13 +246,13 @@ function randomRotation() {
         padding: 1rem;
         box-sizing: border-box;
       }
-      .category {
-        //margin-right: 6rem;
-        width: 40%;
+      .section-title {
+        width: 30%!important;
       }
       .projectsContainer {
         width: 70vw;
         margin: 0 auto;
+        max-width: 70vw;
         padding-top: 3rem;
       }
 
@@ -248,7 +260,7 @@ function randomRotation() {
         padding-bottom: 15rem;
         width: 100%;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
       }
       .lc-row-reverse {
         flex-direction: row-reverse !important;
@@ -288,12 +300,11 @@ function randomRotation() {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.5rem;
         overflow: hidden;
-        width: 50%;
+        width: 60%;
       }
 
       ul li {
         display: flex;
-        flex-direction: column;
       }
 
       .project {
@@ -345,7 +356,6 @@ function randomRotation() {
           width: 90%;
           margin: 0;
           margin: 0 auto;
-          padding-top: 5rem;
         }
 
         .listContainer {
