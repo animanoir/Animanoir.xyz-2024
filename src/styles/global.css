@@ -131,12 +131,8 @@ p {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
-  /* Add explicit height */
   top: 0;
-  /* Add positioning */
   left: 0;
-  /* Add positioning */
 }
 
 #content {
