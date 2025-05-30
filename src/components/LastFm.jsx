@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "@/styles/lastFm.css";
+import * as lastFmStyles from "@/styles/lastFm.css";
 import useLastFmData from "@/components/hooks/useLastFmData.js";
 
 export const LastFm = ({customStyle, showAlbumCover = true}) => {

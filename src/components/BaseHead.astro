@@ -43,6 +43,12 @@ const {
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={`https://www.animanoir.xyz${image}`} />
+<link
+  rel="preload"
+  href="/src/styles/global.css"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'"
+/>
 
 <script>
   import { handleAllImages } from "../scripts/imageLoader";
