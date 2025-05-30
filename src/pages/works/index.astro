@@ -6,7 +6,7 @@ import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
 import avisualsCover from "@/images/works/visuals/visuals-cover.jpg";
 import { motion } from "motion/react";
-import "@/styles/global.css"
+import "@/styles/global.css";
 
 const posts = (await getCollection("works")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -63,13 +63,16 @@ function randomRotation() {
           >
             <div class="listContainer">
               <div class="section-title">
-                <h2 class="workType">A/Visual 3D</h2>
+                <h2 class="workType">3D A/Visuals</h2>
                 <h3>
                   Animations & interactive 3D experiences for your eyes and
                   soul.
                 </h3>
-                <h4>I'm particularly fond of using <b>Max/MSP, Blender, Three.js and Godot</b> for my experiments and amusement.
-                    Though, I'm always open to employ and learn new techniques.
+                <h4 class="section-description">
+                  I'm particularly fond of using <b
+                    >Max/MSP, Blender, Three.js and Godot</b
+                  > for my experiments and amusement. Though, I'm always open to
+                  employ and learn new techniques.
                 </h4>
               </div>
               <ul>
@@ -136,9 +139,12 @@ function randomRotation() {
                     >Be</i
                   >.
                 </h3>
-                <h4>Oh, yeah... That's right... <b>I'm an Artist!</b> A true one, of course. And such my duty is to explain my own version of our reality in the most
-                  simple ways possible. If you're curious about my inspirations, I normally take it from how fucked up society is and 
-                  <a  href="/books">some nice theory</a>.
+                <h4 class="section-description">
+                  Oh, yeah... That's right... <b>I'm an Artist!</b> A true one, of
+                  course. And such my duty is to explain my own version of our reality
+                  in the most simple ways possible. If you're curious about my inspirations,
+                  I normally take it from how fucked up society is and
+                  <a href="/books">some nice theory</a>.
                 </h4>
               </div>
               <ul>
@@ -187,11 +193,14 @@ function randomRotation() {
                   Assortment of passion projects made with pain, blood and
                   soul-crushing fun.
                 </h3>
-                <h4> As a human being with emotions and qualia, it happens that I don't "identify" 
-                  with my career so I have the freedom to pursue whatever the fuck I want to do. 
-                  So apart from being whatever I do, I also like to do music as <b>Geosmina</b> 
-                  and write as <b>Óscar A. Montiel</b>. In fact, I just do fun things for the sake of it.
-                  Honestly, what else is there to live for?
+                <h4 class="section-description">
+                  As a human being with emotions and qualia, it happens that I
+                  don't "identify" with my career so I have the freedom to
+                  pursue whatever the fuck I want to do. So apart from being
+                  whatever I do, I also like to do music as <b>Geosmina</b>
+                  and write as <b>Óscar A. Montiel</b>. In fact, I just do fun
+                  things for the sake of it. Honestly, what else is there to
+                  live for?
                 </h4>
               </div>
               <ul>
@@ -248,7 +257,7 @@ function randomRotation() {
         box-sizing: border-box;
       }
       .section-title {
-        width: 30%!important;
+        width: 30% !important;
       }
       .projectsContainer {
         width: 70vw;
@@ -256,15 +265,15 @@ function randomRotation() {
         max-width: 70vw;
         padding-top: 3rem;
       }
-        .projectsContainer h4 {
-        font-family: "Open Sans", sans-serif!important;
+      .section-description {
+        font-family: "Open Sans", sans-serif !important;
         font-style: normal;
         font-weight: normal;
-        font-size: 1.0rem;
+        font-size: 1rem;
         text-align: justify;
-        color: #E0E0E0;
+        color: #e0e0e0;
         line-height: 1.5;
-        }
+      }
       .listContainer {
         padding-bottom: 15rem;
         width: 100%;
@@ -386,7 +395,6 @@ function randomRotation() {
           opacity: 0.7;
         }
 
-        /* Always show post info on mobile */
         .postInfo {
           display: block;
           background-color: rgba(0, 0, 0, 0.5);
