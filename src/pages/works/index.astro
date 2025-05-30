@@ -43,7 +43,9 @@ function randomRotation() {
       >
         <div class="mainQuote-div">
           <h1 class="mainQuote">
-            <b class="animated-gradient-text">Software engineer</b> specialized in
+            <b>Óscar A. Montiel</b> is a <b class="animated-gradient-text"
+              >Software engineer</b
+            > specialized in
             <b>web development</b>, <b class="animated-gradient-text"
               >game programming</b
             >
@@ -371,19 +373,28 @@ function randomRotation() {
           font-size: 2rem;
         }
         .projectsContainer {
-          width: 90%;
+          width: 100%;
           margin: 0;
           margin: 0 auto;
         }
 
         .listContainer {
           padding-bottom: 5rem;
+          flex-direction: column;
+          display: block;
+          justify-content: initial;
         }
-
+        .section-title {
+          width: 100% !important;
+          text-align: center;
+        }
         .workType {
           font-size: 2.75rem;
-          padding-bottom: 2rem;
           transform: none !important;
+        }
+        ul {
+          width: 100%;
+          grid-template-columns: repeat(1, 1fr);
         }
 
         .project {
