@@ -78,7 +78,7 @@ b {
 }
 
 h4 {
-  font-family: "Open Sans", serif;
+  font-family: "Open Sans", sans-serif!important;
   font-style: normal;
   font-weight: normal;
   font-size: 1.0rem;
