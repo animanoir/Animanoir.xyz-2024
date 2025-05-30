@@ -20,41 +20,18 @@ import Footer from "@/components/Footer.astro";
     <ModifiedHeader goWild={true} sortSpeed={80.0} />
     <div class="container">
       <div class="main-img-container">
-      <Image
-        class="main-image"
-        src={gif1}
-        alt={"Óscar A. Montiel"}
-        inferSize
-        decoding="async"
-        loading="eager"
-        quality={10}
+        <Image
+          class="main-image"
+          src={gif1}
+          alt={"Óscar A. Montiel"}
+          width={500}
+          height={500}
+          decoding="async"
+          loading="eager"
+          quality={10}
         />
       </div>
-        <div class="main-text">
-        <h1>Óscar A. Montiel</h1>
-          <p>
-            <b>Software Engineer</b> by profession—<b
-              >Multidisciplinary Media Artist</b
-            > by choice. <i>Most of the time everything & nothing at once</i>.
-            Just like a poet, I tend to rhyme without knowing. <span
-            style="letter-spacing: 1rem;">Unleashed and boundless,</span
-            ><b>just like you!</b>
-          </p>
-        <h2>Current interests:</h2>
-        <p>
-          As of now, I'm particularly interested in pragmatic philosophy, 
-          particularly in the pedagogic power of games/videogames, therefore, 
-          I'm currently into "Play Metaphysics", learning to use <b>Godot</b> to achieve some of this.
-        </p>
-        <p>I also like to learn constantly about many topics—here's a <a href="/books">gallery of some books</a> I'm reading/studying at the moment.</p>
-        <p style="font-size: 0.8rem; text-align: center;">
-            For collaborations, commissions, or <b>just to say hi</b>,
-            <a href="mailto:etherealflux94@gmail.com" target="_blank"
-              >contact me</a
-            >.
-          </p>
-      </div>
-      </div>
+    </div>
     <style>
       .container {
         margin: 0 auto;
@@ -71,20 +48,21 @@ import Footer from "@/components/Footer.astro";
         max-height: 90vh;
         width: 70%;
       }
-      .container h1{
+      .container h1 {
         text-align: center;
         font-family: "Montserrat", serif;
       }
-      .container h2, h3{
+      .container h2,
+      h3 {
         font-weight: bold;
       }
-      .container p{
-        padding-top: 1rem!important;
+      .container p {
+        padding-top: 1rem !important;
       }
-      .main-img-container{
+      .main-img-container {
         width: 50%;
       }
-      .main-text{
+      .main-text {
         font-size: 1rem;
         width: 50%;
       }
