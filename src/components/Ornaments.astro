@@ -1,0 +1,56 @@
+<div class="ornaments">
+  <!-- Bottom-right corner -->
+  <div class="corner bottom-right">
+    <div class="line horizontal"></div>
+    <div class="line vertical"></div>
+  </div>
+</div>
+
+<style>
+  .ornaments {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .corner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+  }
+
+  .line {
+    position: absolute;
+    background-color: #fdfefe;
+  }
+
+  .horizontal {
+    width: 30px;
+    height: 3px;
+  }
+
+  .vertical {
+    width: 3px;
+    height: 30px;
+  }
+
+  /* Bottom-right corner */
+  .bottom-right {
+    bottom: 10px;
+    right: 20px;
+  }
+
+  .bottom-right .horizontal {
+    bottom: 0;
+    right: 0;
+  }
+
+  .bottom-right .vertical {
+    bottom: 0;
+    right: 0;
+  }
+</style>
