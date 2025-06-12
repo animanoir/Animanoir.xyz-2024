@@ -2,9 +2,9 @@
 import { getDatabase } from "../../notion.js";
 import { SITE_TITLE } from "../consts";
 import BaseHead from "../components/BaseHead.astro";
-import Navbar from "@/components/Navbar.astro";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
-import { Picture, inferRemoteSize } from "astro:assets"
+import { Picture, inferRemoteSize } from "astro:assets";
+import Ornaments from "@/components/Ornaments.astro";
 
 interface Post {
   id: string;
@@ -78,6 +78,7 @@ const posts: Post[] = await Promise.all(
   </head>
 
   <body>
+    <Ornaments />
     <ModifiedHeader />
     <div class="bookGridContainer">
       <div class="booksWelcome">
@@ -116,17 +117,20 @@ const posts: Post[] = await Promise.all(
                 src={post.cover?.file?.url || "default-image-url.jpg"}
                 width={post.cover?.width}
                 height={post.cover?.height}
-                alt={post.properties.Name?.title?.[0]?.text?.content || "No title"}
+                alt={
+                  post.properties.Name?.title?.[0]?.text?.content || "No title"
+                }
               />
             </a>
             <h3>
               {post.properties.Name?.title?.[0]?.text?.content || "No title"}
               <p>
                 {post.properties["Año de publicación (original)"]?.number ||
-                  null} — 
+                  null}{" "}
+                —
                 {post.properties["Autor(es)"]?.multi_select
-                ?.map((author: any) => author.name)
-                .join(", ") || "No author"}
+                  ?.map((author: any) => author.name)
+                  .join(", ") || "No author"}
               </p>
             </h3>
           </div>
