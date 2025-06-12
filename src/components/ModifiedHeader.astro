@@ -3,6 +3,7 @@ import { SITE_TITLE } from "@/consts";
 import LastFm from "@/components/LastFm.jsx";
 import MutatingSubheader from "@/components/MutatingSubheader.jsx";
 import Navbar from "@/components/Navbar.astro";
+import Ornaments from "./Ornaments.astro";
 
 const { goWild = false, sortSpeed = 0 } = Astro.props;
 ---
@@ -20,7 +21,7 @@ const { goWild = false, sortSpeed = 0 } = Astro.props;
   </div>
   <Navbar />
 </header>
-
+<Ornaments />
 <style>
   header {
     position: relative;
