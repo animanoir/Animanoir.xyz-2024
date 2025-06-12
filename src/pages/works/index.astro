@@ -59,9 +59,9 @@ for (let i = posts.length - 1; i > 0; i--) {
           >
             <div class="listContainer">
               <div class="section-title">
-                <h2 class="workType">3D Art & Animations</h2>
+                <h2 class="workType">3D Art & WebGL</h2>
                 <h3>
-                  <b>Animations</b> for your eyes and soul.
+                  <b>Interactive</b> animations and storytelling.
                 </h3>
                 <h4 class="section-description">
                   I specialize in developing compelling visual content using
@@ -75,7 +75,7 @@ for (let i = posts.length - 1; i > 0; i--) {
               </div>
               <ul>
                 <li class="project">
-                  <a href="/avisuals">
+                  <a href="/3Dworks">
                     <Picture
                       class="postHeroImg"
                       src={avisualsCover}
@@ -86,7 +86,7 @@ for (let i = posts.length - 1; i > 0; i--) {
                       loading="lazy"
                     />
                     <div class="postInfo">
-                      <p class="postTitle">3D/A/visuals</p>
+                      <p class="postTitle">3D Animation</p>
                       <p class="year">on-going</p>
                     </div>
                   </a>
@@ -144,7 +144,7 @@ for (let i = posts.length - 1; i > 0; i--) {
           >
             <div class="listContainer lc-row-reverse">
               <div class="section-title">
-                <h2 class="workType">Interactive Art</h2>
+                <h2 class="workType">Interactive Art & Game Development</h2>
                 <h3>
                   Playing the <b>Play Metaphysics</b> to create art you can <i
                     >Be</i
@@ -436,6 +436,17 @@ for (let i = posts.length - 1; i > 0; i--) {
         line-height: 1.6;
         color: #e0e0e0;
       }
+      @keyframes gradient-flow {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
       .animated-gradient-text {
         background-image: linear-gradient(
           90deg,
@@ -520,7 +531,25 @@ for (let i = posts.length - 1; i > 0; i--) {
         animation: gradient-flow 5s linear infinite;
         cursor: default;
       }
-      /* For larger screens (beyond HD) */
+      /* For 1920x1080 screens - reduced text sizes */
+      @media (max-width: 1920px) {
+        .quote {
+          font-size: 3rem;
+        }
+        .workType {
+          font-size: 2.8rem;
+        }
+        .postTitle {
+          font-size: 1.3rem;
+        }
+        .projectsContainer h3 {
+          font-size: 1.1rem;
+        }
+        .section-description {
+          font-size: 0.85rem;
+        }
+      }
+      /* For2larger screens (beyond HD) */
       @media (min-width: 1921px) {
         .mainquote {
           font-size: 4rem;
