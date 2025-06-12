@@ -8,6 +8,7 @@ import avisualsCover from "@/images/works/visuals/visuals-cover.jpg";
 import { motion } from "motion/react";
 import "../../styles/global.css";
 
+// Orders the post chronologically
 const posts = (await getCollection("works")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
@@ -31,17 +32,18 @@ for (let i = posts.length - 1; i > 0; i--) {
         client:load
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div class="mainQuote-div">
-          <h1 class="mainQuote">
+        <div class="quote-container">
+          <h1 class="quote">
             <b>Óscar A. Montiel</b> is a <b class="animated-gradient-text"
-              >software engineer</b
+              >Software Engineer</b
             > specialized in
-            <b>web development</b>, <b class="animated-gradient-text"
-              >game programming</b
-            >
-            & <b class="animated-gradient-text">3D/multimedia interactive art</b
+            <b>Web Development</b>, <b class="animated-gradient-text-1"
+              >Game Programming</b
+            >,
+            <b class="animated-gradient-text-2">3D Artist</b> & <b
+              class="animated-gradient-text-3">Multimedia Interactive Art</b
             >.
           </h1>
         </div>
@@ -57,16 +59,18 @@ for (let i = posts.length - 1; i > 0; i--) {
           >
             <div class="listContainer">
               <div class="section-title">
-                <h2 class="workType">3D A/Visuals</h2>
+                <h2 class="workType">3D Art & Animations</h2>
                 <h3>
-                  Animations & interactive 3D experiences for your eyes and
-                  soul.
+                  <b>Animations</b> for your eyes and soul.
                 </h3>
                 <h4 class="section-description">
-                  I'm particularly fond of using <b
-                    >Max/MSP, Blender, Three.js and Godot</b
-                  > for my experiments and amusement. Though, I'm always open to
-                  employ and learn new techniques.
+                  I specialize in developing compelling visual content using
+                  industry-standard tools including <b
+                    >Max/MSP, Blender, Three.js, and Godot</b
+                  >. My approach combines technical expertise with creative
+                  vision to deliver engaging digital experiences. I'm committed
+                  to staying current with emerging technologies and continuously
+                  expanding my toolkit to meet evolving project requirements.
                 </h4>
               </div>
               <ul>
@@ -95,22 +99,35 @@ for (let i = posts.length - 1; i > 0; i--) {
                     );
                     if (audioVisual3dWork) {
                       return (
-                        <li class="project">
-                          <a href={`/works/${post.slug}/`}>
-                            <Picture
-                              class="postHeroImg"
-                              src={post.data.heroImage}
-                              alt={`${post.data.title} by Óscar A. Montiel`}
-                              formats={["webp"]}
-                              decoding="async"
-                              loading="lazy"
-                            />
-                            <div class="postInfo">
-                              <p class="postTitle">{post.data.title}</p>
-                              <p class="year">{post.data.year || "on-going"}</p>
-                            </div>
-                          </a>
-                        </li>
+                        <motion.div
+                          client:load
+                          initial={{ opacity: 0, x: 30 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true, amount: 0.5 }}
+                          transition={{
+                            duration: Math.random() * 0.1 + 0.6,
+                            ease: "easeInOut",
+                          }}
+                        >
+                          <li class="project">
+                            <a href={`/works/${post.slug}/`}>
+                              <Picture
+                                class="postHeroImg"
+                                src={post.data.heroImage}
+                                alt={`${post.data.title} by Óscar A. Montiel`}
+                                formats={["webp"]}
+                                decoding="async"
+                                loading="lazy"
+                              />
+                              <div class="postInfo">
+                                <p class="postTitle">{post.data.title}</p>
+                                <p class="year">
+                                  {post.data.year || "on-going"}
+                                </p>
+                              </div>
+                            </a>
+                          </li>
+                        </motion.div>
                       );
                     }
                   })
@@ -135,11 +152,11 @@ for (let i = posts.length - 1; i > 0; i--) {
                 </h3>
                 <h4 class="section-description">
                   Oh, yeah... That's right... <b>I'm an Artist!</b> A true one, of
-                  course. And such my duty is to explain my own version of our reality
-                  in the most simple ways possible. At the moment I'm exploring the
-                  expressivness of videogames. If you're curious about my inspirations,
-                  I normally take it from how fucked up society is and
-                  <a href="/books">some nice theory</a>.
+                  course. And such my duty is to explain my of our reality in the
+                  most simple ways possible. At the moment I'm exploring the expressivness
+                  of videogames. I'm mostly inspired by how weird society is and
+                  really complex and killjoy <a href="/books">critical theory</a
+                  >.
                 </h4>
               </div>
               <ul>
@@ -191,8 +208,8 @@ for (let i = posts.length - 1; i > 0; i--) {
                 <h4 class="section-description">
                   As a human being with emotions and qualia, it happens that I
                   don't "identify" with my career so I have the freedom to
-                  pursue whatever I want to do. So apart from being whatever I do, I also like
-                  to do music as <b>Geosmina</b>
+                  pursue whatever I want to do. So apart from being whatever I
+                  do, I also like to do music as <b>Geosmina</b>
                   and write as <b>Óscar A. Montiel</b>. In fact, I just do fun
                   things for the sake of it. Honestly, what else is there to
                   live for?
@@ -234,15 +251,15 @@ for (let i = posts.length - 1; i > 0; i--) {
       </section>
     </main>
     <style>
-      .mainQuote {
+      .quote {
         font-family: "Montserrat", sans-serif;
-        font-size: 3rem;
+        font-size: 3.5rem;
         line-height: 1.35;
         font-weight: 500;
         margin: 0;
-        max-width: 80%;
+        max-width: 70%;
       }
-      .mainQuote-div {
+      .quote-container {
         width: 99vw;
         height: 100vh;
         display: flex;
@@ -362,7 +379,7 @@ for (let i = posts.length - 1; i > 0; i--) {
         display: block;
       }
       @media (max-width: 760px) {
-        .mainQuote {
+        .mainquote {
           font-size: 2rem;
         }
         .projectsContainer {
@@ -432,24 +449,79 @@ for (let i = posts.length - 1; i > 0; i--) {
           #a855f7,
           #ec4899
         );
-        background-size: 200% auto; /* Wider gradient for animation */
+        background-size: 200% auto;
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
         animation: gradient-flow 5s linear infinite;
         cursor: default;
       }
-      @keyframes gradient-flow {
-        0% {
-          background-position: 0% 50%;
-        }
-        100% {
-          background-position: 200% 50%;
-        }
+
+      .animated-gradient-text-1 {
+        background-image: linear-gradient(
+          90deg,
+          #ff6b6b,
+          #4ecdc4,
+          #45b7d1,
+          #96ceb4,
+          #feca57,
+          #ff9ff3,
+          #54a0ff,
+          #5f27cd,
+          #ff6b6b
+        );
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: gradient-flow 5s linear infinite;
+        cursor: default;
+      }
+
+      .animated-gradient-text-2 {
+        background-image: linear-gradient(
+          90deg,
+          #667eea,
+          #764ba2,
+          #f093fb,
+          #f5576c,
+          #4facfe,
+          #00f2fe,
+          #43e97b,
+          #38f9d7,
+          #667eea
+        );
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: gradient-flow 5s linear infinite;
+        cursor: default;
+      }
+
+      .animated-gradient-text-3 {
+        background-image: linear-gradient(
+          90deg,
+          #ee0979,
+          #ff6a00,
+          #fcb045,
+          #fd1d1d,
+          #833ab4,
+          #fd1d1d,
+          #fcb045,
+          #ff6a00,
+          #ee0979
+        );
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: gradient-flow 5s linear infinite;
+        cursor: default;
       }
       /* For larger screens (beyond HD) */
       @media (min-width: 1921px) {
-        .mainQuote {
+        .mainquote {
           font-size: 4rem;
         }
       }
