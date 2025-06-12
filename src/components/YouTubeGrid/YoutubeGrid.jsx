@@ -74,7 +74,7 @@ export function YouTubeGrid({ count = 1 }) {
         initial={{ opacity: 0 }} dragConstraints={{ top: -300, bottom: 300, left: -300, right: 300 }} drag animate={{ opacity: 1, transition: { duration: 1 } }}
         client:visible
       >
-        3D/A/Visual work I do. <a
+        3D Animations I do. <a
           href="https://www.youtube.com/@animanoir"
           target="_blank">Full gallery</a
         >.

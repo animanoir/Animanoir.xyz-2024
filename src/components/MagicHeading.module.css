@@ -5,12 +5,19 @@
 }
 
 .heading {
-  font-size: 4rem !important;
+  font-size: 4rem;
   line-height: 1.2;
   min-height: 11.25rem;
   /* Instead of 180px */
   transition: opacity 0.3s ease;
   margin: 0;
+}
+
+/* For 1920x1080 screens - reduced text sizes */
+@media (max-width: 1920px) {
+  .heading {
+    font-size: 3rem !important;
+  }
 }
 
 /* Mobile Large */

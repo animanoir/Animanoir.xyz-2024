@@ -152,7 +152,7 @@
   animation-delay: calc(var(--random-delay) * 1s);
 }
 
-@media (min-width: 1920px) {
+@media (max-width: 1920px) {
   .youtubeWelcome p {
     font-size: 1.45rem;
   }
