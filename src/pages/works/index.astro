@@ -32,6 +32,7 @@ for (let i = posts.length - 1; i > 0; i--) {
   </head>
   <body>
     <ModifiedHeader />
+
     <main>
       <motion.div
         client:load
@@ -53,7 +54,7 @@ for (let i = posts.length - 1; i > 0; i--) {
           </h1>
         </div>
       </motion.div>
-      <GeneralRandomVideo client:only videoPath={vid2} />
+      <!-- <GeneralRandomVideo client:only videoPath={vid2} /> -->
       <div class="projectsContainer">
         <motion.div
           client:load
@@ -138,6 +139,9 @@ for (let i = posts.length - 1; i > 0; i--) {
             </ul>
           </div>
         </motion.div>
+        <!-- <div class="single-video">
+          <GeneralRandomVideo client:only videoPath={vid5} />
+        </div> -->
         <motion.div
           client:load
           initial={{ opacity: 0, x: -30 }}
@@ -274,14 +278,66 @@ for (let i = posts.length - 1; i > 0; i--) {
           </div>
         </motion.div>
       </div>
-      <div class="videogrid">
+      <!-- <div class="videogrid">
         <GeneralRandomVideo client:only videoPath={vid1} />
         <GeneralRandomVideo client:only videoPath={vid3} />
         <GeneralRandomVideo client:only videoPath={vid5} />
-      </div>
+      </div> -->
     </main>
 
     <style>
+      .background-videos {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 10%;
+        height: 20%;
+        z-index: 100;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .bg-video-container {
+        position: absolute;
+        width: 200px;
+        height: 150px;
+        opacity: 0.15;
+        animation: float 10s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(5deg);
+        }
+      }
+
+      @keyframes fadeInFloat {
+        0% {
+          opacity: 0;
+          transform: translateY(30px) scale(0.8);
+        }
+        100% {
+          opacity: 0.15;
+          transform: translateY(0px) scale(1);
+        }
+      }
+
+      /* Reduce background videos on smaller screens */
+      @media (max-width: 480px) {
+        .bg-video-container:nth-child(n + 4) {
+          display: none;
+        }
+      }
+      .single-video {
+        width: 10%;
+        height: 20%;
+        z-index: -1;
+        /* position: absolute; */
+      }
       .videogrid {
         width: 90vw;
         max-width: 1400px;
