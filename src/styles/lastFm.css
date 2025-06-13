@@ -11,6 +11,10 @@
   color: rgba(255, 255, 255, 0.224);
 }
 
+.lastFmLink {
+  text-decoration-color: #fdfefe75
+}
+
 .songInfo {
   color: #fdfefe8f;
 }
