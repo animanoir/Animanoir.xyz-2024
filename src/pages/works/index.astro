@@ -7,6 +7,9 @@ import avisualsCover from "@/images/works/visuals/visuals-cover.jpg";
 import { motion } from "motion/react";
 import "../../styles/global.css";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
+import GeneralRandomVideo from "@/components/RandomVideo/GeneralRandomVideo.jsx";
+import vid1 from "@/images/videos/webvid1.webm";
+import vid2 from "@/images/videos/webvid2.webm";
 
 // Orders the post chronologically
 const posts = (await getCollection("works")).sort(
@@ -48,235 +51,230 @@ for (let i = posts.length - 1; i > 0; i--) {
           </h1>
         </div>
       </motion.div>
-      <section>
-        <div class="projectsContainer">
-          <motion.div
-            client:load
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            <div class="listContainer">
-              <div class="section-title">
-                <h2 class="workType">3D Art & WebGL</h2>
-                <h3>
-                  <b>Interactive</b> animations and storytelling.
-                </h3>
-                <h4 class="section-description">
-                  I specialize in developing compelling visual content using
-                  industry-standard tools including <b
-                    >Max/MSP, Blender, Three.js, and Godot</b
-                  >. My approach combines technical expertise with creative
-                  vision to deliver engaging digital experiences. I'm committed
-                  to staying current with emerging technologies and continuously
-                  expanding my toolkit to meet evolving project requirements.
-                </h4>
-              </div>
-              <ul>
-                <li class="project">
-                  <a href="/3Dworks">
-                    <Picture
-                      class="postHeroImg"
-                      src={avisualsCover}
-                      alt="A/visuals by Óscar A. Montiel"
-                      formats={["webp"]}
-                      quality={100}
-                      decoding="async"
-                      loading="lazy"
-                    />
-                    <div class="postInfo">
-                      <p class="postTitle">3D Animation</p>
-                      <p class="year">on-going</p>
-                    </div>
-                  </a>
-                </li>
-                {
-                  posts.map((post) => {
-                    const { workType } = post.data;
-                    const audioVisual3dWork = workType.find(
-                      (work) => work === "3D"
-                    );
-                    if (audioVisual3dWork) {
-                      return (
-                        <motion.div
-                          client:load
-                          initial={{ opacity: 0, x: 30 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true, amount: 0.5 }}
-                          transition={{
-                            duration: Math.random() * 0.1 + 0.6,
-                            ease: "easeInOut",
-                          }}
-                        >
-                          <li class="project">
-                            <a href={`/works/${post.slug}/`}>
-                              <Picture
-                                class="postHeroImg"
-                                src={post.data.heroImage}
-                                alt={`${post.data.title} by Óscar A. Montiel`}
-                                formats={["webp"]}
-                                decoding="async"
-                                loading="lazy"
-                              />
-                              <div class="postInfo">
-                                <p class="postTitle">{post.data.title}</p>
-                                <p class="year">
-                                  {post.data.year || "on-going"}
-                                </p>
-                              </div>
-                            </a>
-                          </li>
-                        </motion.div>
-                      );
-                    }
-                  })
-                }
-              </ul>
+      <GeneralRandomVideo client:only videoPath={vid2} />
+      <div class="projectsContainer">
+        <motion.div
+          client:load
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <div class="listContainer">
+            <div class="section-title">
+              <h2 class="workType">3D Art & WebGL</h2>
+              <h3>
+                <b>Interactive</b> animations and storytelling.
+              </h3>
+              <h4 class="section-description">
+                I specialize in developing compelling visual content using
+                industry-standard tools including <b
+                  >Max/MSP, Blender, Three.js, and Godot</b
+                >. My approach combines technical expertise with creative vision
+                to deliver engaging digital experiences. I'm committed to
+                staying current with emerging technologies and continuously
+                expanding my toolkit to meet evolving project requirements.
+              </h4>
             </div>
-          </motion.div>
-          <motion.div
-            client:load
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            <div class="listContainer lc-row-reverse">
-              <div class="section-title">
-                <h2 class="workType">Interactive Art & Game Development</h2>
-                <h3>
-                  Playing the <b>Play Metaphysics</b> to create art you can <i
-                    >Be</i
-                  >.
-                </h3>
-                <h4 class="section-description">
-                  Oh, yeah... That's right... <b>I'm an Artist too!</b> A true one,
-                  of course. And such my duty is to explain reality in the most simple
-                  ways possible. At the moment I'm exploring the expressivness of
-                  <b>videogames</b>. I'm mostly inspired by how weird society is
-                  and really complex and killjoy <a href="/books"
-                    >critical theory</a
-                  >.
-                </h4>
-              </div>
-              <ul>
-                {
-                  posts.map((post) => {
-                    const { workType } = post.data;
-                    const interactiveArtWork = workType.find(
-                      (work) => work === "Interactive Art"
+            <ul>
+              <li class="project">
+                <a href="/3Dworks">
+                  <Picture
+                    class="postHeroImg"
+                    src={avisualsCover}
+                    alt="A/visuals by Óscar A. Montiel"
+                    formats={["webp"]}
+                    quality={100}
+                    decoding="async"
+                    loading="lazy"
+                  />
+                  <div class="postInfo">
+                    <p class="postTitle">3D Animation</p>
+                    <p class="year">on-going</p>
+                  </div>
+                </a>
+              </li>
+              {
+                posts.map((post) => {
+                  const { workType } = post.data;
+                  const audioVisual3dWork = workType.find(
+                    (work) => work === "3D"
+                  );
+                  if (audioVisual3dWork) {
+                    return (
+                      <motion.div
+                        client:load
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{
+                          duration: Math.random() * 0.1 + 0.6,
+                          ease: "easeInOut",
+                        }}
+                      >
+                        <li class="project">
+                          <a href={`/works/${post.slug}/`}>
+                            <Picture
+                              class="postHeroImg"
+                              src={post.data.heroImage}
+                              alt={`${post.data.title} by Óscar A. Montiel`}
+                              formats={["webp"]}
+                              decoding="async"
+                              loading="lazy"
+                            />
+                            <div class="postInfo">
+                              <p class="postTitle">{post.data.title}</p>
+                              <p class="year">{post.data.year || "on-going"}</p>
+                            </div>
+                          </a>
+                        </li>
+                      </motion.div>
                     );
-                    if (interactiveArtWork) {
-                      return (
-                        <motion.div
-                          client:load
-                          initial={{ opacity: 0, x: -30 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true, amount: 0.5 }}
-                          transition={{
-                            duration: Math.random() * 0.1 + 0.6,
-                            ease: "easeInOut",
-                          }}
-                        >
-                          <li class="project">
-                            <a href={`/works/${post.slug}/`}>
-                              <Picture
-                                class="postHeroImg"
-                                src={post.data.heroImage}
-                                alt={`${post.data.title} by Óscar A. Montiel`}
-                                formats={["webp"]}
-                                decoding="async"
-                                loading="lazy"
-                              />
-                              <div class="postInfo">
-                                <p class="postTitle">{post.data.title}</p>
-                                <p class="year">
-                                  {post.data.year || "on-going"}
-                                </p>
-                              </div>
-                            </a>
-                          </li>
-                        </motion.div>
-                      );
-                    }
-                  })
-                }
-              </ul>
+                  }
+                })
+              }
+            </ul>
+          </div>
+        </motion.div>
+        <motion.div
+          client:load
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <div class="listContainer lc-row-reverse">
+            <div class="section-title">
+              <h2 class="workType">Interactive Art & Game Development</h2>
+              <h3>
+                Playing the <b>Play Metaphysics</b> to create art you can <i
+                  >Be</i
+                >.
+              </h3>
+              <h4 class="section-description">
+                Oh, yeah... That's right... <b>I'm an Artist too!</b> A true one,
+                of course. And such my duty is to explain reality in the most simple
+                ways possible. At the moment I'm exploring the expressivness of
+                <b>videogames</b>. I'm mostly inspired by how weird society is
+                and really complex and killjoy <a href="/books"
+                  >critical theory</a
+                >.
+              </h4>
             </div>
-          </motion.div>
-          <motion.div
-            client:load
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            <div class="listContainer">
-              <div class="section-title">
-                <h2 class="workType">Projects</h2>
-                <h3>
-                  Assortment of passion projects made with pain, blood and
-                  soul-crushing fun.
-                </h3>
-                <h4 class="section-description">
-                  As a human being with emotions and qualia, it happens that I
-                  don't "identify" with my career so I have the freedom to
-                  pursue whatever I want to do. So apart from being whatever I
-                  do, I also like to do music as <b>Geosmina</b>
-                  and write as <b>Óscar A. Montiel</b>. In fact, I just do fun
-                  things for the sake of it. Honestly, what else is there to
-                  live for?
-                </h4>
-              </div>
-              <ul>
-                {
-                  posts.map((post) => {
-                    const { workType } = post.data;
-                    const projectWork = workType.find(
-                      (work) => work === "Project"
+            <ul>
+              {
+                posts.map((post) => {
+                  const { workType } = post.data;
+                  const interactiveArtWork = workType.find(
+                    (work) => work === "Interactive Art"
+                  );
+                  if (interactiveArtWork) {
+                    return (
+                      <motion.div
+                        client:load
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{
+                          duration: Math.random() * 0.1 + 0.6,
+                          ease: "easeInOut",
+                        }}
+                      >
+                        <li class="project">
+                          <a href={`/works/${post.slug}/`}>
+                            <Picture
+                              class="postHeroImg"
+                              src={post.data.heroImage}
+                              alt={`${post.data.title} by Óscar A. Montiel`}
+                              formats={["webp"]}
+                              decoding="async"
+                              loading="lazy"
+                            />
+                            <div class="postInfo">
+                              <p class="postTitle">{post.data.title}</p>
+                              <p class="year">{post.data.year || "on-going"}</p>
+                            </div>
+                          </a>
+                        </li>
+                      </motion.div>
                     );
-                    if (projectWork) {
-                      return (
-                        <motion.div
-                          client:load
-                          initial={{ opacity: 0, x: 30 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true, amount: 0.5 }}
-                          transition={{
-                            duration: Math.random() * 0.1 + 0.6,
-                            ease: "easeInOut",
-                          }}
-                        >
-                          <li class="project">
-                            <a href={`/works/${post.slug}/`}>
-                              <Picture
-                                class="postHeroImg"
-                                src={post.data.heroImage}
-                                alt={`${post.data.title} by Óscar A. Montiel`}
-                                formats={["webp"]}
-                                decoding="async"
-                                loading="lazy"
-                              />
-                              <div class="postInfo">
-                                <p class="postTitle">{post.data.title}</p>
-                                <p class="year">
-                                  {post.data.year || "on-going"}
-                                </p>
-                              </div>
-                            </a>
-                          </li>
-                        </motion.div>
-                      );
-                    }
-                  })
-                }
-              </ul>
+                  }
+                })
+              }
+            </ul>
+          </div>
+        </motion.div>
+        <motion.div
+          client:load
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <div class="listContainer">
+            <div class="section-title">
+              <h2 class="workType">Projects</h2>
+              <h3>
+                Assortment of passion projects made with pain, blood and
+                soul-crushing fun.
+              </h3>
+              <h4 class="section-description">
+                As a human being with emotions and qualia, it happens that I
+                don't "identify" with my career so I have the freedom to pursue
+                whatever I want to do. So apart from being whatever I do, I also
+                like to do music as <b>Geosmina</b>
+                and write as <b>Óscar A. Montiel</b>. In fact, I just do fun
+                things for the sake of it. Honestly, what else is there to live
+                for?
+              </h4>
             </div>
-          </motion.div>
-        </div>
-      </section>
+            <ul>
+              {
+                posts.map((post) => {
+                  const { workType } = post.data;
+                  const projectWork = workType.find(
+                    (work) => work === "Project"
+                  );
+                  if (projectWork) {
+                    return (
+                      <motion.div
+                        client:load
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{
+                          duration: Math.random() * 0.1 + 0.6,
+                          ease: "easeInOut",
+                        }}
+                      >
+                        <li class="project">
+                          <a href={`/works/${post.slug}/`}>
+                            <Picture
+                              class="postHeroImg"
+                              src={post.data.heroImage}
+                              alt={`${post.data.title} by Óscar A. Montiel`}
+                              formats={["webp"]}
+                              decoding="async"
+                              loading="lazy"
+                            />
+                            <div class="postInfo">
+                              <p class="postTitle">{post.data.title}</p>
+                              <p class="year">{post.data.year || "on-going"}</p>
+                            </div>
+                          </a>
+                        </li>
+                      </motion.div>
+                    );
+                  }
+                })
+              }
+            </ul>
+          </div>
+        </motion.div>
+      </div>
+      <GeneralRandomVideo client:only videoPath={vid1} />
     </main>
+
     <style>
       .quote {
         font-family: "Montserrat", sans-serif;
@@ -298,10 +296,11 @@ for (let i = posts.length - 1; i > 0; i--) {
         width: 30% !important;
       }
       .projectsContainer {
-        width: 70vw;
+        width: 99vw;
         margin: 0 auto;
-        max-width: 70vw;
+        max-width: 99vw;
         padding-top: 3rem;
+        overflow-x: hidden !important;
       }
       .section-description {
         font-family: "Open Sans", sans-serif !important;
@@ -313,10 +312,10 @@ for (let i = posts.length - 1; i > 0; i--) {
         line-height: 1.5;
       }
       .listContainer {
-        padding-bottom: 15rem;
-        width: 100%;
+        /* padding-bottom: 15rem; */
+        /* width: 100%; */
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
       }
       .lc-row-reverse {
         flex-direction: row-reverse !important;

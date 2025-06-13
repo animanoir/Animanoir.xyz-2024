@@ -11,7 +11,8 @@ html,
 body {
   font-family: "Gotham-Bold";
   text-align: left;
-  background-color: #060606;
+  /* background-color: #060606; */
+  background-color: black;
   word-wrap: break-word;
   overflow-wrap: break-word;
   line-height: 1.5;
