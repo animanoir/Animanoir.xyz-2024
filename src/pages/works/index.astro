@@ -10,6 +10,8 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
 import GeneralRandomVideo from "@/components/RandomVideo/GeneralRandomVideo.jsx";
 import vid1 from "@/images/videos/webvid1.webm";
 import vid2 from "@/images/videos/webvid2.webm";
+import vid3 from "@/images/videos/webvid3.webm";
+import vid5 from "@/images/videos/webvid5.webm";
 
 // Orders the post chronologically
 const posts = (await getCollection("works")).sort(
@@ -272,10 +274,67 @@ for (let i = posts.length - 1; i > 0; i--) {
           </div>
         </motion.div>
       </div>
-      <GeneralRandomVideo client:only videoPath={vid1} />
+      <div class="videogrid">
+        <GeneralRandomVideo client:only videoPath={vid1} />
+        <GeneralRandomVideo client:only videoPath={vid3} />
+        <GeneralRandomVideo client:only videoPath={vid5} />
+      </div>
     </main>
 
     <style>
+      .videogrid {
+        width: 90vw;
+        max-width: 1400px;
+        margin: 5rem auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: 300px 200px;
+        gap: 1rem;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Mobile responsive */
+      @media (max-width: 768px) {
+        .videogrid {
+          width: 95vw;
+          grid-template-columns: 1fr;
+          grid-template-rows: 250px 200px;
+          gap: 1.5rem;
+          padding: 1.5rem;
+        }
+
+        .videogrid > :first-child {
+          grid-column: 1;
+          grid-row: 1;
+          transform: rotate(0deg);
+        }
+
+        .videogrid > :last-child {
+          grid-column: 1;
+          grid-row: 2;
+          transform: rotate(0deg);
+        }
+      }
+
+      /* Alternative: Mosaic style grid */
+      @media (min-width: 1200px) {
+        .videogrid {
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-template-rows: 200px 300px;
+        }
+
+        .videogrid > :first-child {
+          grid-column: 1 / 3;
+          grid-row: 1 / 3;
+        }
+
+        .videogrid > :last-child {
+          grid-column: 3;
+          grid-row: 1;
+        }
+      }
       .quote {
         font-family: "Montserrat", sans-serif;
         font-size: 3.5rem;
