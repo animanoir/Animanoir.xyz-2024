@@ -1,58 +1,160 @@
-import { Fragment, useRef, useMemo, useState } from "react";
+import { Fragment, useRef, useMemo, useState, useEffect } from "react";
 import { Float, Environment } from "@react-three/drei";
 import {AndrosFetal} from "./AndrosFetal/AndrosFetal.jsx"
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 export const AnimanoirLogoScene = () => {
-
+  const [mousePosition, setMousePosition] = useState({x: 0, y: 0});
+  const [isMouseDown, setIsMouseDown] = useState(false);
+  const [trailParticles, setTrailParticles] = useState([]);
   const particlesRef = useRef();
   const [rotation, setRotation] = useState(0);
-  const groupRef = useRef()
-  // Create particles
-  const particlesCount = 100;
-  const { positions, colors } = useMemo(() => {
+  const groupRef = useRef();
+  const { gl } = useThree();
+
+  // Create main particles system
+  const particlesCount = 120;
+  const { positions, colors, originalPositions } = useMemo(() => {
     const positions = new Float32Array(particlesCount * 3);
     const colors = new Float32Array(particlesCount * 3);
-    const color = new THREE.Color(); // Reuse color object
+    const originalPositions = new Float32Array(particlesCount * 3);
+    const color = new THREE.Color();
 
     for (let i = 0; i < particlesCount; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 20;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
+      const x = (Math.random() - 0.5) * 20;
+      const y = (Math.random() - 0.5) * 20;
+      const z = (Math.random() - 0.5) * 20;
+      
+      positions[i * 3] = x;
+      positions[i * 3 + 1] = y;
+      positions[i * 3 + 2] = z;
 
-      // Assign a random color
-      color.setHSL(Math.random(), 1.0, 0.5); // Hue, Saturation, Lightness
+      originalPositions[i * 3] = x;
+      originalPositions[i * 3 + 1] = y;
+      originalPositions[i * 3 + 2] = z;
+
+      color.setHSL(Math.random(), 1.0, 0.5);
       colors[i * 3] = color.r;
       colors[i * 3 + 1] = color.g;
       colors[i * 3 + 2] = color.b;
     }
-    return { positions, colors };
+    return { positions, colors, originalPositions };
   }, []);
 
+  // Mouse event handlers
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      const rect = gl.domElement.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      setMousePosition({ x, y });
+    };
+
+    const handleMouseDown = () => setIsMouseDown(true);
+    const handleMouseUp = () => setIsMouseDown(false);
+
+    const canvas = gl.domElement;
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mouseup', handleMouseUp);
+    canvas.addEventListener('mouseleave', () => setIsMouseDown(false));
+
+    return () => {
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('mousedown', handleMouseDown);
+      canvas.removeEventListener('mouseup', handleMouseUp);
+      canvas.removeEventListener('mouseleave', () => setIsMouseDown(false));
+    };
+  }, [gl]);
+
+  // Create trail particles when mouse is held down
+  const createTrailParticle = (mouseWorld, time) => {
+    return {
+      id: Math.random(),
+      position: new THREE.Vector3(
+        mouseWorld.x + (Math.random() - 0.5) * 0.5,
+        mouseWorld.y + (Math.random() - 0.5) * 0.5,
+        mouseWorld.z + (Math.random() - 0.5) * 0.5
+      ),
+      velocity: new THREE.Vector3(
+        (Math.random() - 0.5) * 2,
+        (Math.random() - 0.5) * 2,
+        (Math.random() - 0.5) * 2
+      ),
+      color: new THREE.Color().setHSL(Math.random(), 1.0, 0.7),
+      life: 1.0,
+      maxLife: 3.0 + Math.random() * 2.0,
+      size: 0.02 + Math.random() * 0.03,
+      birthTime: time
+    };
+  };
+
   useFrame((state, delta) => {
-    if (groupRef.current){
+    if (groupRef.current) {
       groupRef.current.rotation.y += delta * 0.1;
     }
     setRotation((prev) => prev + delta * 0.05);
-    // Particle animation
+
+    const time = state.clock.elapsedTime * 0.3;
+
+    // Handle main particles animation
     if (particlesRef.current) {
       const posArray = particlesRef.current.geometry.attributes.position.array;
-      const colArray = particlesRef.current.geometry.attributes.color.array; // Access color attribute
-      const time = state.clock.elapsedTime;
+      const colArray = particlesRef.current.geometry.attributes.color.array;
 
       for (let i = 0; i < posArray.length; i += 3) {
-        posArray[i] += Math.sin(time + i * 0.1) * 0.005; 
-        posArray[i + 1] += Math.cos(time + i * 0.1) * 0.005;
-        posArray[i + 2] += Math.sin(time + i * 0.1) * 0.005;
+        // Normal floating behavior
+        const targetX = originalPositions[i] + Math.sin(time + i * 0.1) * 2;
+        const targetY = originalPositions[i + 1] + Math.cos(time + i * 0.1) * 2;
+        const targetZ = originalPositions[i + 2] + Math.sin(time + i * 0.1) * 2;
 
-        colArray[i] = (Math.sin(time * 0.5 + i * 0.2) + 1) / 2; // Red channel
-        colArray[i + 1] = (Math.cos(time * 0.3 + i * 0.3) + 1) / 2; // Green channel
-        colArray[i + 2] = (Math.sin(time * 0.2 + i * 0.4) + 1) / 2; // Blue channel
+        posArray[i] = THREE.MathUtils.lerp(posArray[i], targetX, 0.02);
+        posArray[i + 1] = THREE.MathUtils.lerp(posArray[i + 1], targetY, 0.02);
+        posArray[i + 2] = THREE.MathUtils.lerp(posArray[i + 2], targetZ, 0.02);
+
+        // Animate colors
+        colArray[i] = (Math.sin(time * 0.5 + i * 0.2) + 1) / 2;
+        colArray[i + 1] = (Math.cos(time * 0.3 + i * 0.3) + 1) / 2;
+        colArray[i + 2] = (Math.sin(time * 0.2 + i * 0.4) + 1) / 2;
       }
+      
       particlesRef.current.geometry.attributes.position.needsUpdate = true;
-      particlesRef.current.geometry.attributes.color.needsUpdate = true; 
+      particlesRef.current.geometry.attributes.color.needsUpdate = true;
     }
+
+    // Handle trail particles creation and animation
+    if (isMouseDown) {
+      // Convert mouse position to world coordinates
+      const mouseWorld = new THREE.Vector3(mousePosition.x * 10, mousePosition.y * 10, 0);
+      
+      // Create new trail particles (spawn rate controlled by time)
+      if (Math.random() < 0.8) { // 80% chance per frame to create particle
+        setTrailParticles(prev => [...prev, createTrailParticle(mouseWorld, time)]);
+      }
+    }
+
+    // Update existing trail particles
+    setTrailParticles(prev => {
+      return prev.map(particle => {
+        // Update position
+        particle.position.add(particle.velocity.clone().multiplyScalar(delta));
+        
+        // Add some floating motion
+        particle.position.x += Math.sin(time * 2 + particle.id) * 0.01;
+        particle.position.y += Math.cos(time * 2 + particle.id) * 0.01;
+        particle.position.z += Math.sin(time * 1.5 + particle.id) * 0.01;
+        
+        // Decrease life
+        particle.life -= delta / particle.maxLife;
+        
+        // Fade out over time
+        particle.color.multiplyScalar(0.995);
+        particle.size *= 0.0998;
+        
+        return particle;
+      }).filter(particle => particle.life > 0); // Remove dead particles
+    });
   });
 
   return (
@@ -60,40 +162,62 @@ export const AnimanoirLogoScene = () => {
       <Environment
         files={"/images/animanoir-xyz-space-small.hdr"}
         backgroundRotation={[rotation, rotation, rotation]} 
-        backgroundIntensity={0.1}
+        backgroundIntensity={0.3}
         background
       />
+      
+      {/* Main particles */}
       <group ref={groupRef}>
-      <points ref={particlesRef}>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            count={positions.length / 3}
-            array={positions}
-            itemSize={3}
+        <points ref={particlesRef}>
+          <bufferGeometry>
+            <bufferAttribute
+              attach="attributes-position"
+              count={positions.length / 3}
+              array={positions}
+              itemSize={3}
+            />
+            <bufferAttribute
+              attach="attributes-color"
+              count={colors.length / 3}
+              array={colors}
+              itemSize={3}
+            />
+          </bufferGeometry>
+          <pointsMaterial
+            size={0.05}
+            vertexColors
+            opacity={10.0}
+            blending={THREE.AdditiveBlending}
+            depthWrite={false}
           />
-          <bufferAttribute // Add color attribute
-            attach="attributes-color"
-            count={colors.length / 3}
-            array={colors}
-            itemSize={3}
-          />
-        </bufferGeometry>
-        <pointsMaterial
-          size={0.05}
-          // color="#ffffff" // Remove fixed color
-          vertexColors // Enable vertex colors
-          // transparent
-          opacity={10.0}
-          blending={THREE.AdditiveBlending}
-          depthWrite={false} // Often needed for transparent particles
-        />
-      </points>
+        </points>
       </group>
+
+      {/* Trail particles */}
+      {trailParticles.map(particle => (
+        <points key={particle.id} position={particle.position.toArray()}>
+          <bufferGeometry>
+            <bufferAttribute
+              attach="attributes-position"
+              count={1}
+              array={new Float32Array([0, 0, 0])}
+              itemSize={3}
+            />
+          </bufferGeometry>
+          <pointsMaterial
+            size={particle.size}
+            color={particle.color}
+            opacity={particle.life}
+            transparent
+            blending={THREE.AdditiveBlending}
+            depthWrite={false}
+          />
+        </points>
+      ))}
+
       <Float rotationIntensity={10} speed={0.5}>
         <AndrosFetal />
       </Float>
-
     </Fragment>
   );
 };
