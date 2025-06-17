@@ -58,30 +58,30 @@ for (let i = posts.length - 1; i > 0; i--) {
       <div class="videogrid-container">
         <div class="videogrid">
           <motion.div
-            client:load
+            client:only
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.5 }}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 500 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <Video client:only videoPath={vid1} />
           </motion.div>
           <motion.div
-            client:load
+            client:only
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            initial={{ opacity: 0, y: 30 }}
+            viewport={{ once: true, amount: 0.7 }}
+            initial={{ opacity: 0, y: 500 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <Video client:only videoPath={vid2} />
           </motion.div>
           <motion.div
-            client:load
+            client:only
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            initial={{ opacity: 0, y: 30 }}
+            viewport={{ once: true, amount: 0.9 }}
+            initial={{ opacity: 0, y: 500 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
