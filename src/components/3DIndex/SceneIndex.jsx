@@ -1,7 +1,7 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { Loader } from "@react-three/drei";
-import { EffectComposer, Noise, Bloom, Vignette, DepthOfField } from "@react-three/postprocessing";
+import { EffectComposer, Noise, Bloom, Vignette} from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import { AnimanoirLogoScene } from "./AnimanoirLogoScene";
 import "@/styles/canvasFiber.css";
@@ -75,8 +75,8 @@ export const SceneIndex = () => {
   };
 
   const cameraProps = {
-    position: [0, 0, 15],
-    fov: 50,
+    position: [0, 0, 18],
+    fov: 45,
   };
 
   return (

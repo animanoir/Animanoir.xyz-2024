@@ -64,7 +64,7 @@ export const LastFm = ({customStyle, showAlbumCover = true}) => {
         >
           Currently listening to{" "}
           <a className="lastFmLink" href={trackUrl} target="_blank">
-            <b className="songInfo">{songName}</b> <span style={{color: "#FFFFFF39"}}>by</span>{" "}
+            <b className="songInfo">{songName}</b> <span style={{color: "#FFFFFF39"}}>—</span>{" "}
             <b className="songInfo">{artistName}</b>{" "}
           </a>
           <img src="/images/playingBars.gif" alt="Now playing" />

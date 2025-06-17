@@ -53,7 +53,7 @@ pre>code {
 }
 
 hr {
-  margin: 3rem auto;
+  margin: 0 auto !important;
   width: 50%;
 }
 

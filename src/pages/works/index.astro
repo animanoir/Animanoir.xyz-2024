@@ -7,10 +7,9 @@ import avisualsCover from "@/images/works/visuals/visuals-cover.jpg";
 import { motion } from "motion/react";
 import "../../styles/global.css";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
-import GeneralRandomVideo from "@/components/RandomVideo/GeneralRandomVideo.jsx";
+import Video from "@/components/RandomVideo/Video.jsx";
 import vid1 from "@/images/videos/webvid1.webm";
 import vid2 from "@/images/videos/webvid2.webm";
-import vid3 from "@/images/videos/webvid3.webm";
 import vid5 from "@/images/videos/webvid5.webm";
 
 // Orders the post chronologically
@@ -34,6 +33,7 @@ for (let i = posts.length - 1; i > 0; i--) {
     <ModifiedHeader />
 
     <main>
+      <!-- Main quote -->
       <motion.div
         client:load
         initial={{ opacity: 0, y: 30 }}
@@ -54,7 +54,41 @@ for (let i = posts.length - 1; i > 0; i--) {
           </h1>
         </div>
       </motion.div>
-      <!-- <GeneralRandomVideo client:only videoPath={vid2} /> -->
+      <!-- <Video client:only videoPath={vid2} /> -->
+      <div class="videogrid-container">
+        <div class="videogrid">
+          <motion.div
+            client:load
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <Video client:only videoPath={vid1} />
+          </motion.div>
+          <motion.div
+            client:load
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <Video client:only videoPath={vid2} />
+          </motion.div>
+          <motion.div
+            client:load
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <Video client:only videoPath={vid5} />
+          </motion.div>
+        </div>
+      </div>
       <div class="projectsContainer">
         <motion.div
           client:load
@@ -67,7 +101,7 @@ for (let i = posts.length - 1; i > 0; i--) {
             <div class="section-title">
               <h2 class="workType">3D Art & WebGL</h2>
               <h3>
-                <b>Interactive</b> animations and storytelling.
+                <b>Interactive</b> animations and <b>storytelling</b>.
               </h3>
               <h4 class="section-description">
                 I specialize in developing compelling visual content using
@@ -140,7 +174,7 @@ for (let i = posts.length - 1; i > 0; i--) {
           </div>
         </motion.div>
         <!-- <div class="single-video">
-          <GeneralRandomVideo client:only videoPath={vid5} />
+          <Video client:only videoPath={vid5} />
         </div> -->
         <motion.div
           client:load
@@ -227,11 +261,10 @@ for (let i = posts.length - 1; i > 0; i--) {
               <h4 class="section-description">
                 As a human being with emotions and qualia, it happens that I
                 don't "identify" with my career so I have the freedom to pursue
-                whatever I want to do. So apart from being whatever I do, I also
-                like to do music as <b>Geosmina</b>
-                and write as <b>Óscar A. Montiel</b>. In fact, I just do fun
-                things for the sake of it. Honestly, what else is there to live
-                for?
+                whatever I want to do. So apart from being whatever I do at the
+                moment I tend to write as <b>Óscar A. Montiel</b>. In fact, I
+                just do fun things for the sake of it. Honestly, what else is
+                there to live for?
               </h4>
             </div>
             <ul>
@@ -277,424 +310,554 @@ for (let i = posts.length - 1; i > 0; i--) {
             </ul>
           </div>
         </motion.div>
+        <motion.div
+          client:load
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <div class="listContainer lc-row-reverse">
+            <div class="section-title">
+              <h2 class="workType">Music & Sound Experiments</h2>
+              <h3>Music & Sound Experiments</h3>
+              <h4 class="section-description">
+                Oh, yeah... That's right... <b>I'm an Artist too!</b> I mean, I do
+                music! But more than music I really enjoy exploring soundscapes and
+                textures. My main tool is <b>Max/MSP</b> but even banging sticks
+                into computers may do the trick!
+              </h4>
+            </div>
+            <ul>
+              {
+                posts.map((post) => {
+                  const { workType } = post.data;
+                  const projectWork = workType.find((work) => work === "Music");
+                  if (projectWork) {
+                    return (
+                      <motion.div
+                        client:load
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{
+                          duration: Math.random() * 0.1 + 0.6,
+                          ease: "easeInOut",
+                        }}
+                      >
+                        <li class="project">
+                          <a href={`/works/${post.slug}/`}>
+                            <Picture
+                              class="postHeroImg"
+                              src={post.data.heroImage}
+                              alt={`${post.data.title} by Óscar A. Montiel`}
+                              formats={["webp"]}
+                              decoding="async"
+                              loading="lazy"
+                            />
+                            <div class="postInfo">
+                              <p class="postTitle">{post.data.title}</p>
+                              <p class="year">{post.data.year || "on-going"}</p>
+                            </div>
+                          </a>
+                        </li>
+                      </motion.div>
+                    );
+                  }
+                })
+              }
+            </ul>
+          </div>
+        </motion.div>
+
+        <style>
+          /* ==========================================================================
+     BACKGROUND VIDEO STYLES
+     Components for floating background video elements
+     ========================================================================== */
+
+          .background-videos {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 10%;
+            height: 20%;
+            z-index: 100;
+            pointer-events: none;
+            overflow: hidden;
+          }
+
+          .bg-video-container {
+            position: absolute;
+            width: 200px;
+            height: 150px;
+            opacity: 0.15;
+            animation: float 10s ease-in-out infinite;
+          }
+
+          /* Floating animation for background video containers */
+          @keyframes float {
+            0%,
+            100% {
+              transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+              transform: translateY(-20px) rotate(5deg);
+            }
+          }
+
+          /* Entry animation for background videos */
+          @keyframes fadeInFloat {
+            0% {
+              opacity: 0;
+              transform: translateY(30px) scale(0.8);
+            }
+            100% {
+              opacity: 0.15;
+              transform: translateY(0px) scale(1);
+            }
+          }
+
+          /* ==========================================================================
+     VIDEO GRID LAYOUT
+     Main video showcase grid system
+     ========================================================================== */
+
+          .videogrid-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+          }
+          .videogrid {
+            width: 90vw;
+            margin: 0 auto;
+            display: grid;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+          }
+
+          .single-video {
+            width: 10%;
+            height: 20%;
+            z-index: -1;
+          }
+
+          /* ==========================================================================
+     HERO SECTION
+     Main quote and introduction section
+     ========================================================================== */
+
+          .quote-container {
+            width: 99vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+          }
+
+          .quote {
+            font-family: "Montserrat", sans-serif;
+            font-size: 3.5rem;
+            line-height: 1.35;
+            font-weight: 500;
+            margin: 0;
+            max-width: 70%;
+          }
+
+          /* ==========================================================================
+     PROJECTS CONTAINER
+     Main container for all project sections
+     ========================================================================== */
+
+          .projectsContainer {
+            width: 80vw;
+            margin: 0 auto;
+            max-width: 80vw;
+            padding: 5rem 0;
+            overflow-x: hidden;
+          }
+
+          .projectsContainer h3 {
+            margin-block-start: 0;
+            margin-bottom: 2.5rem;
+            font-size: 1.25rem;
+            font-weight: 400;
+            line-height: 1.6;
+            color: #e0e0e0;
+          }
+
+          /* ==========================================================================
+     SECTION LAYOUT
+     Individual work category sections
+     ========================================================================== */
+
+          .listContainer {
+            display: flex;
+            justify-content: center;
+          }
+
+          .lc-row-reverse {
+            flex-direction: row-reverse;
+          }
+
+          .section-title {
+            width: 30%;
+          }
+
+          .section-description {
+            font-family: "Open Sans", sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 0.9rem;
+            text-align: justify;
+            color: #e0e0e0;
+            line-height: 2;
+          }
+
+          /* ==========================================================================
+     TYPOGRAPHY
+     Text styles for headings and content
+     ========================================================================== */
+
+          .postTitle,
+          .year,
+          .workType {
+            font-family: "Montserrat", sans-serif;
+            color: floralwhite;
+            margin: 0;
+            padding: 0;
+          }
+
+          .workType {
+            font-size: 3.5rem;
+            z-index: 100;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+          }
+
+          .postTitle {
+            font-size: 1.5rem;
+            line-height: 1.25;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            font-weight: 500;
+            text-align: initial;
+          }
+
+          .year {
+            font-size: 0.9rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            font-weight: 400;
+          }
+
+          /* ==========================================================================
+     PROJECT GRID
+     Grid layout for project thumbnails
+     ========================================================================== */
+
+          ul {
+            list-style-type: none;
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            overflow: hidden;
+            width: 60%;
+          }
+
+          ul li {
+            display: flex;
+          }
+
+          .project {
+            height: 100%;
+            width: 100%;
+          }
+
+          /* ==========================================================================
+     PROJECT CARDS
+     Individual project card styling and interactions
+     ========================================================================== */
+
+          ul a {
+            filter: hue-rotate(0deg);
+            transition: filter 0.8s ease-in-out;
+            height: 100%;
+            position: relative;
+          }
+
+          ul a:hover {
+            filter: hue-rotate(180deg);
+          }
+
+          .postHeroImg {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+          }
+
+          .postHeroImg.loaded {
+            opacity: 1;
+          }
+
+          /* Project info overlay - appears on hover */
+          .postInfo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            width: 70%;
+          }
+
+          .project:hover .postInfo {
+            display: block;
+          }
+
+          /* ==========================================================================
+     ANIMATED GRADIENT TEXT
+     Gradient animations for highlighted text elements
+     ========================================================================== */
+
+          @keyframes gradient-flow {
+            0% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+            100% {
+              background-position: 0% 50%;
+            }
+          }
+
+          .animated-gradient-text {
+            background-image: linear-gradient(
+              90deg,
+              #ec4899,
+              #f97316,
+              #eab308,
+              #84cc16,
+              #22c55e,
+              #14b8a6,
+              #0ea5e9,
+              #6366f1,
+              #a855f7,
+              #ec4899
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient-flow 5s linear infinite;
+            cursor: default;
+          }
+
+          .animated-gradient-text-1 {
+            background-image: linear-gradient(
+              90deg,
+              #ff6b6b,
+              #4ecdc4,
+              #45b7d1,
+              #96ceb4,
+              #feca57,
+              #ff9ff3,
+              #54a0ff,
+              #5f27cd,
+              #ff6b6b
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient-flow 5s linear infinite;
+            cursor: default;
+          }
+
+          .animated-gradient-text-2 {
+            background-image: linear-gradient(
+              90deg,
+              #667eea,
+              #764ba2,
+              #f093fb,
+              #f5576c,
+              #4facfe,
+              #00f2fe,
+              #43e97b,
+              #38f9d7,
+              #667eea
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient-flow 5s linear infinite;
+            cursor: default;
+          }
+
+          .animated-gradient-text-3 {
+            background-image: linear-gradient(
+              90deg,
+              #ee0979,
+              #ff6a00,
+              #fcb045,
+              #fd1d1d,
+              #833ab4,
+              #fd1d1d,
+              #fcb045,
+              #ff6a00,
+              #ee0979
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient-flow 5s linear infinite;
+            cursor: default;
+          }
+
+          /* ==========================================================================
+     RESPONSIVE DESIGN
+     Media queries for different screen sizes
+     ========================================================================== */
+
+          /* Small mobile screens - hide excess background videos */
+          @media (max-width: 480px) {
+            .bg-video-container:nth-child(n + 4) {
+              display: none;
+            }
+          }
+
+          /* Mobile and tablet styles */
+          @media (max-width: 760px) {
+            .mainquote {
+              font-size: 2rem;
+            }
+
+            .projectsContainer {
+              width: 100%;
+              margin: 0 auto;
+            }
+
+            .listContainer {
+              padding-bottom: 5rem;
+              flex-direction: column;
+              display: block;
+              justify-content: initial;
+            }
+
+            .section-title {
+              width: 100%;
+              text-align: center;
+            }
+
+            .workType {
+              font-size: 2.75rem;
+              transform: none;
+            }
+
+            ul {
+              width: 100%;
+              grid-template-columns: repeat(1, 1fr);
+            }
+
+            .project {
+              opacity: 1;
+              height: 40vh;
+            }
+
+            .postHeroImg {
+              opacity: 0.7;
+            }
+
+            .postInfo {
+              display: block;
+              background-color: rgba(0, 0, 0, 0.5);
+              padding: 0.5rem;
+              border-radius: 4px;
+            }
+
+            .postTitle {
+              font-size: 1.6rem;
+            }
+          }
+
+          /* Tablet responsive for video grid */
+          @media (max-width: 768px) {
+            .videogrid {
+              width: 95vw;
+              grid-template-columns: 1fr;
+              gap: 1.5rem;
+              padding: 1.5rem;
+            }
+
+            .videogrid > :first-child {
+              grid-column: 1;
+              grid-row: 1;
+              transform: rotate(0deg);
+            }
+
+            .videogrid > :last-child {
+              grid-column: 1;
+              grid-row: 2;
+              transform: rotate(0deg);
+            }
+          }
+
+          /* Large desktop - mosaic video grid layout */
+          @media (min-width: 1200px) {
+            .videogrid {
+              grid-template-columns: 1fr 2fr 1fr;
+            }
+
+            .videogrid > :first-child {
+              grid-column: 1 / 3;
+              grid-row: 1 / 3;
+            }
+
+            .videogrid > :last-child {
+              grid-column: 3;
+              grid-row: 1;
+            }
+          }
+
+          /* Standard HD screens - slightly reduced text sizes */
+          @media (max-width: 1920px) {
+            .quote {
+              font-size: 3rem;
+            }
+
+            .workType {
+              font-size: 2.8rem;
+            }
+
+            .postTitle {
+              font-size: 1.3rem;
+            }
+
+            .projectsContainer h3 {
+              font-size: 1.1rem;
+            }
+
+            .section-description {
+              font-size: 0.85rem;
+            }
+          }
+
+          /* Ultra-wide screens */
+          @media (min-width: 1921px) {
+            .mainquote {
+              font-size: 4rem;
+            }
+          }
+        </style>
       </div>
-      <!-- <div class="videogrid">
-        <GeneralRandomVideo client:only videoPath={vid1} />
-        <GeneralRandomVideo client:only videoPath={vid3} />
-        <GeneralRandomVideo client:only videoPath={vid5} />
-      </div> -->
     </main>
-
-    <style>
-      .background-videos {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 10%;
-        height: 20%;
-        z-index: 100;
-        pointer-events: none;
-        overflow: hidden;
-      }
-
-      .bg-video-container {
-        position: absolute;
-        width: 200px;
-        height: 150px;
-        opacity: 0.15;
-        animation: float 10s ease-in-out infinite;
-      }
-
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0px) rotate(0deg);
-        }
-        50% {
-          transform: translateY(-20px) rotate(5deg);
-        }
-      }
-
-      @keyframes fadeInFloat {
-        0% {
-          opacity: 0;
-          transform: translateY(30px) scale(0.8);
-        }
-        100% {
-          opacity: 0.15;
-          transform: translateY(0px) scale(1);
-        }
-      }
-
-      /* Reduce background videos on smaller screens */
-      @media (max-width: 480px) {
-        .bg-video-container:nth-child(n + 4) {
-          display: none;
-        }
-      }
-      .single-video {
-        width: 10%;
-        height: 20%;
-        z-index: -1;
-        /* position: absolute; */
-      }
-      .videogrid {
-        width: 90vw;
-        max-width: 1400px;
-        margin: 5rem auto;
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        grid-template-rows: 300px 200px;
-        gap: 1rem;
-        padding: 2rem;
-        position: relative;
-        overflow: hidden;
-      }
-
-      /* Mobile responsive */
-      @media (max-width: 768px) {
-        .videogrid {
-          width: 95vw;
-          grid-template-columns: 1fr;
-          grid-template-rows: 250px 200px;
-          gap: 1.5rem;
-          padding: 1.5rem;
-        }
-
-        .videogrid > :first-child {
-          grid-column: 1;
-          grid-row: 1;
-          transform: rotate(0deg);
-        }
-
-        .videogrid > :last-child {
-          grid-column: 1;
-          grid-row: 2;
-          transform: rotate(0deg);
-        }
-      }
-
-      /* Alternative: Mosaic style grid */
-      @media (min-width: 1200px) {
-        .videogrid {
-          grid-template-columns: 1fr 1fr 1fr;
-          grid-template-rows: 200px 300px;
-        }
-
-        .videogrid > :first-child {
-          grid-column: 1 / 3;
-          grid-row: 1 / 3;
-        }
-
-        .videogrid > :last-child {
-          grid-column: 3;
-          grid-row: 1;
-        }
-      }
-      .quote {
-        font-family: "Montserrat", sans-serif;
-        font-size: 3.5rem;
-        line-height: 1.35;
-        font-weight: 500;
-        margin: 0;
-        max-width: 70%;
-      }
-      .quote-container {
-        width: 99vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-      }
-      .section-title {
-        width: 30% !important;
-      }
-      .projectsContainer {
-        width: 80vw;
-        margin: 0 auto;
-        max-width: 80vw;
-        padding: 5rem 0;
-        overflow-x: hidden !important;
-      }
-      .section-description {
-        font-family: "Open Sans", sans-serif !important;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 0.9rem;
-        text-align: justify;
-        color: #e0e0e0;
-        line-height: 1.5;
-      }
-      .listContainer {
-        /* padding-bottom: 15rem; */
-        /* width: 100%; */
-        display: flex;
-        justify-content: center;
-      }
-      .lc-row-reverse {
-        flex-direction: row-reverse !important;
-      }
-
-      .postTitle,
-      .year,
-      .workType {
-        font-family: "Montserrat", sans-serif;
-        color: floralwhite;
-        margin: 0;
-        padding: 0;
-      }
-      .workType {
-        font-size: 3.5rem;
-        z-index: 100;
-        font-weight: 600;
-        line-height: 1.2;
-        margin-bottom: 1.5rem;
-      }
-      .postInfo {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        /* display: none; */
-        z-index: 10;
-        width: 70%;
-      }
-      .postTitle {
-        font-size: 1.5rem;
-        line-height: 1.25;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        font-weight: 500;
-        text-align: initial;
-      }
-
-      .year {
-        font-size: 0.9rem;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        font-weight: 400;
-      }
-
-      ul {
-        list-style-type: none;
-        padding: 1rem;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem;
-        overflow: hidden;
-        width: 60%;
-      }
-
-      ul li {
-        display: flex;
-      }
-
-      .project {
-        height: 100%;
-        width: 100%;
-      }
-
-      ul a {
-        filter: hue-rotate(0deg);
-        transition: filter 0.8s ease-in-out;
-        height: 100%;
-        position: relative;
-      }
-
-      ul a:hover {
-        filter: hue-rotate(180deg);
-      }
-
-      .postHeroImg {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-      }
-
-      .postHeroImg.loaded {
-        opacity: 1;
-      }
-
-      .project:hover .postInfo {
-        display: block;
-      }
-      @media (max-width: 760px) {
-        .mainquote {
-          font-size: 2rem;
-        }
-        .projectsContainer {
-          width: 100%;
-          margin: 0;
-          margin: 0 auto;
-        }
-
-        .listContainer {
-          padding-bottom: 5rem;
-          flex-direction: column;
-          display: block;
-          justify-content: initial;
-        }
-        .section-title {
-          width: 100% !important;
-          text-align: center;
-        }
-        .workType {
-          font-size: 2.75rem;
-          transform: none !important;
-        }
-        ul {
-          width: 100%;
-          grid-template-columns: repeat(1, 1fr);
-        }
-
-        .project {
-          opacity: 1;
-          height: 40vh;
-        }
-
-        .postHeroImg {
-          opacity: 0.7;
-        }
-
-        .postInfo {
-          display: block;
-          background-color: rgba(0, 0, 0, 0.5);
-          padding: 0.5rem;
-          border-radius: 4px;
-        }
-
-        .postTitle {
-          font-size: 1.6rem;
-        }
-      }
-      .projectsContainer h3 {
-        margin-block-start: 0 !important;
-        margin-bottom: 2.5rem;
-        font-size: 1.25rem;
-        font-weight: 400;
-        line-height: 1.6;
-        color: #e0e0e0;
-      }
-      @keyframes gradient-flow {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
-      }
-      .animated-gradient-text {
-        background-image: linear-gradient(
-          90deg,
-          #ec4899,
-          #f97316,
-          #eab308,
-          #84cc16,
-          #22c55e,
-          #14b8a6,
-          #0ea5e9,
-          #6366f1,
-          #a855f7,
-          #ec4899
-        );
-        background-size: 200% auto;
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        animation: gradient-flow 5s linear infinite;
-        cursor: default;
-      }
-
-      .animated-gradient-text-1 {
-        background-image: linear-gradient(
-          90deg,
-          #ff6b6b,
-          #4ecdc4,
-          #45b7d1,
-          #96ceb4,
-          #feca57,
-          #ff9ff3,
-          #54a0ff,
-          #5f27cd,
-          #ff6b6b
-        );
-        background-size: 200% auto;
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        animation: gradient-flow 5s linear infinite;
-        cursor: default;
-      }
-
-      .animated-gradient-text-2 {
-        background-image: linear-gradient(
-          90deg,
-          #667eea,
-          #764ba2,
-          #f093fb,
-          #f5576c,
-          #4facfe,
-          #00f2fe,
-          #43e97b,
-          #38f9d7,
-          #667eea
-        );
-        background-size: 200% auto;
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        animation: gradient-flow 5s linear infinite;
-        cursor: default;
-      }
-
-      .animated-gradient-text-3 {
-        background-image: linear-gradient(
-          90deg,
-          #ee0979,
-          #ff6a00,
-          #fcb045,
-          #fd1d1d,
-          #833ab4,
-          #fd1d1d,
-          #fcb045,
-          #ff6a00,
-          #ee0979
-        );
-        background-size: 200% auto;
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        animation: gradient-flow 5s linear infinite;
-        cursor: default;
-      }
-      /* For 1920x1080 screens - reduced text sizes */
-      @media (max-width: 1920px) {
-        .quote {
-          font-size: 3rem;
-        }
-        .workType {
-          font-size: 2.8rem;
-        }
-        .postTitle {
-          font-size: 1.3rem;
-        }
-        .projectsContainer h3 {
-          font-size: 1.1rem;
-        }
-        .section-description {
-          font-size: 0.85rem;
-        }
-      }
-      /* For2larger screens (beyond HD) */
-      @media (min-width: 1921px) {
-        .mainquote {
-          font-size: 4rem;
-        }
-      }
-    </style>
   </body>
 </html>

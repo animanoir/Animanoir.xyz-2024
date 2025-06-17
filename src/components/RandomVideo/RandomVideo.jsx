@@ -24,7 +24,7 @@ export default function RandomVideo() {
   };
 
   return (
-    <div className={styles.videoContainer}>
+    <div className={styles.fullvpvideo}>
       {isLoading && (
         <div className={styles.loaderContainer}>
           <div className={styles.loader}></div>
@@ -37,7 +37,7 @@ export default function RandomVideo() {
         loop
         playsInline
         onLoadedData={handleLoadedData}
-        className={`${styles.video} ${isLoading ? styles.hidden : styles.visible}`}
+        className={`${styles.fullvpvideo} ${isLoading ? styles.hidden : styles.visible}`}
       >
         <source src={videoSrc} type="video/webm" />
         Your browser does not support the video tag.

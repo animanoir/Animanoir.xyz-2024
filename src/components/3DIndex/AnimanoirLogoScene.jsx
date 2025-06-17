@@ -11,7 +11,7 @@ export const AnimanoirLogoScene = () => {
   const particlesRef = useRef();
   const [rotation, setRotation] = useState(0);
   const groupRef = useRef();
-  const { gl } = useThree();
+  const { gl, camera } = useThree();
 
   // Create main particles system
   const particlesCount = 120;
@@ -82,7 +82,7 @@ export const AnimanoirLogoScene = () => {
         (Math.random() - 0.5) * 2,
         (Math.random() - 0.5) * 2
       ),
-      color: new THREE.Color().setHSL(Math.random(), 1.0, 0.7),
+      color: new THREE.Color().setRGB(Math.random(), Math.random(), Math.random()),
       life: 1.0,
       maxLife: 3.0 + Math.random() * 2.0,
       size: 0.02 + Math.random() * 0.03,
@@ -123,10 +123,20 @@ export const AnimanoirLogoScene = () => {
       particlesRef.current.geometry.attributes.color.needsUpdate = true;
     }
 
+    const raycaster = new THREE.Raycaster();
+    const mouseVector = new THREE.Vector2();
     // Handle trail particles creation and animation
     if (isMouseDown) {
-      // Convert mouse position to world coordinates
-      const mouseWorld = new THREE.Vector3(mousePosition.x * 10, mousePosition.y * 10, 0);
+      // Convert mouse position to world coordinates using raycasting
+      mouseVector.set(mousePosition.x, mousePosition.y)
+      raycaster.setFromCamera(mouseVector, camera);
+      
+      // Project to a plane at z = 0 (where particles will spawn)
+      const planeZ = 0;
+      const distance = (planeZ - camera.position.z) / raycaster.ray.direction.z;
+      const mouseWorld = raycaster.ray.origin.clone().add(
+        raycaster.ray.direction.clone().multiplyScalar(distance)
+      );
       
       // Create new trail particles (spawn rate controlled by time)
       if (Math.random() < 0.8) { // 80% chance per frame to create particle
@@ -149,8 +159,8 @@ export const AnimanoirLogoScene = () => {
         particle.life -= delta / particle.maxLife;
         
         // Fade out over time
-        particle.color.multiplyScalar(0.995);
-        particle.size *= 0.0998;
+        particle.color.multiplyScalar(10.0);
+        particle.size *= 0.9;
         
         return particle;
       }).filter(particle => particle.life > 0); // Remove dead particles
@@ -162,7 +172,7 @@ export const AnimanoirLogoScene = () => {
       <Environment
         files={"/images/animanoir-xyz-space-small.hdr"}
         backgroundRotation={[rotation, rotation, rotation]} 
-        backgroundIntensity={0.3}
+        backgroundIntensity={0.1}
         background
       />
       
@@ -208,7 +218,7 @@ export const AnimanoirLogoScene = () => {
             size={particle.size}
             color={particle.color}
             opacity={particle.life}
-            transparent
+            // transparent
             blending={THREE.AdditiveBlending}
             depthWrite={false}
           />

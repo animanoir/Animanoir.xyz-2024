@@ -22,14 +22,14 @@ const { title, summary, pubDate, heroImage } = Astro.props;
     <article class="articleContainer">
       <div class="articleBody">
         <h1 class="title">{title}</h1>
-        <h2 class="summary">{summary}</h2>
+        <!-- <h2 class="summary">{summary}</h2> -->
         <p class="postDate">
           {new Date(pubDate).toLocaleDateString()}
         </p>
+        <hr />
         <slot />
       </div>
     </article>
-    <Footer />
     <style>
       :root {
         --font-montserrat: "Montserrat", sans-serif;
@@ -70,7 +70,6 @@ const { title, summary, pubDate, heroImage } = Astro.props;
         font-size: var(--font-size-summary);
         color: var(--color-light-faded);
         margin: 1rem 0;
-        padding: 0 1rem;
         font-weight: normal;
         text-align: start;
         font-family: var(--font-open-sans);
@@ -95,7 +94,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
       .articleBody {
         color: var(--color-light);
         padding: 0 5rem;
-        font-size: var(--font-size-medium);
+        font-size: 0.9rem;
       }
 
       .articleBody p {

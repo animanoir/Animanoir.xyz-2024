@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./RandomVideo.module.css";
 
-export default function GeneralRandomVideo({ videoPath }) {
+export default function Video({ videoPath }) {
   const [isLoading, setIsLoading] = useState(true);
   const [videoSrc, setVideoSrc] = useState(videoPath)
   
@@ -14,7 +14,7 @@ export default function GeneralRandomVideo({ videoPath }) {
   },[])
 
   return (
-    <div className={styles.videoContainer}>
+    <div className={styles.video}>
       {isLoading && (
         <div className={styles.loaderContainer}>
           <div className={styles.loader}></div>
