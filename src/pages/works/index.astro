@@ -58,32 +58,41 @@ for (let i = posts.length - 1; i > 0; i--) {
       <div class="videogrid-container">
         <div class="videogrid">
           <motion.div
-            client:only
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            initial={{ opacity: 0, y: 500 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            client:load
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{
+              duration: 0.4,
+              ease: [0.4, 0, 0.2, 1],
+              delay: 0,
+            }}
           >
             <Video client:only videoPath={vid1} />
           </motion.div>
           <motion.div
-            client:only
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.7 }}
-            initial={{ opacity: 0, y: 500 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            client:load
+            initial={{ opacity: 0, scale: 0.9, y: 20, rotate: -3 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{
+              duration: 0.4,
+              ease: [0.4, 0, 0.2, 1],
+              delay: 0.15,
+            }}
           >
             <Video client:only videoPath={vid2} />
           </motion.div>
           <motion.div
-            client:only
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.9 }}
-            initial={{ opacity: 0, y: 500 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            client:load
+            initial={{ opacity: 0, scale: 0.9, y: 20, rotate: 3 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{
+              duration: 0.4,
+              ease: [0.4, 0, 0.2, 1],
+              delay: 0.3,
+            }}
           >
             <Video client:only videoPath={vid5} />
           </motion.div>
