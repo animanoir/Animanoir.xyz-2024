@@ -4,6 +4,12 @@
   height: 100vh;
 }
 
+.fullscreenvideo {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
 .loaderContainer {
   position: absolute;
   top: 0;
