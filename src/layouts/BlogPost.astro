@@ -19,107 +19,165 @@ const { title, summary, pubDate, heroImage } = Astro.props;
   </head>
   <body>
     <ModifiedHeader />
-    <article class="articleContainer">
-      <div class="articleBody">
+    <div class="articleBody">
+      <div class="title-container">
         <h1 class="title">{title}</h1>
-        <!-- <h2 class="summary">{summary}</h2> -->
+        <h2 class="summary">{summary}</h2>
         <p class="postDate">
           {new Date(pubDate).toLocaleDateString()}
         </p>
-        <hr />
-        <slot />
       </div>
-    </article>
+      <article class="articleContainer">
+        <slot />
+      </article>
+    </div>
     <style>
+      /* ==========================================================================
+         FONT IMPORTS
+         External font imports for typography
+         ========================================================================== */
+      @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+
+      /* ==========================================================================
+         CSS CUSTOM PROPERTIES (VARIABLES)
+         Global design tokens for consistent styling
+         ========================================================================== */
       :root {
-        --font-montserrat: "Montserrat", sans-serif;
+        /* Typography */
+        --font-spacegrotesk: "Space Grotesk", sans-serif;
         --font-open-sans: "Open Sans", sans-serif;
+
+        /* Colors */
         --color-light: #fdfefe;
         --color-light-faded: #fdfefe7f;
         --color-gray: #999;
+        --color-border: #ddd;
+
+        /* Font Sizes */
         --font-size-small: 0.7rem;
-        --font-size-large: 3rem;
         --font-size-medium: 1rem;
-        --line-height-heading: 1.2;
+        --font-size-large: 5rem;
+
+        /* Layout */
+        --line-height-heading: 1;
+        --spacing-small: 1rem;
+        --spacing-medium: 2rem;
+        --spacing-large: 4rem;
+        --spacing-xlarge: 6rem;
       }
 
-      .postDate,
-      .tools,
+      /* ==========================================================================
+         ARTICLE CONTAINER
+         Main container for blog post content
+         ========================================================================== */
+      .articleContainer {
+        padding-bottom: var(--spacing-xlarge);
+        margin: 0 auto;
+        position: relative;
+        max-width: 35%;
+      }
+
+      /* ==========================================================================
+         ARTICLE BODY
+         Content wrapper with base typography styles
+         ========================================================================== */
+      .title-container {
+        width: 50%;
+        margin: 0 auto;
+      }
       .articleBody {
+        color: var(--color-light);
         font-family: var(--font-open-sans);
       }
 
+      .articleBody p {
+        margin-bottom: 1.1rem;
+        line-height: 1.6;
+      }
+
+      /* ==========================================================================
+         TYPOGRAPHY COMPONENTS
+         Individual text elements with specific styling
+         ========================================================================== */
+
+      /* Main blog post title */
+      .title {
+        margin: 0;
+        padding: var(--spacing-xlarge) 0 var(--spacing-small);
+        font-size: var(--font-size-large);
+        font-family: var(--font-spacegrotesk);
+        line-height: var(--line-height-heading);
+        text-align: start;
+      }
+
+      /* Blog post summary/subtitle */
+      .summary {
+        font-size: var(--font-size-medium);
+        color: var(--color-light-faded);
+        margin: var(--spacing-small) 0;
+        font-weight: normal;
+        font-family: var(--font-open-sans);
+        text-align: start;
+      }
+
+      /* Publication date display */
       .postDate {
         font-size: var(--font-size-small);
+        font-family: var(--font-open-sans);
         margin: 0 0 0 auto;
         color: var(--color-gray);
         text-align: right;
         padding: 0;
       }
 
-      .title {
-        margin: 0;
-        padding: 4rem 0 1rem;
-        font-size: var(--font-size-large);
-        text-align: start;
-        font-family: var(--font-montserrat);
-        line-height: var(--line-height-heading);
-      }
-
-      .summary {
-        font-size: var(--font-size-summary);
-        color: var(--color-light-faded);
-        margin: 1rem 0;
-        font-weight: normal;
-        text-align: start;
-        font-family: var(--font-open-sans);
-      }
-
+      /* Tools/metadata display (unused but kept for future use) */
       .tools {
         display: block;
         text-align: center;
         font-size: var(--font-size-small);
+        font-family: var(--font-open-sans);
         color: var(--color-light-faded);
-        padding-bottom: 2rem;
+        padding-bottom: var(--spacing-medium);
         font-style: italic;
       }
 
-      .articleContainer {
-        padding-bottom: 5rem;
-        margin: 0 auto;
-        position: relative;
-        max-width: 50%;
-      }
+      /* ==========================================================================
+         CONTENT ELEMENTS
+         Styling for various content elements within articles
+         ========================================================================== */
 
-      .articleBody {
-        color: var(--color-light);
-        padding: 0 5rem;
-        font-size: 0.9rem;
-      }
-
-      .articleBody p {
-        margin-bottom: 1.1rem;
-      }
-
+      /* Horizontal rule separator */
       hr {
-        border-top: 1px solid #ddd;
-        margin: 1rem 0;
+        border: none;
+        border-top: 1px solid var(--color-border);
+        margin: var(--spacing-small) 0;
       }
 
+      /* ==========================================================================
+         RESPONSIVE DESIGN
+         Media queries for different screen sizes
+         ========================================================================== */
+
+      /* Mobile devices */
       @media (max-width: 768px) {
         .title {
           font-size: 2rem;
           text-align: left;
+          padding: var(--spacing-medium) 0 var(--spacing-small);
         }
+
         .articleContainer {
-          padding-top: 2rem;
+          padding-top: var(--spacing-medium);
           max-width: 90%;
         }
+
         .articleBody {
-          padding: 0 1rem;
+          padding: 0 var(--spacing-small);
           padding-bottom: 50%;
         }
       }
+
+      /* Tablet and small desktop */
       @media (max-width: 1360px) {
         .articleBody {
           padding: 0 !important;
