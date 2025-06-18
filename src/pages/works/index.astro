@@ -11,6 +11,7 @@ import Video from "@/components/RandomVideo/Video.jsx";
 import vid1 from "@/images/videos/webvid1.webm";
 import vid2 from "@/images/videos/webvid2.webm";
 import vid5 from "@/images/videos/webvid5.webm";
+import ledvid from "@/images/videos/ledveo.webm";
 
 // Orders the post chronologically
 const posts = (await getCollection("works")).sort(
@@ -378,7 +379,7 @@ for (let i = posts.length - 1; i > 0; i--) {
             </ul>
           </div>
         </motion.div>
-
+        <Video client:only videoPath={ledvid} />
         <style>
           /* ==========================================================================
      BACKGROUND VIDEO STYLES
@@ -486,7 +487,7 @@ for (let i = posts.length - 1; i > 0; i--) {
             width: 80vw;
             margin: 0 auto;
             max-width: 80vw;
-            padding: 5rem 0;
+            /* padding: 5rem 0; */
             overflow-x: hidden;
           }
 
