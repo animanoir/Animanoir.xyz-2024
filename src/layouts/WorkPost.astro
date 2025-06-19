@@ -160,6 +160,28 @@ const { title, description, heroImage } = Astro.props;
       }
 
       @media (max-width: 768px) {
+        .project-description-container h3 {
+          font-size: 1rem;
+        }
+        .top-section {
+          flex-direction: column;
+        }
+        .gradient-black::before {
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 0.5) 40%,
+            transparent 100%
+          );
+        }
+        .project-description-container {
+          transform: initial;
+        }
+        .title {
+          transform: initial;
+          top: initial;
+          left: initial;
+        }
         .title {
           font-size: 2.5rem;
         }
@@ -167,7 +189,7 @@ const { title, description, heroImage } = Astro.props;
           width: 100%;
         }
         .articleBody {
-          padding: 0 1rem;
+          width: 85%;
         }
       }
 
