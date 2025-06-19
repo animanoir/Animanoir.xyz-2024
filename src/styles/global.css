@@ -141,11 +141,11 @@ p {
 }
 
 .blog-image {
-  width: 80%;
+  width: 100%;
   display: block;
   margin: 0 auto;
   padding: 2rem 0;
-  height: 80%;
+  height: auto;
 }
 
 lite-youtube {
