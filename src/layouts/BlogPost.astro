@@ -42,6 +42,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
          CSS CUSTOM PROPERTIES (VARIABLES)
          Global design tokens for consistent styling
          ========================================================================== */
+
       :root {
         /* Typography */
         --font-spacegrotesk: "Space Grotesk", sans-serif;
@@ -55,7 +56,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
 
         /* Font Sizes */
         --font-size-small: 0.7rem;
-        --font-size-medium: 1rem;
+        --font-size-medium: 1.4rem;
         --font-size-large: 5rem;
 
         /* Layout */
@@ -75,6 +76,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
         margin: 0 auto;
         position: relative;
         max-width: 35%;
+        font-size: 1.2rem;
       }
 
       /* ==========================================================================
@@ -82,7 +84,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
          Content wrapper with base typography styles
          ========================================================================== */
       .title-container {
-        width: 50%;
+        width: 40%;
         margin: 0 auto;
       }
       .articleBody {
