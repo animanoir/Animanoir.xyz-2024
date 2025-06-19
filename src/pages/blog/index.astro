@@ -3,7 +3,6 @@ import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import { SITE_TITLE } from "../../consts";
 import { getCollection } from "astro:content";
-import Footer from "@/components/Footer.astro";
 
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -15,7 +14,7 @@ const posts = (await getCollection("blog")).sort(
   <head>
     <BaseHead
       title={SITE_TITLE}
-      description={"Writings and thought processes on topics, mostly meta."}
+      description={"Writings and creative processes..."}
     />
   </head>
   <body>
