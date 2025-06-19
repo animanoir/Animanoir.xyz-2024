@@ -27,10 +27,10 @@ const { title, description, heroImage } = Astro.props;
   </head>
   <body>
     <ModifiedHeader />
-    <article class="articleContainer">
-      <div class="top-section">
-        {
-          heroImage && (
+    <div class="top-section">
+      {
+        heroImage && (
+          <div class="gradient-black">
             <Picture
               src={heroImage}
               alt={description}
@@ -38,12 +38,17 @@ const { title, description, heroImage } = Astro.props;
               formats={["webp"]}
               decoding="async"
               loading="eager"
-              quality={80}
+              quality={100}
             />
-          )
-        }
+          </div>
+        )
+      }
+      <div class="project-description-container">
         <h1 class="title">{title}</h1>
+        <h3>{description}</h3>
       </div>
+    </div>
+    <article class="articleContainer">
       <div class="articleBody">
         <slot />
       </div>
@@ -59,17 +64,42 @@ const { title, description, heroImage } = Astro.props;
         position: relative;
         justify-content: center;
         align-items: center;
-        margin-top: 5rem;
+        width: 80%;
+        margin: 0 auto;
+        height: 100vh;
+      }
+
+      .gradient-black {
+        position: relative;
+        width: 100%;
+      }
+
+      .gradient-black::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          to left,
+          rgba(0, 0, 0, 1) 0%,
+          rgba(0, 0, 0, 0.5) 40%,
+          transparent 100%
+        );
+        z-index: 1;
+        pointer-events: none;
       }
 
       .heroImage {
-        height: 500px;
-        width: 50vw;
+        height: 100%;
+        width: 100%;
         object-fit: cover;
-        padding-bottom: 3rem;
         filter: brightness(0.9);
         opacity: 0;
         transition: opacity 0.5s ease-in-out;
+        position: relative;
+        z-index: 0;
       }
       .heroImage.loaded {
         opacity: 1;
@@ -81,11 +111,9 @@ const { title, description, heroImage } = Astro.props;
         font-size: 5rem;
         font-family: "Montserrat", sans-serif;
         line-height: 1;
-        position: absolute;
+        /* position: absolute; */
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
         text-shadow:
           2px 2px 4px rgba(0, 0, 0, 0.8),
           -1px -1px 0 rgba(0, 0, 0, 0.4);
@@ -93,16 +121,10 @@ const { title, description, heroImage } = Astro.props;
         z-index: 2;
       }
 
-      .tools {
-        display: block;
-        text-align: center;
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.7rem;
-        color: #fdfefe7f;
-        padding-bottom: 2rem;
-        font-style: bold;
+      .project-description-container {
+        transform: translate(-50%, 0);
+        z-index: 3;
       }
-
       .articleContainer {
         padding-bottom: 40vh;
         margin: 0 auto;
@@ -150,6 +172,15 @@ const { title, description, heroImage } = Astro.props;
       }
 
       @media (max-width: 480px) {
+        .top-section {
+          flex-direction: column;
+          height: auto;
+          padding: 1rem;
+        }
+        .project-description-container {
+          text-align: center;
+          margin-top: 1rem;
+        }
         .title {
           font-size: 2rem;
           text-align: center;
@@ -163,7 +194,9 @@ const { title, description, heroImage } = Astro.props;
           padding: 0 0.5rem;
         }
         .heroImage {
-          height: 300px;
+          height: auto;
+          max-height: 300px;
+          width: 100%;
         }
       }
     </style>

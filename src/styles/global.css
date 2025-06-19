@@ -52,10 +52,10 @@ pre>code {
   all: unset;
 }
 
-hr {
+/* hr {
   margin: 0 auto !important;
   width: 50%;
-}
+} */
 
 table {
   width: 100%;
