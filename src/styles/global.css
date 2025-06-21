@@ -83,6 +83,7 @@ h3 {
   font-family: "Montserrat", serif;
   font-style: normal;
   font-size: 1.3rem;
+  margin-bottom: 2rem !important;
 }
 
 h2 {
@@ -93,6 +94,7 @@ p {
   line-height: normal;
   margin: 0;
   padding: 2.5rem 0;
+  padding-top: 1rem;
   padding-bottom: 0.5rem;
   line-height: 1.7;
   text-rendering: optimizeLegibility;
