@@ -114,6 +114,7 @@ const posts: Post[] = await Promise.all(
           <div class="card" key={post.id}>
             <a href={post.public_url} target="_blank" rel="noopener noreferrer">
               <Picture
+                inferSize
                 src={post.cover?.file?.url || "default-image-url.jpg"}
                 width={post.cover?.width}
                 height={post.cover?.height}

@@ -12,10 +12,7 @@ const posts = (await getCollection("blog")).sort(
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead
-      title={SITE_TITLE}
-      description={"Writings and creative processes..."}
-    />
+    <BaseHead title={SITE_TITLE} description={"Blog & studies"} />
   </head>
   <body>
     <Header />
@@ -23,6 +20,11 @@ const posts = (await getCollection("blog")).sort(
       <section>
         <div class="blogpostsContainer">
           <ul>
+            <li class="random-position">
+              <a href="/books">
+                <div class="postTitle">📚 Books I'm currently reading!</div>
+              </a>
+            </li>
             {
               posts.map((post) => (
                 <li class="random-position">
@@ -97,10 +99,9 @@ const posts = (await getCollection("blog")).sort(
         color: floralwhite;
         font-family: "Montserrat", sans-serif;
         font-size: 1rem;
-        padding: 1rem;
         padding-left: 0;
         padding-top: 0;
-        margin-bottom: 0;
+        margin-bottom: 0 !important;
         line-height: 1.5;
         width: fit-content;
       }
