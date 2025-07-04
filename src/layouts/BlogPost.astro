@@ -20,12 +20,14 @@ const { title, summary, pubDate, heroImage } = Astro.props;
   <body>
     <ModifiedHeader />
     <div class="articleBody">
-      <div class="title-container">
-        <h1 class="title">{title}</h1>
-        <h2 class="summary">{summary}</h2>
-        <p class="postDate">
-          {new Date(pubDate).toLocaleDateString()}
-        </p>
+      <div class="left-container">
+        <div class="title-container">
+          <h1 class="title">{title}</h1>
+          <h2 class="summary">{summary}</h2>
+          <p class="postDate">
+            {new Date(pubDate).toLocaleDateString()}
+          </p>
+        </div>
       </div>
       <article class="articleContainer">
         <slot />
@@ -40,44 +42,16 @@ const { title, summary, pubDate, heroImage } = Astro.props;
       @import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Space+Grotesk:wght@300..700&display=swap");
 
       /* ==========================================================================
-         CSS CUSTOM PROPERTIES (VARIABLES)
-         Global design tokens for consistent styling
-         ========================================================================== */
-
-      :root {
-        /* Typography */
-        --font-spacegrotesk: "Space Grotesk", sans-serif;
-        --font-garamond: "EB Garamond", serif;
-
-        /* Colors */
-        --color-light: #fdfefe;
-        --color-light-faded: #fdfefe7f;
-        --color-gray: #999;
-        --color-border: #ddd;
-
-        /* Font Sizes */
-        --font-size-small: 0.7rem;
-        --font-size-medium: 1.3rem;
-        --font-size-large: 5rem;
-
-        /* Layout */
-        --line-height-heading: 1;
-        --spacing-small: 1rem;
-        --spacing-medium: 2rem;
-        --spacing-large: 4rem;
-        --spacing-xlarge: 6rem;
-      }
-
-      /* ==========================================================================
          ARTICLE CONTAINER
          Main container for blog post content
          ========================================================================== */
       .articleContainer {
-        padding-bottom: var(--spacing-xlarge);
         margin: 0 auto;
         position: relative;
-        max-width: 40%;
-        font-size: 1.4rem;
+        max-width: 60%;
+        font-size: 1.3rem;
+      }
+      .left-container {
       }
 
       /* ==========================================================================
@@ -85,12 +59,16 @@ const { title, summary, pubDate, heroImage } = Astro.props;
          Content wrapper with base typography styles
          ========================================================================== */
       .title-container {
-        width: 40%;
-        margin: 0 auto;
+        /* width: 70%; */
+        padding-right: 5rem;
       }
       .articleBody {
-        color: var(--color-light);
-        font-family: var(--font-garamond);
+        margin: 0 auto;
+        width: 80%;
+        display: flex;
+        padding-top: 5rem;
+        color: #fdfefe;
+        font-family: "EB Garamond", serif;
       }
 
       .articleBody p {
@@ -106,30 +84,29 @@ const { title, summary, pubDate, heroImage } = Astro.props;
       /* Main blog post title */
       .title {
         margin: 0;
-        padding: var(--spacing-xlarge) 0 var(--spacing-small);
-        font-size: var(--font-size-large);
-        font-family: var(--font-spacegrotesk);
-        line-height: var(--line-height-heading);
+        padding: 0 0 1rem;
+        font-size: 3rem;
+        font-family: "Space Grotesk", sans-serif;
+        line-height: 1;
         text-align: start;
       }
 
       /* Blog post summary/subtitle */
       .summary {
-        font-size: var(--font-size-medium);
-        color: var(--color-light-faded);
-        margin: var(--spacing-small) 0;
+        font-size: 1rem;
+        color: #fdfefe7f;
+        margin: 1rem 0;
         font-weight: normal;
-        font-family: var(--font-spacegrotesk);
+        font-family: "Space Grotesk", sans-serif;
         text-align: start;
       }
 
       /* Publication date display */
       .postDate {
-        font-size: var(--font-size-small);
-        font-family: var(--font-garamond);
+        font-size: 0.5rem;
+        font-family: "Space Grotesk", sans-serif;
         margin: 0 0 0 auto;
-        color: var(--color-gray);
-        text-align: right;
+        color: #999;
         padding: 0;
       }
 
@@ -137,10 +114,10 @@ const { title, summary, pubDate, heroImage } = Astro.props;
       .tools {
         display: block;
         text-align: center;
-        font-size: var(--font-size-small);
-        font-family: var(--font-garamond);
-        color: var(--color-light-faded);
-        padding-bottom: var(--spacing-medium);
+        font-size: 0.7rem;
+        font-family: "EB Garamond", serif;
+        color: #fdfefe7f;
+        padding-bottom: 2rem;
         font-style: italic;
       }
 
@@ -152,8 +129,8 @@ const { title, summary, pubDate, heroImage } = Astro.props;
       /* Horizontal rule separator */
       hr {
         border: none;
-        border-top: 1px solid var(--color-border);
-        margin: var(--spacing-small) 0;
+        border-top: 1px solid #ddd;
+        margin: 1rem 0;
       }
 
       /* ==========================================================================
@@ -161,29 +138,129 @@ const { title, summary, pubDate, heroImage } = Astro.props;
          Media queries for different screen sizes
          ========================================================================== */
 
-      /* Mobile devices */
-      @media (max-width: 768px) {
+      /* Large desktop screens */
+      @media (min-width: 1921px) {
         .title {
-          font-size: 2rem;
-          text-align: left;
-          padding: var(--spacing-medium) 0 var(--spacing-small);
+          font-size: 3rem;
         }
-
+        .summary {
+          font-size: 1.2rem;
+        }
+        .postDate {
+          font-size: 0.8rem;
+        }
         .articleContainer {
-          padding-top: var(--spacing-medium);
-          max-width: 90%;
+          font-size: 1.3rem;
         }
-
         .articleBody {
-          padding: 0 var(--spacing-small);
-          padding-bottom: 50%;
+          padding-top: 8rem;
+        }
+      }
+
+      /* Desktop screens */
+      @media (min-width: 1361px) and (max-width: 1920px) {
+        .title {
+          font-size: 3.5rem;
+        }
+        .summary {
+          font-size: 1.2rem;
+        }
+        .postDate {
+          font-size: 0.9rem;
+        }
+        .articleContainer {
+          font-size: 1.3rem;
+        }
+        .articleBody {
+          padding-top: 6rem;
         }
       }
 
       /* Tablet and small desktop */
-      @media (max-width: 1360px) {
+      @media (min-width: 769px) and (max-width: 1360px) {
+        .title {
+          font-size: 2.8rem;
+        }
+        .summary {
+          font-size: 1.1rem;
+        }
+        .postDate {
+          font-size: 0.8rem;
+        }
+        .articleContainer {
+          font-size: 1.2rem;
+        }
         .articleBody {
-          padding: 0 !important;
+          padding-top: 4rem;
+        }
+        .title-container {
+          width: 60%;
+        }
+      }
+
+      /* Mobile devices */
+      @media (max-width: 768px) {
+        .title-container {
+          width: 100%;
+          padding-right: 0;
+        }
+        .title {
+          width: 100%;
+          font-size: 2rem;
+          text-align: left;
+        }
+        .summary {
+          font-size: 1rem;
+          margin: 1rem 0;
+        }
+        .postDate {
+          font-size: 0.7rem;
+          text-align: left;
+          margin: 1rem 0;
+        }
+        .articleContainer {
+          flex-direction: column;
+          max-width: 95%;
+          font-size: 1.1rem;
+        }
+        .articleBody {
+          flex-direction: column;
+        }
+        .articleBody p {
+          margin-bottom: 1rem;
+          line-height: 1.5;
+        }
+        .left-container {
+          height: auto;
+          padding: 2rem 0;
+        }
+      }
+
+      /* Small mobile devices */
+      @media (max-width: 480px) {
+        .title {
+          font-size: 1.8rem;
+          padding: 1rem 0;
+        }
+        .summary {
+          font-size: 0.9rem;
+        }
+        .postDate {
+          font-size: 0.6rem;
+        }
+        .articleContainer {
+          max-width: 100%;
+          font-size: 1rem;
+        }
+        .articleBody {
+          padding: 0 0.5rem;
+        }
+        .articleBody p {
+          margin-bottom: 0.8rem;
+          line-height: 1.4;
+        }
+        .left-container {
+          padding: 1rem 0;
         }
       }
     </style>
