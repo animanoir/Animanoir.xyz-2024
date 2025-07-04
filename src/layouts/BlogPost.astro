@@ -20,7 +20,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
   <body>
     <ModifiedHeader />
     <div class="articleBody">
-      <div class="left-container">
+      <div>
         <div class="title-container">
           <h1 class="title">{title}</h1>
           <h2 class="summary">{summary}</h2>
@@ -51,9 +51,6 @@ const { title, summary, pubDate, heroImage } = Astro.props;
         max-width: 60%;
         font-size: 1.3rem;
       }
-      .left-container {
-      }
-
       /* ==========================================================================
          ARTICLE BODY
          Content wrapper with base typography styles
@@ -140,6 +137,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
       @media (min-width: 1921px) {
         .title {
           font-size: 3rem;
+          line-height: 1.2;
         }
         .summary {
           font-size: 1.2rem;
@@ -158,7 +156,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
       /* Desktop screens */
       @media (min-width: 1361px) and (max-width: 1920px) {
         .title {
-          font-size: 3.5rem;
+          line-height: 1.2;
         }
         .summary {
           font-size: 1.2rem;
