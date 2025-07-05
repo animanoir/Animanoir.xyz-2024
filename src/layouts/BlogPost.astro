@@ -2,7 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import ModifiedHeader from "../components/ModifiedHeader.astro";
-import Footer from "@/components/Footer.astro";
+import Footer from "@/components/Footer/Footer.astro";
 
 type Props = CollectionEntry<"blog">["data"];
 
@@ -33,6 +33,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
         <slot />
       </article>
     </div>
+    <Footer useTopOffset={false} />
     <style>
       /* ==========================================================================
          FONT IMPORTS
@@ -64,6 +65,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
         width: 80%;
         display: flex;
         padding-top: 5rem;
+        padding-bottom: 5rem;
         color: #fdfefe;
         font-family: "EB Garamond", serif;
       }

@@ -4,9 +4,15 @@ import youtubeSvg from "./icons/youtube.svg";
 import linkedinSvg from "./icons/linkedin.svg";
 import Image from "astro/components/Image.astro";
 import arenaLogo from "./icons/arena-logo-white.png";
+
+interface Props {
+  useTopOffset?: boolean;
+}
+
+const { useTopOffset = true } = Astro.props;
 ---
 
-<footer>
+<footer class={useTopOffset ? "footer-with-offset" : "footer-no-offset"}>
   {today.getFullYear()} · Óscar A. Montiel
   <section class="section-icons">
     <a
@@ -44,18 +50,29 @@ import arenaLogo from "./icons/arena-logo-white.png";
   .icon-image {
     max-height: 24px;
   }
+
+  /* Base footer styles */
   footer {
     min-height: 15vh;
     font-family: "Montserrat", serif;
     color: white;
     font-size: 0.8rem;
     background: rgb(165, 42, 42);
-    top: 100vh;
     position: relative;
     display: flex;
     justify-content: space-around;
     align-items: center;
     width: 100%;
+  }
+
+  /* Footer with top offset (default behavior) */
+  .footer-with-offset {
+    top: 100vh;
+  }
+
+  /* Footer without top offset */
+  .footer-no-offset {
+    top: 0;
   }
 
   /* Mobile responsive styles */

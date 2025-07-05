@@ -12,6 +12,7 @@ import vid1 from "@/images/videos/webvid1.webm";
 import vid2 from "@/images/videos/webvid2.webm";
 import vid5 from "@/images/videos/webvid5.webm";
 import ledvid from "@/images/videos/ledveo.webm";
+import Footer from "@/components/Footer/Footer.astro";
 
 // Orders the post chronologically
 const posts = (await getCollection("works")).sort(
@@ -868,6 +869,7 @@ for (let i = posts.length - 1; i > 0; i--) {
         </style>
       </div>
       <Video client:only videoPath={ledvid} />
+      <Footer useTopOffset={false} />
     </main>
   </body>
 </html>
