@@ -22,7 +22,7 @@
     "@types/react": "^18.2.16",
     "@types/react-dom": "^18.2.7",
     "@types/three": "^0.155.0",
-    "astro": "5.10.1",
+    "astro": "5.11.0",
     "astro-embed": "^0.5.1",
     "astro-lenis": "^1.0.0",
     "astro-particles": "^2.10.0",
