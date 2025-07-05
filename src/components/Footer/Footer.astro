@@ -1,0 +1,104 @@
+---
+const today = new Date();
+import youtubeSvg from "./icons/youtube.svg";
+import linkedinSvg from "./icons/linkedin.svg";
+import Image from "astro/components/Image.astro";
+import arenaLogo from "./icons/arena-logo-white.png";
+---
+
+<footer>
+  {today.getFullYear()} · Óscar A. Montiel
+  <section class="section-icons">
+    <a
+      href="https://www.are.na/tilde-colon-pipe-degrees-degrees-bullet-period-pipe-colon-tilde/channels"
+      target="_blank"
+    >
+      <Image
+        class="icon-image"
+        alt="Óscar A. Montiel's Are.na profile."
+        src={arenaLogo}
+      />
+    </a>
+
+    <a href="https://www.linkedin.com/in/oscaramontiel/" target="_blank">
+      <Image alt="Óscar A. Montiel's LinkedIn profile." src={linkedinSvg} />
+    </a>
+    <a
+      href="https://www.youtube.com/channel/UCGe1qc0nF0uNypETYDQmMMQ"
+      target="_blank"
+    >
+      <Image alt="Óscar A. Montiel's YouTube channel." src={youtubeSvg} />
+    </a>
+  </section>
+</footer>
+<style>
+  .section-icons {
+    display: flex;
+    justify-content: space-around;
+    width: 300px;
+  }
+  .section-icons img {
+    max-height: 24px;
+    width: auto;
+  }
+  .icon-image {
+    max-height: 24px;
+  }
+  footer {
+    min-height: 15vh;
+    font-family: "Montserrat", serif;
+    color: white;
+    font-size: 0.8rem;
+    background: rgb(165, 42, 42);
+    top: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* Mobile responsive styles */
+  @media (max-width: 768px) {
+    footer {
+      flex-direction: column;
+      padding: 20px;
+      gap: 15px;
+      text-align: center;
+      min-height: auto;
+    }
+
+    .section-icons {
+      width: 200px;
+      justify-content: space-between;
+    }
+
+    .section-icons img {
+      max-height: 20px;
+    }
+
+    .icon-image {
+      max-height: 20px;
+    }
+  }
+
+  /* Small mobile devices */
+  @media (max-width: 480px) {
+    footer {
+      font-size: 0.7rem;
+      padding: 15px;
+    }
+
+    .section-icons {
+      width: 150px;
+    }
+
+    .section-icons img {
+      max-height: 18px;
+    }
+
+    .icon-image {
+      max-height: 18px;
+    }
+  }
+</style>

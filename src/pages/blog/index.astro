@@ -1,4 +1,5 @@
 ---
+import Footer from "@/components/Footer/Footer.astro";
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import { SITE_TITLE } from "../../consts";
@@ -17,38 +18,36 @@ const posts = (await getCollection("blog")).sort(
   <body>
     <Header />
     <main>
-      <section>
-        <div class="blogpostsContainer">
-          <ul>
-            <li class="random-position">
-              <a href="/books">
-                <div class="postTitle">📚 Books I'm currently reading!</div>
-              </a>
-            </li>
-            {
-              posts.map((post) => (
-                <li class="random-position">
-                  <small class="postDate">
-                    {new Date(post.data.pubDate).toLocaleDateString()}
-                  </small>
-                  <a data-astro-prefetch href={`/blog/${post.slug}/`}>
-                    <div class="postInfo">
-                      <p class="postTitle">{post.data.title}</p>
-                    </div>
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </section>
+      <div class="blogpostsContainer">
+        <ul>
+          <li class="random-position">
+            <a href="/books">
+              <div class="postTitle">📚 Books I'm currently reading!</div>
+            </a>
+          </li>
+          {
+            posts.map((post) => (
+              <li class="random-position">
+                <small class="postDate">
+                  {new Date(post.data.pubDate).toLocaleDateString()}
+                </small>
+                <a data-astro-prefetch href={`/blog/${post.slug}/`}>
+                  <div class="postInfo">
+                    <p class="postTitle">{post.data.title}</p>
+                  </div>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </main>
+    <Footer />
     <style>
       .blogpostsContainer {
-        /* margin: 0 40rem; */
         padding-top: 5rem;
         position: relative;
-        /* height: calc(99vh - 8rem); */
+        padding-bottom: 50vh;
       }
 
       ul {
@@ -101,6 +100,7 @@ const posts = (await getCollection("blog")).sort(
         font-size: 1rem;
         padding-left: 0;
         padding-top: 0;
+        padding-bottom: 0;
         margin-bottom: 0 !important;
         line-height: 1.5;
         width: fit-content;
@@ -156,7 +156,6 @@ const posts = (await getCollection("blog")).sort(
         }
       }
     </style>
-
     <script>
       function throttle(func, limit) {
         let inThrottle;
@@ -173,7 +172,7 @@ const posts = (await getCollection("blog")).sort(
 
       function randomizePositions() {
         const posts = document.querySelectorAll(".random-position");
-
+        let offset = 100;
         posts.forEach((post, index) => {
           // Reset opacity and position first
           post.style.opacity = "0";
@@ -186,7 +185,7 @@ const posts = (await getCollection("blog")).sort(
 
             // Calculate random positions within the container bounds
             const maxX = window.innerWidth - postRect.width;
-            const maxY = window.innerHeight - postRect.height;
+            const maxY = window.innerHeight + offset - postRect.height;
 
             const randomX = Math.floor(Math.random() * Math.max(0, maxX));
             const randomY = Math.floor(Math.random() * Math.max(0, maxY));
