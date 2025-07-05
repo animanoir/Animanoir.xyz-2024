@@ -18,7 +18,7 @@ export default defineConfig({
     clientPrerender: true,
   },
   image: {
-    domains: ["youtube.com", "s3.amazonaws.com", "notion.so"],
+    domains: ["youtube.com", "s3.amazonaws.com", "notion.so", "prod-files-secure.s3.us-west-2.amazonaws.com"],
     remotePatterns: [
       {
         protocol: "https",
@@ -28,6 +28,11 @@ export default defineConfig({
       {
         protocol: "https",
         hostname: "**.notion.so",
+        pathname: "/**"
+      },
+      {
+        protocol: "https",
+        hostname: "prod-files-secure.s3.us-west-2.amazonaws.com",
         pathname: "/**"
       }
     ],
