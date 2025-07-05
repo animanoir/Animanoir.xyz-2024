@@ -15,6 +15,7 @@ import img7 from "@/images/works/visuals/visuals-7.jpg";
 import img8 from "@/images/works/visuals/visuals-8.jpg";
 import img9 from "@/images/works/visuals/visuals-9.jpg";
 import RandomVideo from "@/components/RandomVideo/RandomVideo.jsx";
+import Footer from "@/components/Footer/Footer.astro";
 import * as motion from "motion/react-client"; 
 // import { YouTube } from "astro-embed";
 ---
@@ -70,6 +71,7 @@ import * as motion from "motion/react-client";
         <h3>Go to the top.</h3>
       </a>
     </main>
+    <Footer useTopOffset={false} />
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         const images = document.querySelectorAll('.heroImage');
