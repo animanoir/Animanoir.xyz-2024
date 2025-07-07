@@ -67,7 +67,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
         width: 100vw;
         height: 100vh;
         object-fit: cover;
-        filter: blur(8px) brightness(0.5);
+        filter: blur(8px) brightness(0.4);
       }
       .articleContainer {
         margin: 0 auto;
@@ -212,6 +212,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
       @media (min-width: 769px) and (max-width: 1360px) {
         .title {
           font-size: 2.8rem;
+          line-height: 1.1;
         }
 
         .left-container {
@@ -225,12 +226,13 @@ const { title, summary, pubDate, heroImage } = Astro.props;
         }
         .articleContainer {
           font-size: 1.2rem;
+          max-width: 55%;
         }
         .articleBody {
-          padding-top: 4rem;
+          padding-top: 7rem;
         }
         .title-container {
-          width: 60%;
+          width: 90%;
         }
       }
 
@@ -241,12 +243,12 @@ const { title, summary, pubDate, heroImage } = Astro.props;
           padding-right: 0;
         }
         .left-container {
-          margin-top: 3rem;
           width: 100%;
         }
         .title {
           width: 100%;
-          font-size: 2rem;
+          font-size: 3rem;
+          line-height: 1.1;
           text-align: left;
         }
         .summary {
