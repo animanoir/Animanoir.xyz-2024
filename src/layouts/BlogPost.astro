@@ -28,6 +28,8 @@ const { title, summary, pubDate, heroImage } = Astro.props;
           alt={title}
           quality={50}
           loading="eager"
+          fetchpriority="high"
+          decoding="sync"
         />
       )
     }
