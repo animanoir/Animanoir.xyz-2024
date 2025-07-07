@@ -13,13 +13,14 @@ const { useTopOffset = true } = Astro.props;
 ---
 
 <footer class={useTopOffset ? "footer-with-offset" : "footer-no-offset"}>
-  {today.getFullYear()} · Óscar A. Montiel
+  {today.getFullYear()} · Óscar A. Montiel · Proudly existing.
   <section class="section-icons">
     <a
       href="https://www.are.na/tilde-colon-pipe-degrees-degrees-bullet-period-pipe-colon-tilde/channels"
       target="_blank"
     >
       <Image
+        loading="lazy"
         class="icon-image"
         alt="Óscar A. Montiel's Are.na profile."
         src={arenaLogo}
@@ -27,13 +28,21 @@ const { useTopOffset = true } = Astro.props;
     </a>
 
     <a href="https://www.linkedin.com/in/oscaramontiel/" target="_blank">
-      <Image alt="Óscar A. Montiel's LinkedIn profile." src={linkedinSvg} />
+      <Image
+        loading="lazy"
+        alt="Óscar A. Montiel's LinkedIn profile."
+        src={linkedinSvg}
+      />
     </a>
     <a
       href="https://www.youtube.com/channel/UCGe1qc0nF0uNypETYDQmMMQ"
       target="_blank"
     >
-      <Image alt="Óscar A. Montiel's YouTube channel." src={youtubeSvg} />
+      <Image
+        loading="lazy"
+        alt="Óscar A. Montiel's YouTube channel."
+        src={youtubeSvg}
+      />
     </a>
   </section>
 </footer>
@@ -41,10 +50,10 @@ const { useTopOffset = true } = Astro.props;
   .section-icons {
     display: flex;
     justify-content: space-around;
-    width: 300px;
+    width: 200px;
   }
   .section-icons img {
-    max-height: 24px;
+    max-height: 20px;
     width: auto;
   }
   .icon-image {
@@ -53,7 +62,7 @@ const { useTopOffset = true } = Astro.props;
 
   /* Base footer styles */
   footer {
-    min-height: 15vh;
+    min-height: 10vh;
     font-family: "Montserrat", serif;
     color: white;
     font-size: 0.8rem;

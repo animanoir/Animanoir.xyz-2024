@@ -38,6 +38,7 @@ input {
 }
 
 code {
+  font-size: 1rem;
   padding: 2px 5px;
   background-color: #272727;
 }
@@ -147,11 +148,13 @@ p {
 }
 
 .blog-image {
-  width: 80%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  width: 90%;
   display: block;
-  margin: 0 auto;
-  padding: 2rem 0;
+  margin: 2rem auto;
+  /* padding: 2rem 0; */
   height: auto;
+  background-size: cover;
 }
 
 lite-youtube {
@@ -167,6 +170,7 @@ iframe {
 /* Blockquote */
 blockquote {
   position: relative;
+  width: 50%;
   font-family: "Georgia", serif;
   font-size: 1.5rem;
   line-height: 1.6;

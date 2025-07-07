@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import ModifiedHeader from "../components/ModifiedHeader.astro";
 import Footer from "@/components/Footer/Footer.astro";
+import Picture from "astro/components/Picture.astro";
 
 type Props = CollectionEntry<"blog">["data"];
 
@@ -19,6 +20,17 @@ const { title, summary, pubDate, heroImage } = Astro.props;
   </head>
   <body>
     <ModifiedHeader />
+    {
+      heroImage && (
+        <Picture
+          class="heroimage"
+          src={heroImage}
+          alt={title}
+          quality={50}
+          loading="eager"
+        />
+      )
+    }
     <div class="articleBody">
       <div class="left-container">
         <div class="title-container">
@@ -46,6 +58,15 @@ const { title, summary, pubDate, heroImage } = Astro.props;
          ARTICLE CONTAINER
          Main container for blog post content
          ========================================================================== */
+      .heroimage {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        filter: blur(10px);
+      }
       .articleContainer {
         margin: 0 auto;
         position: relative;
@@ -54,6 +75,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
       }
       .left-container {
         width: 30%;
+        z-index: 1;
       }
       /* ==========================================================================
          ARTICLE BODY
@@ -62,6 +84,8 @@ const { title, summary, pubDate, heroImage } = Astro.props;
       .title-container {
         /* width: 70%; */
         /* padding-right: 5rem; */
+        z-index: 10;
+        padding-top: 1rem;
       }
       .articleBody {
         margin: 0 auto;
@@ -142,7 +166,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
       @media (min-width: 1921px) {
         .title {
           font-size: 4rem;
-          line-height: 1.2;
+          line-height: 1;
         }
         .summary {
           font-size: 1.2rem;
@@ -162,13 +186,17 @@ const { title, summary, pubDate, heroImage } = Astro.props;
       @media (min-width: 1361px) and (max-width: 1920px) {
         .title {
           line-height: 1.2;
-          font-size: 3rem;
+          font-size: 3.5rem;
+          line-height: 1;
         }
         .summary {
           font-size: 1.1rem;
         }
         .postDate {
           font-size: 0.8rem;
+        }
+        .left-container {
+          width: 35%;
         }
         .articleContainer {
           font-size: 1.3rem;
