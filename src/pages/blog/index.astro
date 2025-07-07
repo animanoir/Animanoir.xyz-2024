@@ -154,14 +154,49 @@ const posts = (await getCollection("blog")).sort(
       /* Mobile Devices */
       @media (max-width: 768px) {
         .blogpostsContainer {
-          margin: 0 0.5rem;
+          margin: 0 2rem;
+          padding-bottom: 2rem;
+          padding-top: 8rem;
         }
+
         .postTitle {
           font-size: 1.2rem;
         }
-        ul li {
-          max-width: 250px;
+
+        ul {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem; /* Add consistent spacing between items */
         }
+
+        ul li {
+          position: static !important; /* Override absolute positioning */
+          max-width: none; /* Allow full width */
+          width: 100%;
+          opacity: 1 !important; /* Ensure visibility */
+          left: auto !important; /* Reset positioning */
+          top: auto !important; /* Reset positioning */
+          margin-bottom: 0; /* Remove margin since we're using gap */
+        }
+
+        ul li.random-position {
+          position: static !important;
+          transform: none !important;
+        }
+
+        .postInfo {
+          text-align: left; /* Left align for better readability on mobile */
+        }
+
+        .postDate {
+          display: block;
+          margin-bottom: 0.5rem;
+        }
+      }
+      /* Add initial opacity for smooth appearance */
+      .random-position {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
       }
     </style>
     <script>
@@ -179,13 +214,27 @@ const posts = (await getCollection("blog")).sort(
       }
 
       function randomizePositions() {
+        // Skip randomization on mobile devices
+        if (window.innerWidth <= 768) {
+          const posts = document.querySelectorAll(".random-position");
+          posts.forEach((post) => {
+            // Reset to normal positioning for mobile
+            (post as HTMLElement).style.position = "static";
+            (post as HTMLElement).style.left = "auto";
+            (post as HTMLElement).style.top = "auto";
+            (post as HTMLElement).style.opacity = "1";
+          });
+          return;
+        }
+
         const posts = document.querySelectorAll(".random-position");
         let offset = 100;
         posts.forEach((post, index) => {
           // Reset opacity and position first
-          post.style.opacity = "0";
-          post.style.left = "0px";
-          post.style.top = "0px";
+          (post as HTMLElement).style.opacity = "0";
+          (post as HTMLElement).style.position = "absolute";
+          (post as HTMLElement).style.left = "0px";
+          (post as HTMLElement).style.top = "0px";
 
           // Add a small delay to create a staggered appearance effect
           setTimeout(() => {
@@ -198,9 +247,9 @@ const posts = (await getCollection("blog")).sort(
             const randomX = Math.floor(Math.random() * Math.max(0, maxX));
             const randomY = Math.floor(Math.random() * Math.max(0, maxY));
 
-            post.style.left = randomX + "px";
-            post.style.top = randomY + "px";
-            post.style.opacity = "1";
+            (post as HTMLElement).style.left = randomX + "px";
+            (post as HTMLElement).style.top = randomY + "px";
+            (post as HTMLElement).style.opacity = "1";
           }, index * 100); // Stagger by 100ms
         });
       }
@@ -220,13 +269,5 @@ const posts = (await getCollection("blog")).sort(
       // Also run when navigating to this page
       document.addEventListener("astro:after-swap", randomizePositions);
     </script>
-
-    <style>
-      /* Add initial opacity for smooth appearance */
-      .random-position {
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out;
-      }
-    </style>
   </body>
 </html>

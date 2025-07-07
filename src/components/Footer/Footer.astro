@@ -76,7 +76,7 @@ const { useTopOffset = true } = Astro.props;
 
   /* Footer with top offset (default behavior) */
   .footer-with-offset {
-    top: 100vh;
+    top: 50vh;
   }
 
   /* Footer without top offset */
@@ -92,6 +92,12 @@ const { useTopOffset = true } = Astro.props;
       gap: 15px;
       text-align: center;
       min-height: auto;
+      top: 0 !important; /* Override useTopOffset behavior on mobile */
+      width: 100vw; /* Full viewport width */
+      margin: 0; /* Remove any margins */
+      left: 0; /* Ensure it starts from the left edge */
+      right: 0; /* Ensure it extends to the right edge */
+      box-sizing: border-box; /* Include padding in width calculation */
     }
 
     .left-container {
