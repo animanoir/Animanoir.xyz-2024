@@ -4,10 +4,13 @@ import BaseHead from "../components/BaseHead.astro";
 import ModifiedHeader from "../components/ModifiedHeader.astro";
 import Footer from "@/components/Footer/Footer.astro";
 import Picture from "astro/components/Picture.astro";
+import RelatedArticles from "@/components/RelatedArticles.astro";
 
-type Props = CollectionEntry<"blog">["data"];
+type Props = CollectionEntry<"blog">["data"] & {
+  slug: string;
+};
 
-const { title, summary, pubDate, heroImage } = Astro.props;
+const { title, summary, pubDate, heroImage, tags, slug } = Astro.props;
 ---
 
 <html lang="en">
@@ -15,7 +18,7 @@ const { title, summary, pubDate, heroImage } = Astro.props;
     <BaseHead
       title={`${title} by Óscar A. Montiel | Interactive Media Developer`}
       description={summary ?? "Blog post by Óscar A. Montiel."}
-      image={heroImage}
+      image={heroImage?.src}
     />
   </head>
   <body>
@@ -42,11 +45,20 @@ const { title, summary, pubDate, heroImage } = Astro.props;
             {new Date(pubDate).toLocaleDateString()}
           </p>
         </div>
+        <div class="related-container">
+          <RelatedArticles
+            currentTags={tags}
+            currentUrl={`/blog/${slug}/`}
+            currentSlug={slug}
+            maxResults={3}
+          />
+        </div>
       </div>
       <article class="articleContainer">
         <slot />
       </article>
     </div>
+
     <Footer useTopOffset={false} />
     <style>
       /* ==========================================================================
@@ -145,6 +157,15 @@ const { title, summary, pubDate, heroImage } = Astro.props;
         padding-bottom: 2rem;
         font-style: italic;
       } */
+
+      /* ==========================================================================
+         RELATED ARTICLES CONTAINER
+         Styling for the related articles section
+         ========================================================================== */
+      .related-container {
+        width: 100%;
+        margin: 0 auto;
+      }
 
       /* ==========================================================================
          CONTENT ELEMENTS
@@ -276,6 +297,10 @@ const { title, summary, pubDate, heroImage } = Astro.props;
           height: auto;
           padding: 2rem 0;
         }
+        .related-container {
+          width: 95%;
+          padding: 1rem 0;
+        }
       }
 
       /* Small mobile devices */
@@ -304,6 +329,10 @@ const { title, summary, pubDate, heroImage } = Astro.props;
         }
         .left-container {
           padding: 1rem 0;
+        }
+        .related-container {
+          width: 100%;
+          padding: 0.5rem 0;
         }
       }
     </style>
