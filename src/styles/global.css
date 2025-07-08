@@ -170,12 +170,12 @@ iframe {
 /* Blockquote */
 blockquote {
   position: relative;
-  width: 50%;
+  width: 60%;
   font-family: "Georgia", serif;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   line-height: 1.6;
   margin: 20px auto;
-  padding: 1.2em 5rem 1.2em 5rem;
+  padding: 1em 3rem;
   quotes: "\201C" "\201D" "\2018" "\2019";
 }
 
