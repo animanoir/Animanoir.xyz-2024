@@ -13,7 +13,11 @@ const { useTopOffset = true } = Astro.props;
 ---
 
 <footer class={useTopOffset ? "footer-with-offset" : "footer-no-offset"}>
-  {today.getFullYear()} · Óscar A. Montiel · Proudly existing.
+  <div>
+    {today.getFullYear()} · Óscar A. Montiel——<span style="font-style:italic"
+      >Proudly existing.</span
+    >
+  </div>
   <section class="section-icons">
     <a
       href="https://www.are.na/tilde-colon-pipe-degrees-degrees-bullet-period-pipe-colon-tilde/channels"
@@ -45,100 +49,101 @@ const { useTopOffset = true } = Astro.props;
       />
     </a>
   </section>
-</footer>
-<style>
-  .section-icons {
-    display: flex;
-    justify-content: space-around;
-    width: 200px;
-  }
-  .section-icons img {
-    max-height: 20px;
-    width: auto;
-  }
-  .icon-image {
-    max-height: 24px;
-  }
 
-  /* Base footer styles */
-  footer {
-    min-height: 10vh;
-    font-family: "Montserrat", serif;
-    color: white;
-    font-size: 0.8rem;
-    background: rgb(165, 42, 42);
-    position: relative;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-  }
-
-  /* Footer with top offset (default behavior) */
-  .footer-with-offset {
-    top: 80vh;
-  }
-
-  /* Footer without top offset */
-  .footer-no-offset {
-    top: 0;
-  }
-
-  /* Mobile responsive styles */
-  @media (max-width: 768px) {
-    footer {
-      flex-direction: column;
-      padding: 20px;
-      gap: 15px;
-      text-align: center;
-      min-height: auto;
-      top: 0 !important; /* Override useTopOffset behavior on mobile */
-      width: 100vw; /* Full viewport width */
-      margin: 0; /* Remove any margins */
-      left: 0; /* Ensure it starts from the left edge */
-      right: 0; /* Ensure it extends to the right edge */
-      box-sizing: border-box; /* Include padding in width calculation */
-    }
-
-    .left-container {
-      width: 100%;
-    }
-    .title {
-      width: 100%;
-    }
-
+  <style>
     .section-icons {
+      display: flex;
+      justify-content: space-around;
       width: 200px;
-      justify-content: space-between;
     }
-
     .section-icons img {
       max-height: 20px;
+      width: auto;
     }
-
     .icon-image {
-      max-height: 20px;
+      max-height: 24px;
     }
-  }
 
-  /* Small mobile devices */
-  @media (max-width: 480px) {
+    /* Base footer styles */
     footer {
-      font-size: 0.7rem;
-      padding: 15px;
-      max-width: 100%;
+      min-height: 10vh;
+      font-family: "Montserrat", serif;
+      color: white;
+      font-size: 0.8rem;
+      background: rgb(165, 42, 42);
+      position: relative;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
     }
 
-    .section-icons {
-      width: 150px;
+    /* Footer with top offset (default behavior) */
+    .footer-with-offset {
+      top: 80vh;
     }
 
-    .section-icons img {
-      max-height: 18px;
+    /* Footer without top offset */
+    .footer-no-offset {
+      top: 0;
     }
 
-    .icon-image {
-      max-height: 18px;
+    /* Mobile responsive styles */
+    @media (max-width: 768px) {
+      footer {
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+        text-align: center;
+        min-height: auto;
+        top: 0 !important; /* Override useTopOffset behavior on mobile */
+        width: 100vw; /* Full viewport width */
+        margin: 0; /* Remove any margins */
+        left: 0; /* Ensure it starts from the left edge */
+        right: 0; /* Ensure it extends to the right edge */
+        box-sizing: border-box; /* Include padding in width calculation */
+      }
+
+      .left-container {
+        width: 100%;
+      }
+      .title {
+        width: 100%;
+      }
+
+      .section-icons {
+        width: 200px;
+        justify-content: space-between;
+      }
+
+      .section-icons img {
+        max-height: 20px;
+      }
+
+      .icon-image {
+        max-height: 20px;
+      }
     }
-  }
-</style>
+
+    /* Small mobile devices */
+    @media (max-width: 480px) {
+      footer {
+        font-size: 0.7rem;
+        padding: 15px;
+        max-width: 100%;
+      }
+
+      .section-icons {
+        width: 150px;
+      }
+
+      .section-icons img {
+        max-height: 18px;
+      }
+
+      .icon-image {
+        max-height: 18px;
+      }
+    }
+  </style>
+</footer>
