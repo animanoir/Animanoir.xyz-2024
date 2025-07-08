@@ -23,11 +23,19 @@ const allPosts = await getCollection("blog");
 const slugToExclude =
   currentSlug || currentUrl.replace("/blog/", "").replace("/", "");
 
+console.log("Debug RelatedArticles:");
+console.log("- currentSlug:", currentSlug);
+console.log("- currentUrl:", currentUrl);
+console.log("- slugToExclude:", slugToExclude);
+
 // Filter out the current post and find related posts
 const relatedPosts = allPosts
   .filter((post) => {
     // Exclude the current post by comparing slugs
-    if (post.slug === slugToExclude) return false;
+    if (post.slug === slugToExclude) {
+      console.log("- Excluding current post:", post.slug);
+      return false;
+    }
 
     // Only include posts that have tags
     if (!post.data.tags || post.data.tags.length === 0) return false;
@@ -40,7 +48,17 @@ const relatedPosts = allPosts
       currentTags.includes(tag)
     );
 
-    return sharedTags.length > 0;
+    const hasSharedTags = sharedTags.length > 0;
+    if (hasSharedTags) {
+      console.log(
+        "- Including related post:",
+        post.slug,
+        "shared tags:",
+        sharedTags
+      );
+    }
+
+    return hasSharedTags;
   })
   .map((post) => {
     // Calculate relevance score based on shared tags
@@ -64,6 +82,11 @@ const relatedPosts = allPosts
     );
   })
   .slice(0, maxResults);
+
+console.log(
+  "- Final related posts:",
+  relatedPosts.map((p) => p.slug)
+);
 ---
 
 {
@@ -124,7 +147,7 @@ const relatedPosts = allPosts
   }
 
   .related-card:hover {
-    transform: translateY(-2px);
+    transform: translateX(2px);
   }
 
   .related-link {
