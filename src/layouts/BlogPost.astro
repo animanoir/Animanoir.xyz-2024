@@ -7,10 +7,14 @@ import Picture from "astro/components/Picture.astro";
 import RelatedArticles from "@/components/RelatedArticles.astro";
 
 type Props = CollectionEntry<"blog">["data"] & {
-  slug: string;
+  slug?: string;
 };
 
 const { title, summary, pubDate, heroImage, tags, slug } = Astro.props;
+
+// Extract the actual slug from the URL if not provided
+const actualSlug =
+  slug || Astro.url.pathname.split("/").filter(Boolean).pop() || "";
 ---
 
 <html lang="en">
@@ -48,8 +52,8 @@ const { title, summary, pubDate, heroImage, tags, slug } = Astro.props;
         <div class="related-container">
           <RelatedArticles
             currentTags={tags}
-            currentUrl={`/blog/${slug}/`}
-            currentSlug={slug}
+            currentUrl={Astro.url.pathname}
+            currentSlug={actualSlug}
             maxResults={3}
           />
         </div>
