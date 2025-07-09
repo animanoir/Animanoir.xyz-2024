@@ -14,7 +14,7 @@ export const AnimanoirLogoScene = () => {
   const { gl, camera } = useThree();
 
   // Create main particles system
-  const particlesCount = 120;
+  const particlesCount = 100;
   const { positions, colors, originalPositions } = useMemo(() => {
     const positions = new Float32Array(particlesCount * 3);
     const colors = new Float32Array(particlesCount * 3);

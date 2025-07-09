@@ -20,8 +20,7 @@ const {
 const allPosts = await getCollection("blog");
 
 // Extract slug from currentUrl if currentSlug is not provided
-const slugToExclude =
-  currentSlug || currentUrl.replace("/blog/", "").replace("/", "");
+const slugToExclude = currentUrl.replace("/blog/", "").replace(/\/+$/, "");
 
 console.log("Debug RelatedArticles:");
 console.log("- currentSlug:", currentSlug);

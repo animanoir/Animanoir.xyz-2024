@@ -41,9 +41,9 @@ const { title, summary, pubDate, heroImage, tags, slug } = Astro.props;
         <div class="title-container">
           <h1 class="title">{title}</h1>
           <h2 class="summary">{summary}</h2>
-          <p class="postDate">
+          <time class="postDate">
             {new Date(pubDate).toLocaleDateString()}
-          </p>
+          </time>
         </div>
         <div class="related-container">
           <RelatedArticles
