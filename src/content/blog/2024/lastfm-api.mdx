@@ -32,12 +32,13 @@ That's the reason I constantly have music playing from anywhere. I do have a vas
 That's why I decided to open a Last.fm account, back in 2011. I wanted to keep track of the music I was listening to and by "scrobbling" the music I could have a record of it available for me and whoever finds my profile. After that, I started to use the Last.fm API to fetch the music I was listening to and display it on this webplace.
 
 <LastFm showAlbumCover={false} customStyle={{
-  fontSize: "3rem",
+  fontSize: "1.5rem",
   width: "auto",
-  left: "0"
+  left: "0",
+  padding: "5rem 0"
 }} client:load/>
 
-Cute! Doesn't it? The lil' animated bars do the trick! The above version is a simplified version of the component, configured via `props`, like to show or not show the album cover (if you hover on the text in the component under my name, you'll see the album cover).
+Cute, isn't it? The little animated bars do the trick! The above version is a simplified version of the component, configured via `props`, such as whether to show the album cover or not (if you hover over the text in the component under my name, you'll see the album cover).
 
 <Picture
   src={img2}
