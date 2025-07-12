@@ -9,7 +9,7 @@ export const AnimanoirLogoScene = () => {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [trailParticles, setTrailParticles] = useState([]);
   const particlesRef = useRef();
-  const [rotation, setRotation] = useState(0);
+  const [envRotation, setEnvRotation] = useState(0);
   const groupRef = useRef();
   const { gl, camera } = useThree();
 
@@ -94,7 +94,7 @@ export const AnimanoirLogoScene = () => {
     if (groupRef.current) {
       groupRef.current.rotation.y += delta * 0.1;
     }
-    setRotation((prev) => prev + delta * 0.05);
+    setEnvRotation((prev) => prev + delta * 0.05);
 
     const time = state.clock.elapsedTime * 0.3;
 
@@ -171,9 +171,10 @@ export const AnimanoirLogoScene = () => {
     <Fragment>
       <Environment
         files={"/images/animanoir-xyz-space-small.hdr"}
-        backgroundRotation={[rotation, rotation, rotation]} 
-        backgroundIntensity={0.1}
+        backgroundRotation={envRotation, envRotation, envRotation} 
+        backgroundIntensity={2}
         background
+        backgroundBlurriness={0.2}
       />
       
       {/* Main particles */}
