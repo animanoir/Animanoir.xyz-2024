@@ -62,6 +62,7 @@ const posts: Post[] = await Promise.all(
         ["Autor(es)"]: post.properties["Autor(es)"],
         ["Año de publicación (original)"]:
           post.properties["Año de publicación (original)"],
+        ["Estatus"]: post.properties["Estatus"]?.select.content,
       },
       public_url: post.public_url,
     };
@@ -125,9 +126,11 @@ const posts: Post[] = await Promise.all(
                     "No title"
                   }
                 />
-                <h3>
-                  {post.properties.Name?.title?.[0]?.text?.content ||
-                    "No title"}
+                <div>
+                  <h3 class="book-title">
+                    {post.properties.Name?.title?.[0]?.text?.content ||
+                      "No title"}
+                  </h3>
                   <p>
                     {post.properties["Año de publicación (original)"]?.number ||
                       null}{" "}
@@ -136,7 +139,8 @@ const posts: Post[] = await Promise.all(
                       ?.map((author: any) => author.name)
                       .join(", ") || "No author"}
                   </p>
-                </h3>
+                  <p>{post.properties["Estatus"]?.select.content}</p>
+                </div>
               </div>
             </a>
           ))
@@ -147,7 +151,7 @@ const posts: Post[] = await Promise.all(
     <style>
       .page-container {
         width: 70vw;
-        padding-top: 15vh !important;
+        padding-top: 13vh !important;
         margin: 0 auto;
       }
       .page-container a {
@@ -175,6 +179,11 @@ const posts: Post[] = await Promise.all(
         font-family: "Montserrat", sans-serif;
         line-height: 1.2;
       }
+      .book-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.2rem;
+        margin: 0.1rem !important;
+      }
       .card {
         /* padding-bottom: 1rem; */
       }
@@ -184,11 +193,6 @@ const posts: Post[] = await Promise.all(
         border-radius: 8px;
         object-fit: cover;
         padding-bottom: 1rem;
-      }
-
-      .card h3 {
-        font-size: 1.2rem;
-        margin: 0.1rem 0;
       }
 
       .card p {

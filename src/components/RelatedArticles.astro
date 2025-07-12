@@ -9,12 +9,7 @@ interface Props {
   maxResults?: number;
 }
 
-const {
-  currentTags = [],
-  currentUrl,
-  currentSlug,
-  maxResults = 3,
-} = Astro.props;
+const { currentTags = [], currentUrl, maxResults = 3 } = Astro.props;
 
 // Get all blog posts
 const allPosts = await getCollection("blog");
@@ -22,17 +17,12 @@ const allPosts = await getCollection("blog");
 // Extract slug from currentUrl if currentSlug is not provided
 const slugToExclude = currentUrl.replace("/blog/", "").replace(/\/+$/, "");
 
-console.log("Debug RelatedArticles:");
-console.log("- currentSlug:", currentSlug);
-console.log("- currentUrl:", currentUrl);
-console.log("- slugToExclude:", slugToExclude);
-
 // Filter out the current post and find related posts
 const relatedPosts = allPosts
   .filter((post) => {
     // Exclude the current post by comparing slugs
     if (post.slug === slugToExclude) {
-      console.log("- Excluding current post:", post.slug);
+      // console.log("- Excluding current post:", post.slug);
       return false;
     }
 
@@ -48,14 +38,14 @@ const relatedPosts = allPosts
     );
 
     const hasSharedTags = sharedTags.length > 0;
-    if (hasSharedTags) {
-      console.log(
-        "- Including related post:",
-        post.slug,
-        "shared tags:",
-        sharedTags
-      );
-    }
+    // if (hasSharedTags) {
+    //   console.log(
+    //     "- Including related post:",
+    //     post.slug,
+    //     "shared tags:",
+    //     sharedTags
+    //   );
+    // }
 
     return hasSharedTags;
   })
@@ -82,10 +72,10 @@ const relatedPosts = allPosts
   })
   .slice(0, maxResults);
 
-console.log(
-  "- Final related posts:",
-  relatedPosts.map((p) => p.slug)
-);
+// console.log(
+//   "- Final related posts:",
+//   relatedPosts.map((p) => p.slug)
+// );
 ---
 
 {
@@ -146,7 +136,7 @@ console.log(
   }
 
   .related-card:hover {
-    transform: translateX(2px);
+    transform: translateX(10px);
   }
 
   .related-link {
