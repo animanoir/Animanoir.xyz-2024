@@ -111,15 +111,15 @@ const { title, description, heroImage } = Astro.props;
       .title {
         width: 100%;
         margin: 0;
-        font-size: 5rem;
+        font-size: 4rem;
         font-family: "Montserrat", sans-serif;
         line-height: 1;
         /* position: absolute; */
         top: 50%;
         left: 50%;
         text-shadow:
-          2px 2px 4px rgba(0, 0, 0, 0.8),
-          -1px -1px 0 rgba(0, 0, 0, 0.4);
+          2px 2px 4px rgba(0, 0, 0, 1),
+          -1px -1px 0 rgba(0, 0, 0, 1);
         color: #ffffff;
         z-index: 2;
       }
@@ -132,6 +132,8 @@ const { title, description, heroImage } = Astro.props;
       .project-description-container h3 {
         font-family: "Open Sans", sans-serif;
         font-weight: normal;
+        margin-top: 0.1rem;
+        font-size: 1.1rem;
       }
 
       .articleContainer {
@@ -143,9 +145,9 @@ const { title, description, heroImage } = Astro.props;
       }
 
       .articleBody {
-        font-family: "Open Sans", sans-serif;
+        font-family: "EB Garamond", serif;
         color: #fdfefe;
-        font-size: 1.1rem;
+        font-size: 1.3rem;
         width: 65%;
         max-width: 900px;
         margin: 0 auto;
