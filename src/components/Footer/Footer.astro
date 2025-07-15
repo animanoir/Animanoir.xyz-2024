@@ -4,6 +4,7 @@ import youtubeSvg from "./icons/youtube.svg";
 import linkedinSvg from "./icons/linkedin.svg";
 import Image from "astro/components/Image.astro";
 import arenaLogo from "./icons/arena-logo-white.png";
+import igSvg from "./icons/ig.svg";
 
 interface Props {
   useTopOffset?: boolean;
@@ -46,6 +47,13 @@ const { useTopOffset = true } = Astro.props;
         loading="lazy"
         alt="Óscar A. Montiel's YouTube channel."
         src={youtubeSvg}
+      />
+    </a>
+    <a href="https://www.instagram.com/_ivyamara/" target="_blank">
+      <Image
+        loading="lazy"
+        alt="Óscar A. Montiel's Instagram channel."
+        src={igSvg}
       />
     </a>
   </section>

@@ -171,10 +171,10 @@ export const AnimanoirLogoScene = () => {
     <Fragment>
       <Environment
         files={"/images/animanoir-xyz-space-small.hdr"}
-        backgroundRotation={envRotation, envRotation, envRotation} 
-        backgroundIntensity={2}
+        backgroundRotation={[envRotation, envRotation, envRotation]} 
+        backgroundIntensity={1}
         background
-        backgroundBlurriness={0.2}
+        backgroundBlurriness={0.1}
       />
       
       {/* Main particles */}
