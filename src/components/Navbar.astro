@@ -1,15 +1,63 @@
 ---
 import HeaderLink from "@/components/HeaderLink.astro";
 import { ClientRouter } from "astro:transitions";
+import Image from "astro/components/Image.astro";
+import youtubeSvg from "@/components/Footer/icons/youtube.svg";
+import linkedinSvg from "@/components/Footer/icons/linkedin.svg";
+import arenaLogo from "@/components/Footer/icons/arena-logo-white.png";
+import igSvg from "@/components/Footer/icons/ig.svg";
+import steamSvg from "@/components/Footer/icons/steam.svg";
 
 const links = [
   { href: "/works", label: "Works", target: "_self" },
   { href: "/blog", label: "Blog & Studies", target: "_self" },
   { href: "https://linktr.ee/animanoir", label: "Contact", target: "_blank" },
 ];
+
+const socialLinks = [
+  {
+    href: "https://www.are.na/tilde-colon-pipe-degrees-degrees-bullet-period-pipe-colon-tilde/channels",
+    icon: arenaLogo,
+    alt: "Are.na profile",
+  },
+  {
+    href: "https://www.linkedin.com/in/oscaramontiel/",
+    icon: linkedinSvg,
+    alt: "LinkedIn profile",
+  },
+  {
+    href: "https://www.youtube.com/channel/UCGe1qc0nF0uNypETYDQmMMQ",
+    icon: youtubeSvg,
+    alt: "YouTube channel",
+  },
+  {
+    href: "https://steamcommunity.com/id/geosmina/",
+    icon: steamSvg,
+    alt: "Steam profile",
+  },
+  {
+    href: "https://www.instagram.com/animanoirxyz/",
+    icon: igSvg,
+    alt: "Instagram profile",
+  },
+];
 ---
 
 <nav class="navbar" role="navigation">
+  <div class="social-icons">
+    {
+      socialLinks.map((social) => (
+        <a href={social.href} target="_blank" class="social-link">
+          <Image
+            loading="lazy"
+            alt={social.alt}
+            src={social.icon}
+            class="social-icon"
+          />
+        </a>
+      ))
+    }
+  </div>
   <div class="nav-links">
     {
       links.map((link) => (
@@ -42,9 +90,33 @@ const links = [
   .navbar {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     font-family: "Montserrat", sans-serif;
     z-index: 1000;
     /* margin-top: 1rem; */
+  }
+
+  .social-icons {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-right: 1rem;
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    transition: opacity var(--transition-speed);
+  }
+
+  .social-link:hover {
+    opacity: 0.7;
+  }
+
+  .social-icon {
+    height: 18px;
+    width: auto;
   }
 
   .navbar a {

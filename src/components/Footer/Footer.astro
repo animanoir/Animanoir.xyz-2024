@@ -5,6 +5,7 @@ import linkedinSvg from "./icons/linkedin.svg";
 import Image from "astro/components/Image.astro";
 import arenaLogo from "./icons/arena-logo-white.png";
 import igSvg from "./icons/ig.svg";
+import steamSvg from "./icons/steam.svg";
 
 interface Props {
   useTopOffset?: boolean;
@@ -19,43 +20,11 @@ const { useTopOffset = true } = Astro.props;
       >Proudly existing.</span
     >
   </div>
-  <section class="section-icons">
-    <a
-      href="https://www.are.na/tilde-colon-pipe-degrees-degrees-bullet-period-pipe-colon-tilde/channels"
-      target="_blank"
-    >
-      <Image
-        loading="lazy"
-        class="icon-image"
-        alt="Óscar A. Montiel's Are.na profile."
-        src={arenaLogo}
-      />
-    </a>
-
-    <a href="https://www.linkedin.com/in/oscaramontiel/" target="_blank">
-      <Image
-        loading="lazy"
-        alt="Óscar A. Montiel's LinkedIn profile."
-        src={linkedinSvg}
-      />
-    </a>
-    <a
-      href="https://www.youtube.com/channel/UCGe1qc0nF0uNypETYDQmMMQ"
-      target="_blank"
-    >
-      <Image
-        loading="lazy"
-        alt="Óscar A. Montiel's YouTube channel."
-        src={youtubeSvg}
-      />
-    </a>
-  </section>
-
   <style>
     .section-icons {
       display: flex;
       justify-content: space-around;
-      width: 200px;
+      width: 300px;
     }
     .section-icons img {
       max-height: 20px;
@@ -67,26 +36,31 @@ const { useTopOffset = true } = Astro.props;
 
     /* Base footer styles */
     footer {
-      min-height: 10vh;
+      flex-direction: column-reverse;
+      height: 100vh;
+      width: 99vw;
       font-family: "Montserrat", serif;
       color: white;
       font-size: 0.8rem;
       background: rgb(165, 42, 42);
-      position: relative;
+      /* position: fixed; */
+      /* bottom: 0; */
+      /* left: 0; */
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
       align-items: center;
-      width: 100%;
+      gap: 2rem;
+      font-size: 3rem;
     }
 
     /* Footer with top offset (default behavior) */
     .footer-with-offset {
-      top: 80vh;
+      /* No longer needed - footer is now full viewport */
     }
 
     /* Footer without top offset */
     .footer-no-offset {
-      top: 0;
+      /* No longer needed - footer is now full viewport */
     }
 
     /* Mobile responsive styles */
@@ -96,13 +70,15 @@ const { useTopOffset = true } = Astro.props;
         padding: 20px;
         gap: 15px;
         text-align: center;
-        min-height: auto;
-        top: 0 !important; /* Override useTopOffset behavior on mobile */
-        width: 100vw; /* Full viewport width */
-        margin: 0; /* Remove any margins */
-        left: 0; /* Ensure it starts from the left edge */
-        right: 0; /* Ensure it extends to the right edge */
-        box-sizing: border-box; /* Include padding in width calculation */
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        margin: 0;
+        box-sizing: border-box;
+        justify-content: center;
+        align-items: center;
       }
 
       .left-container {
@@ -113,7 +89,7 @@ const { useTopOffset = true } = Astro.props;
       }
 
       .section-icons {
-        width: 200px;
+        width: 300px;
         justify-content: space-between;
       }
 
@@ -131,11 +107,18 @@ const { useTopOffset = true } = Astro.props;
       footer {
         font-size: 0.7rem;
         padding: 15px;
-        max-width: 100%;
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
       }
 
       .section-icons {
-        width: 150px;
+        width: 250px;
       }
 
       .section-icons img {
