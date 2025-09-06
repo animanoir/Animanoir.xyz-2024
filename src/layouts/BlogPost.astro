@@ -20,9 +20,12 @@ const actualSlug =
 <html lang="en">
   <head>
     <BaseHead
-      title={`${title} by Óscar A. Montiel | Interactive Media Developer`}
+      title={title}
       description={summary ?? "Blog post by Óscar A. Montiel."}
       image={heroImage?.src}
+      type="article"
+      publishDate={pubDate?.toISOString()}
+      author="Óscar A. Montiel"
     />
   </head>
   <body>

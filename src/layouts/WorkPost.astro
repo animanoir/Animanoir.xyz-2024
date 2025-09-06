@@ -22,9 +22,11 @@ const { title, description, heroImage } = Astro.props;
 <html lang="en">
   <head>
     <BaseHead
-      title={`${title} by Óscar A. Montiel | Interactive Media Developer`}
+      title={title}
       description={description}
       image={heroImage.src}
+      type="article"
+      author="Óscar A. Montiel"
     />
   </head>
   <body>
