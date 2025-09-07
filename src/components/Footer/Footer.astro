@@ -35,97 +35,69 @@ const { useTopOffset = true } = Astro.props;
 
     /* Base footer styles */
     footer {
-      flex-direction: column-reverse;
-      height: 100vh;
-      width: 99vw;
       font-family: "Montserrat", serif;
       color: white;
       font-size: 0.8rem;
       background: rgb(165, 42, 42);
-      /* position: fixed; */
-      /* bottom: 0; */
-      /* left: 0; */
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 2rem;
-      font-size: 3rem;
+      padding: 2rem;
+      margin-top: auto;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     /* Footer with top offset (default behavior) */
     .footer-with-offset {
-      /* No longer needed - footer is now full viewport */
+      margin-top: 4rem;
     }
 
     /* Footer without top offset */
     .footer-no-offset {
-      /* No longer needed - footer is now full viewport */
+      margin-top: 0;
     }
 
     /* Mobile responsive styles */
     @media (max-width: 768px) {
       footer {
         flex-direction: column;
-        padding: 20px;
-        gap: 15px;
+        padding: 1.5rem;
         text-align: center;
-        height: 100vh;
-        width: 100vw;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        margin: 0;
-        box-sizing: border-box;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .left-container {
-        width: 100%;
-      }
-      .title {
-        width: 100%;
+        font-size: 0.7rem;
       }
 
       .section-icons {
-        width: 300px;
+        width: 250px;
         justify-content: space-between;
       }
 
       .section-icons img {
-        max-height: 20px;
+        max-height: 18px;
       }
 
       .icon-image {
-        max-height: 20px;
+        max-height: 18px;
       }
     }
 
     /* Small mobile devices */
     @media (max-width: 480px) {
       footer {
-        font-size: 0.7rem;
-        padding: 15px;
-        height: 100vh;
-        width: 100vw;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
+        font-size: 0.6rem;
+        padding: 1rem;
       }
 
       .section-icons {
-        width: 250px;
+        width: 200px;
       }
 
       .section-icons img {
-        max-height: 18px;
+        max-height: 16px;
       }
 
       .icon-image {
-        max-height: 18px;
+        max-height: 16px;
       }
     }
   </style>

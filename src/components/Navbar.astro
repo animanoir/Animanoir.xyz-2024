@@ -67,8 +67,82 @@ const socialLinks = [
       ))
     }
   </div>
+  <button class="mobile-menu-button" aria-label="Toggle mobile menu">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
+  <div class="mobile-menu">
+    <div class="mobile-nav-links">
+      {
+        links.map((link) => (
+          <HeaderLink href={link.href} target={link.target}>
+            {link.label}
+          </HeaderLink>
+        ))
+      }
+    </div>
+    <div class="mobile-social-icons">
+      {
+        socialLinks.map((social) => (
+          <a href={social.href} target="_blank" class="social-link">
+            <Image
+              loading="lazy"
+              alt={social.alt}
+              src={social.icon}
+              class="social-icon"
+            />
+          </a>
+        ))
+      }
+    </div>
+  </div>
   <ClientRouter />
 </nav>
+
+<script>
+  function initializeMobileMenu() {
+    const mobileMenuButton = document.querySelector('.mobile-menu-button');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const navbar = document.querySelector('.navbar');
+    
+    if (mobileMenuButton && mobileMenu) {
+      // Remove existing event listeners to prevent duplicates
+      const newButton = mobileMenuButton.cloneNode(true);
+      mobileMenuButton.parentNode?.replaceChild(newButton, mobileMenuButton);
+      
+      newButton.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.contains('open');
+        
+        if (isOpen) {
+          mobileMenu.classList.remove('open');
+          newButton.classList.remove('active');
+          navbar?.classList.remove('menu-open');
+        } else {
+          mobileMenu.classList.add('open');
+          newButton.classList.add('active');
+          navbar?.classList.add('menu-open');
+        }
+      });
+      
+      // Close menu when clicking on a link
+      const mobileNavLinks = mobileMenu.querySelectorAll('a');
+      mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          newButton.classList.remove('active');
+          navbar?.classList.remove('menu-open');
+        });
+      });
+    }
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', initializeMobileMenu);
+  
+  // Reinitialize after Astro page transitions
+  document.addEventListener('astro:page-load', initializeMobileMenu);
+</script>
 
 <style>
   :root {
@@ -130,5 +204,112 @@ const socialLinks = [
 
   .navbar a:not(:last-child) {
     margin-right: var(--margin-horizontal);
+  }
+
+  /* Mobile Menu Button */
+  .mobile-menu-button {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+  }
+
+  .hamburger-line {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-color);
+    transition: all var(--transition-speed) ease;
+    transform-origin: center;
+  }
+
+  .mobile-menu-button.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+
+  .mobile-menu-button.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-button.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg-color);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    z-index: 999;
+    transform: translateY(-100%);
+    transition: transform var(--transition-speed) ease;
+  }
+
+  .mobile-menu.open {
+    transform: translateY(0);
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .mobile-nav-links a {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: var(--text-color);
+    text-shadow: var(--text-shadow);
+    transition: color var(--transition-speed);
+  }
+
+  .mobile-nav-links a:hover {
+    color: var(--hover-color);
+  }
+
+  .mobile-social-icons {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .mobile-social-icons .social-icon {
+    height: 24px;
+    width: auto;
+  }
+
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .social-icons,
+    .nav-links {
+      display: none;
+    }
+
+    .mobile-menu-button {
+      display: flex;
+    }
+
+    .mobile-menu {
+      display: flex;
+    }
+
+    .navbar {
+      position: relative;
+    }
   }
 </style>
