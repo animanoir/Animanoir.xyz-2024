@@ -102,46 +102,46 @@ const socialLinks = [
 
 <script>
   function initializeMobileMenu() {
-    const mobileMenuButton = document.querySelector('.mobile-menu-button');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const navbar = document.querySelector('.navbar');
-    
+    const mobileMenuButton = document.querySelector(".mobile-menu-button");
+    const mobileMenu = document.querySelector(".mobile-menu");
+    const navbar = document.querySelector(".navbar");
+
     if (mobileMenuButton && mobileMenu) {
       // Remove existing event listeners to prevent duplicates
       const newButton = mobileMenuButton.cloneNode(true);
       mobileMenuButton.parentNode?.replaceChild(newButton, mobileMenuButton);
-      
-      newButton.addEventListener('click', () => {
-        const isOpen = mobileMenu.classList.contains('open');
-        
+
+      newButton.addEventListener("click", () => {
+        const isOpen = mobileMenu.classList.contains("open");
+
         if (isOpen) {
-          mobileMenu.classList.remove('open');
-          newButton.classList.remove('active');
-          navbar?.classList.remove('menu-open');
+          mobileMenu.classList.remove("open");
+          newButton.classList.remove("active");
+          navbar?.classList.remove("menu-open");
         } else {
-          mobileMenu.classList.add('open');
-          newButton.classList.add('active');
-          navbar?.classList.add('menu-open');
+          mobileMenu.classList.add("open");
+          newButton.classList.add("active");
+          navbar?.classList.add("menu-open");
         }
       });
-      
+
       // Close menu when clicking on a link
-      const mobileNavLinks = mobileMenu.querySelectorAll('a');
-      mobileNavLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.remove('open');
-          newButton.classList.remove('active');
-          navbar?.classList.remove('menu-open');
+      const mobileNavLinks = mobileMenu.querySelectorAll("a");
+      mobileNavLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.remove("open");
+          newButton.classList.remove("active");
+          navbar?.classList.remove("menu-open");
         });
       });
     }
   }
 
   // Initialize on page load
-  document.addEventListener('DOMContentLoaded', initializeMobileMenu);
-  
+  document.addEventListener("DOMContentLoaded", initializeMobileMenu);
+
   // Reinitialize after Astro page transitions
-  document.addEventListener('astro:page-load', initializeMobileMenu);
+  document.addEventListener("astro:page-load", initializeMobileMenu);
 </script>
 
 <style>
@@ -211,13 +211,16 @@ const socialLinks = [
     display: none;
     flex-direction: column;
     justify-content: space-around;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     background: transparent;
     border: none;
     cursor: pointer;
     padding: 0;
     z-index: 1001;
+    position: fixed;
+    top: 70vh;
+    right: 1.5rem;
   }
 
   .hamburger-line {
@@ -244,7 +247,7 @@ const socialLinks = [
   .mobile-menu {
     display: none;
     position: fixed;
-    top: 0;
+    top: -15px;
     left: 0;
     width: 100%;
     height: 100vh;
@@ -254,12 +257,16 @@ const socialLinks = [
     align-items: center;
     gap: 2rem;
     z-index: 999;
-    transform: translateY(-100%);
-    transition: transform var(--transition-speed) ease;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--transition-speed) ease,
+      visibility var(--transition-speed) ease;
   }
 
   .mobile-menu.open {
-    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
   }
 
   .mobile-nav-links {
