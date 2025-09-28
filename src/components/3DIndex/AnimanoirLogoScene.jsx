@@ -1,13 +1,26 @@
 import { Fragment, useRef, useMemo, useState, useEffect } from "react";
 import { Float, Environment } from "@react-three/drei";
-import {AndrosFetal} from "./AndrosFetal/AndrosFetal.jsx"
+import { AndrosFetal } from "./AndrosFetal/AndrosFetal.jsx"
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 export const AnimanoirLogoScene = () => {
-  const [mousePosition, setMousePosition] = useState({x: 0, y: 0});
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMouseDown, setIsMouseDown] = useState(false);
-  const [trailParticles, setTrailParticles] = useState([]);
+  // Particle pool for trail particles (fixed size, reusable)
+  const PARTICLE_POOL_SIZE = 300;
+  const particlePool = useRef(
+    Array.from({ length: PARTICLE_POOL_SIZE }, (_, i) => ({
+      id: i,
+      position: new THREE.Vector3(),
+      velocity: new THREE.Vector3(),
+      color: new THREE.Color(),
+      life: 0,
+      maxLife: 1,
+      size: 0.5,
+      active: false
+    }))
+  );
   const particlesRef = useRef();
   const [envRotation, setEnvRotation] = useState(0);
   const groupRef = useRef();
@@ -25,7 +38,7 @@ export const AnimanoirLogoScene = () => {
       const x = (Math.random() - 0.5) * 20;
       const y = (Math.random() - 0.5) * 20;
       const z = (Math.random() - 0.5) * 20;
-      
+
       positions[i * 3] = x;
       positions[i * 3 + 1] = y;
       positions[i * 3 + 2] = z;
@@ -68,26 +81,27 @@ export const AnimanoirLogoScene = () => {
     };
   }, [gl]);
 
-  // Create trail particles when mouse is held down
-  const createTrailParticle = (mouseWorld, time) => {
-    return {
-      id: Math.random(),
-      position: new THREE.Vector3(
-        mouseWorld.x + (Math.random() - 0.5) * 0.5,
-        mouseWorld.y + (Math.random() - 0.5) * 0.5,
-        mouseWorld.z + (Math.random() - 0.5) * 0.5
-      ),
-      velocity: new THREE.Vector3(
-        (Math.random() - 0.5) * 2,
-        (Math.random() - 0.5) * 2,
-        (Math.random() - 0.5) * 2
-      ),
-      color: new THREE.Color().setRGB(Math.random(), Math.random(), Math.random()),
-      life: 1.0,
-      maxLife: 3.0 + Math.random() * 2.0,
-      size: 0.02 + Math.random() * 0.03,
-      birthTime: time
-    };
+  // Find and activate an inactive particle from the pool
+  const activateParticle = (mouseWorld, time) => {
+    const particle = particlePool.current.find(p => !p.active);
+    if (!particle) return; // Pool exhausted
+
+    // Reset particle properties
+    particle.position.set(
+      mouseWorld.x + (Math.random() - 0.5) * 0.5,
+      mouseWorld.y + (Math.random() - 0.5) * 0.5,
+      mouseWorld.z + (Math.random() - 0.5) * 0.5
+    );
+    particle.velocity.set(
+      (Math.random() - 0.5) * 2,
+      (Math.random() - 0.5) * 2,
+      (Math.random() - 0.5) * 2
+    );
+    particle.color.setRGB(Math.random(), Math.random(), Math.random());
+    particle.life = 1.0;
+    particle.maxLife = 3.0 + Math.random() * 2.0;
+    particle.size = 0.02 + Math.random() * 0.03;
+    particle.active = true;
   };
 
   useFrame((state, delta) => {
@@ -118,7 +132,7 @@ export const AnimanoirLogoScene = () => {
         colArray[i + 1] = (Math.cos(time * 0.3 + i * 0.3) + 1) / 2;
         colArray[i + 2] = (Math.sin(time * 0.2 + i * 0.4) + 1) / 2;
       }
-      
+
       particlesRef.current.geometry.attributes.position.needsUpdate = true;
       particlesRef.current.geometry.attributes.color.needsUpdate = true;
     }
@@ -130,53 +144,56 @@ export const AnimanoirLogoScene = () => {
       // Convert mouse position to world coordinates using raycasting
       mouseVector.set(mousePosition.x, mousePosition.y)
       raycaster.setFromCamera(mouseVector, camera);
-      
+
       // Project to a plane at z = 0 (where particles will spawn)
       const planeZ = 0;
       const distance = (planeZ - camera.position.z) / raycaster.ray.direction.z;
       const mouseWorld = raycaster.ray.origin.clone().add(
         raycaster.ray.direction.clone().multiplyScalar(distance)
       );
-      
-      // Create new trail particles (spawn rate controlled by time)
-      if (Math.random() < 0.8) { // 80% chance per frame to create particle
-        setTrailParticles(prev => [...prev, createTrailParticle(mouseWorld, time)]);
+
+      // Activate trail particles from pool (spawn rate controlled by time)
+      if (Math.random() < 0.8) { // 80% chance per frame to activate particle
+        activateParticle(mouseWorld, time);
       }
     }
 
-    // Update existing trail particles
-    setTrailParticles(prev => {
-      return prev.map(particle => {
-        // Update position
-        particle.position.add(particle.velocity.clone().multiplyScalar(delta));
-        
-        // Add some floating motion
-        particle.position.x += Math.sin(time * 2 + particle.id) * 0.01;
-        particle.position.y += Math.cos(time * 2 + particle.id) * 0.01;
-        particle.position.z += Math.sin(time * 1.5 + particle.id) * 0.01;
-        
-        // Decrease life
-        particle.life -= delta / particle.maxLife;
-        
-        // Fade out over time
-        particle.color.multiplyScalar(10.0);
-        particle.size *= 0.9;
-        
-        return particle;
-      }).filter(particle => particle.life > 0); // Remove dead particles
-    });
+    // Update active trail particles in pool
+    for (const particle of particlePool.current) {
+      if (!particle.active) continue;
+
+      // Update position
+      particle.position.add(particle.velocity.clone().multiplyScalar(delta));
+
+      // Add some floating motion
+      particle.position.x += Math.sin(time * 2 + particle.id) * 0.01;
+      particle.position.y += Math.cos(time * 2 + particle.id) * 0.01;
+      particle.position.z += Math.sin(time * 1.5 + particle.id) * 0.01;
+
+      // Decrease life
+      particle.life -= delta / particle.maxLife;
+
+      // Fade out over time
+      particle.color.multiplyScalar(0.99); // More subtle fading
+      particle.size *= 0.995; // More subtle size reduction
+
+      // Deactivate dead particles instead of removing them
+      if (particle.life <= 0) {
+        particle.active = false;
+      }
+    }
   });
 
   return (
     <Fragment>
       <Environment
         files={"/images/animanoir-xyz-space-small.hdr"}
-        backgroundRotation={[envRotation, envRotation, envRotation]} 
+        backgroundRotation={[envRotation, envRotation, envRotation]}
         backgroundIntensity={1}
         background
         backgroundBlurriness={0.1}
       />
-      
+
       {/* Main particles */}
       <group ref={groupRef}>
         <points ref={particlesRef}>
@@ -204,27 +221,29 @@ export const AnimanoirLogoScene = () => {
         </points>
       </group>
 
-      {/* Trail particles */}
-      {trailParticles.map(particle => (
-        <points key={particle.id} position={particle.position.toArray()}>
-          <bufferGeometry>
-            <bufferAttribute
-              attach="attributes-position"
-              count={1}
-              array={new Float32Array([0, 0, 0])}
-              itemSize={3}
+      {/* Trail particles from pool */}
+      {particlePool.current
+        .filter(particle => particle.active)
+        .map(particle => (
+          <points key={particle.id} position={particle.position.toArray()}>
+            <bufferGeometry>
+              <bufferAttribute
+                attach="attributes-position"
+                count={1}
+                array={new Float32Array([0, 0, 0])}
+                itemSize={3}
+              />
+            </bufferGeometry>
+            <pointsMaterial
+              size={particle.size}
+              color={particle.color}
+              opacity={particle.life}
+              transparent
+              blending={THREE.AdditiveBlending}
+              depthWrite={false}
             />
-          </bufferGeometry>
-          <pointsMaterial
-            size={particle.size}
-            color={particle.color}
-            opacity={particle.life}
-            // transparent
-            blending={THREE.AdditiveBlending}
-            depthWrite={false}
-          />
-        </points>
-      ))}
+          </points>
+        ))}
 
       <Float rotationIntensity={10} speed={0.5}>
         <AndrosFetal />
