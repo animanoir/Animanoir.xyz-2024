@@ -18,13 +18,33 @@ export const AnimanoirLogoScene = () => {
       life: 0,
       maxLife: 1,
       size: 0.5,
-      active: false
+      active: false,
+      geometry: (() => {
+        const geometry = new THREE.BufferGeometry();
+        const positionArray = new Float32Array(3);
+        geometry.setAttribute("position", new THREE.BufferAttribute(positionArray, 3));
+        geometry.userData.positionArray = positionArray;
+        return geometry;
+      })(),
+      material: new THREE.PointsMaterial({
+        size: 0.02,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      })
     }))
   );
   const particlesRef = useRef();
-  const [envRotation, setEnvRotation] = useState(0);
+  const envRotationRef = useRef(0);
+  const environmentRef = useRef();
   const groupRef = useRef();
   const { gl, camera } = useThree();
+  const raycasterRef = useRef(new THREE.Raycaster());
+  const mouseVectorRef = useRef(new THREE.Vector2());
+  const tempRayOriginRef = useRef(new THREE.Vector3());
+  const tempRayDirectionRef = useRef(new THREE.Vector3());
+  const tempMouseWorldRef = useRef(new THREE.Vector3());
+  const tempVelocityRef = useRef(new THREE.Vector3());
 
   // Create main particles system
   const particlesCount = 100;
@@ -57,29 +77,37 @@ export const AnimanoirLogoScene = () => {
 
   // Mouse event handlers
   useEffect(() => {
-    const handleMouseMove = (event) => {
+    const handlePointerMove = (event) => {
       const rect = gl.domElement.getBoundingClientRect();
       const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
       const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
       setMousePosition({ x, y });
     };
 
-    const handleMouseDown = () => setIsMouseDown(true);
-    const handleMouseUp = () => setIsMouseDown(false);
+    const handlePointerDown = () => setIsMouseDown(true);
+    const handlePointerUp = () => setIsMouseDown(false);
+    const handlePointerLeave = () => setIsMouseDown(false);
 
     const canvas = gl.domElement;
-    canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('mousedown', handleMouseDown);
-    canvas.addEventListener('mouseup', handleMouseUp);
-    canvas.addEventListener('mouseleave', () => setIsMouseDown(false));
+    canvas.addEventListener('pointermove', handlePointerMove);
+    canvas.addEventListener('pointerdown', handlePointerDown);
+    canvas.addEventListener('pointerup', handlePointerUp);
+    canvas.addEventListener('pointerleave', handlePointerLeave);
 
     return () => {
-      canvas.removeEventListener('mousemove', handleMouseMove);
-      canvas.removeEventListener('mousedown', handleMouseDown);
-      canvas.removeEventListener('mouseup', handleMouseUp);
-      canvas.removeEventListener('mouseleave', () => setIsMouseDown(false));
+      canvas.removeEventListener('pointermove', handlePointerMove);
+      canvas.removeEventListener('pointerdown', handlePointerDown);
+      canvas.removeEventListener('pointerup', handlePointerUp);
+      canvas.removeEventListener('pointerleave', handlePointerLeave);
     };
   }, [gl]);
+
+  useEffect(() => () => {
+    particlePool.current.forEach((particle) => {
+      particle.geometry.dispose();
+      particle.material.dispose();
+    });
+  }, []);
 
   // Find and activate an inactive particle from the pool
   const activateParticle = (mouseWorld, time) => {
@@ -102,13 +130,32 @@ export const AnimanoirLogoScene = () => {
     particle.maxLife = 3.0 + Math.random() * 2.0;
     particle.size = 0.02 + Math.random() * 0.03;
     particle.active = true;
+
+    const positionArray = particle.geometry.attributes.position.array;
+    positionArray[0] = particle.position.x;
+    positionArray[1] = particle.position.y;
+    positionArray[2] = particle.position.z;
+    particle.geometry.attributes.position.needsUpdate = true;
+
+    particle.material.color.copy(particle.color);
+    particle.material.opacity = particle.life;
+    particle.material.size = particle.size;
   };
 
   useFrame((state, delta) => {
     if (groupRef.current) {
       groupRef.current.rotation.y += delta * 0.1;
     }
-    setEnvRotation((prev) => prev + delta * 0.05);
+    envRotationRef.current += delta * 0.05;
+    if (environmentRef.current?.backgroundRotation) {
+      environmentRef.current.backgroundRotation.set(
+        envRotationRef.current,
+        envRotationRef.current,
+        envRotationRef.current
+      );
+    } else if (environmentRef.current?.rotation) {
+      environmentRef.current.rotation.y = envRotationRef.current;
+    }
 
     const time = state.clock.elapsedTime * 0.3;
 
@@ -137,8 +184,12 @@ export const AnimanoirLogoScene = () => {
       particlesRef.current.geometry.attributes.color.needsUpdate = true;
     }
 
-    const raycaster = new THREE.Raycaster();
-    const mouseVector = new THREE.Vector2();
+    const raycaster = raycasterRef.current;
+    const mouseVector = mouseVectorRef.current;
+    const rayOrigin = tempRayOriginRef.current;
+    const rayDirection = tempRayDirectionRef.current;
+    const mouseWorld = tempMouseWorldRef.current;
+    const tempVelocity = tempVelocityRef.current;
     // Handle trail particles creation and animation
     if (isMouseDown) {
       // Convert mouse position to world coordinates using raycasting
@@ -147,10 +198,10 @@ export const AnimanoirLogoScene = () => {
 
       // Project to a plane at z = 0 (where particles will spawn)
       const planeZ = 0;
-      const distance = (planeZ - camera.position.z) / raycaster.ray.direction.z;
-      const mouseWorld = raycaster.ray.origin.clone().add(
-        raycaster.ray.direction.clone().multiplyScalar(distance)
-      );
+      rayOrigin.copy(raycaster.ray.origin);
+      rayDirection.copy(raycaster.ray.direction);
+      const distance = (planeZ - rayOrigin.z) / rayDirection.z;
+      mouseWorld.copy(rayDirection).multiplyScalar(distance).add(rayOrigin);
 
       // Activate trail particles from pool (spawn rate controlled by time)
       if (Math.random() < 0.8) { // 80% chance per frame to activate particle
@@ -163,7 +214,8 @@ export const AnimanoirLogoScene = () => {
       if (!particle.active) continue;
 
       // Update position
-      particle.position.add(particle.velocity.clone().multiplyScalar(delta));
+      tempVelocity.copy(particle.velocity).multiplyScalar(delta);
+      particle.position.add(tempVelocity);
 
       // Add some floating motion
       particle.position.x += Math.sin(time * 2 + particle.id) * 0.01;
@@ -177,9 +229,21 @@ export const AnimanoirLogoScene = () => {
       particle.color.multiplyScalar(0.99); // More subtle fading
       particle.size *= 0.995; // More subtle size reduction
 
+      const positionArray = particle.geometry.attributes.position.array;
+      positionArray[0] = particle.position.x;
+      positionArray[1] = particle.position.y;
+      positionArray[2] = particle.position.z;
+      particle.geometry.attributes.position.needsUpdate = true;
+
+      particle.material.color.copy(particle.color);
+      particle.material.opacity = Math.max(particle.life, 0);
+      particle.material.size = particle.size;
+      particle.material.needsUpdate = true;
+
       // Deactivate dead particles instead of removing them
       if (particle.life <= 0) {
         particle.active = false;
+        particle.material.opacity = 0;
       }
     }
   });
@@ -187,8 +251,8 @@ export const AnimanoirLogoScene = () => {
   return (
     <Fragment>
       <Environment
+        ref={environmentRef}
         files={"/images/animanoir-xyz-space-small.hdr"}
-        backgroundRotation={[envRotation, envRotation, envRotation]}
         backgroundIntensity={1}
         background
         backgroundBlurriness={0.1}
@@ -225,24 +289,12 @@ export const AnimanoirLogoScene = () => {
       {particlePool.current
         .filter(particle => particle.active)
         .map(particle => (
-          <points key={particle.id} position={particle.position.toArray()}>
-            <bufferGeometry>
-              <bufferAttribute
-                attach="attributes-position"
-                count={1}
-                array={new Float32Array([0, 0, 0])}
-                itemSize={3}
-              />
-            </bufferGeometry>
-            <pointsMaterial
-              size={particle.size}
-              color={particle.color}
-              opacity={particle.life}
-              transparent
-              blending={THREE.AdditiveBlending}
-              depthWrite={false}
-            />
-          </points>
+          <points
+            key={particle.id}
+            geometry={particle.geometry}
+            material={particle.material}
+            frustumCulled={false}
+          />
         ))}
 
       <Float rotationIntensity={10} speed={0.5}>
