@@ -31,11 +31,11 @@
   pointer-events: none;
   transition: opacity 0.4s ease;
   z-index: 100;
-  box-shadow: 6px 6px 10px rgba(0, 0, 0, 1;
-  }
+  box-shadow: 6px 6px 10px rgba(0, 0, 0, 1);
+}
 
-  @media screen and (max-width: 768px) {
-    .lastfmContainer {
-      display: none;
-    }
+@media screen and (max-width: 768px) {
+  .lastfmContainer {
+    display: none;
   }
+}
