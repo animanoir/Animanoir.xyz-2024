@@ -1,0 +1,240 @@
+---
+import { SITE_TITLE } from "../consts";
+import BaseHead from "../components/BaseHead.astro";
+import ModifiedHeader from "@/components/ModifiedHeader.astro";
+import Ornaments from "@/components/Ornaments.astro";
+import Footer from "@/components/Footer/Footer.astro";
+import { Image } from "astro:assets";
+
+// Fetch photos from Are.na channels
+const channelSlugs = ["fotodiario-2025", "fotodiario-2024"];
+
+interface ArenaBlock {
+  class: string;
+  image?: {
+    display: {
+      url: string;
+    };
+    thumb: {
+      url: string;
+    };
+    original: {
+      url: string;
+    };
+  };
+  title?: string;
+  id: number;
+}
+
+interface ArenaResponse {
+  contents: ArenaBlock[];
+  length: number;
+  total_pages: number;
+  current_page: number;
+  per: number;
+}
+
+// Fetch all pages from a single channel
+async function fetchAllFromChannel(slug: string): Promise<ArenaBlock[]> {
+  const allBlocks: ArenaBlock[] = [];
+  let page = 1;
+  let totalPages = 1;
+  const perPage = 100;
+
+  while (page <= totalPages) {
+    const url = `https://api.are.na/v2/channels/${slug}/contents?page=${page}&per=${perPage}`;
+    const response = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status} for ${slug}`);
+    }
+
+    const data: ArenaResponse = await response.json();
+    totalPages = data.total_pages;
+
+    // Filter for image blocks only
+    const imageBlocks = data.contents?.filter(
+      (block: ArenaBlock) => block.class === "Image" && block.image
+    ) || [];
+
+    allBlocks.push(...imageBlocks);
+    page++;
+  }
+
+  return allBlocks;
+}
+
+let photos: ArenaBlock[] = [];
+
+// Fisher-Yates shuffle algorithm
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+try {
+  // Fetch all photos from each channel
+  const [photos2025, photos2024] = await Promise.all([
+    fetchAllFromChannel("fotodiario-2025"),
+    fetchAllFromChannel("fotodiario-2024"),
+  ]);
+
+  // Combine and randomize
+  const allPhotos = [...photos2025, ...photos2024];
+  photos = shuffleArray(allPhotos);
+} catch (error) {
+  console.error("Error fetching Are.na photos:", error);
+}
+---
+
+<html lang="es">
+  <head>
+    <BaseHead
+      title={`Fotodiario | ${SITE_TITLE}`}
+      description={"Photo diary from Are.na"}
+      image="/images/about/óscar-a-montiel-animanoir-geosmina.jpg"
+    />
+  </head>
+
+  <body>
+    <Ornaments />
+    <ModifiedHeader />
+    <div class="photo-grid">
+      {
+        photos.map((photo) => (
+          <div class="photo-item" key={photo.id}>
+            <a
+              href={photo.image?.original?.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src={photo.image?.display?.url || photo.image?.original?.url}
+                alt={photo.title || `Photo ${photo.id}`}
+                width={800}
+                height={800}
+                loading="lazy"
+                decoding="async"
+                quality={90}
+              />
+            </a>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="more-photos">
+      <p>
+        Para ver más fotos, visita{" "}
+        <a
+          href="https://www.are.na/tilde-colon-pipe-degrees-degrees-bullet-period-pipe-colon-tilde/atras-gris-panteismo-infiernos-y-claraboyas-fotodiarios"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Atrás gris: panteísmo, infiernos y claraboyas (fotodiarios)
+        </a>
+      </p>
+    </div>
+
+    <Footer useTopOffset={false} />
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+
+      .photo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 0;
+        width: 100vw;
+        min-height: 100vh;
+      }
+
+      .photo-item {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%; /* Square aspect ratio */
+        overflow: hidden;
+        background: #000;
+      }
+
+      .photo-item a {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .photo-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .photo-item:hover img {
+        transform: scale(1.05);
+      }
+
+      .more-photos {
+        width: 100vw;
+        padding: 4rem 2rem;
+        background: #000;
+        text-align: center;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      .more-photos p {
+        color: whitesmoke;
+        font-size: 1rem;
+        line-height: 1.5;
+        margin: 0;
+      }
+
+      .more-photos a {
+        color: #fff;
+        text-decoration: underline;
+        transition: opacity 0.3s ease;
+      }
+
+      .more-photos a:hover {
+        opacity: 0.7;
+      }
+
+      @media (max-width: 768px) {
+        .photo-grid {
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          padding-top: 8vh;
+        }
+
+        .more-photos {
+          padding: 2rem 1.5rem;
+        }
+
+        .more-photos p {
+          font-size: 0.9rem;
+        }
+      }
+
+      @media (min-width: 1920px) {
+        .photo-grid {
+          grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        }
+      }
+    </style>
+  </body>
+</html>
