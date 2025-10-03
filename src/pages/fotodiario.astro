@@ -7,7 +7,12 @@ import Footer from "@/components/Footer/Footer.astro";
 import { Image } from "astro:assets";
 
 // Fetch photos from Are.na channels
-const channelSlugs = ["fotodiario-2025", "fotodiario-2024"];
+const channelSlugs = [
+  "fotodiario-2025",
+  "fotodiario-2024",
+  "fotodiario-antiguos",
+  "ai-nano-banana-experiments",
+];
 
 interface ArenaBlock {
   class: string;
@@ -82,13 +87,12 @@ function shuffleArray<T>(array: T[]): T[] {
 
 try {
   // Fetch all photos from each channel
-  const [photos2025, photos2024] = await Promise.all([
-    fetchAllFromChannel("fotodiario-2025"),
-    fetchAllFromChannel("fotodiario-2024"),
-  ]);
+  const results = await Promise.all(
+    channelSlugs.map((slug) => fetchAllFromChannel(slug))
+  );
 
   // Combine and randomize
-  const allPhotos = [...photos2025, ...photos2024];
+  const allPhotos = results.flat();
   photos = shuffleArray(allPhotos);
 } catch (error) {
   console.error("Error fetching Are.na photos:", error);
