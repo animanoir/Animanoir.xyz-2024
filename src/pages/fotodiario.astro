@@ -61,9 +61,10 @@ async function fetchAllFromChannel(slug: string): Promise<ArenaBlock[]> {
     totalPages = data.total_pages;
 
     // Filter for image blocks only
-    const imageBlocks = data.contents?.filter(
-      (block: ArenaBlock) => block.class === "Image" && block.image
-    ) || [];
+    const imageBlocks =
+      data.contents?.filter(
+        (block: ArenaBlock) => block.class === "Image" && block.image
+      ) || [];
 
     allBlocks.push(...imageBlocks);
     page++;
@@ -74,25 +75,14 @@ async function fetchAllFromChannel(slug: string): Promise<ArenaBlock[]> {
 
 let photos: ArenaBlock[] = [];
 
-// Fisher-Yates shuffle algorithm
-function shuffleArray<T>(array: T[]): T[] {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-}
-
 try {
   // Fetch all photos from each channel
   const results = await Promise.all(
     channelSlugs.map((slug) => fetchAllFromChannel(slug))
   );
 
-  // Combine and randomize
-  const allPhotos = results.flat();
-  photos = shuffleArray(allPhotos);
+  // Combine photos (newest first based on channel order)
+  photos = results.flat();
 } catch (error) {
   console.error("Error fetching Are.na photos:", error);
 }
