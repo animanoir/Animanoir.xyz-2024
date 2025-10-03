@@ -4,7 +4,6 @@ import BaseHead from "../components/BaseHead.astro";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
 import Ornaments from "@/components/Ornaments.astro";
 import Footer from "@/components/Footer/Footer.astro";
-import { Image } from "astro:assets";
 
 // Fetch photos from Are.na channels
 const channelSlugs = [
@@ -120,14 +119,11 @@ try {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Image
+              <img
                 src={photo.image?.display?.url || photo.image?.original?.url}
                 alt={photo.title || `Photo ${photo.id}`}
-                width={800}
-                height={800}
                 loading="lazy"
                 decoding="async"
-                quality={90}
               />
             </a>
           </div>
