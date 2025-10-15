@@ -11,7 +11,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "4.3.6",
+    "@astrojs/mdx": "4.3.7",
     "@astrojs/react": "4.4.0",
     "@astrojs/rss": "4.0.12",
     "@astrojs/sitemap": "3.6.0",
@@ -22,7 +22,7 @@
     "@types/react": "^18.2.16",
     "@types/react-dom": "^18.2.7",
     "@types/three": "^0.155.0",
-    "astro": "5.14.0",
+    "astro": "5.14.5",
     "astro-embed": "^0.5.1",
     "astro-lenis": "^1.0.0",
     "astro-particles": "^2.10.0",

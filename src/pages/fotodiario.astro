@@ -10,7 +10,6 @@ const channelSlugs = [
   "fotodiario-2025",
   "fotodiario-2024",
   "fotodiario-antiguos",
-  // "ai-nano-banana-experiments",
 ];
 
 interface ArenaBlock {
@@ -28,6 +27,7 @@ interface ArenaBlock {
   };
   title?: string;
   id: number;
+  connected_at?: string;
 }
 
 interface ArenaResponse {
@@ -70,7 +70,16 @@ async function fetchAllFromChannel(slug: string): Promise<ArenaBlock[]> {
     page++;
   }
 
-  return allBlocks;
+  return allBlocks.sort((a, b) => {
+    const aDate = a.connected_at ? new Date(a.connected_at).getTime() : 0;
+    const bDate = b.connected_at ? new Date(b.connected_at).getTime() : 0;
+
+    if (aDate === bDate) {
+      return b.id - a.id;
+    }
+
+    return bDate - aDate;
+  });
 }
 
 let photos: ArenaBlock[] = [];
@@ -82,7 +91,7 @@ try {
   );
 
   // Combine photos and reverse to show newest first
-  photos = results.flat().reverse();
+  photos = results.flat();
 } catch (error) {
   console.error("Error fetching Are.na photos:", error);
 }
@@ -103,7 +112,7 @@ try {
     <div class="photo-grid">
       {
         photos.map((photo) => (
-          <div class="photo-item" key={photo.id}>
+          <div class="photo-item">
             <a
               href={photo.image?.original?.url}
               target="_blank"
