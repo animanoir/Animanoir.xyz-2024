@@ -81,8 +81,8 @@ try {
     channelSlugs.map((slug) => fetchAllFromChannel(slug))
   );
 
-  // Combine photos (newest first based on channel order)
-  photos = results.flat();
+  // Combine photos and reverse to show newest first
+  photos = results.flat().reverse();
 } catch (error) {
   console.error("Error fetching Are.na photos:", error);
 }
