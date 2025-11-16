@@ -40,6 +40,7 @@ const socialLinks = [
     href: "https://www.instagram.com/animanoirxyz/",
     icon: igSvg,
     alt: "Instagram profile",
+    tooltip: "I fucking hate Instagram, and you should too.",
   },
 ];
 ---
@@ -47,16 +48,29 @@ const socialLinks = [
 <nav class="navbar" role="navigation">
   <div class="social-icons">
     {
-      socialLinks.map((social) => (
-        <a href={social.href} target="_blank" class="social-link">
-          <Image
-            loading="lazy"
-            alt={social.alt}
-            src={social.icon}
-            class="social-icon"
-          />
-        </a>
-      ))
+      socialLinks.map((social) => {
+        const isBlocked = Boolean(social.tooltip);
+
+        return (
+          <a
+            href={isBlocked ? undefined : social.href}
+            target={isBlocked ? undefined : "_blank"}
+            rel={isBlocked ? undefined : "noreferrer"}
+            class={`social-link${isBlocked ? " social-link--blocked" : ""}`}
+            data-tooltip={isBlocked ? social.tooltip : undefined}
+            role={isBlocked ? "button" : undefined}
+            aria-disabled={isBlocked ? "true" : undefined}
+            tabindex={isBlocked ? "0" : undefined}
+          >
+            <Image
+              loading="lazy"
+              alt={social.alt}
+              src={social.icon}
+              class="social-icon"
+            />
+          </a>
+        );
+      })
     }
   </div>
   <div class="nav-links">
@@ -85,16 +99,29 @@ const socialLinks = [
     </div>
     <div class="mobile-social-icons">
       {
-        socialLinks.map((social) => (
-          <a href={social.href} target="_blank" class="social-link">
-            <Image
-              loading="lazy"
-              alt={social.alt}
-              src={social.icon}
-              class="social-icon"
-            />
-          </a>
-        ))
+        socialLinks.map((social) => {
+          const isBlocked = Boolean(social.tooltip);
+
+          return (
+            <a
+              href={isBlocked ? undefined : social.href}
+              target={isBlocked ? undefined : "_blank"}
+              rel={isBlocked ? undefined : "noreferrer"}
+              class={`social-link${isBlocked ? " social-link--blocked" : ""}`}
+              data-tooltip={isBlocked ? social.tooltip : undefined}
+              role={isBlocked ? "button" : undefined}
+              aria-disabled={isBlocked ? "true" : undefined}
+              tabindex={isBlocked ? "0" : undefined}
+            >
+              <Image
+                loading="lazy"
+                alt={social.alt}
+                src={social.icon}
+                class="social-icon"
+              />
+            </a>
+          );
+        })
       }
     </div>
   </div>
@@ -110,6 +137,9 @@ const socialLinks = [
     if (mobileMenuButton && mobileMenu) {
       // Remove existing event listeners to prevent duplicates
       const newButton = mobileMenuButton.cloneNode(true);
+      if (!(newButton instanceof HTMLButtonElement)) {
+        return;
+      }
       mobileMenuButton.parentNode?.replaceChild(newButton, mobileMenuButton);
 
       newButton.addEventListener("click", () => {
@@ -186,6 +216,37 @@ const socialLinks = [
 
   .social-link:hover {
     opacity: 0.7;
+  }
+
+  .social-link--blocked {
+    position: relative;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .social-link--blocked::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.9);
+    color: var(--text-color);
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: normal;
+    text-align: center;
+    max-width: 240px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-speed) ease;
+    z-index: 1002;
+  }
+
+  .social-link--blocked:focus-visible::after,
+  .social-link--blocked:hover::after {
+    opacity: 1;
   }
 
   .social-icon {
