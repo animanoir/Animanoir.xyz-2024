@@ -87,12 +87,21 @@ const actualSlug =
         height: 100vh;
         object-fit: cover;
         filter: blur(8px) brightness(0.4);
+        z-index: 1;
       }
       .articleContainer {
         margin: 0 auto;
         position: relative;
-        max-width: 45%;
-        font-size: 1.3rem;
+        max-width: 60%;
+        font-size: 1.5rem;
+        z-index: 10;
+      }
+      .articleContainer {
+        margin-top: 0 !important;
+      }
+
+      .articleContainer h2 {
+        margin-top: 0 !important;
       }
       .left-container {
         width: 30%;
@@ -203,7 +212,8 @@ const actualSlug =
           font-size: 0.8rem;
         }
         .articleContainer {
-          font-size: 1.4rem;
+          font-size: 1.5rem;
+          margin-top: 0 !important;
         }
         .articleBody {
           padding-top: 8rem;
@@ -227,11 +237,12 @@ const actualSlug =
           width: 35%;
         }
         .articleContainer {
-          font-size: 1.3rem;
+          font-size: 1.5rem;
           max-width: 50%;
+          margin-top: 0 !important;
         }
         .articleBody {
-          padding-top: 6rem;
+          padding-top: 15vh;
         }
       }
 
@@ -252,8 +263,9 @@ const actualSlug =
           font-size: 0.8rem;
         }
         .articleContainer {
-          font-size: 1.2rem;
+          font-size: 1.5rem;
           max-width: 55%;
+          margin-top: 0 !important;
         }
         .articleBody {
           padding-top: 7rem;
@@ -290,7 +302,8 @@ const actualSlug =
         .articleContainer {
           flex-direction: column;
           max-width: 95%;
-          font-size: 1.1rem;
+          font-size: 1.5rem;
+          margin-top: 0 !important;
         }
         .articleBody {
           flex-direction: column;
@@ -325,7 +338,8 @@ const actualSlug =
         }
         .articleContainer {
           max-width: 100%;
-          font-size: 1.3rem;
+          font-size: 1.5rem;
+          margin-top: 0 !important;
         }
         .articleBody {
           padding: 0 0.5rem;

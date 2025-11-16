@@ -36,9 +36,9 @@ const { useTopOffset = true } = Astro.props;
     /* Base footer styles */
     footer {
       font-family: "Montserrat", serif;
-      color: white;
+      color: #fdfefe;
       font-size: 0.8rem;
-      background: rgb(165, 42, 42);
+      z-index: 1000000;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -46,6 +46,7 @@ const { useTopOffset = true } = Astro.props;
       margin-top: auto;
       width: 100%;
       box-sizing: border-box;
+      position: relative;
     }
 
     /* Footer with top offset (default behavior) */

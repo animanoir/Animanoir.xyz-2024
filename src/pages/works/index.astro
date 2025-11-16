@@ -870,9 +870,28 @@ for (let i = posts.length - 1; i > 0; i--) {
               font-size: 4rem;
             }
           }
+
+          /* Video gradient wrapper */
+          .video-gradient-wrapper {
+            position: relative;
+          }
+
+          .video-gradient-wrapper::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30%;
+            background: linear-gradient(to bottom, transparent, #060606);
+            pointer-events: none;
+            z-index: 10;
+          }
         </style>
       </div>
-      <Video client:only videoPath={ledvid} />
+      <div class="video-gradient-wrapper">
+        <Video client:only videoPath={ledvid} />
+      </div>
       <Footer useTopOffset={false} />
     </main>
   </body>
