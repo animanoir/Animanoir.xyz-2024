@@ -100,7 +100,6 @@ p {
   line-height: 1.7;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  text-align: justify;
 }
 
 /* Replace the existing p::selection rule with these general selection rules */
