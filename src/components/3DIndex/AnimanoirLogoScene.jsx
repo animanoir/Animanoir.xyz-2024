@@ -8,7 +8,7 @@ export const AnimanoirLogoScene = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMouseDown, setIsMouseDown] = useState(false);
   // Particle pool for trail particles (fixed size, reusable)
-  const PARTICLE_POOL_SIZE = 300;
+  const PARTICLE_POOL_SIZE = 200;
   const particlePool = useRef(
     Array.from({ length: PARTICLE_POOL_SIZE }, (_, i) => ({
       id: i,
@@ -38,7 +38,7 @@ export const AnimanoirLogoScene = () => {
   const envRotationRef = useRef(0);
   const environmentRef = useRef();
   const groupRef = useRef();
-  const { gl, camera } = useThree();
+  const { gl, camera, scene } = useThree();
   const raycasterRef = useRef(new THREE.Raycaster());
   const mouseVectorRef = useRef(new THREE.Vector2());
   const tempRayOriginRef = useRef(new THREE.Vector3());
@@ -55,9 +55,9 @@ export const AnimanoirLogoScene = () => {
     const color = new THREE.Color();
 
     for (let i = 0; i < particlesCount; i++) {
-      const x = (Math.random() - 0.5) * 20;
-      const y = (Math.random() - 0.5) * 20;
-      const z = (Math.random() - 0.5) * 20;
+      const x = (Math.random() - 0.5) * 12;
+      const y = (Math.random() - 0.5) * 12;
+      const z = (Math.random() - 0.5) * 12;
 
       positions[i * 3] = x;
       positions[i * 3 + 1] = y;
@@ -146,15 +146,12 @@ export const AnimanoirLogoScene = () => {
     if (groupRef.current) {
       groupRef.current.rotation.y += delta * 0.1;
     }
-    envRotationRef.current += delta * 0.05;
-    if (environmentRef.current?.backgroundRotation) {
-      environmentRef.current.backgroundRotation.set(
-        envRotationRef.current,
-        envRotationRef.current,
-        envRotationRef.current
-      );
-    } else if (environmentRef.current?.rotation) {
-      environmentRef.current.rotation.y = envRotationRef.current;
+
+    // Rotate environment for dizzy effect
+    if (scene.backgroundRotation) {
+      scene.backgroundRotation.y += delta * 0.05;
+      scene.backgroundRotation.x += delta * 0.02;
+      scene.backgroundRotation.z += delta * 0.01;
     }
 
     const time = state.clock.elapsedTime * 0.3;
@@ -258,6 +255,10 @@ export const AnimanoirLogoScene = () => {
         backgroundBlurriness={0.1}
       />
 
+      <Float rotationIntensity={10} speed={0.5}>
+        <AndrosFetal />
+      </Float>
+
       {/* Main particles */}
       <group ref={groupRef}>
         <points ref={particlesRef}>
@@ -297,9 +298,6 @@ export const AnimanoirLogoScene = () => {
           />
         ))}
 
-      <Float rotationIntensity={10} speed={0.5}>
-        <AndrosFetal />
-      </Float>
     </Fragment>
   );
 };

@@ -8,11 +8,16 @@ export function AndrosFetal(props) {
   const eyeMaterialRef = useRef(); // Ref for the eye material
   const bodyMaterialRef = useRef(); // Ref for the body material
   const [isTransparent, setIsTransparent] = useState(true); // State for transparency/metalness toggle
-  
+
   // Mouse rotation states
   const [isDragging, setIsDragging] = useState(false);
   const [lastMousePos, setLastMousePos] = useState({ x: 0, y: 0 });
-  const [rotationVelocity, setRotationVelocity] = useState({ x: 0, y: 0 });
+
+  // Physics refs for heavy feel
+  const targetRotation = useRef({ x: 0, y: 0 });
+  const velocity = useRef({ x: 0, y: 0 });
+  const lastFrameRotation = useRef({ x: 0, y: 0 });
+
   const { gl } = useThree();
 
   const handleBodyClick = () => {
@@ -24,29 +29,32 @@ export function AndrosFetal(props) {
     event.stopPropagation();
     setIsDragging(true);
     setLastMousePos({ x: event.clientX, y: event.clientY });
-    setRotationVelocity({ x: 0, y: 0 }); // Stop current rotation velocity
+
+    if (group.current) {
+      targetRotation.current = {
+        x: group.current.rotation.x,
+        y: group.current.rotation.y
+      };
+      lastFrameRotation.current = {
+        x: group.current.rotation.x,
+        y: group.current.rotation.y
+      };
+    }
+    velocity.current = { x: 0, y: 0 };
     gl.domElement.style.cursor = 'grabbing';
   };
 
   const handleMouseMove = (event) => {
     if (!isDragging) return;
-    
+
     const deltaX = event.clientX - lastMousePos.x;
     const deltaY = event.clientY - lastMousePos.y;
-    
-    // Apply rotation based on mouse movement
+
+    // Update target rotation instead of direct rotation
     const rotationSpeed = 0.005;
-    if (group.current) {
-      group.current.rotation.y += deltaX * rotationSpeed;
-      group.current.rotation.x += deltaY * rotationSpeed;
-    }
-    
-    // Set velocity for damping
-    setRotationVelocity({
-      x: deltaY * rotationSpeed * 0.1,
-      y: deltaX * rotationSpeed * 0.1
-    });
-    
+    targetRotation.current.y += deltaX * rotationSpeed;
+    targetRotation.current.x += deltaY * rotationSpeed;
+
     setLastMousePos({ x: event.clientX, y: event.clientY });
   };
 
@@ -60,7 +68,7 @@ export function AndrosFetal(props) {
     if (isDragging) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
-      
+
       return () => {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
@@ -71,7 +79,7 @@ export function AndrosFetal(props) {
   // Set cursor style
   useEffect(() => {
     gl.domElement.style.cursor = 'grab';
-    
+
     return () => {
       gl.domElement.style.cursor = 'default';
     };
@@ -89,25 +97,34 @@ export function AndrosFetal(props) {
 
   useFrame((state, delta) => {
     // Bobbing animation
-    group.current.position.y = group.current.position.y +=
-      Math.sin(state.clock.getElapsedTime()) * 0.1 * 0.05;
+    if (group.current) {
+      group.current.position.y += Math.sin(state.clock.getElapsedTime()) * 0.1 * 0.05;
 
-    // Apply damping to rotation when not dragging
-    if (!isDragging && group.current) {
-      // Apply velocity to rotation
-      group.current.rotation.x += rotationVelocity.x;
-      group.current.rotation.y += rotationVelocity.y;
-      
-      // Apply damping (reduce velocity over time)
-      const dampingFactor = 0.95;
-      setRotationVelocity(prev => ({
-        x: prev.x * dampingFactor,
-        y: prev.y * dampingFactor
-      }));
-      
-      // Stop very small velocities to prevent infinite rotation
-      if (Math.abs(rotationVelocity.x) < 0.001 && Math.abs(rotationVelocity.y) < 0.001) {
-        setRotationVelocity({ x: 0, y: 0 });
+      if (isDragging) {
+        // Lerp towards target for heavy feel
+        const lerpFactor = 0.1;
+        group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetRotation.current.x, lerpFactor);
+        group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetRotation.current.y, lerpFactor);
+
+        // Calculate velocity for momentum release
+        velocity.current.x = group.current.rotation.x - lastFrameRotation.current.x;
+        velocity.current.y = group.current.rotation.y - lastFrameRotation.current.y;
+
+        lastFrameRotation.current.x = group.current.rotation.x;
+        lastFrameRotation.current.y = group.current.rotation.y;
+      } else {
+        // Apply momentum
+        group.current.rotation.x += velocity.current.x;
+        group.current.rotation.y += velocity.current.y;
+
+        // Damping
+        const dampingFactor = 0.95;
+        velocity.current.x *= dampingFactor;
+        velocity.current.y *= dampingFactor;
+
+        // Update target to match current so it doesn't snap back
+        targetRotation.current.x = group.current.rotation.x;
+        targetRotation.current.y = group.current.rotation.y;
       }
     }
 
