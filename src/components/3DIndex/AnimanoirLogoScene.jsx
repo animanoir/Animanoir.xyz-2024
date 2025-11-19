@@ -35,7 +35,7 @@ export const AnimanoirLogoScene = () => {
     }))
   );
   const particlesRef = useRef();
-  const envRotationRef = useRef(0);
+  const envRotationRef = useRef({ x: 0, y: 0, z: 0 });
   const environmentRef = useRef();
   const groupRef = useRef();
   const { gl, camera, scene } = useThree();
@@ -149,9 +149,15 @@ export const AnimanoirLogoScene = () => {
 
     // Rotate environment for dizzy effect
     if (scene.backgroundRotation) {
-      scene.backgroundRotation.y += delta * 0.05;
-      scene.backgroundRotation.x += delta * 0.02;
-      scene.backgroundRotation.z += delta * 0.01;
+      envRotationRef.current.y += delta * 0.05;
+      envRotationRef.current.x += delta * 0.02;
+      envRotationRef.current.z += delta * 0.01;
+
+      scene.backgroundRotation.set(
+        envRotationRef.current.x,
+        envRotationRef.current.y,
+        envRotationRef.current.z
+      );
     }
 
     const time = state.clock.elapsedTime * 0.3;
