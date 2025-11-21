@@ -16,7 +16,7 @@
 /* For 1920x1080 screens - reduced text sizes */
 @media (max-width: 1920px) {
   .heading {
-    font-size: 3rem !important;
+    font-size: 4rem !important;
   }
 }
 
