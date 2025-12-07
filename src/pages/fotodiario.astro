@@ -63,7 +63,7 @@ async function fetchAllFromChannel(slug: string): Promise<ArenaBlock[]> {
     // Filter for image blocks only
     const imageBlocks =
       data.contents?.filter(
-        (block: ArenaBlock) => block.class === "Image" && block.image
+        (block: ArenaBlock) => block.class === "Image" && block.image,
       ) || [];
 
     allBlocks.push(...imageBlocks);
@@ -87,7 +87,7 @@ let photos: ArenaBlock[] = [];
 try {
   // Fetch all photos from each channel
   const results = await Promise.all(
-    channelSlugs.map((slug) => fetchAllFromChannel(slug))
+    channelSlugs.map((slug) => fetchAllFromChannel(slug)),
   );
 
   // Combine photos and reverse to show newest first
@@ -182,7 +182,7 @@ try {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.3s ease;
+        transition: transform 5s ease;
       }
 
       .photo-item:hover img {

@@ -16,7 +16,7 @@ import Footer from "@/components/Footer/Footer.astro";
 
 // Orders the post chronologically
 const posts = (await getCollection("works")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
 // Fisher-Yates shuffle algorithm to randomize the posts
@@ -149,7 +149,7 @@ for (let i = posts.length - 1; i > 0; i--) {
                 posts.map((post) => {
                   const { workType } = post.data;
                   const audioVisual3dWork = workType.find(
-                    (work) => work === "3D"
+                    (work) => work === "3D",
                   );
                   if (audioVisual3dWork) {
                     return (
@@ -220,7 +220,7 @@ for (let i = posts.length - 1; i > 0; i--) {
                 posts.map((post) => {
                   const { workType } = post.data;
                   const interactiveArtWork = workType.find(
-                    (work) => work === "Interactive Art"
+                    (work) => work === "Interactive Art",
                   );
                   if (interactiveArtWork) {
                     return (
@@ -286,7 +286,7 @@ for (let i = posts.length - 1; i > 0; i--) {
                 posts.map((post) => {
                   const { workType } = post.data;
                   const projectWork = workType.find(
-                    (work) => work === "Project"
+                    (work) => work === "Project",
                   );
                   if (projectWork) {
                     return (
@@ -512,6 +512,7 @@ for (let i = posts.length - 1; i > 0; i--) {
           .listContainer {
             display: flex;
             justify-content: center;
+            margin-bottom: 10rem;
           }
 
           .lc-row-reverse {

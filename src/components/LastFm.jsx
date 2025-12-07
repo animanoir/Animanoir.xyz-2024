@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as lastFmStyles from "@/styles/lastFm.css";
 import useLastFmData from "@/components/hooks/useLastFmData.js";
 
-export const LastFm = ({customStyle, showAlbumCover = true}) => {
+export const LastFm = ({ customStyle, showAlbumCover = true }) => {
   const lfmData = useLastFmData();
 
   const [albumImageState, setAlbumImageState] = useState({
@@ -31,7 +31,7 @@ export const LastFm = ({customStyle, showAlbumCover = true}) => {
 
     if (error) {
       return (
-        <div className={lastFmStyles.container}>
+        <div style={customStyle} className="lastfmContainer fadeInQuick">
           <p>{error}</p>
         </div>
       );
@@ -64,14 +64,14 @@ export const LastFm = ({customStyle, showAlbumCover = true}) => {
         >
           Currently listening to{" "}
           <a className="lastFmLink" href={trackUrl} target="_blank">
-            <b className="songInfo">{artistName}</b> <span style={{color: "#FFFFFF39"}}>—</span>{" "}
+            <b className="songInfo">{artistName}</b> <span style={{ color: "#FFFFFF39" }}>—</span>{" "}
             <b className="songInfo">{songName}</b>{" "}
           </a>
           <img src="/images/playingBars.gif" alt="Now playing" />
         </span>
         {
           showAlbumCover && (
-            <div 
+            <div
               className="albumCover"
               style={{
                 zIndex: onMouseEnter ? 1 : -1,
@@ -81,7 +81,7 @@ export const LastFm = ({customStyle, showAlbumCover = true}) => {
               }}
             >
               <img src={albumImage} alt={albumName} />
-          </div>
+            </div>
           )
         }
 

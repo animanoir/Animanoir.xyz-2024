@@ -1,12 +1,11 @@
 ---
-import Footer from "@/components/Footer/Footer.astro";
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import { SITE_TITLE } from "../../consts";
 import { getCollection } from "astro:content";
 
 const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
@@ -50,7 +49,6 @@ const posts = (await getCollection("blog")).sort(
         </ul>
       </div>
     </main>
-    <Footer />
     <style>
       .blogpostsContainer {
         padding-top: 5rem;
@@ -105,7 +103,7 @@ const posts = (await getCollection("blog")).sort(
         background-color: black;
         color: floralwhite;
         font-family: "Montserrat", sans-serif;
-        font-size: 1rem;
+        font-size: 1em;
         padding-left: 0;
         padding-top: 0;
         padding-bottom: 0;
