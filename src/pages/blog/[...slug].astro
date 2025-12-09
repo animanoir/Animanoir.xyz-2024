@@ -1,46 +1,142 @@
 ---
-import { CollectionEntry, getCollection } from "astro:content";
 import BlogPost from "../../layouts/BlogPost.astro";
+import PortableTextRenderer from "../../components/PortableTextRenderer";
+import { getAllPostSlugs, getPostBySlug, urlFor } from "../../lib/sanity";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: post,
+  const slugs = await getAllPostSlugs();
+  return slugs.map((item) => ({
+    params: { slug: item.slug },
   }));
 }
-type Props = CollectionEntry<"blog">;
 
-const post = Astro.props;
-const { Content } = await post.render();
+const { slug } = Astro.params;
+const post = await getPostBySlug(slug as string);
+
+if (!post) {
+  return Astro.redirect("/404");
+}
+
+// Get the hero image URL if available
+const heroImageUrl = post.mainImage
+  ? urlFor(post.mainImage).width(1920).auto("format").url()
+  : undefined;
 ---
 
-<BlogPost {...post.data}>
-  <Content class="markdown" />
+<BlogPost
+  title={post.title}
+  summary={post.summary}
+  pubDate={new Date(post.publishedAt)}
+  heroImage={heroImageUrl ? { src: heroImageUrl } : undefined}
+  tags={post.tags}
+  slug={post.slug.current}
+>
+  {post.body && <PortableTextRenderer client:load value={post.body} />}
 </BlogPost>
+
 <style>
   /* Markdown heading styles */
-  .markdown h1 {
-    font-size: 20em;
+  :global(.sanity-h1) {
+    font-size: 2.5em;
+    margin: 1.5rem 0 1rem 0;
   }
 
-  .markdown h2 {
+  :global(.sanity-h2) {
+    font-size: 2em;
+    margin: 1.3rem 0 0.8rem 0;
+  }
+
+  :global(.sanity-h3) {
     font-size: 1.75em;
+    margin: 1.2rem 0 0.6rem 0;
   }
 
-  .markdown h3 {
+  :global(.sanity-h4) {
     font-size: 1.5em;
+    margin: 1rem 0 0.5rem 0;
   }
 
-  .markdown h4 {
-    font-size: 1.25em;
+  :global(.sanity-paragraph) {
+    margin: 0.8rem 0;
+    line-height: 1.8;
   }
 
-  .markdown h5 {
-    font-size: 1em;
+  :global(.sanity-blockquote) {
+    border-left: 4px solid #444;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    font-style: italic;
+    color: #aaa;
   }
 
-  .markdown h6 {
-    font-size: 0.875em;
+  :global(.sanity-list-bullet),
+  :global(.sanity-list-number) {
+    margin: 0.8rem 0;
+    padding-left: 1.5rem;
+  }
+
+  :global(.sanity-list-item) {
+    margin: 0.4rem 0;
+    line-height: 1.6;
+  }
+
+  :global(.sanity-image) {
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+
+  :global(.sanity-image img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  :global(.sanity-image figcaption) {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 0.5rem;
+  }
+
+  :global(.code-block) {
+    margin: 1rem 0;
+    background: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  :global(.code-filename) {
+    padding: 0.5rem 1rem;
+    background: #2d2d2d;
+    font-size: 0.85rem;
+    color: #aaa;
+    border-bottom: 1px solid #444;
+  }
+
+  :global(.code-block pre) {
+    margin: 0;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+
+  :global(.code-block code) {
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+    font-size: 0.9rem;
+  }
+
+  :global(.inline-code) {
+    background: #2d2d2d;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+    font-size: 0.9em;
+  }
+
+  :global(.portable-text-content a) {
+    color: #6bb9f0;
+    text-decoration: underline;
+  }
+
+  :global(.portable-text-content a:hover) {
+    color: #9bd1f7;
   }
 </style>

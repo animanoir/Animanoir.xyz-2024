@@ -2,11 +2,27 @@
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import { SITE_TITLE } from "../../consts";
-import { getCollection } from "astro:content";
+import { getAllPosts } from "../../lib/sanity";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+const posts = await getAllPosts();
+
+// Group posts by year
+const postsByYear = posts.reduce(
+  (acc, post) => {
+    const year = new Date(post.publishedAt).getFullYear();
+    if (!acc[year]) {
+      acc[year] = [];
+    }
+    acc[year].push(post);
+    return acc;
+  },
+  {} as Record<number, typeof posts>,
 );
+
+// Sort years in descending order (newest first)
+const sortedYears = Object.keys(postsByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
 ---
 
 <!doctype html>
@@ -17,61 +33,57 @@ const posts = (await getCollection("blog")).sort(
   <body>
     <Header />
     <main>
-      <div class="blogpostsContainer">
-        <ul>
-          <li class="random-position">
-            <a href="/books">
-              <div class="postTitle">📚 Books I'm currently reading!</div>
-            </a>
-          </li>
-          <li class="random-position">
-            <a
-              href="https://ensamblaje-maquinico-dela-sensualidad.netlify.app/"
-            >
-              <div class="postTitle">🎇 Visit my Knowledge graph!</div>
-            </a>
-          </li>
-
+      <div class="vertical-scroll-wrapper">
+        <div class="blogpostsContainer">
+          <!-- Posts grouped by year -->
           {
-            posts.map((post) => (
-              <li class="random-position">
-                <small class="postDate">
-                  {new Date(post.data.pubDate).toLocaleDateString()}
-                </small>
-                <a data-astro-prefetch href={`/blog/${post.slug}/`}>
-                  <div class="postInfo">
-                    <p class="postTitle">{post.data.title}</p>
+            sortedYears.map((year) => (
+              <div class="year-section" data-year={year}>
+                {postsByYear[year].map((post) => (
+                  <div class="random-position post-item" data-year={year}>
+                    <small class="postDate">
+                      {new Date(post.publishedAt).toLocaleDateString()}
+                    </small>
+                    <a data-astro-prefetch href={`/blog/${post.slug.current}/`}>
+                      <div class="postInfo">
+                        <p class="postTitle">{post.title}</p>
+                      </div>
+                    </a>
                   </div>
-                </a>
-              </li>
+                ))}
+              </div>
             ))
           }
-        </ul>
+        </div>
       </div>
     </main>
     <style>
-      .blogpostsContainer {
-        padding-top: 5rem;
-        position: relative;
-        padding-bottom: 50vh;
+      main {
+        width: 100%;
+        min-height: 100vh;
+        overflow-x: hidden;
       }
 
-      ul {
-        list-style-type: none;
-        padding: 0;
+      .blogpostsContainer {
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-top: 100px;
+        padding-bottom: 20vh;
+      }
+
+      .year-section {
         position: relative;
         width: 100%;
-        height: 100%;
+        min-height: 60vh;
       }
 
-      ul li {
+      .random-position {
         position: absolute;
-        display: block;
-        max-width: 400px; /* Prevent posts from being too wide */
-      }
-
-      ul li.random-position {
-        /* Positions will be set by JavaScript */
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        max-width: 350px;
+        z-index: 1;
       }
 
       .postDate {
@@ -80,192 +92,136 @@ const posts = (await getCollection("blog")).sort(
         margin: 0;
         color: #484848;
       }
-      ul {
-        list-style-type: none;
-        padding: 0;
-      }
 
-      ul a {
+      a {
         text-decoration: none;
       }
 
-      ul a:hover {
+      a:hover {
         filter: invert(1);
-      }
-
-      ul li {
-        height: 100%;
-        display: block;
-        margin-bottom: 1rem;
       }
 
       .postTitle {
         background-color: black;
         color: floralwhite;
         font-family: "Montserrat", sans-serif;
-        font-size: 1em;
-        padding-left: 0;
-        padding-top: 0;
-        padding-bottom: 0;
-        margin-bottom: 0 !important;
-        line-height: 1.5;
+        font-size: 1.1rem;
+        line-height: 1.4;
         width: fit-content;
+        padding-top: 0;
       }
 
-      ul li a {
-        position: relative;
-      }
       .postInfo {
         mix-blend-mode: exclusion;
-        text-align: center;
       }
 
-      .tools {
-        margin-top: 1rem;
-        color: #fdfefe;
-        font-family: "Open Sans", sans-serif;
-        margin: 0;
-        font-size: 1em;
-      }
-
-      /* Standard Desktops / Large Laptops */
-      @media (max-width: 1920px) {
-        .blogpostsContainer {
-          margin: 0 2rem;
-        }
-      }
-
-      /* Laptops / Large Tablets */
-      @media (max-width: 1440px) {
-        .blogpostsContainer {
-          margin: 0 2rem;
-        }
-      }
-
-      /* Tablets / Small Laptops */
-      @media (max-width: 1024px) {
-        .blogpostsContainer {
-          margin: 0 1rem;
-        }
-      }
-
-      /* Mobile Devices */
       @media (max-width: 768px) {
         .blogpostsContainer {
-          margin: 0 2rem;
-          padding-bottom: 2rem;
-          padding-top: 8rem;
+          padding-left: 20px;
+          padding-right: 20px;
+          padding-top: 120px;
         }
 
-        .postTitle {
-          font-size: 1.2rem;
-        }
-
-        ul {
+        .year-section {
+          min-height: auto !important;
+          height: auto !important;
           display: flex;
           flex-direction: column;
-          gap: 1.5rem; /* Add consistent spacing between items */
+          gap: 40px;
+          margin-bottom: 60px;
         }
 
-        ul li {
-          position: static !important; /* Override absolute positioning */
-          max-width: none; /* Allow full width */
-          width: 100%;
-          opacity: 1 !important; /* Ensure visibility */
-          left: auto !important; /* Reset positioning */
-          top: auto !important; /* Reset positioning */
-          margin-bottom: 0; /* Remove margin since we're using gap */
+        .random-position {
+          position: static;
+          opacity: 1;
+          max-width: 100%;
         }
 
-        ul li.random-position {
-          position: static !important;
-          transform: none !important;
+        .year-markers {
+          display: none;
         }
-
-        .postInfo {
-          text-align: left; /* Left align for better readability on mobile */
-        }
-
-        .postDate {
-          display: block;
-          margin-bottom: 0.5rem;
-        }
-      }
-      /* Add initial opacity for smooth appearance */
-      .random-position {
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out;
       }
     </style>
     <script>
-      function throttle(func, limit) {
-        let inThrottle;
-        return function () {
-          const args = arguments;
-          const context = this;
-          if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => (inThrottle = false), limit);
-          }
-        };
-      }
+      function initVerticalScroll() {
+        const container = document.querySelector(".blogpostsContainer");
+        if (!container) return;
 
-      function randomizePositions() {
-        // Skip randomization on mobile devices
+        const sections = document.querySelectorAll(".year-section");
+        const posts = document.querySelectorAll(".random-position");
+
+        // Mobile Reset
         if (window.innerWidth <= 768) {
-          const posts = document.querySelectorAll(".random-position");
-          posts.forEach((post) => {
-            // Reset to normal positioning for mobile
-            (post as HTMLElement).style.position = "static";
-            (post as HTMLElement).style.left = "auto";
-            (post as HTMLElement).style.top = "auto";
-            (post as HTMLElement).style.opacity = "1";
+          posts.forEach((p) => {
+            const el = p as HTMLElement;
+            el.style.removeProperty("top");
+            el.style.removeProperty("left");
+            el.style.opacity = "1";
           });
+          sections.forEach((s) =>
+            (s as HTMLElement).style.removeProperty("height"),
+          );
           return;
         }
 
-        const posts = document.querySelectorAll(".random-position");
-        let offset = 100;
-        posts.forEach((post, index) => {
-          // Reset opacity and position first
-          (post as HTMLElement).style.opacity = "0";
-          (post as HTMLElement).style.position = "absolute";
-          (post as HTMLElement).style.left = "0px";
-          (post as HTMLElement).style.top = "0px";
+        // Desktop Positioning
+        sections.forEach((section) => {
+          const secEl = section as HTMLElement;
+          const items = secEl.querySelectorAll(".post-item");
 
-          // Add a small delay to create a staggered appearance effect
-          setTimeout(() => {
-            const postRect = post.getBoundingClientRect();
+          if (items.length === 0) return;
 
-            // Calculate random positions within the container bounds
-            const maxX = window.innerWidth - postRect.width;
-            const maxY = window.innerHeight + offset - postRect.height;
+          // Calculate needed height roughly
+          const heightVal = Math.max(80, items.length * 25);
+          secEl.style.height = `${heightVal}vh`;
 
-            const randomX = Math.floor(Math.random() * Math.max(0, maxX));
-            const randomY = Math.floor(Math.random() * Math.max(0, maxY));
+          const w = secEl.offsetWidth;
+          const h = secEl.offsetHeight;
 
-            (post as HTMLElement).style.left = randomX + "px";
-            (post as HTMLElement).style.top = randomY + "px";
-            (post as HTMLElement).style.opacity = "1";
-          }, index * 100); // Stagger by 100ms
+          items.forEach((item, i) => {
+            const el = item as HTMLElement;
+            const x = Math.random() * (w - 400);
+            const y = Math.random() * (h - 200) + 50;
+
+            el.style.left = `${Math.max(0, x)}px`;
+            el.style.top = `${y}px`;
+
+            setTimeout(() => {
+              el.style.opacity = "1";
+            }, i * 150);
+          });
         });
+
+        // Year Marker Logic
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const y = (entry.target as HTMLElement).dataset.year;
+                document.querySelectorAll(".year-marker").forEach((m) => {
+                  const mEl = m as HTMLElement;
+                  if (mEl.dataset.year === y) mEl.classList.add("active");
+                  else mEl.classList.remove("active");
+                });
+              }
+            });
+          },
+          {
+            rootMargin: "-45% 0px -45% 0px",
+          },
+        );
+
+        sections.forEach((s) => observer.observe(s));
       }
 
-      // Create throttled version of randomizePositions
-      const throttledRandomizePositions = throttle(randomizePositions, 250);
+      document.addEventListener("astro:page-load", initVerticalScroll);
+      document.addEventListener("DOMContentLoaded", initVerticalScroll);
 
-      // Use throttled version for resize event
-      addEventListener("resize", throttledRandomizePositions);
-
-      // Run on initial load
-      document.addEventListener("DOMContentLoaded", randomizePositions);
-
-      // Run on Astro view transitions
-      document.addEventListener("astro:page-load", randomizePositions);
-
-      // Also run when navigating to this page
-      document.addEventListener("astro:after-swap", randomizePositions);
+      let resizeTimer: number;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(initVerticalScroll, 200) as unknown as number;
+      });
     </script>
   </body>
 </html>

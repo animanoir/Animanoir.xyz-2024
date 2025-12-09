@@ -4,21 +4,30 @@ import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 import dotenv from "dotenv";
 import lenis from "astro-lenis";
+import sanity from "@sanity/astro";
 
 dotenv.config();
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://animanoir.xyz",
-  integrations: [mdx(), sitemap(), react(), lenis()],
-  prefetch: {
-    defaultStrategy: "viewport",
-  },
+  integrations: [
+    mdx(),
+    sitemap(),
+    react(),
+    lenis(),
+    sanity({
+      projectId: process.env.PUBLIC_SANITY_PROJECT_ID || "ztpln7un",
+      dataset: process.env.PUBLIC_SANITY_DATASET || "production",
+      useCdn: true,
+    }),
+  ],
+
   experimental: {
     clientPrerender: true,
   },
   image: {
-    domains: ["youtube.com", "s3.amazonaws.com", "notion.so", "prod-files-secure.s3.us-west-2.amazonaws.com", "are.na", "d2w9rnfcy7mm78.cloudfront.net"],
+    domains: ["youtube.com", "s3.amazonaws.com", "notion.so", "prod-files-secure.s3.us-west-2.amazonaws.com", "are.na", "d2w9rnfcy7mm78.cloudfront.net", "cdn.sanity.io"],
     remotePatterns: [
       {
         protocol: "https",

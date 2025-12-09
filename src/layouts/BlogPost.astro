@@ -31,17 +31,27 @@ const actualSlug =
   <body>
     <ModifiedHeader />
     {
-      heroImage && (
-        <Picture
-          class="heroimage"
-          src={heroImage}
-          alt={title}
-          quality={50}
-          loading="eager"
-          fetchpriority="high"
-          decoding="sync"
-        />
-      )
+      heroImage &&
+        (heroImage.format ? (
+          <Picture
+            class="heroimage"
+            src={heroImage}
+            alt={title}
+            quality={50}
+            loading="eager"
+            fetchpriority="high"
+            decoding="sync"
+          />
+        ) : (
+          <img
+            class="heroimage"
+            src={heroImage.src}
+            alt={title}
+            loading="eager"
+            fetchpriority="high"
+            decoding="sync"
+          />
+        ))
     }
     <div class="articleBody">
       <div class="left-container">
@@ -63,6 +73,35 @@ const actualSlug =
       </div>
       <article class="articleContainer">
         <slot />
+        {
+          heroImage && (
+            <a
+              href={heroImage.src}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="end-hero-link"
+            >
+              {heroImage.format ? (
+                <Picture
+                  class="end-hero-image"
+                  src={heroImage}
+                  alt={title}
+                  quality={50}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <img
+                  class="end-hero-image"
+                  src={heroImage.src}
+                  alt={title}
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+            </a>
+          )
+        }
       </article>
     </div>
 
@@ -88,6 +127,20 @@ const actualSlug =
         object-fit: cover;
         filter: blur(8px) brightness(0.4);
         z-index: 1;
+      }
+      .end-hero-link {
+        display: block;
+        width: 100%;
+      }
+      .end-hero-image {
+        width: 100%;
+        height: auto;
+        margin-top: 2rem;
+        border-radius: 8px;
+        transition: opacity 0.3s ease;
+      }
+      .end-hero-image:hover {
+        opacity: 0.9;
       }
       .articleContainer {
         margin: 0 auto;
