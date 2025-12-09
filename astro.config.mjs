@@ -17,9 +17,9 @@ export default defineConfig({
     react(),
     lenis(),
     sanity({
-      projectId: process.env.PUBLIC_SANITY_PROJECT_ID || "ztpln7un",
+      projectId: process.env.PUBLIC_SANITY_PROJECT_ID,
       dataset: process.env.PUBLIC_SANITY_DATASET || "production",
-      useCdn: true,
+      useCdn: false,
     }),
   ],
 
