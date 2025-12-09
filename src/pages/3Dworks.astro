@@ -16,7 +16,7 @@ import img8 from "@/images/works/visuals/visuals-8.jpg";
 import img9 from "@/images/works/visuals/visuals-9.jpg";
 import RandomVideo from "@/components/RandomVideo/RandomVideo.jsx";
 import Footer from "@/components/Footer/Footer.astro";
-import * as motion from "motion/react-client"; 
+import * as motion from "motion/react-client";
 // import { YouTube } from "astro-embed";
 ---
 
@@ -31,37 +31,49 @@ import * as motion from "motion/react-client";
   <body>
     <Header />
     <RandomVideo client:load />
-    <YouTubeGrid client:load  count={20} />
+    <YouTubeGrid client:load count={20} />
     <main class="articleContainer">
       <motion.div
-      initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1 } }}
-      client:visible
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { duration: 1 } }}
+        client:visible
       >
-      <MagicHeading client:visible />
-    </motion.div>
+        <MagicHeading client:visible />
+      </motion.div>
 
-    {/*<YouTube id="https://www.youtube.com/watch?v=hk-sb9owrtc" />
+      {
+        /*<YouTube id="https://www.youtube.com/watch?v=hk-sb9owrtc" />
     <YouTube id="https://www.youtube.com/watch?v=3nsmnV6FhdY" />
     <YouTube id="https://www.youtube.com/watch?v=EiEBZUccdR8" />
     <YouTube id="https://www.youtube.com/watch?v=52EWlBICt0g" />
     <YouTube id="https://www.youtube.com/watch?v=bAPAXWBrNJI" />
     <YouTube id="https://www.youtube.com/watch?v=rqg9pFlV-0s" />
     <YouTube id="https://www.youtube.com/watch?v=jpcgtRk59hI" />
-    <YouTube id="https://www.youtube.com/watch?v=_elpdaOBOis" />*/}
+    <YouTube id="https://www.youtube.com/watch?v=_elpdaOBOis" />*/
+      }
       <div class="images-container">
-        {[heroImage, img7, img1, img8, img9, img3, img2, img4, img5].map((image, index) => (
-          <a href={image.src} target="_blank" class="image-grid-item" aria-label={`View full size image ${index + 1}`}>
-            <Picture
-              src={image}
-              alt={"3D Art by Óscar A. Montiel"}
-              class="heroImage"
-              formats={["webp"]}
-              decoding="async"
-              loading="eager"
-              quality={90}
-            />
-          </a>
-        ))}
+        {
+          [heroImage, img7, img1, img8, img9, img3, img2, img4, img5].map(
+            (image, index) => (
+              <a
+                href={image.src}
+                target="_blank"
+                class="image-grid-item"
+                aria-label={`View full size image ${index + 1}`}
+              >
+                <Picture
+                  src={image}
+                  alt={"3D Art by Óscar A. Montiel"}
+                  class="heroImage"
+                  formats={["webp"]}
+                  decoding="async"
+                  loading="eager"
+                  quality={90}
+                />
+              </a>
+            ),
+          )
+        }
       </div>
       <a
         class="top-link"
@@ -73,25 +85,24 @@ import * as motion from "motion/react-client";
     </main>
     <Footer useTopOffset={false} />
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const images = document.querySelectorAll('.heroImage');
-        
-        images.forEach(image => {
+      document.addEventListener("DOMContentLoaded", () => {
+        const images = document.querySelectorAll(".heroImage");
+
+        images.forEach((image) => {
           if (image.complete) {
-            image.classList.add('loaded');
+            image.classList.add("loaded");
           } else {
-            image.addEventListener('load', () => {
-              image.classList.add('loaded');
+            image.addEventListener("load", () => {
+              image.classList.add("loaded");
             });
           }
         });
       });
     </script>
-  </body>
-  <style>
+  </body><style>
     .hero-video {
       width: 100%;
-      100vh;
+      height: 100vh;
     }
     .top-link {
       display: flex;
@@ -137,7 +148,9 @@ import * as motion from "motion/react-client";
       margin: 0 !important;
       filter: brightness(1);
       opacity: 0;
-      transition: opacity 0.5s ease-in-out, transform 0.3s ease;
+      transition:
+        opacity 0.5s ease-in-out,
+        transform 0.3s ease;
     }
 
     .heroImage.loaded {
