@@ -66,15 +66,15 @@ const posts: Post[] = await Promise.all(
       },
       public_url: post.public_url,
     };
-  })
+  }),
 );
 ---
 
 <html lang="es">
   <head>
     <BaseHead
-      title={SITE_TITLE}
-      description={"Books I like"}
+      title="Books"
+      description={"Books I'm reading."}
       image="/images/about/óscar-a-montiel-animanoir-geosmina.jpg"
     />
   </head>
