@@ -14,7 +14,7 @@
  * }
  */
 
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 export default defineType({
   name: "post",
@@ -149,6 +149,9 @@ export default defineType({
             withFilename: true,
           },
         },
+        defineArrayMember({
+          type: 'youTube'
+        }),
       ],
     }),
   ],
