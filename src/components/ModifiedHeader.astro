@@ -11,11 +11,11 @@ const { goWild = false, sortSpeed = 0 } = Astro.props;
 <header>
   <div>
     <a href="/">
-      <h1 id="headerTitle">
+      <h2 id="headerTitle">
         {SITE_TITLE} | <span id="headerSubtitle"
           ><MutatingSubheader client:load /></span
         >
-      </h1>
+      </h2>
     </a>
     <LastFm client:load />
   </div>
