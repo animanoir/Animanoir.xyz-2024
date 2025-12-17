@@ -1,4 +1,4 @@
 import post from "./post";
-import { youtube } from "../schemas/youTubeType/index"
+import { youTubeType } from "../schemas/youTubeType/index"
 
-export const schemaTypes = [post, youtube];
+export const schemaTypes = [post, youTubeType];

@@ -1,6 +1,16 @@
 import { PortableText, type PortableTextReactComponents } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { urlFor } from "../lib/sanity";
+import ReactPlayer from "react-player";
+
+const serializers = {
+  types: {
+    youtube: ({ node }) => {
+      const { url } = node
+      return (<ReactPlayer url={url} />)
+    }
+  }
+}
 
 interface PortableTextRendererProps {
   value: PortableTextBlock[];
@@ -75,7 +85,7 @@ export default function PortableTextRenderer({ value }: PortableTextRendererProp
 
   return (
     <div className="portable-text-content">
-      <PortableText value={value} components={components} />
+      <PortableText value={value} components={components} types={serializers} />
     </div>
   );
 }
