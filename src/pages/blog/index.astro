@@ -25,6 +25,7 @@ const sortedYears = Object.keys(postsByYear)
 
 // Fetch Are.na texts
 let arenaTexts = [];
+let remainingTexts = [];
 try {
   const response = await fetch(
     "https://api.are.na/v2/channels/2025-a-salvo-en-la-soledad/contents?per=100",
@@ -42,6 +43,7 @@ try {
     }
 
     arenaTexts = allTexts.slice(0, 30);
+    remainingTexts = allTexts.slice(30).map((t: any) => t.content_html);
   }
 } catch (e) {
   console.error("Failed to fetch Are.na texts", e);
@@ -59,7 +61,11 @@ try {
   <body>
     <Header />
     <main>
-      <div class="arena-background" aria-hidden="true">
+      <div
+        class="arena-background"
+        aria-hidden="true"
+        data-remaining-texts={JSON.stringify(remainingTexts)}
+      >
         {
           arenaTexts.map((text: any) => (
             <div class="arena-text-item" set:html={text.content_html} />
@@ -241,6 +247,68 @@ try {
           window.addEventListener("resize", () => {
             setTimeout(distributeArenaItems, 200);
           });
+
+          // --- Swapping Logic ---
+          const remainingTextsData = arenaContainer.dataset.remainingTexts;
+          let pool: string[] = [];
+
+          try {
+            if (remainingTextsData) {
+              pool = JSON.parse(remainingTextsData);
+            }
+          } catch (e) {
+            console.error("Failed to parse remaining texts", e);
+          }
+
+          if (pool.length > 0) {
+            const swapRandomText = () => {
+              // Pick a random currently displayed item
+              const randomIndex = Math.floor(Math.random() * arenaItems.length);
+              const el = arenaItems[randomIndex] as HTMLElement;
+
+              // 1. Fade out
+              el.style.transition = "opacity 2s ease-in-out"; // Slower transition for subtlety
+              el.style.opacity = "0";
+
+              setTimeout(() => {
+                // 2. Swap content
+                if (pool.length === 0) return; // Should not happen if we push back
+
+                const oldContent = el.innerHTML;
+                const newContentIndex = Math.floor(Math.random() * pool.length);
+                const newContent = pool[newContentIndex];
+
+                // Remove new content from pool, add old content back
+                pool.splice(newContentIndex, 1);
+                pool.push(oldContent);
+
+                el.innerHTML = newContent;
+
+                // 3. New Random Position
+                const docWidth = document.documentElement.clientWidth;
+                const docHeight = Math.max(
+                  document.body.scrollHeight,
+                  window.innerHeight,
+                );
+
+                // Same logic as distributeArenaItems
+                const x = Math.random() * (docWidth - 250);
+                const y = Math.random() * (docHeight - 100);
+
+                el.style.left = `${Math.max(0, x)}px`;
+                el.style.top = `${y}px`;
+
+                // 4. Fade back in
+                // Small delay to ensure position is set
+                requestAnimationFrame(() => {
+                  el.style.opacity = "0.2"; // Back to base opacity
+                });
+              }, 2000); // Wait for fade out
+            };
+
+            // Start loop - swap one every 4 seconds
+            setInterval(swapRandomText, 4000);
+          }
         }
         // -------------------------------
 

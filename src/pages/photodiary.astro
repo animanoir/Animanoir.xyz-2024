@@ -100,8 +100,8 @@ try {
 <html lang="es">
   <head>
     <BaseHead
-      title="Fotodiario"
-      description={"Photo diary of daily surreal life. Hosted in Are.na."}
+      title="Photodiary"
+      description={"Photo diary of the daily surrealness of life. Hosted in Are.na."}
       image="/images/about/óscar-a-montiel-animanoir-geosmina.jpg"
     />
   </head>
@@ -114,7 +114,7 @@ try {
         photos.map((photo) => (
           <div class="photo-item">
             <a
-              href={photo.image?.original?.url}
+              href={`https://www.are.na/block/${photo.id}`}
               target="_blank"
               rel="noopener noreferrer"
             >
