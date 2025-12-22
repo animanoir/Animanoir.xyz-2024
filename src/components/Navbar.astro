@@ -52,6 +52,7 @@ const socialLinks = [
     icon: igSvg,
     alt: "Instagram profile",
     tooltip: "I fucking hate Instagram, and you should too.",
+    hoverIcon: "/middle-finger.gif",
   },
 ];
 ---
@@ -61,13 +62,14 @@ const socialLinks = [
     {
       socialLinks.map((social) => {
         const isBlocked = Boolean(social.tooltip);
+        const hasHover = Boolean(social.hoverIcon);
 
         return (
           <a
             href={isBlocked ? undefined : social.href}
             target={isBlocked ? undefined : "_blank"}
             rel={isBlocked ? undefined : "noreferrer"}
-            class={`social-link${isBlocked ? " social-link--blocked" : ""}`}
+            class={`social-link${isBlocked ? " social-link--blocked" : ""}${hasHover ? " has-hover-effect" : ""}`}
             data-tooltip={isBlocked ? social.tooltip : undefined}
             role={isBlocked ? "button" : undefined}
             aria-disabled={isBlocked ? "true" : undefined}
@@ -77,8 +79,15 @@ const socialLinks = [
               loading="eager"
               alt={social.alt}
               src={social.icon}
-              class="social-icon"
+              class="social-icon static-icon"
             />
+            {social.hoverIcon && (
+              <img
+                src={social.hoverIcon}
+                alt={social.alt}
+                class="social-icon hover-icon"
+              />
+            )}
           </a>
         );
       })
@@ -134,13 +143,14 @@ const socialLinks = [
       {
         socialLinks.map((social) => {
           const isBlocked = Boolean(social.tooltip);
+          const hasHover = Boolean(social.hoverIcon);
 
           return (
             <a
               href={isBlocked ? undefined : social.href}
               target={isBlocked ? undefined : "_blank"}
               rel={isBlocked ? undefined : "noreferrer"}
-              class={`social-link${isBlocked ? " social-link--blocked" : ""}`}
+              class={`social-link${isBlocked ? " social-link--blocked" : ""}${hasHover ? " has-hover-effect" : ""}`}
               data-tooltip={isBlocked ? social.tooltip : undefined}
               role={isBlocked ? "button" : undefined}
               aria-disabled={isBlocked ? "true" : undefined}
@@ -150,8 +160,15 @@ const socialLinks = [
                 loading="eager"
                 alt={social.alt}
                 src={social.icon}
-                class="social-icon"
+                class="social-icon static-icon"
               />
+              {social.hoverIcon && (
+                <img
+                  src={social.hoverIcon}
+                  alt={social.alt}
+                  class="social-icon hover-icon"
+                />
+              )}
             </a>
           );
         })
@@ -263,6 +280,19 @@ const socialLinks = [
     opacity: 0.7;
   }
 
+  .hover-icon {
+    display: none;
+    transform: scale(2);
+  }
+
+  .has-hover-effect:hover .static-icon {
+    display: none;
+  }
+
+  .has-hover-effect:hover .hover-icon {
+    display: block;
+  }
+
   .social-link--blocked::after {
     content: attr(data-tooltip);
     position: absolute;
@@ -276,7 +306,7 @@ const socialLinks = [
     font-size: 0.75rem;
     white-space: normal;
     text-align: center;
-    max-width: 240px;
+    max-width: 480px;
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--transition-speed) ease;
