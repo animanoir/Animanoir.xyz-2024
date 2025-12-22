@@ -1,6 +1,6 @@
 ---
 import BaseHead from "../../components/BaseHead.astro";
-import Header from "../../components/Header.astro";
+import ModifiedHeader from "../../components/ModifiedHeader.astro";
 import { getAllPosts } from "../../lib/sanity";
 
 const posts = await getAllPosts();
@@ -59,7 +59,7 @@ try {
     />
   </head>
   <body>
-    <Header />
+    <ModifiedHeader />
     <main>
       <div
         class="arena-background"

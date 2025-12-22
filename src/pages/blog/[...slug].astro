@@ -61,11 +61,16 @@ const heroImageUrl = post.mainImage
   }
 
   :global(.sanity-blockquote) {
-    border-left: 4px solid #444;
-    padding-left: 1rem;
-    margin: 1rem 0;
+    border-left: 4px solid #ee5858;
+    margin: 1rem auto;
     font-style: italic;
     color: #aaa;
+    text-align: center;
+  }
+
+  :global(.sanity-blockquote:before),
+  :global(.sanity-blockquote:after) {
+    color: #ee5858;
   }
 
   :global(.sanity-list-bullet),
