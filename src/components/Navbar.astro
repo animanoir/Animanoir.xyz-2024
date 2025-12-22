@@ -10,7 +10,18 @@ import steamSvg from "@/components/Footer/icons/steam.svg";
 
 const links = [
   { href: "/works", label: "Works", target: "_self" },
-  { href: "/blog", label: "Blog & Studies", target: "_self" },
+  {
+    href: "/blog",
+    label: "Blog & Studies",
+    target: "_self",
+    subLinks: [
+      {
+        href: "https://animanoir.notion.site/Mi-biblioteca-digital-06dfea2aa5e048bba145b85d5395c68f",
+        label: "Books I'm reading",
+        target: "_blank",
+      },
+    ],
+  },
   { href: "/fotodiario", label: "Fotodiario", target: "_self" },
   { href: "https://linktr.ee/animanoir", label: "Contact", target: "_blank" },
 ];
@@ -76,9 +87,20 @@ const socialLinks = [
   <div class="nav-links">
     {
       links.map((link) => (
-        <HeaderLink href={link.href} target={link.target}>
-          {link.label}
-        </HeaderLink>
+        <div class="nav-item">
+          <HeaderLink href={link.href} target={link.target}>
+            {link.label}
+          </HeaderLink>
+          {link.subLinks && (
+            <div class="dropdown-content">
+              {link.subLinks.map((subLink) => (
+                <a href={subLink.href} target={subLink.target}>
+                  {subLink.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
       ))
     }
   </div>
@@ -91,9 +113,20 @@ const socialLinks = [
     <div class="mobile-nav-links">
       {
         links.map((link) => (
-          <HeaderLink href={link.href} target={link.target}>
-            {link.label}
-          </HeaderLink>
+          <>
+            <HeaderLink href={link.href} target={link.target}>
+              {link.label}
+            </HeaderLink>
+            {link.subLinks && (
+              <div class="mobile-sublinks">
+                {link.subLinks.map((subLink) => (
+                  <a href={subLink.href} target={subLink.target}>
+                    {subLink.label}
+                  </a>
+                ))}
+              </div>
+            )}
+          </>
         ))
       }
     </div>
@@ -206,6 +239,12 @@ const socialLinks = [
     display: flex;
     align-items: center;
     margin-right: 1rem;
+    gap: var(--margin-horizontal);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
   }
 
   .social-link {
@@ -264,7 +303,42 @@ const socialLinks = [
   }
 
   .navbar a:not(:last-child) {
+    /* margin-right: var(--margin-horizontal); */
+  }
+
+  .nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
     margin-right: var(--margin-horizontal);
+  }
+
+  .nav-item:last-child {
+    margin-right: 0;
+  }
+
+  /* Dropdown Styles */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    z-index: 1002;
+    padding: 0.1rem 0;
+    flex-direction: column;
+  }
+
+  .dropdown-content a {
+    color: var(--text-color);
+    padding: 6px 0;
+    text-decoration: none;
+    display: block;
+    margin-right: 0;
+  }
+
+  .nav-item:hover .dropdown-content {
+    display: flex;
   }
 
   /* Mobile Menu Button */
@@ -347,6 +421,20 @@ const socialLinks = [
 
   .mobile-nav-links a:hover {
     color: var(--hover-color);
+  }
+
+  .mobile-sublinks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: -1rem; /* Pull it closer to the parent */
+  }
+
+  .mobile-sublinks a {
+    font-size: 1rem;
+    color: var(--text-color);
+    opacity: 0.8;
   }
 
   .mobile-social-icons {
