@@ -43,14 +43,25 @@ const FloatingCamera = ({ intensity = 0.15, speed = 0.3 }) => {
       Math.sin(t * 0.7 + z1) * 0.3
     ) * intensity;
 
-    // Apply noise to camera position
-    camera.position.x = initialCameraPos.current.x + noiseX;
-    camera.position.y = initialCameraPos.current.y + noiseY;
-    camera.position.z = initialCameraPos.current.z + noiseZ * 2.0;
+    // Calculate orbit
+    const radius = Math.sqrt(initialCameraPos.current.x ** 2 + initialCameraPos.current.z ** 2);
+    const rotationSpeed = 0.1;
+    const angle = t * rotationSpeed;
 
-    // Subtle camera rotation for enhanced drunk effect
-    camera.rotation.x = Math.sin(t * 0.5 + x1) * 0.01 * intensity;
-    camera.rotation.y = Math.sin(t * 0.6 + y1) * 0.01 * intensity;
+    const orbitX = Math.sin(angle) * radius;
+    const orbitZ = Math.cos(angle) * radius;
+
+    // Apply noise to camera position
+    camera.position.x = orbitX + noiseX;
+    camera.position.y = initialCameraPos.current.y + noiseY;
+    camera.position.z = orbitZ + noiseZ * 2.0;
+
+    // Look at center
+    camera.lookAt(0, 0, 0);
+
+    // Subtle camera rotation for enhanced drunk effect on top
+    camera.rotation.x += Math.sin(t * 0.5 + x1) * 0.01 * intensity;
+    camera.rotation.y += Math.sin(t * 0.6 + y1) * 0.01 * intensity;
   });
 
   return null;
