@@ -42,14 +42,20 @@ const components: Partial<PortableTextReactComponents> = {
   },
   marks: {
     link: ({ children, value }) => {
-      // Extract href - it might be in value.href or directly in value
-      const href = value?.href || value?.url || "";
+      // Extract href - handle different possible structures from Sanity
+      let href = "";
+      if (typeof value === "string") {
+        href = value;
+      } else if (value?.href) {
+        href = value.href;
+      } else if (value?.url) {
+        href = value.url;
+      }
+
       // Check if blank is explicitly set, default to true for external links
       const isExternal = href.startsWith("http://") || href.startsWith("https://");
       const shouldOpenInNewTab = value?.blank !== false; // Default to true unless explicitly false
       const target = shouldOpenInNewTab ? "_blank" : undefined;
-
-      console.log("Link render:", { href, value, shouldOpenInNewTab }); // Debug log
 
       return (
         <a
