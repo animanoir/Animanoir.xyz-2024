@@ -140,12 +140,15 @@ const heroImageUrl = post.mainImage
     font-size: 0.9em;
   }
 
-  :global(.portable-text-content a) {
+  :global(.portable-text-content a),
+  :global(.portable-text-link) {
     color: #ee5858;
     text-decoration: underline;
+    cursor: pointer;
   }
 
-  :global(.portable-text-content a:hover) {
+  :global(.portable-text-content a:hover),
+  :global(.portable-text-link:hover) {
     color: #fa8e8e;
   }
 </style>

@@ -3,15 +3,6 @@ import type { PortableTextBlock } from "@portabletext/types";
 import { urlFor } from "../lib/sanity";
 import ReactPlayer from "react-player";
 
-const serializers = {
-  types: {
-    youtube: ({ node }) => {
-      const { url } = node
-      return (<ReactPlayer url={url} />)
-    }
-  }
-}
-
 interface PortableTextRendererProps {
   value: PortableTextBlock[];
 }
@@ -44,12 +35,29 @@ const components: Partial<PortableTextReactComponents> = {
         </div>
       );
     },
+    youtube: ({ value }) => {
+      const { url } = value;
+      return <ReactPlayer url={url} />;
+    },
   },
   marks: {
     link: ({ children, value }) => {
-      const target = value?.blank ? "_blank" : undefined;
+      // Extract href - it might be in value.href or directly in value
+      const href = value?.href || value?.url || "";
+      // Check if blank is explicitly set, default to true for external links
+      const isExternal = href.startsWith("http://") || href.startsWith("https://");
+      const shouldOpenInNewTab = value?.blank !== false; // Default to true unless explicitly false
+      const target = shouldOpenInNewTab ? "_blank" : undefined;
+
+      console.log("Link render:", { href, value, shouldOpenInNewTab }); // Debug log
+
       return (
-        <a href={value?.href} target={target} rel={target ? "noopener noreferrer" : undefined}>
+        <a
+          href={href}
+          target={target}
+          rel={target ? "noopener noreferrer" : undefined}
+          className="portable-text-link"
+        >
           {children}
         </a>
       );
@@ -85,7 +93,7 @@ export default function PortableTextRenderer({ value }: PortableTextRendererProp
 
   return (
     <div className="portable-text-content">
-      <PortableText value={value} components={components} types={serializers} />
+      <PortableText value={value} components={components} />
     </div>
   );
 }
