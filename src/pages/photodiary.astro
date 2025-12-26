@@ -146,17 +146,23 @@ try {
     <Footer useTopOffset={false} />
 
     <style>
+      * {
+        box-sizing: border-box;
+      }
+
       body {
         margin: 0;
         padding: 0;
         overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
       }
 
       .photo-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(390px, 1fr));
         gap: 0;
-        width: 100vw;
+        width: 100%;
         min-height: 100vh;
       }
 
@@ -189,7 +195,7 @@ try {
       }
 
       .more-photos {
-        width: 100vw;
+        width: 100%;
         padding: 4rem 2rem;
         background: #000;
         text-align: center;
@@ -215,7 +221,10 @@ try {
 
       @media (max-width: 768px) {
         .photo-grid {
-          grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+          grid-template-columns: repeat(
+            auto-fit,
+            minmax(min(150px, 100%), 1fr)
+          );
           padding-top: 8vh;
         }
 
