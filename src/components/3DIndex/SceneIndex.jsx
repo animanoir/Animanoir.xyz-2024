@@ -92,17 +92,29 @@ export const SceneIndex = () => {
 
   return (
     <div id="fiberCanvas">
-      <Canvas onCreated={sceneCreated} camera={cameraProps} style={canvasStyle}>
+      <Canvas
+        onCreated={sceneCreated}
+        camera={cameraProps}
+        style={canvasStyle}
+        dpr={[1, 1.5]}
+        performance={{ min: 0.5 }}
+        gl={{
+          antialias: false,
+          powerPreference: "high-performance",
+          stencil: false,
+          depth: true
+        }}
+      >
         <AnimanoirLogoScene client:only="react" />
         <FloatingCamera intensity={1.0} speed={1.0} />
-        <EffectComposer>
+        <EffectComposer multisampling={0}>
           <Bloom
-            intensity={2.0}
-            luminanceThreshold={0.9}
-            luminanceSmoothing={0.9}
-            mipmapBlur
+            intensity={1.5}
+            luminanceThreshold={0.85}
+            luminanceSmoothing={0.5}
+            mipmapBlur={false}
           />
-          <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.15} />
+          <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.12} />
           <Vignette eskil={false} offset={0.1} darkness={0.2} />
         </EffectComposer>
       </Canvas>
