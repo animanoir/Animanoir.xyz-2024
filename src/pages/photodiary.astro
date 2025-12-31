@@ -34,40 +34,29 @@ interface ArenaResponse {
   per: number;
 }
 
-// Fetch all pages from a single channel
-async function fetchAllFromChannel(slug: string): Promise<ArenaBlock[]> {
-  const allBlocks: ArenaBlock[] = [];
-  let page = 1;
-  let totalPages = 1;
-  const perPage = 50;
+// Fetch first page from a single channel (limited to reduce API requests)
+async function fetchFromChannel(slug: string): Promise<ArenaBlock[]> {
+  const url = `https://api.are.na/v2/channels/${slug}/contents?page=1&per=50`;
+  const response = await fetch(url, {
+    headers: {
+      Accept: "application/json",
+      "User-Agent": "Animanoir-Website/1.0",
+    },
+  });
 
-  while (page <= totalPages) {
-    const url = `https://api.are.na/v2/channels/${slug}/contents?page=${page}&per=${perPage}`;
-    const response = await fetch(url, {
-      headers: {
-        Accept: "application/json",
-        "User-Agent": "Animanoir-Website/1.0",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status} for ${slug}`);
-    }
-
-    const data: ArenaResponse = await response.json();
-    totalPages = data.total_pages;
-
-    // Filter for image blocks only
-    const imageBlocks =
-      data.contents?.filter(
-        (block: ArenaBlock) => block.class === "Image" && block.image,
-      ) || [];
-
-    allBlocks.push(...imageBlocks);
-    page++;
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status} for ${slug}`);
   }
 
-  return allBlocks.sort((a, b) => {
+  const data: ArenaResponse = await response.json();
+
+  // Filter for image blocks only
+  const imageBlocks =
+    data.contents?.filter(
+      (block: ArenaBlock) => block.class === "Image" && block.image,
+    ) || [];
+
+  return imageBlocks.sort((a, b) => {
     const aDate = a.connected_at ? new Date(a.connected_at).getTime() : 0;
     const bDate = b.connected_at ? new Date(b.connected_at).getTime() : 0;
 
@@ -84,7 +73,7 @@ let photos: ArenaBlock[] = [];
 try {
   // Fetch all photos from each channel
   const results = await Promise.all(
-    channelSlugs.map((slug) => fetchAllFromChannel(slug)),
+    channelSlugs.map((slug) => fetchFromChannel(slug)),
   );
 
   // Combine photos and reverse to show newest first
