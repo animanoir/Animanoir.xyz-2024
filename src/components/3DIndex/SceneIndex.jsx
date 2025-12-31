@@ -73,7 +73,7 @@ export const SceneIndex = () => {
     gl.setClearColor("black", 1);
     gl.toneMapping = THREE.AgXToneMapping;
     gl.outputColorSpace = THREE.SRGBColorSpace;
-    gl.toneMappingExposure = 1.0;
+    gl.toneMappingExposure = 1.2;
   };
 
   const canvasStyle = {
@@ -108,12 +108,6 @@ export const SceneIndex = () => {
         <AnimanoirLogoScene client:only="react" />
         <FloatingCamera intensity={1.0} speed={1.0} />
         <EffectComposer multisampling={0}>
-          <Bloom
-            intensity={1.5}
-            luminanceThreshold={0.85}
-            luminanceSmoothing={0.5}
-            mipmapBlur={false}
-          />
           <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.12} />
           <Vignette eskil={false} offset={0.1} darkness={0.2} />
         </EffectComposer>

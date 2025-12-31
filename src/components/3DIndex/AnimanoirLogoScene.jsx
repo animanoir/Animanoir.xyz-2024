@@ -45,7 +45,7 @@ export const AnimanoirLogoScene = () => {
   const tempVelocityRef = useRef(new THREE.Vector3());
 
   // Create main particles system
-  const particlesCount = 80; // Reduced from 100
+  const particlesCount = 80;
   const { positions, colors, originalPositions } = useMemo(() => {
     const positions = new Float32Array(particlesCount * 3);
     const colors = new Float32Array(particlesCount * 3);
@@ -257,7 +257,7 @@ export const AnimanoirLogoScene = () => {
       <Environment
         ref={environmentRef}
         files={"/images/animanoir-xyz-space-small.hdr"}
-        backgroundIntensity={1}
+        backgroundIntensity={1.2}
         background
         backgroundBlurriness={0.1}
       />
@@ -284,7 +284,7 @@ export const AnimanoirLogoScene = () => {
             />
           </bufferGeometry>
           <pointsMaterial
-            size={0.05}
+            size={0.07}
             vertexColors
             opacity={10.0}
             blending={THREE.AdditiveBlending}
@@ -316,7 +316,7 @@ export const AnimanoirLogoScene = () => {
           />
         </bufferGeometry>
         <pointsMaterial
-          size={0.02}
+          size={0.2}
           vertexColors
           transparent
           opacity={0.8}
