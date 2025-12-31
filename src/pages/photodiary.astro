@@ -50,6 +50,7 @@ async function fetchAllFromChannel(slug: string): Promise<ArenaBlock[]> {
     const response = await fetch(url, {
       headers: {
         Accept: "application/json",
+        "User-Agent": "Animanoir-Website/1.0",
       },
     });
 

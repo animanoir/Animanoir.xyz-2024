@@ -29,6 +29,12 @@ let remainingTexts = [];
 try {
   const response = await fetch(
     "https://api.are.na/v2/channels/2025-a-salvo-en-la-soledad/contents?per=100",
+    {
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "Animanoir-Website/1.0",
+      },
+    },
   );
   if (response.ok) {
     const data = await response.json();
