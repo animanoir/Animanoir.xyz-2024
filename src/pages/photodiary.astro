@@ -91,12 +91,28 @@ try {
   <head>
     <BaseHead
       title="Photodiary"
-      description="Photo diary of my daily surrealness of life."
+      description="Photo diary capturing the daily surrealness of life — moments, textures, and fleeting beauty."
       image="/images/photodiary.jpg"
     />
+    <style>
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
   </head>
 
   <body>
+    <h1 class="visually-hidden">
+      Photodiary — Daily Surreal Photography by Óscar A. Montiel
+    </h1>
     <Ornaments />
     <ModifiedHeader />
     <div class="photo-grid">
