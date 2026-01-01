@@ -150,8 +150,7 @@ const { title, description, heroImage } = Astro.props;
         font-family: "EB Garamond", serif;
         color: #fdfefe;
         font-size: 1.3rem;
-        width: 65%;
-        max-width: 900px;
+        width: 90%;
         margin: 0 auto;
       }
 
@@ -167,8 +166,7 @@ const { title, description, heroImage } = Astro.props;
 
       @media (max-width: 1920px) {
         .articleContainer {
-          width: 60%;
-          max-width: 1200px;
+          width: 90%;
         }
       }
 
@@ -202,7 +200,7 @@ const { title, description, heroImage } = Astro.props;
           width: 100%;
         }
         .articleBody {
-          width: 85%;
+          width: 95%;
         }
       }
 
@@ -226,7 +224,9 @@ const { title, description, heroImage } = Astro.props;
           padding-bottom: 20vh;
         }
         .articleBody {
-          padding: 0 0.5rem;
+          width: 100%;
+          padding: 0 1rem;
+          box-sizing: border-box;
         }
         .heroImage {
           height: auto;
