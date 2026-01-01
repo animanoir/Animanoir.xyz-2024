@@ -28,6 +28,17 @@ const actualSlug =
       publishDate={pubDate?.toISOString()}
       author="Óscar A. Montiel"
     />
+    {/* Preload hero image for instant display */}
+    {
+      heroImage && (
+        <link
+          rel="preload"
+          as="image"
+          href={heroImage.src}
+          fetchpriority="high"
+        />
+      )
+    }
   </head>
   <body>
     <ModifiedHeader />
@@ -128,6 +139,24 @@ const actualSlug =
         object-fit: cover;
         filter: blur(8px) brightness(0.4);
         z-index: 1;
+        /* Placeholder background while image loads */
+        background: linear-gradient(
+          135deg,
+          #1a1a2e 0%,
+          #16213e 50%,
+          #0f0f23 100%
+        );
+        /* Smooth fade-in animation when loaded */
+        animation: heroFadeIn 0.3s ease-out;
+      }
+
+      @keyframes heroFadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
       .end-hero-link {
         display: block;
