@@ -1,5 +1,5 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useRef, useState, useCallback } from "react";
 import { Loader } from "@react-three/drei";
 import { EffectComposer, Noise, Vignette } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
@@ -68,13 +68,17 @@ const FloatingCamera = ({ intensity = 0.15, speed = 0.3 }) => {
 };
 
 export const SceneIndex = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const sceneCreated = ({ gl }) => {
+  const handleSceneCreated = useCallback(({ gl }) => {
     gl.setClearColor("black", 1);
     gl.toneMapping = THREE.AgXToneMapping;
     gl.outputColorSpace = THREE.SRGBColorSpace;
     gl.toneMappingExposure = 1.2;
-  };
+
+    // Trigger fade-in after a small delay to ensure scene is rendered
+    setTimeout(() => setIsLoaded(true), 100);
+  }, []);
 
   const canvasStyle = {
     display: "block",
@@ -85,6 +89,19 @@ export const SceneIndex = () => {
     height: "100%",
   };
 
+  const fadeOverlayStyle = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "black",
+    opacity: isLoaded ? 0 : 1,
+    transition: "opacity 1s ease-out",
+    pointerEvents: "none",
+    zIndex: 10,
+  };
+
   const cameraProps = {
     position: [0, 0, 15],
     fov: 40,
@@ -93,7 +110,7 @@ export const SceneIndex = () => {
   return (
     <div id="fiberCanvas">
       <Canvas
-        onCreated={sceneCreated}
+        onCreated={handleSceneCreated}
         camera={cameraProps}
         style={canvasStyle}
         dpr={[1, 1.5]}
@@ -112,6 +129,7 @@ export const SceneIndex = () => {
           <Vignette eskil={false} offset={0.1} darkness={0.2} />
         </EffectComposer>
       </Canvas>
+      <div style={fadeOverlayStyle} />
       <Loader containerStyles={{ backgroundColor: "#060606" }} />
     </div>
   );
