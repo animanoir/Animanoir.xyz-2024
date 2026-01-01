@@ -113,7 +113,7 @@ for (let i = posts.length - 1; i > 0; i--) {
         >
           <div class="listContainer">
             <div class="section-title">
-              <h2 class="workType">3D Art & WebGL</h2>
+              <h2 class="workType">3D & WebGL</h2>
               <h3>
                 <b>Interactive</b> animations and <b>storytelling</b>.
               </h3>
@@ -338,8 +338,8 @@ for (let i = posts.length - 1; i > 0; i--) {
               <h4 class="section-description">
                 Oh, yeah... That's right... <b>I'm an Artist too!</b> I mean, I do
                 music! But more than music I really enjoy exploring soundscapes and
-                textures. My main tool is <b>Max/MSP</b> but even banging sticks
-                into computers may do the trick!
+                textures. My main tool is <b>Max/MSP</b> but even banging sticks into
+                computers may do the trick!
               </h4>
             </div>
             <ul>
@@ -490,8 +490,6 @@ for (let i = posts.length - 1; i > 0; i--) {
           .projectsContainer {
             width: 80vw;
             margin: 0 auto;
-            max-width: 80vw;
-            /* padding: 5rem 0; */
             overflow-x: hidden;
           }
 
@@ -513,6 +511,7 @@ for (let i = posts.length - 1; i > 0; i--) {
             display: flex;
             justify-content: center;
             margin-bottom: 10rem;
+            gap: 2rem;
           }
 
           .lc-row-reverse {
@@ -520,7 +519,7 @@ for (let i = posts.length - 1; i > 0; i--) {
           }
 
           .section-title {
-            width: 30%;
+            width: 35%;
           }
 
           .section-description {
@@ -758,10 +757,18 @@ for (let i = posts.length - 1; i > 0; i--) {
             .projectsContainer {
               width: 100%;
               margin: 0 auto;
+              padding: 0;
+              box-sizing: border-box;
+              overflow-x: hidden;
+            }
+
+            .projectsContainer h3 {
+              font-size: 1.1rem;
+              padding: 0 1.25rem;
             }
 
             .listContainer {
-              padding-bottom: 5rem;
+              padding-bottom: 2rem;
               flex-direction: column;
               display: block;
               justify-content: initial;
@@ -770,25 +777,39 @@ for (let i = posts.length - 1; i > 0; i--) {
             .section-title {
               width: 100%;
               text-align: center;
+              padding: 0 1.25rem;
+              box-sizing: border-box;
+            }
+
+            .section-description {
+              font-size: 0.85rem;
+              line-height: 1.8;
+              padding: 0;
             }
 
             .workType {
-              font-size: 2.75rem;
+              font-size: 2.25rem;
               transform: none;
+              padding: 0;
             }
 
             ul {
               width: 100%;
               grid-template-columns: repeat(1, 1fr);
+              padding: 0;
+              box-sizing: border-box;
             }
 
             .project {
               opacity: 1;
-              height: 40vh;
+              width: 100%;
             }
 
             .postHeroImg {
               opacity: 0.7;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
             }
 
             .postInfo {
@@ -799,7 +820,7 @@ for (let i = posts.length - 1; i > 0; i--) {
             }
 
             .postTitle {
-              font-size: 1.6rem;
+              font-size: 1.4rem;
             }
           }
 
@@ -808,8 +829,7 @@ for (let i = posts.length - 1; i > 0; i--) {
             .videogrid {
               width: 95vw;
               grid-template-columns: 1fr;
-              gap: 1.5rem;
-              padding: 1.5rem;
+              margin-bottom: 10rem;
             }
 
             .videogrid > :first-child {
@@ -845,7 +865,7 @@ for (let i = posts.length - 1; i > 0; i--) {
           /* Standard HD screens - slightly reduced text sizes */
           @media (max-width: 1920px) {
             .quote {
-              font-size: 3rem;
+              font-size: 2.5rem;
             }
 
             .workType {
