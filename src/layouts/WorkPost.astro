@@ -152,6 +152,27 @@ const { title, description, heroImage } = Astro.props;
         font-size: 1.3rem;
         width: 90%;
         margin: 0 auto;
+        line-height: 1.8;
+      }
+
+      .articleBody :global(p) {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        margin-top: 1.8rem !important;
+        margin-bottom: 2.4rem !important;
+      }
+
+      .articleBody :global(h2),
+      .articleBody :global(h3),
+      .articleBody :global(h4) {
+        margin-top: 4.2rem !important;
+        margin-bottom: 1.8rem !important;
+      }
+
+      .articleBody :global(img),
+      .articleBody :global(video),
+      .articleBody :global(lite-youtube) {
+        margin: 3.6rem 0 !important;
       }
 
       .articleContainer h1 {
@@ -220,7 +241,7 @@ const { title, description, heroImage } = Astro.props;
         }
         .articleContainer {
           width: 100%;
-          padding-top: 10vh;
+          padding-top: 5vh;
           padding-bottom: 20vh;
         }
         .articleBody {
