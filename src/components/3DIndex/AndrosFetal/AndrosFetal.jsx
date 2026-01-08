@@ -7,7 +7,7 @@ export function AndrosFetal(props) {
   const group = useRef();
   const eyeMaterialRef = useRef(); // Ref for the eye material
   const bodyMaterialRef = useRef(); // Ref for the body material
-  const [isTransparent, setIsTransparent] = useState(true); // State for transparency/metalness toggle
+  const [isTransparent, setIsTransparent] = useState(false); // State for transparency/metalness toggle
 
   // Mouse rotation states
   const [isDragging, setIsDragging] = useState(false);
