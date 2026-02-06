@@ -34,7 +34,7 @@ for (let i = posts.length - 1; i > 0; i--) {
       description={"Interactive media projects exploring 3D art, web development, game design and programming, and multimedia installations by Óscar A. Montiel"}
     />
   </head>
-  <body>
+  <body style="overflow-x: hidden;">
     <ModifiedHeader />
 
     <main>
@@ -444,11 +444,17 @@ for (let i = posts.length - 1; i > 0; i--) {
             box-sizing: border-box;
           }
           .videogrid {
-            width: 90vw;
+            width: 90%;
             margin: 0 auto;
             display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
             position: relative;
+            overflow: hidden;
+          }
+
+          .videogrid > :global(*) {
+            aspect-ratio: 16 / 9;
             overflow: hidden;
           }
 
@@ -464,7 +470,7 @@ for (let i = posts.length - 1; i > 0; i--) {
      ========================================================================== */
 
           .quote-container {
-            width: 99vw;
+            width: 100%;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -827,38 +833,9 @@ for (let i = posts.length - 1; i > 0; i--) {
           /* Tablet responsive for video grid */
           @media (max-width: 768px) {
             .videogrid {
-              width: 95vw;
+              width: 95%;
               grid-template-columns: 1fr;
               margin-bottom: 10rem;
-            }
-
-            .videogrid > :first-child {
-              grid-column: 1;
-              grid-row: 1;
-              transform: rotate(0deg);
-            }
-
-            .videogrid > :last-child {
-              grid-column: 1;
-              grid-row: 2;
-              transform: rotate(0deg);
-            }
-          }
-
-          /* Large desktop - mosaic video grid layout */
-          @media (min-width: 1200px) {
-            .videogrid {
-              grid-template-columns: 1fr 2fr 1fr;
-            }
-
-            .videogrid > :first-child {
-              grid-column: 1 / 3;
-              grid-row: 1 / 3;
-            }
-
-            .videogrid > :last-child {
-              grid-column: 3;
-              grid-row: 1;
             }
           }
 
