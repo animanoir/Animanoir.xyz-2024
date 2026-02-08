@@ -90,6 +90,7 @@ const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
     "Profound Creator",
     "Metaphor Sculptor",
     "Ex-boyfriend",
+    "DuMb",
     "Poet of Dreams",
     "Poet of Algorithms",
     "Creative Explorer",
