@@ -2,6 +2,7 @@
 import BaseHead from "../../components/BaseHead.astro";
 import ModifiedHeader from "../../components/ModifiedHeader.astro";
 import { getAllPosts } from "../../lib/sanity";
+import Footer from "../../components/Footer/Footer.astro";
 
 const posts = await getAllPosts();
 
@@ -56,339 +57,337 @@ try {
 }
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead
-      title="Blog"
-      description={"Blog & studies about subjects I find interesting and fun. Expect random, weird and probably confusing thoughts."}
-    />
-  </head>
-  <body>
-    <ModifiedHeader />
-    <main>
-      <div
-        class="arena-background"
-        aria-hidden="true"
-        data-remaining-texts={JSON.stringify(remainingTexts)}
-      >
+<head>
+  <BaseHead
+    title="Blog"
+    description={"Blog & studies about subjects I find interesting and fun. Expect random, weird and probably confusing thoughts."}
+  />
+</head>
+<body style="overflow-y: hidden;">
+  <ModifiedHeader />
+  <main>
+    <div
+      class="arena-background"
+      aria-hidden="true"
+      data-remaining-texts={JSON.stringify(remainingTexts)}
+    >
+      {
+        arenaTexts.map((text: any) => (
+          <div class="arena-text-item" set:html={text.content_html} />
+        ))
+      }
+    </div>
+
+    <div class="vertical-scroll-wrapper">
+      <div class="blogpostsContainer">
+        <!-- Posts grouped by year -->
         {
-          arenaTexts.map((text: any) => (
-            <div class="arena-text-item" set:html={text.content_html} />
+          sortedYears.map((year) => (
+            <div class="year-section" data-year={year}>
+              {postsByYear[year].map((post) => (
+                <div class="random-position post-item" data-year={year}>
+                  <small class="postDate">
+                    {new Date(post.publishedAt).toLocaleDateString()}
+                  </small>
+                  <a data-astro-prefetch href={`/blog/${post.slug.current}/`}>
+                    <div class="postInfo">
+                      <p class="postTitle">{post.title}</p>
+                    </div>
+                  </a>
+                </div>
+              ))}
+            </div>
           ))
         }
       </div>
+    </div>
+  </main>
+  <Footer />
+  <style>
+    main {
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      margin-left: 10vw;
+    }
 
-      <div class="vertical-scroll-wrapper">
-        <div class="blogpostsContainer">
-          <!-- Posts grouped by year -->
-          {
-            sortedYears.map((year) => (
-              <div class="year-section" data-year={year}>
-                {postsByYear[year].map((post) => (
-                  <div class="random-position post-item" data-year={year}>
-                    <small class="postDate">
-                      {new Date(post.publishedAt).toLocaleDateString()}
-                    </small>
-                    <a data-astro-prefetch href={`/blog/${post.slug.current}/`}>
-                      <div class="postInfo">
-                        <p class="postTitle">{post.title}</p>
-                      </div>
-                    </a>
-                  </div>
-                ))}
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </main>
-    <style>
-      main {
-        width: 100%;
-        min-height: 100vh;
-        overflow-x: hidden;
-        position: relative;
-      }
+    .arena-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
 
-      .arena-background {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        pointer-events: none;
-        overflow: hidden;
-      }
+    .arena-text-item {
+      position: absolute;
+      color: #b0b0b0;
+      opacity: 0.2;
+      font-size: 1rem;
+      max-width: 400px;
+      font-style: italic;
+      font-family: "Cormorant Garamond", serif;
+    }
 
-      .arena-text-item {
-        position: absolute;
-        color: #b0b0b0;
-        opacity: 0.2;
-        font-size: 1rem;
-        max-width: 400px;
-        font-style: italic;
-        font-family: "EB Garamond", serif;
-      }
+    .blogpostsContainer {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px var(--page-padding, 6%) 20vh;
+      z-index: 10;
+    }
 
+    .year-section {
+      position: relative;
+      width: 100%;
+      min-height: 60vh;
+    }
+
+    .random-position {
+      position: absolute;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      max-width: 350px;
+      z-index: 15;
+    }
+
+    .postDate {
+      font-family: "Open Sans", sans-serif;
+      font-size: 0.8rem;
+      margin: 0;
+      color: #484848;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    a:hover {
+      filter: invert(1);
+    }
+
+    .postTitle {
+      background-color: rgba(0, 0, 0, 0);
+      color: floralwhite;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.5rem;
+      /* line-height: 1.4; */
+      width: fit-content;
+      padding-top: 0;
+    }
+
+    .postInfo {
+      mix-blend-mode: exclusion;
+    }
+
+    @media (max-width: 768px) {
       .blogpostsContainer {
-        position: relative;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding-top: 100px;
-        padding-bottom: 20vh;
-        z-index: 10;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 120px;
       }
 
       .year-section {
-        position: relative;
-        width: 100%;
-        min-height: 60vh;
+        min-height: auto !important;
+        height: auto !important;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        margin-bottom: 60px;
       }
 
       .random-position {
-        position: absolute;
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-        max-width: 350px;
-        z-index: 15;
+        position: static;
+        opacity: 1;
+        max-width: 100%;
       }
 
-      .postDate {
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.8rem;
-        margin: 0;
-        color: #484848;
+      .year-markers {
+        display: none;
       }
+    }
+  </style>
+  <script>
+    function initVerticalScroll() {
+      const container = document.querySelector(".blogpostsContainer");
+      if (!container) return;
 
-      a {
-        text-decoration: none;
-      }
+      const sections = document.querySelectorAll(".year-section");
+      const posts = document.querySelectorAll(".random-position");
 
-      a:hover {
-        filter: invert(1);
-      }
+      // --- Are.na Background Logic ---
+      const arenaContainer = document.querySelector(
+        ".arena-background",
+      ) as HTMLElement;
+      const arenaItems = document.querySelectorAll(".arena-text-item");
 
-      .postTitle {
-        background-color: rgba(0, 0, 0, 0);
-        color: floralwhite;
-        font-family: "Montserrat", sans-serif;
-        font-size: 1.1rem;
-        line-height: 1.4;
-        width: fit-content;
-        padding-top: 0;
-      }
+      if (arenaContainer && arenaItems.length > 0) {
+        const distributeArenaItems = () => {
+          // Use clientWidth to avoid scrollbar width issues and potential horizontal overflow loops
+          const docWidth = document.documentElement.clientWidth;
+          const docHeight = Math.max(
+            document.body.scrollHeight,
+            window.innerHeight,
+          );
 
-      .postInfo {
-        mix-blend-mode: exclusion;
-      }
+          arenaContainer.style.height = `${docHeight}px`;
 
-      @media (max-width: 768px) {
-        .blogpostsContainer {
-          padding-left: 20px;
-          padding-right: 20px;
-          padding-top: 120px;
+          arenaItems.forEach((item) => {
+            const el = item as HTMLElement;
+            // Distribute heavily across the width, minus a buffer for the item width
+            const x = Math.random() * (docWidth - 250);
+            const y = Math.random() * (docHeight - 100);
+
+            el.style.left = `${Math.max(0, x)}px`;
+            el.style.top = `${y}px`;
+          });
+        };
+
+        // Initial distribution
+        setTimeout(distributeArenaItems, 100);
+
+        window.addEventListener("resize", () => {
+          setTimeout(distributeArenaItems, 200);
+        });
+
+        // --- Swapping Logic ---
+        const remainingTextsData = arenaContainer.dataset.remainingTexts;
+        let pool: string[] = [];
+
+        try {
+          if (remainingTextsData) {
+            pool = JSON.parse(remainingTextsData);
+          }
+        } catch (e) {
+          console.error("Failed to parse remaining texts", e);
         }
 
-        .year-section {
-          min-height: auto !important;
-          height: auto !important;
-          display: flex;
-          flex-direction: column;
-          gap: 40px;
-          margin-bottom: 60px;
-        }
+        if (pool.length > 0) {
+          const swapRandomText = () => {
+            // Pick a random currently displayed item
+            const randomIndex = Math.floor(Math.random() * arenaItems.length);
+            const el = arenaItems[randomIndex] as HTMLElement;
 
-        .random-position {
-          position: static;
-          opacity: 1;
-          max-width: 100%;
-        }
+            // 1. Fade out
+            el.style.transition = "opacity 2s ease-in-out"; // Slower transition for subtlety
+            el.style.opacity = "0";
 
-        .year-markers {
-          display: none;
-        }
-      }
-    </style>
-    <script>
-      function initVerticalScroll() {
-        const container = document.querySelector(".blogpostsContainer");
-        if (!container) return;
+            setTimeout(() => {
+              // 2. Swap content
+              if (pool.length === 0) return; // Should not happen if we push back
 
-        const sections = document.querySelectorAll(".year-section");
-        const posts = document.querySelectorAll(".random-position");
+              const oldContent = el.innerHTML;
+              const newContentIndex = Math.floor(Math.random() * pool.length);
+              const newContent = pool[newContentIndex];
 
-        // --- Are.na Background Logic ---
-        const arenaContainer = document.querySelector(
-          ".arena-background",
-        ) as HTMLElement;
-        const arenaItems = document.querySelectorAll(".arena-text-item");
+              // Remove new content from pool, add old content back
+              pool.splice(newContentIndex, 1);
+              pool.push(oldContent);
 
-        if (arenaContainer && arenaItems.length > 0) {
-          const distributeArenaItems = () => {
-            // Use clientWidth to avoid scrollbar width issues and potential horizontal overflow loops
-            const docWidth = document.documentElement.clientWidth;
-            const docHeight = Math.max(
-              document.body.scrollHeight,
-              window.innerHeight,
-            );
+              el.innerHTML = newContent;
 
-            arenaContainer.style.height = `${docHeight}px`;
+              // 3. New Random Position
+              const docWidth = document.documentElement.clientWidth;
+              const docHeight = Math.max(
+                document.body.scrollHeight,
+                window.innerHeight,
+              );
 
-            arenaItems.forEach((item) => {
-              const el = item as HTMLElement;
-              // Distribute heavily across the width, minus a buffer for the item width
+              // Same logic as distributeArenaItems
               const x = Math.random() * (docWidth - 250);
               const y = Math.random() * (docHeight - 100);
 
               el.style.left = `${Math.max(0, x)}px`;
               el.style.top = `${y}px`;
-            });
+
+              // 4. Fade back in
+              // Small delay to ensure position is set
+              requestAnimationFrame(() => {
+                el.style.opacity = "0.2"; // Back to base opacity
+              });
+            }, 2000); // Wait for fade out
           };
 
-          // Initial distribution
-          setTimeout(distributeArenaItems, 100);
-
-          window.addEventListener("resize", () => {
-            setTimeout(distributeArenaItems, 200);
-          });
-
-          // --- Swapping Logic ---
-          const remainingTextsData = arenaContainer.dataset.remainingTexts;
-          let pool: string[] = [];
-
-          try {
-            if (remainingTextsData) {
-              pool = JSON.parse(remainingTextsData);
-            }
-          } catch (e) {
-            console.error("Failed to parse remaining texts", e);
-          }
-
-          if (pool.length > 0) {
-            const swapRandomText = () => {
-              // Pick a random currently displayed item
-              const randomIndex = Math.floor(Math.random() * arenaItems.length);
-              const el = arenaItems[randomIndex] as HTMLElement;
-
-              // 1. Fade out
-              el.style.transition = "opacity 2s ease-in-out"; // Slower transition for subtlety
-              el.style.opacity = "0";
-
-              setTimeout(() => {
-                // 2. Swap content
-                if (pool.length === 0) return; // Should not happen if we push back
-
-                const oldContent = el.innerHTML;
-                const newContentIndex = Math.floor(Math.random() * pool.length);
-                const newContent = pool[newContentIndex];
-
-                // Remove new content from pool, add old content back
-                pool.splice(newContentIndex, 1);
-                pool.push(oldContent);
-
-                el.innerHTML = newContent;
-
-                // 3. New Random Position
-                const docWidth = document.documentElement.clientWidth;
-                const docHeight = Math.max(
-                  document.body.scrollHeight,
-                  window.innerHeight,
-                );
-
-                // Same logic as distributeArenaItems
-                const x = Math.random() * (docWidth - 250);
-                const y = Math.random() * (docHeight - 100);
-
-                el.style.left = `${Math.max(0, x)}px`;
-                el.style.top = `${y}px`;
-
-                // 4. Fade back in
-                // Small delay to ensure position is set
-                requestAnimationFrame(() => {
-                  el.style.opacity = "0.2"; // Back to base opacity
-                });
-              }, 2000); // Wait for fade out
-            };
-
-            // Start loop - swap one every 4 seconds
-            setInterval(swapRandomText, 4000);
-          }
+          // Start loop - swap one every 4 seconds
+          setInterval(swapRandomText, 4000);
         }
-        // -------------------------------
+      }
+      // -------------------------------
 
-        // Mobile Reset
-        if (window.innerWidth <= 768) {
-          posts.forEach((p) => {
-            const el = p as HTMLElement;
-            el.style.removeProperty("top");
-            el.style.removeProperty("left");
-            el.style.opacity = "1";
-          });
-          sections.forEach((s) =>
-            (s as HTMLElement).style.removeProperty("height"),
-          );
-          return;
-        }
-
-        // Desktop Positioning
-        sections.forEach((section) => {
-          const secEl = section as HTMLElement;
-          const items = secEl.querySelectorAll(".post-item");
-
-          if (items.length === 0) return;
-
-          const heightVal = Math.max(80, items.length * 25);
-          secEl.style.height = `${heightVal}vh`;
-
-          const w = secEl.offsetWidth;
-          const h = secEl.offsetHeight;
-
-          items.forEach((item, i) => {
-            const el = item as HTMLElement;
-            const x = Math.random() * (w - 400);
-            const y = Math.random() * (h - 200) + 50;
-
-            el.style.left = `${Math.max(0, x)}px`;
-            el.style.top = `${y}px`;
-
-            setTimeout(() => {
-              el.style.opacity = "1";
-            }, i * 150);
-          });
+      // Mobile Reset
+      if (window.innerWidth <= 768) {
+        posts.forEach((p) => {
+          const el = p as HTMLElement;
+          el.style.removeProperty("top");
+          el.style.removeProperty("left");
+          el.style.opacity = "1";
         });
-
-        // Year Marker Logic
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                const y = (entry.target as HTMLElement).dataset.year;
-                document.querySelectorAll(".year-marker").forEach((m) => {
-                  const mEl = m as HTMLElement;
-                  if (mEl.dataset.year === y) mEl.classList.add("active");
-                  else mEl.classList.remove("active");
-                });
-              }
-            });
-          },
-          {
-            rootMargin: "-45% 0px -45% 0px",
-          },
+        sections.forEach((s) =>
+          (s as HTMLElement).style.removeProperty("height"),
         );
-
-        sections.forEach((s) => observer.observe(s));
+        return;
       }
 
-      document.addEventListener("astro:page-load", initVerticalScroll);
-      document.addEventListener("DOMContentLoaded", initVerticalScroll);
+      // Desktop Positioning
+      sections.forEach((section) => {
+        const secEl = section as HTMLElement;
+        const items = secEl.querySelectorAll(".post-item");
 
-      let resizeTimer: number;
-      window.addEventListener("resize", () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(initVerticalScroll, 200) as unknown as number;
+        if (items.length === 0) return;
+
+        const heightVal = Math.max(80, items.length * 25);
+        secEl.style.height = `${heightVal}vh`;
+
+        const w = secEl.offsetWidth;
+        const h = secEl.offsetHeight;
+
+        items.forEach((item, i) => {
+          const el = item as HTMLElement;
+          const x = Math.random() * (w - 400);
+          const y = Math.random() * (h - 200) + 50;
+
+          el.style.left = `${Math.max(0, x)}px`;
+          el.style.top = `${y}px`;
+
+          setTimeout(() => {
+            el.style.opacity = "1";
+          }, i * 150);
+        });
       });
-    </script>
-  </body>
-</html>
+
+      // Year Marker Logic
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const y = (entry.target as HTMLElement).dataset.year;
+              document.querySelectorAll(".year-marker").forEach((m) => {
+                const mEl = m as HTMLElement;
+                if (mEl.dataset.year === y) mEl.classList.add("active");
+                else mEl.classList.remove("active");
+              });
+            }
+          });
+        },
+        {
+          rootMargin: "-45% 0px -45% 0px",
+        },
+      );
+
+      sections.forEach((s) => observer.observe(s));
+    }
+
+    document.addEventListener("astro:page-load", initVerticalScroll);
+    document.addEventListener("DOMContentLoaded", initVerticalScroll);
+
+    let resizeTimer: number;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(initVerticalScroll, 200) as unknown as number;
+    });
+  </script>
+</body>

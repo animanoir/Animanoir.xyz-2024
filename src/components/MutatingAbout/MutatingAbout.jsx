@@ -53,7 +53,7 @@ const MutatingAbout = () => {
     <div className="about-info">
       <div className="about-info-inner">
         <p>
-          <b>Software developer</b>, multidisciplinary <b>visual & sound artist</b>—most of the time everything at once.
+          <b>Interactive media artist</b>—videoart, videogames, music, and interactive 3D.
         </p>
         <p>
           Experienced in teaching <b>artistic programming</b> using <b>Processing</b> & <b>Max/MSP</b>.
@@ -61,9 +61,6 @@ const MutatingAbout = () => {
         <p>
           Absolute <b>philosophy</b> freak—currently reading{" "}
           <a href="https://animanoir.notion.site/Mi-biblioteca-digital-06dfea2aa5e048bba145b85d5395c68f" target="_blank">these books</a>.
-        </p>
-        <p>
-          At the moment working as a <b>front-end developer</b> (it just pays!), but always open to actually have fun & more money.
         </p>
         <p>
           {funnyText}

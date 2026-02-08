@@ -1,171 +1,166 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
-import Navbar from "@/components/Navbar.astro";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
 import gif1 from "@/images/about/oscar-a-montiel.gif";
 import { Image } from "astro:assets";
-import Footer from "@/components/Footer.astro";
+import "../styles/global.css";
+
+import arenaLogo from "@/components/Footer/icons/arena-logo-white.png";
+import youtubeSvg from "@/components/Footer/icons/youtube.svg";
+import steamSvg from "@/components/Footer/icons/steam.svg";
+import linkedinSvg from "@/components/Footer/icons/linkedin.svg";
+
+const socialLinks = [
+  {
+    href: "https://www.are.na/tilde-colon-pipe-degrees-degrees-bullet-period-pipe-colon-tilde/channels",
+    icon: arenaLogo,
+    label: "Are.na",
+  },
+  {
+    href: "https://www.youtube.com/channel/UCGe1qc0nF0uNypETYDQmMMQ",
+    icon: youtubeSvg,
+    label: "YouTube",
+  },
+  {
+    href: "https://steamcommunity.com/id/geosmina/",
+    icon: steamSvg,
+    label: "Steam",
+  },
+  {
+    href: "https://www.linkedin.com/in/oscaramontiel/",
+    icon: linkedinSvg,
+    label: "LinkedIn",
+  },
+];
 ---
 
-<html lang="en">
-  <head>
-    <BaseHead
-      title="Hola, dicen que soy Óscar"
-      description={"Software engineer specialized in web development, game programming & 3D/multimedia interactive art."}
-      image="/images/about/óscar-a-montiel-animanoir-geosmina.jpg"
-    />
-  </head>
+<head>
+  <BaseHead
+    title="Hola, dicen que soy Óscar"
+    description={"Interactive Media Artist. Videoart, videogames, music, and interactive 3D."}
+    image="/images/about/óscar-a-montiel-animanoir-geosmina.jpg"
+  />
+</head>
 
-  <body>
-    <ModifiedHeader goWild={true} sortSpeed={80.0} />
-    <div class="container">
-      <div class="main-img-container">
-        <Image
-          class="main-image"
-          src={gif1}
-          alt={"Óscar A. Montiel"}
-          width={500}
-          height={500}
-          decoding="async"
-          loading="eager"
-          quality={10}
-        />
-      </div>
+<body>
+  <ModifiedHeader goWild={true} sortSpeed={80.0} />
+  <div class="about-container">
+    <Image
+      class="main-image"
+      src={gif1}
+      alt={"Óscar A. Montiel"}
+      width={500}
+      height={500}
+      decoding="async"
+      loading="eager"
+      quality={10}
+    />
+    <h1 class="name">Óscar A. Montiel</h1>
+    <p class="title">Interactive Media Artist</p>
+    <div class="social-row">
+      {
+        socialLinks.map((link) => (
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noreferrer"
+            class="social-link"
+          >
+            <Image
+              src={link.icon}
+              alt={link.label}
+              class="social-icon"
+              loading="eager"
+            />
+            <span>{link.label}</span>
+          </a>
+        ))
+      }
     </div>
-    <style>
-      .container {
-        margin: 0 auto;
-        top: 50%;
-        left: 50%;
-        position: absolute;
-        transform: translate(-50%, -50%);
-        color: #fdfefe;
-        display: flex;
-        align-items: center;
-        flex-direction: row;
-        font-family: "Montserrat", serif;
-        justify-content: space-between;
-        max-height: 90vh;
-        width: 70%;
-      }
-      .container h1 {
-        text-align: center;
-        font-family: "Montserrat", serif;
-      }
-      .container h2,
-      h3 {
-        font-weight: bold;
-      }
-      .container p {
-        padding-top: 1rem !important;
-      }
-      .main-img-container {
-        width: 50%;
-      }
-      .main-text {
-        font-size: 1rem;
-        width: 50%;
+  </div>
+  <style>
+    .about-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      color: #fdfefe;
+      font-family: "Bebas Neue", sans-serif;
+    }
+
+    .main-image {
+      display: block;
+      max-width: 350px;
+      width: 100%;
+      height: auto;
+    }
+
+    .name {
+      font-size: 2rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.25rem;
+      font-family: "Bebas Neue", sans-serif;
+    }
+
+    .title {
+      font-size: 1rem;
+      color: #b0b0b0;
+      margin: 0;
+      padding: 0;
+      font-weight: 400;
+    }
+
+    .social-row {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #fdfefe;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: opacity 0.3s;
+    }
+
+    .social-link:hover {
+      opacity: 0.6;
+    }
+
+    .social-icon {
+      height: 18px;
+      width: auto;
+    }
+
+    @media (max-width: 767.98px) {
+      .about-container {
+        position: static;
+        transform: none;
+        margin: 6rem auto 2rem;
+        padding: 0 1.5rem;
       }
 
       .main-image {
-        display: block;
-        max-width: 100%;
-        height: auto;
-        width: 90%;
+        max-width: 280px;
       }
 
-      /* Large devices (desktops, less than 1200px) */
-      @media (max-width: 1199.98px) {
-        .container {
-          width: 80%;
-        }
+      .name {
+        font-size: 1.6rem;
       }
 
-      /* Medium devices (tablets, less than 992px) */
-      @media (max-width: 991.98px) {
-        .container {
-          width: 85%;
-          padding: 2rem 1rem;
-        }
-        .container h1 {
-          font-size: 1.8rem; /* Responsive heading size */
-        }
-        .container h2 {
-          font-size: 1.4rem; /* Responsive heading size */
-        }
-        .main-image {
-          width: 50% !important; /* Adjusted image size (50% of .main-img-container) */
-        }
-        .main-text {
-          font-size: 0.95rem; /* Adjusted font size */
-          text-align: left; /* Align text left for better readability */
-        }
+      .social-row {
+        gap: 1.5rem;
       }
-
-      /* Small devices (landscape phones, small tablets, less than 768px) */
-      @media (max-width: 767.98px) {
-        .container {
-          position: static; /* Change from absolute to static for scrolling */
-          transform: none;
-          margin: 2rem auto; /* Center container in the flow */
-          flex-direction: column;
-          text-align: center; /* Center inline content and text */
-          width: 90%;
-          padding: 2rem 1rem;
-          max-height: none; /* Allow container to grow with content */
-          overflow-y: auto; /* Add scroll if content overflows */
-        }
-        .main-img-container {
-          width: 80%; /* Adjust width for stacked layout */
-          margin: 0 auto 1.5rem auto; /* Center and add bottom margin */
-          order: 1; /* Control order if needed */
-        }
-        .main-text {
-          width: 100%; /* Full width for text content */
-          text-align: left; /* Keep text left aligned for readability */
-          font-size: 0.95rem;
-          order: 2; /* Control order if needed */
-        }
-        .container h1 {
-          font-size: 1.8rem;
-        }
-        .container h2 {
-          font-size: 1.4rem;
-        }
-        .main-image {
-          width: 100% !important; /* Image is 50% of .main-img-container */
-          margin: 0 auto; /* Center image if its container is wider */
-        }
-      }
-
-      /* Extra small devices (portrait phones, less than 576px) */
-      @media (max-width: 575.98px) {
-        .container {
-          width: 95%;
-          padding: 1.5rem 0.5rem; /* Adjusted padding */
-          margin: 1rem auto;
-        }
-        .container h1 {
-          font-size: 1.6rem; /* Smaller heading */
-        }
-        .container h2 {
-          font-size: 1.2rem; /* Smaller heading */
-        }
-        .main-img-container {
-          width: 90%; /* Adjust image container size */
-        }
-        .main-image {
-          margin-top: 3rem;
-          width: 100% !important; /* Consistent image size relative to its container */
-        }
-        .main-text {
-          font-size: 0.9rem; /* Adjusted font size */
-        }
-        .main-text p {
-          line-height: 1.6; /* Improved line height */
-          margin-bottom: 1rem;
-        }
-      }
-    </style>
-  </body>
-</html>
+    }
+  </style>
+</body>

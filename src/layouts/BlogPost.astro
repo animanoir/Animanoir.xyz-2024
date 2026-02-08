@@ -2,7 +2,6 @@
 import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import ModifiedHeader from "../components/ModifiedHeader.astro";
-import Footer from "@/components/Footer/Footer.astro";
 import Picture from "astro/components/Picture.astro";
 import RelatedArticles from "@/components/RelatedArticles.astro";
 
@@ -22,7 +21,7 @@ const actualSlug =
     <BaseHead
       title={title}
       description={summary ??
-        "Blog post by Óscar A. Montiel, interactive media developer and artist."}
+        "Blog post by Óscar A. Montiel, interactive media artist."}
       image={heroImage?.src}
       type="article"
       publishDate={pubDate?.toISOString()}
@@ -66,24 +65,24 @@ const actualSlug =
         ))
     }
     <div class="articleBody">
-      <div class="left-container">
-        <div class="title-container">
-          <h1 class="title">{title}</h1>
-          <h2 class="summary">{summary}</h2>
-          <time class="postDate">
-            {new Date(pubDate).toLocaleDateString()}
-          </time>
-        </div>
-        <div class="related-container">
-          <RelatedArticles
-            currentTags={tags}
-            currentUrl={Astro.url.pathname}
-            currentSlug={actualSlug}
-            maxResults={3}
-          />
-        </div>
-      </div>
       <article class="articleContainer">
+        <div class="top-container">
+          <div class="title-container">
+            <h1 class="title">{title}</h1>
+            <h2 class="summary">{summary}</h2>
+            <time class="postDate">
+              {new Date(pubDate).toLocaleDateString()}
+            </time>
+          </div>
+          <div class="related-container">
+            <RelatedArticles
+              currentTags={tags}
+              currentUrl={Astro.url.pathname}
+              currentSlug={actualSlug}
+              maxResults={3}
+            />
+          </div>
+        </div>
         <slot />
         {
           heroImage && (
@@ -116,8 +115,6 @@ const actualSlug =
         }
       </article>
     </div>
-
-    <Footer useTopOffset={false} />
     <style>
       /* ==========================================================================
          FONT IMPORTS
@@ -186,9 +183,10 @@ const actualSlug =
       .articleContainer h2 {
         margin-top: 0 !important;
       }
-      .left-container {
-        width: 30%;
-        z-index: 1;
+      .top-container {
+        width: 100%;
+        position: relative;
+        z-index: 10;
       }
       /* ==========================================================================
          ARTICLE BODY
@@ -203,10 +201,11 @@ const actualSlug =
         margin: 0 auto;
         width: 80%;
         display: flex;
+        flex-direction: column;
         padding-top: 8rem;
         padding-bottom: 30vh;
         color: #fdfefe;
-        font-family: "EB Garamond", serif;
+        font-family: "Cormorant Garamond", serif;
       }
 
       .articleBody p {
@@ -252,11 +251,14 @@ const actualSlug =
         display: block;
         text-align: center;
         font-size: 0.7rem;
-        font-family: "EB Garamond", serif;
+        font-family: "
+            Cormorant Garamond "",
+          serif;
         color: #fdfefe7f;
         padding-bottom: 2rem;
         font-style: italic;
-      } */
+      }
+      */
 
       /* ==========================================================================
          RELATED ARTICLES CONTAINER
@@ -319,8 +321,8 @@ const actualSlug =
         .postDate {
           font-size: 0.8rem;
         }
-        .left-container {
-          width: 35%;
+        .top-container {
+          width: 100%;
         }
         .articleContainer {
           font-size: 1.5rem;
@@ -339,8 +341,8 @@ const actualSlug =
           line-height: 1.1;
         }
 
-        .left-container {
-          width: 35%;
+        .top-container {
+          width: 100%;
         }
         .summary {
           font-size: 1.1rem;
@@ -350,7 +352,6 @@ const actualSlug =
         }
         .articleContainer {
           font-size: 1.5rem;
-          max-width: 55%;
           margin-top: 0 !important;
         }
         .articleBody {
@@ -367,7 +368,7 @@ const actualSlug =
           width: 100%;
           padding-right: 0;
         }
-        .left-container {
+        .top-container {
           width: 100%;
         }
         .title {
@@ -398,7 +399,7 @@ const actualSlug =
           margin-bottom: 1rem;
           line-height: 1.5;
         }
-        .left-container {
+        .top-container {
           height: auto;
           padding: 2rem 0;
         }
@@ -434,7 +435,7 @@ const actualSlug =
           margin-bottom: 0.8rem;
           line-height: 1.4;
         }
-        .left-container {
+        .top-container {
           padding: 1rem 0;
         }
         .related-container {

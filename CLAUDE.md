@@ -4,10 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
-- `bun run dev` or `bun start` - Start development server
-- `bun run build` - Build the site for production
-- `bun run preview` - Preview the production build locally
-- `bun run sanity` - Start Sanity Studio for content management
+- `pnpm run dev` or `pnpm start` - Start development server
+- `pnpm run build` - Build the site for production
+- `pnpm run preview` - Preview the production build locally
+- `pnpm run sanity` - Start Sanity Studio for content management
 
 ## Project Architecture
 

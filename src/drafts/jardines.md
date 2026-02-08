@@ -4,7 +4,7 @@ description: "Float into the otherwordly music of Jardines"
 pubDate: "June 11 2021"
 heroImage: "@/images/works/jardines/jardines-oscar-a-montiel-animanoir-maremoto.png"
 tools: ["Three.js"]
-workType: ["Web Development", "3D"]
+workType: ["Interactive 3D"]
 year: 2022
 ---
 

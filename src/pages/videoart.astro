@@ -1,0 +1,144 @@
+---
+import BaseHead from "@/components/BaseHead.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer/Footer.astro";
+import { YouTube } from "astro-embed";
+import videoartCover from "@/images/works/videoart.png";
+---
+
+<html lang="en">
+  <head>
+    <BaseHead
+      title="Videoart"
+      description={"Videoart by Óscar A. Montiel."}
+      image={videoartCover.src}
+    />
+  </head>
+  <body>
+    <Header />
+    <main class="articleContainer">
+      <div>
+        <h1 class="page-title">Video Art</h1>
+      </div>
+
+      <div class="videos-container">
+        <YouTube id="https://www.youtube.com/watch?v=15PnoZ63I0U" />
+        <YouTube id="https://www.youtube.com/watch?v=5Hec7rJ0iQ4" />
+        <YouTube id="https://www.youtube.com/watch?v=Hv3F1eRYVNY" />
+        <YouTube id="https://www.youtube.com/watch?v=53mO61hIEOU" />
+        <YouTube id="https://www.youtube.com/watch?v=HLnraLAKT3M" />
+        <YouTube id="https://www.youtube.com/watch?v=S2-rMxZCKZs" />
+      </div>
+
+      <p class="youtube-link">
+        To view more, you can visit my YouTube site: <a
+          href="https://www.youtube.com/@animanoir"
+          target="_blank"
+          rel="noopener noreferrer">https://www.youtube.com/@animanoir</a
+        >
+      </p>
+    </main>
+    <Footer useTopOffset={false} />
+  </body><style>
+    .page-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 4rem;
+      text-align: center;
+      color: floralwhite;
+      margin-bottom: 2rem;
+    }
+
+    .videos-container {
+      margin: 0 auto;
+    }
+
+    .youtube-link {
+      text-align: center;
+      color: floralwhite;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.25rem;
+      margin-top: 3rem;
+    }
+
+    .youtube-link a {
+      color: floralwhite;
+      text-decoration: underline;
+      transition: opacity 0.2s ease;
+    }
+
+    .youtube-link a:hover {
+      opacity: 0.7;
+    }
+
+    .videos-container :global(lite-youtube) {
+      width: 100%;
+      max-width: 800px;
+      aspect-ratio: 16 / 9;
+    }
+    .articleContainer {
+      z-index: 1000;
+    }
+
+    /* QHD - 2560x1440 */
+    @media (min-width: 2560px) {
+      .videos-container {
+        padding-top: 10vh;
+      }
+      .articleContainer {
+        width: 70%;
+        max-width: 2000px;
+      }
+    }
+
+    /* Large Desktop */
+    @media (min-width: 1200px) and (max-width: 2559px) {
+      .articleContainer {
+        width: 75%;
+      }
+    }
+
+    /* Mobile Large */
+    @media (max-width: 767px) and (min-width: 576px) {
+      .videos-container {
+        grid-template-columns: 1fr;
+      }
+      .articleContainer {
+        width: 90%;
+      }
+    }
+
+    /* Mobile Small */
+    @media (max-width: 575px) {
+      .videos-container {
+        grid-template-columns: 1fr;
+        padding-top: 5vh;
+      }
+      .articleContainer {
+        width: 95%;
+      }
+      .page-title {
+        font-size: 2.5rem;
+      }
+    }
+
+    .articleContainer {
+      padding-bottom: 20vh;
+      margin: 0 auto;
+      position: relative;
+      width: 65%;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .articleContainer {
+        width: 100%;
+      }
+      .videos-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</html>

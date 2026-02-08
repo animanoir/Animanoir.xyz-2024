@@ -1,110 +1,59 @@
 ---
 import HeaderLink from "@/components/HeaderLink.astro";
 import { ClientRouter } from "astro:transitions";
-import { Image } from "astro:assets";
-import youtubeSvg from "@/components/Footer/icons/youtube.svg";
-import linkedinSvg from "@/components/Footer/icons/linkedin.svg";
-import arenaLogo from "@/components/Footer/icons/arena-logo-white.png";
-import igSvg from "@/components/Footer/icons/ig.svg";
-import steamSvg from "@/components/Footer/icons/steam.svg";
 
-const links = [
-  { href: "/works", label: "Works", target: "_self" },
-  {
-    href: "/blog",
-    label: "Blog & Studies",
-    target: "_self",
-    subLinks: [
-      {
-        href: "https://animanoir.notion.site/Mi-biblioteca-digital-06dfea2aa5e048bba145b85d5395c68f",
-        label: "Books I'm reading",
-        target: "_blank",
-      },
-    ],
-  },
+// Work-related links
+const workLinks = [
+  { href: "/3Dworks", label: "3D Animation", target: "_self" },
+  { href: "/videoart", label: "Video", target: "_self" },
+  { href: "/interactiveart", label: "Interactive", target: "_self" },
+  { href: "/works/2024/geosmina-music/", label: "Sound", target: "_self" },
+];
+
+// Personal content links
+const personalLinks = [
+  { href: "/blog", label: "Blog", target: "_self" },
   { href: "/photodiary", label: "Photodiary", target: "_self" },
+  { href: "/aboutMe", label: "About", target: "_self" },
   { href: "https://linktr.ee/animanoir", label: "Contact", target: "_blank" },
 ];
 
-const socialLinks = [
-  {
-    href: "https://www.are.na/tilde-colon-pipe-degrees-degrees-bullet-period-pipe-colon-tilde/channels",
-    icon: arenaLogo,
-    alt: "Are.na profile",
-  },
-  {
-    href: "https://www.linkedin.com/in/oscaramontiel/",
-    icon: linkedinSvg,
-    alt: "LinkedIn profile",
-  },
-  {
-    href: "https://www.youtube.com/channel/UCGe1qc0nF0uNypETYDQmMMQ",
-    icon: youtubeSvg,
-    alt: "YouTube channel",
-  },
-  {
-    href: "https://steamcommunity.com/id/geosmina/",
-    icon: steamSvg,
-    alt: "Steam profile",
-  },
-];
+// Combined for mobile menu
+const allLinks = [...workLinks, ...personalLinks];
 ---
 
 <nav class="navbar" role="navigation">
-  <div class="social-icons">
-    {
-      socialLinks.map((social) => {
-        const isBlocked = Boolean(social.tooltip);
-        const hasHover = Boolean(social.hoverIcon);
-
-        return (
-          <a
-            href={isBlocked ? undefined : social.href}
-            target={isBlocked ? undefined : "_blank"}
-            rel={isBlocked ? undefined : "noreferrer"}
-            class={`social-link${isBlocked ? " social-link--blocked" : ""}${hasHover ? " has-hover-effect" : ""}`}
-            data-tooltip={isBlocked ? social.tooltip : undefined}
-            role={isBlocked ? "button" : undefined}
-            aria-disabled={isBlocked ? "true" : undefined}
-            tabindex={isBlocked ? "0" : undefined}
-          >
-            <Image
-              loading="eager"
-              alt={social.alt}
-              src={social.icon}
-              class="social-icon static-icon"
-            />
-            {social.hoverIcon && (
-              <img
-                src={social.hoverIcon}
-                alt={social.alt}
-                class="social-icon hover-icon"
-              />
-            )}
-          </a>
-        );
-      })
-    }
-  </div>
   <div class="nav-links">
-    {
-      links.map((link) => (
-        <div class="nav-item">
-          <HeaderLink href={link.href} target={link.target}>
-            {link.label}
-          </HeaderLink>
-          {link.subLinks && (
-            <div class="dropdown-content">
-              {link.subLinks.map((subLink) => (
-                <a href={subLink.href} target={subLink.target}>
-                  {subLink.label}
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
-      ))
-    }
+    <!-- Work Links Group -->
+    <div class="link-group">
+      {
+        workLinks.map((link) => (
+          <div class="nav-item">
+            <HeaderLink href={link.href} target={link.target}>
+              {link.label}
+            </HeaderLink>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Elegant Separator -->
+    <div class="nav-separator">
+      <span class="separator-line"></span>
+    </div>
+
+    <!-- Personal Links Group -->
+    <div class="link-group">
+      {
+        personalLinks.map((link) => (
+          <div class="nav-item">
+            <HeaderLink href={link.href} target={link.target}>
+              {link.label}
+            </HeaderLink>
+          </div>
+        ))
+      }
+    </div>
   </div>
   <button class="mobile-menu-button" aria-label="Toggle mobile menu">
     <span class="hamburger-line"></span>
@@ -113,58 +62,27 @@ const socialLinks = [
   </button>
   <div class="mobile-menu">
     <div class="mobile-nav-links">
+      <!-- Work Links -->
       {
-        links.map((link) => (
-          <>
-            <HeaderLink href={link.href} target={link.target}>
-              {link.label}
-            </HeaderLink>
-            {link.subLinks && (
-              <div class="mobile-sublinks">
-                {link.subLinks.map((subLink) => (
-                  <a href={subLink.href} target={subLink.target}>
-                    {subLink.label}
-                  </a>
-                ))}
-              </div>
-            )}
-          </>
+        workLinks.map((link) => (
+          <HeaderLink href={link.href} target={link.target}>
+            {link.label}
+          </HeaderLink>
         ))
       }
-    </div>
-    <div class="mobile-social-icons">
-      {
-        socialLinks.map((social) => {
-          const isBlocked = Boolean(social.tooltip);
-          const hasHover = Boolean(social.hoverIcon);
 
-          return (
-            <a
-              href={isBlocked ? undefined : social.href}
-              target={isBlocked ? undefined : "_blank"}
-              rel={isBlocked ? undefined : "noreferrer"}
-              class={`social-link${isBlocked ? " social-link--blocked" : ""}${hasHover ? " has-hover-effect" : ""}`}
-              data-tooltip={isBlocked ? social.tooltip : undefined}
-              role={isBlocked ? "button" : undefined}
-              aria-disabled={isBlocked ? "true" : undefined}
-              tabindex={isBlocked ? "0" : undefined}
-            >
-              <Image
-                loading="eager"
-                alt={social.alt}
-                src={social.icon}
-                class="social-icon static-icon"
-              />
-              {social.hoverIcon && (
-                <img
-                  src={social.hoverIcon}
-                  alt={social.alt}
-                  class="social-icon hover-icon"
-                />
-              )}
-            </a>
-          );
-        })
+      <!-- Mobile Separator -->
+      <div class="mobile-separator">
+        <span class="mobile-separator-line"></span>
+      </div>
+
+      <!-- Personal Links -->
+      {
+        personalLinks.map((link) => (
+          <HeaderLink href={link.href} target={link.target}>
+            {link.label}
+          </HeaderLink>
+        ))
       }
     </div>
   </div>
@@ -222,7 +140,7 @@ const socialLinks = [
   :root {
     --text-color: #fdfefe;
     --hover-color: #ee5858;
-    --font-size: 0.9rem;
+    --font-size: 1rem;
     --margin-horizontal: 1rem;
     --margin-vertical: 1rem;
     --text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.475);
@@ -237,24 +155,93 @@ const socialLinks = [
 
   .navbar {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    font-family: "Montserrat", sans-serif;
-    z-index: 1000;
-    /* margin-top: 1rem; */
+    flex-direction: column;
+    align-items: flex-start;
+    font-family: "Cormorant Garamond", serif;
+    gap: 0.75rem;
   }
 
   .social-icons {
     display: flex;
     align-items: center;
-    margin-right: 1rem;
+    flex-direction: column;
     gap: var(--margin-horizontal);
+    order: 2;
+    margin-top: 0.5rem;
   }
 
   .nav-links {
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    order: 1;
+  }
+
+  .link-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  /* Elegant separator between link groups */
+  .nav-separator {
+    display: flex;
     align-items: center;
+    padding: 0.75rem 0;
+    width: 100%;
+  }
+
+  .separator-line {
+    display: block;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(253, 254, 254, 0.4) 20%,
+      rgba(253, 254, 254, 0.7) 50%,
+      rgba(253, 254, 254, 0.4) 80%,
+      transparent 100%
+    );
+    position: relative;
+  }
+
+  /* Mobile separator */
+  .mobile-separator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+  }
+
+  .mobile-separator-line {
+    display: block;
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(253, 254, 254, 0.4) 20%,
+      rgba(253, 254, 254, 0.7) 50%,
+      rgba(253, 254, 254, 0.4) 80%,
+      transparent 100%
+    );
+    position: relative;
+  }
+
+  .mobile-separator-line::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    background: rgba(253, 254, 254, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(253, 254, 254, 0.6);
   }
 
   .social-link {
@@ -333,7 +320,7 @@ const socialLinks = [
     position: relative;
     display: flex;
     align-items: center;
-    margin-right: var(--margin-horizontal);
+    margin-right: 0;
   }
 
   .nav-item:last-child {
@@ -344,12 +331,13 @@ const socialLinks = [
   .dropdown-content {
     display: none;
     position: absolute;
-    top: 100%;
-    left: 0;
+    top: 0;
+    left: 100%;
     min-width: 200px;
     z-index: 1002;
     padding: 0.1rem 0;
     flex-direction: column;
+    margin-left: 0.5rem;
   }
 
   .dropdown-content a {

@@ -1,7 +1,7 @@
 ---
 import { YouTubeGrid } from "@/components/YouTubeGrid/YoutubeGrid.jsx";
 import BaseHead from "@/components/BaseHead.astro";
-import Header from "@/components/Header.astro";
+import ModifiedHeader from "@/components/ModifiedHeader.astro";
 import { Picture } from "astro:assets";
 import MagicHeading from "@/components/MagicHeading.jsx";
 import visualsCover from "@/images/works/visuals/visuals-main-cover.jpg";
@@ -29,7 +29,7 @@ import * as motion from "motion/react-client";
     />
   </head>
   <body>
-    <Header />
+    <ModifiedHeader />
     <RandomVideo client:load />
     <YouTubeGrid client:load count={20} />
     <main class="articleContainer">
@@ -75,6 +75,14 @@ import * as motion from "motion/react-client";
           )
         }
       </div>
+      <p class="youtube-link">
+        To view more, you can visit my YouTube playlist: <a
+          href="https://www.youtube.com/playlist?list=PLNgUiXAsdpaVbq6BO8H0ZVS20h0A_o_2F"
+          target="_blank"
+          rel="noopener noreferrer"
+          >https://www.youtube.com/playlist?list=PLNgUiXAsdpaVbq6BO8H0ZVS20h0A_o_2F</a
+        >
+      </p>
       <a
         class="top-link"
         href="#"
@@ -123,6 +131,25 @@ import * as motion from "motion/react-client";
       opacity: 1;
       color: #000;
     }
+
+    .youtube-link {
+      text-align: center;
+      color: floralwhite;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.25rem;
+      margin-top: 3rem;
+    }
+
+    .youtube-link a {
+      color: floralwhite;
+      text-decoration: underline;
+      transition: opacity 0.2s ease;
+    }
+
+    .youtube-link a:hover {
+      opacity: 0.7;
+    }
+
     .images-container {
       padding-top: 32vh;
       display: grid;

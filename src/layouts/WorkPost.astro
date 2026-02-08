@@ -31,37 +31,43 @@ const { title, description, heroImage } = Astro.props;
   </head>
   <body>
     <ModifiedHeader />
-    <div class="top-section">
-      {
-        heroImage && (
-          <div class="gradient-black">
-            <Picture
-              src={heroImage}
-              alt={description}
-              class="heroImage"
-              formats={["webp"]}
-              decoding="async"
-              loading="eager"
-              quality={100}
-            />
-          </div>
-        )
-      }
-      <div class="project-description-container">
-        <h1 class="title">{title}</h1>
-        <h3>{description}</h3>
+    <main>
+      <div class="top-section">
+        {
+          heroImage && (
+            <div class="gradient-black">
+              <Picture
+                src={heroImage}
+                alt={description}
+                class="heroImage"
+                formats={["webp"]}
+                decoding="async"
+                loading="eager"
+                quality={80}
+              />
+            </div>
+          )
+        }
+        <div class="project-description-container">
+          <h1 class="title">{title}</h1>
+          <h3>{description}</h3>
+        </div>
       </div>
-    </div>
-    <article class="articleContainer">
-      <div class="articleBody">
-        <slot />
-      </div>
-    </article>
+      <article class="articleContainer">
+        <div class="articleBody">
+          <slot />
+        </div>
+      </article>
+    </main>
     <Footer useTopOffset={false} />
     <style>
       body {
         margin: 0;
         overflow-x: hidden; /* Prevent horizontal scrolling */
+      }
+
+      main {
+        margin-left: 10vw;
       }
 
       .top-section {
@@ -113,8 +119,9 @@ const { title, description, heroImage } = Astro.props;
       .title {
         width: 100%;
         margin: 0;
-        font-size: 4rem;
-        font-family: "Montserrat", sans-serif;
+        font-size: 3.5rem;
+        font-family: "Bebas Neue", sans-serif;
+        letter-spacing: 0.5rem;
         line-height: 1;
         /* position: absolute; */
         top: 50%;
@@ -132,10 +139,11 @@ const { title, description, heroImage } = Astro.props;
       }
 
       .project-description-container h3 {
-        font-family: "Open Sans", sans-serif;
+        font-family: "Bebas Neue", sans-serif;
         font-weight: normal;
         margin-top: 0.1rem;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
+        opacity: 0.5;
       }
 
       .articleContainer {
@@ -147,7 +155,7 @@ const { title, description, heroImage } = Astro.props;
       }
 
       .articleBody {
-        font-family: "EB Garamond", serif;
+        font-family: "Cormorant Garamond", serif;
         color: #fdfefe;
         font-size: 1.3rem;
         width: 90%;

@@ -87,25 +87,25 @@ const HoverTextEffect = () => {
       <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 5], fov: 45 }}>
         <ambientLight intensity={0.5} />
         <Center position={[0, 0, 0]}>
-          <ShaderText 
-            text="Software engineer" 
-            position={[-2, 1.2, 0]} 
+          <ShaderText
+            text="Interactive media"
+            position={[-2, 1.2, 0]}
           />
-          <ShaderText 
-            text="specialized in" 
-            position={[0.5, 1.2, 0]} 
+          <ShaderText
+            text="artist —"
+            position={[0.5, 1.2, 0]}
           />
-          <ShaderText 
-            text="web development," 
-            position={[-1.8, 0.6, 0]} 
+          <ShaderText
+            text="videoart, music,"
+            position={[-1.8, 0.6, 0]}
           />
-          <ShaderText 
-            text="game programming" 
-            position={[-1.8, 0, 0]} 
+          <ShaderText
+            text="videogames"
+            position={[-1.8, 0, 0]}
           />
-          <ShaderText 
-            text="& 3D/multimedia interactive art." 
-            position={[-0.8, -0.6, 0]} 
+          <ShaderText
+            text="& interactive 3D."
+            position={[-0.8, -0.6, 0]}
           />
         </Center>
       </Canvas>
