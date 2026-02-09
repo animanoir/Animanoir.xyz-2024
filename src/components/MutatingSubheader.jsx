@@ -13,6 +13,7 @@ const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
     "Three.js Dreamer",
     "Godot Wanderer",
     "Digital Ritualist",
+    "Tritúrame el Zen Advocate",
     "Play Metaphysician",
     "Interactivity Poet",
     "Curator of Chaos",
