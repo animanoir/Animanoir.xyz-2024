@@ -11,10 +11,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Architecture
 
-This is an Astro-based portfolio website for an interactive media developer, featuring a hybrid approach with both static content and React components for interactive elements.
+This is an Astro-based portfolio website for an Interactive Media Artist, featuring a hybrid approach with both static content and React components for interactive elements.
 
 ### Key Technologies
-- **Astro 5.16.3** - Main framework with experimental client prerender enabled
+- **Astro 5.17.1** - Main framework with experimental client prerender enabled
 - **React** - For interactive components (Three.js scenes, animations, LastFM integration)
 - **Sanity CMS** - Headless CMS for blog content management with Portable Text support
 - **Three.js** - 3D graphics via React Three Fiber ecosystem (@react-three/fiber, @react-three/drei, @react-three/postprocessing)
@@ -43,6 +43,13 @@ The site uses both Astro's content collections and Sanity CMS for content manage
 **Content Schema (src/content/config.ts):**
 - Works collection includes professional portfolio pieces with categorization by workType and tools
 - Blog collection supports optional hero images and tagging system
+
+**Work Categories (workType field):**
+- `Interactive 3D` - Three.js and 3D animation work
+- `Videoart` - Installations and video pieces
+- `Videogames` - Game development work
+- `Music` - Sound experiments and compositions
+- `Other` - Miscellaneous projects
 
 ### Component Structure
 
