@@ -45,8 +45,6 @@ const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
     "Deleuzean Zhuangzian",
     "Metamodern Non-Dualist",
     "Algorithmic Artist",
-
-    // === las nuevas ===
     "Genuine Pretender",
     "Anhedonia Kamikaze",
     "Professional People Borer",
@@ -54,7 +52,6 @@ const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
     "Devenir-Payaso",
     "The Dog That Experienced God",
     "Árbitro de la Realidad",
-    "Happily Girlfriendless",
     "Certified Nagarjuna Fanboy",
     "Wu Wei Debugger",
     "Are.na Addict",
