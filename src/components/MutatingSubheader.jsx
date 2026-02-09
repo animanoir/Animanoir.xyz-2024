@@ -8,7 +8,7 @@ const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
     "Sound Sculptor",
     "Game Artist",
     "Sonic Explorer",
-    "Generative Artist",
+    "(Another) Generative Artist",
     "Max/MSP Mystic",
     "Three.js Dreamer",
     "Godot Wanderer",
