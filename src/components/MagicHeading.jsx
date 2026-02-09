@@ -9,7 +9,7 @@ export default function MagicHeading() {
     { __html: "Animations that evoke a sense of <b>dreams</b> and <b>confusion</b>." },
     { __html: "Visual poetry in <b>motion</b> and <b>stillness</b>." },
     { __html: "<b>Blender</b>, <b>Max/MSP</b>, <b>shaders</b>, Three.js, etc." },
-    { __html: "My works are best understood when in <b>drukqs</b>."},
+    { __html: "My works are best understood when in <b>drukqs</b>." },
     { __html: "Somewhere between <b>meta-glitch art</b> and <b>wet dreams</b>." },
     { __html: "Powered by <b>mind-altering</b> volition & <b>esoteric software</b>." },
     { __html: "Embracing <b>new ways</b> to <b>break</b> your <b>mind</b>." },
@@ -32,7 +32,7 @@ export default function MagicHeading() {
 
   return (
     <div className={styles.headingContainer}>
-      <h3
+      <h1
         ref={ref}
         className={styles.heading}
         dangerouslySetInnerHTML={texts[currentIndex]}
