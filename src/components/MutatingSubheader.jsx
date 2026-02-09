@@ -49,6 +49,7 @@ const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
     "Anhedonia Kamikaze",
     "Professional People Borer",
     "LinkedIn Despiser",
+    "~·:| ⡷⠂〇º °•.⠐⢾ |:·~",
     "Devenir-Payaso",
     "The Dog That Experienced God",
     "Árbitro de la Realidad",
