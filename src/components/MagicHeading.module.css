@@ -71,3 +71,18 @@
     padding: 0 6rem;
   }
 }
+
+/* Mobile adjust */
+@media (max-width: 760px) {
+  .heading {
+    font-size: 2rem !important;
+    min-height: auto;
+    line-height: normal;
+  }
+
+  .headingContainer {
+    height: auto;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+  }
+}

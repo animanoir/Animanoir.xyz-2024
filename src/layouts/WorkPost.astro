@@ -205,6 +205,8 @@ const { title, description, heroImage } = Astro.props;
         }
         .top-section {
           flex-direction: column;
+          margin-top: 40%;
+          width: 90%;
         }
         .gradient-black::before {
           background: linear-gradient(
@@ -230,6 +232,10 @@ const { title, description, heroImage } = Astro.props;
         }
         .articleBody {
           width: 95%;
+          font-size: 1.1rem;
+        }
+        main {
+          margin-left: 0;
         }
       }
 
@@ -237,7 +243,7 @@ const { title, description, heroImage } = Astro.props;
         .top-section {
           flex-direction: column;
           height: auto;
-          padding: 1rem;
+          width: 90%;
         }
         .project-description-container {
           text-align: center;
@@ -256,6 +262,7 @@ const { title, description, heroImage } = Astro.props;
           width: 100%;
           padding: 0 1rem;
           box-sizing: border-box;
+          font-size: 1rem;
         }
         .heroImage {
           height: auto;

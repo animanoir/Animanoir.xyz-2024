@@ -34,6 +34,21 @@ for (let i = posts.length - 1; i > 0; i--) {
   <ModifiedHeader />
 
   <main>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><polyline points="6 9 12 15 18 9"></polyline></svg
+      >
+    </div>
     <!-- Main quote -->
     <!--       <motion.div
         client:load
@@ -351,6 +366,10 @@ for (let i = posts.length - 1; i > 0; i--) {
       <style>
         main {
           margin-left: 10vw;
+        }
+
+        .scroll-indicator {
+          display: none;
         }
         /* ==========================================================================
      BACKGROUND VIDEO STYLES
@@ -709,37 +728,88 @@ for (let i = posts.length - 1; i > 0; i--) {
 
         /* Mobile and tablet styles */
         @media (max-width: 760px) {
+          .scroll-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fdfefe;
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 1.2rem;
+            opacity: 0.7;
+            margin-bottom: 5rem;
+            margin-top: -15vh;
+            animation: bounce 2s infinite;
+          }
+
+          @keyframes bounce {
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+              transform: translateY(0);
+            }
+            40% {
+              transform: translateY(-10px);
+            }
+            60% {
+              transform: translateY(-5px);
+            }
+          }
+          main {
+            margin-left: 0;
+            width: 100%;
+            margin-top: 40%;
+          }
+
           .quote {
             font-size: 2rem !important;
+            padding: 0 1rem;
+            max-width: 100%;
+          }
+
+          .video-gradient-wrapper {
+            display: none;
           }
 
           .projectsContainer {
-            width: 100%;
-            padding: 0 1.25rem;
+            width: 90%;
+            padding: 0;
+            margin: 0 auto;
             box-sizing: border-box;
             overflow-x: hidden;
           }
 
           .listContainer {
             min-height: auto;
-            padding: 2rem 1rem;
+            padding: 2rem 0;
+            width: 100%;
           }
 
           .workType {
             font-size: 2.25rem;
             transform: none;
             padding: 0;
+            text-align: left;
+            margin-bottom: 2rem;
           }
 
           ul {
             width: 100%;
-            grid-template-columns: repeat(1, 1fr);
+            grid-template-columns: 1fr;
             padding: 0;
             box-sizing: border-box;
+            gap: 2rem;
           }
 
           .project {
             opacity: 1;
+            width: 100%;
+            margin-bottom: 1rem;
+          }
+
+          ul a {
+            display: block;
             width: 100%;
           }
 
