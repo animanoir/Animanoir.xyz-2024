@@ -103,7 +103,7 @@ export const SceneIndex = () => {
   };
 
   const cameraProps = {
-    position: [0, 0, 15],
+    position: [0, 0, 16],
     fov: 40,
   };
 

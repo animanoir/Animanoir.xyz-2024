@@ -11,6 +11,7 @@ import ModifiedHeader from "@/components/ModifiedHeader.astro";
 import Video from "@/components/RandomVideo/Video.jsx";
 import ledvid from "@/images/videos/ledveo.webm";
 import Footer from "@/components/Footer/Footer.astro";
+import SceneIndex from "@/components/3DIndex/SceneIndex.jsx";
 
 // Orders the post chronologically
 const posts = (await getCollection("works")).sort(
@@ -31,6 +32,9 @@ for (let i = posts.length - 1; i > 0; i--) {
   />
 </head>
 <body>
+  <div class="scene-background">
+    <SceneIndex client:only="react" />
+  </div>
   <ModifiedHeader />
 
   <main>
@@ -65,9 +69,7 @@ for (let i = posts.length - 1; i > 0; i--) {
         </div>
       </motion.div> -->
     <!-- <Video client:only videoPath={vid2} /> -->
-    <div class="video-gradient-wrapper">
-      <Video client:only videoPath={ledvid} />
-    </div>
+    <div class="scene-spacer"></div>
     <!--     <div class="videogrid-container">
       <div class="videogrid">
         <motion.div
@@ -364,8 +366,40 @@ for (let i = posts.length - 1; i > 0; i--) {
         </div>
       </motion.div>
       <style>
+        :global(body) {
+          background-color: transparent !important;
+        }
+
+        .scene-background {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          z-index: 0;
+        }
+
+        .scene-background :global(#fiberCanvas) {
+          position: fixed;
+          width: 100vw;
+          height: 100vh;
+        }
+
+        .scene-spacer {
+          width: 100%;
+          height: 100vh;
+          pointer-events: none;
+        }
+
         main {
+          position: relative;
+          z-index: 1;
           margin-left: 10vw;
+          pointer-events: none;
+        }
+
+        .projectsContainer {
+          pointer-events: auto;
         }
 
         .scroll-indicator {
@@ -595,6 +629,9 @@ for (let i = posts.length - 1; i > 0; i--) {
           margin: 0;
           padding: 0;
           margin-bottom: 1.5rem;
+          text-shadow:
+            0 2px 8px rgba(0, 0, 0, 0.8),
+            0 0 20px rgba(0, 0, 0, 0.6);
         }
 
         .postTitle {
@@ -634,6 +671,10 @@ for (let i = posts.length - 1; i > 0; i--) {
         .project {
           height: 100%;
           width: 100%;
+          background-color: rgba(0, 0, 0, 0.7);
+          border-radius: 0.5rem;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+          overflow: hidden;
         }
 
         /* ==========================================================================
