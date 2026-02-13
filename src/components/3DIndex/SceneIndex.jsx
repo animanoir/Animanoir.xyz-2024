@@ -4,12 +4,14 @@ import { Loader, useGLTF, useProgress } from "@react-three/drei";
 import { EffectComposer, Noise, Vignette } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import { AnimanoirLogoScene } from "./AnimanoirLogoScene";
+import { useScrollEffect } from "./useScrollEffect";
 import "@/styles/canvasFiber.css";
 import * as THREE from "three";
 
-const FloatingCamera = ({ intensity = 0.15, speed = 0.3 }) => {
+const FloatingCamera = ({ intensity = 0.15, speed = 0.3, scrollEffectRef }) => {
   const timeRef = useRef(0);
   const initialCameraPos = useRef(null);
+  const baseRadiusRef = useRef(null);
 
   const noiseOffsets = useRef({
     x1: Math.random() * 100,
@@ -22,6 +24,9 @@ const FloatingCamera = ({ intensity = 0.15, speed = 0.3 }) => {
   useFrame(({ camera }, delta) => {
     if (!initialCameraPos.current) {
       initialCameraPos.current = camera.position.clone();
+      baseRadiusRef.current = Math.sqrt(
+        initialCameraPos.current.x ** 2 + initialCameraPos.current.z ** 2
+      );
     }
 
     timeRef.current += delta * speed;
@@ -43,8 +48,11 @@ const FloatingCamera = ({ intensity = 0.15, speed = 0.3 }) => {
       Math.sin(t * 0.7 + z1) * 0.3
     ) * intensity;
 
-    // Calculate orbit
-    const radius = Math.sqrt(initialCameraPos.current.x ** 2 + initialCameraPos.current.z ** 2);
+    // Scroll-driven zoom out: increase orbit radius up to +8 units
+    const scrollEffect = scrollEffectRef ? scrollEffectRef.current : 0;
+    const zoomOutAmount = scrollEffect * 8;
+    const radius = baseRadiusRef.current + zoomOutAmount;
+
     const rotationSpeed = 0.1;
     const angle = t * rotationSpeed;
 
@@ -70,6 +78,8 @@ const FloatingCamera = ({ intensity = 0.15, speed = 0.3 }) => {
 export const SceneIndex = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const { progress } = useProgress();
+  const scrollEffectRef = useScrollEffect();
+  const blurOverlayRef = useRef(null);
 
   // Preload heavy assets ahead of render to avoid Loader stalling at 0%
   useEffect(() => {
@@ -97,6 +107,23 @@ export const SceneIndex = () => {
     const fallback = setTimeout(() => setIsLoaded(true), 8000);
     return () => clearTimeout(fallback);
   }, []);
+
+  // Sync scroll effect intensity → CSS blur via direct DOM mutation (no re-renders)
+  useEffect(() => {
+    let rafId;
+    const syncBlur = () => {
+      if (blurOverlayRef.current) {
+        const maxBlur = 6; // pixels
+        const blur = scrollEffectRef.current * maxBlur;
+        const blurVal = `blur(${blur.toFixed(1)}px)`;
+        blurOverlayRef.current.style.backdropFilter = blurVal;
+        blurOverlayRef.current.style.webkitBackdropFilter = blurVal;
+      }
+      rafId = requestAnimationFrame(syncBlur);
+    };
+    rafId = requestAnimationFrame(syncBlur);
+    return () => cancelAnimationFrame(rafId);
+  }, [scrollEffectRef]);
 
   const canvasStyle = {
     display: "block",
@@ -141,12 +168,25 @@ export const SceneIndex = () => {
         }}
       >
         <AnimanoirLogoScene client:only="react" />
-        <FloatingCamera intensity={1.0} speed={1.0} />
+        <FloatingCamera intensity={1.0} speed={1.0} scrollEffectRef={scrollEffectRef} />
         <EffectComposer multisampling={0}>
           <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.12} />
           <Vignette eskil={false} offset={0.1} darkness={0.2} />
         </EffectComposer>
       </Canvas>
+      {/* Scroll-driven blur overlay — always mounted to avoid flicker */}
+      <div
+        ref={blurOverlayRef}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          pointerEvents: "none",
+          zIndex: 5,
+        }}
+      />
       <div style={fadeOverlayStyle} />
       <Loader containerStyles={{ backgroundColor: "#060606" }} />
     </div>
