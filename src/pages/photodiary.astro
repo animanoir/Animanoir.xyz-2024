@@ -183,6 +183,13 @@ try {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.8s ease;
+      }
+
+      .photo-item img.revealed {
+        opacity: 1;
+        transition: none;
       }
 
       .photo-item:hover img {
@@ -238,5 +245,46 @@ try {
         }
       }
     </style>
+
+    <script>
+      (() => {
+        const imgs = document.querySelectorAll(".photo-item img");
+        let remaining = imgs.length;
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+
+              const img = entry.target as HTMLImageElement;
+              const delay = Math.random() * 1500; // 0–1.5s random delay
+
+              observer.unobserve(img);
+
+              setTimeout(() => {
+                img.style.opacity = "1";
+
+                // After the CSS transition ends, clean up
+                img.addEventListener(
+                  "transitionend",
+                  () => {
+                    img.style.opacity = "";
+                    img.style.transition = "";
+                    img.classList.add("revealed");
+                  },
+                  { once: true },
+                );
+              }, delay);
+
+              remaining--;
+              if (remaining <= 0) observer.disconnect();
+            });
+          },
+          { threshold: 0.1 },
+        );
+
+        imgs.forEach((img) => observer.observe(img));
+      })();
+    </script>
   </body>
 </html>
