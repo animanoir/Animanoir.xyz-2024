@@ -1,94 +1,91 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useCallback, memo } from "react";
 import * as lastFmStyles from "@/styles/lastFm.css";
 import useLastFmData from "@/components/hooks/useLastFmData.js";
 
-export const LastFm = ({ customStyle, showAlbumCover = true }) => {
+const LastFm = memo(({ customStyle, showAlbumCover = true }) => {
   const lfmData = useLastFmData();
+  const albumCoverRef = useRef(null);
+  const [isHovering, setIsHovering] = useState(false);
 
-  const [albumImageState, setAlbumImageState] = useState({
-    x: 0,
-    y: 0,
-  });
-  const [onMouseEnter, setOnMouseEnter] = useState(false);
-
-  const handleMouseEnter = (albumImage) => {
+  const handleMouseEnter = useCallback((albumImage) => {
     if (albumImage) {
-      setOnMouseEnter(true);
+      setIsHovering(true);
     }
-  };
+  }, []);
 
-  const handleMouseLeave = () => {
-    setOnMouseEnter(false);
-  };
+  const handleMouseLeave = useCallback(() => {
+    setIsHovering(false);
+  }, []);
 
-  const handleMouseMove = (e) => {
-    setAlbumImageState({ ...albumImageState, x: e.clientX, y: e.clientY });
-  };
-
-  const buildLastFmData = () => {
-    const { error, trackUrl } = lfmData;
-    const track = lfmData?.recenttracks?.track;
-
-    if (error) {
-      return (
-        <div style={customStyle} className="lastfmContainer fadeInQuick">
-          <p>{error}</p>
-        </div>
-      );
+  const handleMouseMove = useCallback((e) => {
+    // Update DOM directly via ref — no re-render needed
+    if (albumCoverRef.current) {
+      albumCoverRef.current.style.left = `${e.clientX}px`;
     }
+  }, []);
 
-    if (!track) {
-      return (
-        <div className="lastfmContainer">
-          <p>Fetching from Last.FM servers...</p>
-        </div>
-      );
-    }
+  const { error, trackUrl } = lfmData;
+  const track = lfmData?.recenttracks?.track;
 
-    const [
-      {
-        name: songName,
-        artist: { "#text": artistName },
-        album: { "#text": albumName },
-        image,
-      } = {},
-    ] = track;
-    const albumImage = image?.[image.length - 1]?.["#text"];
-
+  if (error) {
     return (
       <div style={customStyle} className="lastfmContainer fadeInQuick">
-        <span
-          onMouseEnter={() => handleMouseEnter(albumImage)}
-          onMouseLeave={handleMouseLeave}
-          onMouseMove={handleMouseMove}
-        >
-          Currently listening to{" "}
-          <a className="lastFmLink" href={trackUrl} target="_blank">
-            <b className="songInfo">{artistName}</b> <span style={{ color: "#FFFFFF39" }}>—</span>{" "}
-            <b className="songInfo">{songName}</b>{" "}
-          </a>
-          <img src="/images/playingBars.gif" alt="Now playing" />
-        </span>
-        {
-          showAlbumCover && (
-            <div
-              className="albumCover"
-              style={{
-                zIndex: onMouseEnter ? 1 : -1,
-                left: albumImageState.x,
-                top: 40,
-                opacity: onMouseEnter ? 1 : 0,
-              }}
-            >
-              <img src={albumImage} alt={albumName} />
-            </div>
-          )
-        }
-
+        <p>{error}</p>
       </div>
     );
-  };
-  return buildLastFmData();
-};
+  }
 
+  if (!track) {
+    return (
+      <div className="lastfmContainer">
+        <p>Fetching from Last.FM servers...</p>
+      </div>
+    );
+  }
+
+  const [
+    {
+      name: songName,
+      artist: { "#text": artistName },
+      album: { "#text": albumName },
+      image,
+    } = {},
+  ] = track;
+  const albumImage = image?.[image.length - 1]?.["#text"];
+
+  return (
+    <div style={customStyle} className="lastfmContainer fadeInQuick">
+      <span
+        onMouseEnter={() => handleMouseEnter(albumImage)}
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
+      >
+        Currently listening to{" "}
+        <a className="lastFmLink" href={trackUrl} target="_blank">
+          <b className="songInfo">{artistName}</b> <span style={{ color: "#FFFFFF39" }}>—</span>{" "}
+          <b className="songInfo">{songName}</b>{" "}
+        </a>
+        <img src="/images/playingBars.gif" alt="Now playing" />
+      </span>
+      {showAlbumCover && (
+        <div
+          ref={albumCoverRef}
+          className="albumCover"
+          style={{
+            zIndex: isHovering ? 1 : -1,
+            left: 0,
+            top: 40,
+            opacity: isHovering ? 1 : 0,
+          }}
+        >
+          <img src={albumImage} alt={albumName} />
+        </div>
+      )}
+    </div>
+  );
+});
+
+LastFm.displayName = "LastFm";
+
+export { LastFm };
 export default LastFm;
