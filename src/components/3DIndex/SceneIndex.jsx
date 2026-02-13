@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useRef, useState, useCallback } from "react";
-import { Loader } from "@react-three/drei";
+import { useRef, useState, useCallback, useEffect } from "react";
+import { Loader, useGLTF, useProgress } from "@react-three/drei";
 import { EffectComposer, Noise, Vignette } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import { AnimanoirLogoScene } from "./AnimanoirLogoScene";
@@ -69,15 +69,33 @@ const FloatingCamera = ({ intensity = 0.15, speed = 0.3 }) => {
 
 export const SceneIndex = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const { progress } = useProgress();
+
+  // Preload heavy assets ahead of render to avoid Loader stalling at 0%
+  useEffect(() => {
+    useGLTF.preload("/animanoir-logo-3d.glb");
+    useGLTF.preload("/andros_fetal.glb");
+  }, []);
 
   const handleSceneCreated = useCallback(({ gl }) => {
     gl.setClearColor("black", 1);
     gl.toneMapping = THREE.AgXToneMapping;
     gl.outputColorSpace = THREE.SRGBColorSpace;
     gl.toneMappingExposure = 1.2;
+  }, []);
 
-    // Trigger fade-in after a small delay to ensure scene is rendered
-    setTimeout(() => setIsLoaded(true), 100);
+  // Fade overlay once loader hits ~100% (with a tiny delay for final render)
+  useEffect(() => {
+    if (progress >= 99) {
+      const timeout = setTimeout(() => setIsLoaded(true), 150);
+      return () => clearTimeout(timeout);
+    }
+  }, [progress]);
+
+  // Safety net: never leave the screen black if progress cannot reach 100%
+  useEffect(() => {
+    const fallback = setTimeout(() => setIsLoaded(true), 8000);
+    return () => clearTimeout(fallback);
   }, []);
 
   const canvasStyle = {

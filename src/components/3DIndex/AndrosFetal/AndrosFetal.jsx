@@ -149,7 +149,7 @@ export function AndrosFetal(props) {
     }
   });
 
-  const { nodes, animations } = useGLTF("./andros_fetal.glb");
+  const { nodes, animations } = useGLTF("/andros_fetal.glb");
   const { actions } = useAnimations(animations, group);
   useEffect(() => {
     actions.Fetal.play();
@@ -209,4 +209,4 @@ export function AndrosFetal(props) {
 
 export default AndrosFetal;
 
-useGLTF.preload("./andros_fetal.glb");
+useGLTF.preload("/andros_fetal.glb");

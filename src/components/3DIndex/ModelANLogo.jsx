@@ -9,7 +9,7 @@ import * as THREE from "three";
 
 export function ModelANLogo(props) {
   const { gl } = useThree();
-  const { nodes, materials } = useGLTF("./animanoir-logo-3d.glb");
+  const { nodes, materials } = useGLTF("/animanoir-logo-3d.glb");
   const meshRef = useRef();
   const [clicked, setClicked] = useState(false);
 
@@ -49,16 +49,16 @@ export function ModelANLogo(props) {
           gl.domElement.style.cursor = "auto";
         }}
       >
-      <meshPhysicalMaterial
-        metalness={0.0}
-        roughness={0.2}
-        transmission={1.0}
-        thickness={0.5}
-        ior={2.417}
-        clearcoat={1}
-        clearcoatRoughness={0.1}
-        envMapIntensity={1}
-      />
+        <meshPhysicalMaterial
+          metalness={0.0}
+          roughness={0.2}
+          transmission={1.0}
+          thickness={0.5}
+          ior={2.417}
+          clearcoat={1}
+          clearcoatRoughness={0.1}
+          envMapIntensity={1}
+        />
       </mesh>
     </>
   );
