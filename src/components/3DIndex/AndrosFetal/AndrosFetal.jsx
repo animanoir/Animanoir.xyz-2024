@@ -6,8 +6,6 @@ import * as THREE from "three"; // Import THREE
 export function AndrosFetal(props) {
   const group = useRef();
   const eyeMaterialRef = useRef(); // Ref for the eye material
-  const bodyMaterialRef = useRef(); // Ref for the body material
-  const [isTransparent, setIsTransparent] = useState(false); // State for transparency/metalness toggle
 
   // Mouse rotation states
   const [isDragging, setIsDragging] = useState(false);
@@ -20,9 +18,6 @@ export function AndrosFetal(props) {
 
   const { gl } = useThree();
 
-  const handleBodyClick = () => {
-    setIsTransparent(!isTransparent); // Toggle the state
-  };
 
   // Mouse event handlers for rotation
   const handleMouseDown = (event) => {
@@ -86,14 +81,6 @@ export function AndrosFetal(props) {
   }, [gl]);
 
   // Update material properties based on the state
-  useEffect(() => {
-    if (bodyMaterialRef.current) {
-      bodyMaterialRef.current.metalness = isTransparent ? 0.0 : 1.0;
-      // You might want to adjust other properties like transmission or opacity here too
-      bodyMaterialRef.current.transmission = isTransparent ? 1.0 : 0.0; // Example
-      bodyMaterialRef.current.opacity = isTransparent ? 0.5 : 1.0; // Example
-    }
-  }, [isTransparent]); // Re-run effect when isTransparent changes
 
   useFrame((state, delta) => {
     // Bobbing animation
@@ -172,11 +159,9 @@ export function AndrosFetal(props) {
             name="CC_Base_Body"
             geometry={nodes.CC_Base_Body.geometry}
             skeleton={nodes.CC_Base_Body.skeleton}
-            onClick={handleBodyClick}
           >
             {/* Assign ref to the material */}
             <meshPhysicalMaterial
-              ref={bodyMaterialRef} // Add ref here
               color="#7997A1"
               metalness={1.0} // Initial metalness
               roughness={0.0}
