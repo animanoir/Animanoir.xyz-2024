@@ -1,7 +1,7 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
-import gif1 from "@/images/about/oscar-a-montiel.gif";
+import video from "@/images/about/oscar-a-montiel.webm";
 import { Image } from "astro:assets";
 import "../styles/global.css";
 
@@ -40,21 +40,21 @@ const socialLinks = [
     description={"Interactive Media Artist. Videoart, videogames, music, and interactive 3D."}
     image="/images/about/óscar-a-montiel-animanoir-geosmina.jpg"
   />
+  <link rel="preload" as="video" href={video} />
 </head>
 
 <body>
   <ModifiedHeader goWild={true} sortSpeed={80.0} />
   <div class="about-container">
-    <Image
+    <video
       class="main-image"
-      src={gif1}
-      alt={"Óscar A. Montiel"}
+      src={video}
+      autoplay
+      loop
+      muted
+      playsinline
       width={500}
-      height={500}
-      decoding="async"
-      loading="eager"
-      quality={10}
-    />
+      height={500}></video>
     <h1 class="name">Óscar A. Montiel</h1>
     <p class="title">Interactive Media Artist</p>
     <div class="social-row">
