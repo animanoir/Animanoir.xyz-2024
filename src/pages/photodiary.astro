@@ -247,9 +247,43 @@ try {
     </style>
 
     <script>
-      (() => {
+      function initPhotodiary() {
         const imgs = document.querySelectorAll(".photo-item img");
-        let remaining = imgs.length;
+        if (!imgs.length) return;
+
+        // Retrieve set of already-revealed image URLs from session
+        const STORAGE_KEY = "photodiary-revealed";
+        let revealedSet: Set<string>;
+        try {
+          const stored = sessionStorage.getItem(STORAGE_KEY);
+          revealedSet = stored ? new Set(JSON.parse(stored)) : new Set();
+        } catch {
+          revealedSet = new Set();
+        }
+
+        function persistRevealed() {
+          try {
+            sessionStorage.setItem(
+              STORAGE_KEY,
+              JSON.stringify([...revealedSet]),
+            );
+          } catch {
+            /* ignore quota errors */
+          }
+        }
+
+        // Immediately reveal images that were already seen
+        const unseenImgs: HTMLImageElement[] = [];
+        imgs.forEach((img) => {
+          const src = (img as HTMLImageElement).src;
+          if (revealedSet.has(src)) {
+            (img as HTMLImageElement).classList.add("revealed");
+          } else {
+            unseenImgs.push(img as HTMLImageElement);
+          }
+        });
+
+        if (!unseenImgs.length) return;
 
         const observer = new IntersectionObserver(
           (entries) => {
@@ -271,20 +305,22 @@ try {
                     img.style.opacity = "";
                     img.style.transition = "";
                     img.classList.add("revealed");
+                    revealedSet.add(img.src);
+                    persistRevealed();
                   },
                   { once: true },
                 );
               }, delay);
-
-              remaining--;
-              if (remaining <= 0) observer.disconnect();
             });
           },
           { threshold: 0.1 },
         );
 
-        imgs.forEach((img) => observer.observe(img));
-      })();
+        unseenImgs.forEach((img) => observer.observe(img));
+      }
+
+      // Run on first load and every View Transitions navigation
+      document.addEventListener("astro:page-load", initPhotodiary);
     </script>
   </body>
 </html>
