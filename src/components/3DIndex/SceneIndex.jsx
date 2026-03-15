@@ -88,7 +88,7 @@ export const SceneIndex = () => {
   }, []);
 
   const handleSceneCreated = useCallback(({ gl }) => {
-    gl.setClearColor("#f2f0eb", 1);
+    gl.setClearColor("#0a0a0a", 1);
     gl.toneMapping = THREE.AgXToneMapping;
     gl.outputColorSpace = THREE.SRGBColorSpace;
     gl.toneMappingExposure = 1.2;
@@ -140,7 +140,7 @@ export const SceneIndex = () => {
     left: 0,
     width: "100%",
     height: "100%",
-    backgroundColor: "#f2f0eb",
+    backgroundColor: "#0a0a0a",
     opacity: isLoaded ? 0 : 1,
     transition: "opacity 1s ease-out",
     pointerEvents: "none",
@@ -188,7 +188,7 @@ export const SceneIndex = () => {
         }}
       />
       <div style={fadeOverlayStyle} />
-      <Loader containerStyles={{ backgroundColor: "#f2f0eb" }} />
+      <Loader containerStyles={{ backgroundColor: "#0a0a0a" }} />
     </div>
   );
 };
