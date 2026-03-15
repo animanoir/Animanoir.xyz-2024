@@ -56,7 +56,6 @@ const socialLinks = [
       width={500}
       height={500}></video>
     <h1 class="name">Óscar A. Montiel</h1>
-    <p class="title">Interactive Media Artist</p>
     <div class="social-row">
       {
         socialLinks.map((link) => (
@@ -88,7 +87,7 @@ const socialLinks = [
       flex-direction: column;
       align-items: center;
       text-align: center;
-      color: #fdfefe;
+      color: #1c1c1c;
       font-family: "Bebas Neue", sans-serif;
     }
 
@@ -104,6 +103,7 @@ const socialLinks = [
       font-weight: 600;
       margin: 1.5rem 0 0.25rem;
       font-family: "Bebas Neue", sans-serif;
+      display: none;
     }
 
     .title {
@@ -127,7 +127,7 @@ const socialLinks = [
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      color: #fdfefe;
+      color: #1c1c1c;
       text-decoration: none;
       font-size: 0.85rem;
       transition: opacity 0.3s;
@@ -140,6 +140,7 @@ const socialLinks = [
     .social-icon {
       height: 18px;
       width: auto;
+      filter: brightness(0.11);
     }
 
     @media (max-width: 767.98px) {

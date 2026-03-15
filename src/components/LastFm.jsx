@@ -62,7 +62,7 @@ const LastFm = memo(({ customStyle, showAlbumCover = true }) => {
       >
         Currently listening to{" "}
         <a className="lastFmLink" href={trackUrl} target="_blank">
-          <b className="songInfo">{artistName}</b> <span style={{ color: "#FFFFFF39" }}>—</span>{" "}
+          <b className="songInfo">{artistName}</b> <span className="lastFmDash">—</span>{" "}
           <b className="songInfo">{songName}</b>{" "}
         </a>
         <img src="/images/playingBars.gif" alt="Now playing" />

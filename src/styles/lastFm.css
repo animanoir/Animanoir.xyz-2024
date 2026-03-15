@@ -8,15 +8,19 @@
   align-items: center;
   cursor: crosshair;
   user-select: none;
-  color: rgba(255, 255, 255, 0.224);
+  color: rgba(28, 28, 28, 0.224);
 }
 
 .lastFmLink {
-  text-decoration-color: #fdfefe75
+  text-decoration-color: #1c1c1c75
 }
 
 .songInfo {
-  color: #fdfefe8f;
+  color: #1c1c1c8f;
+}
+
+.lastFmDash {
+  color: rgba(28, 28, 28, 0.224);
 }
 
 .lastfmContainer p {

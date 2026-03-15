@@ -31,7 +31,8 @@ body {
   font-family: "Gotham-Bold";
   text-align: left;
   /* background-color: #060606; */
-  background-color: black;
+  background-color: #f2f0eb;
+  color: #1c1c1c;
   word-wrap: break-word;
   overflow-wrap: break-word;
   line-height: 1.5;
@@ -59,7 +60,7 @@ input {
 code {
   font-size: 1rem;
   padding: 2px 5px;
-  background-color: #272727;
+  background-color: #e5e3de;
 }
 
 pre {
@@ -96,7 +97,7 @@ h5,
 h6,
 strong,
 b {
-  color: #fdfefe;
+  color: #1c1c1c;
 }
 
 h3 {
@@ -124,12 +125,12 @@ p {
 /* Replace the existing p::selection rule with these general selection rules */
 ::selection {
   background-color: transparent;
-  color: #060606;
+  color: #f2f0eb;
 }
 
 ::-moz-selection {
   background-color: transparent;
-  color: #060606;
+  color: #f2f0eb;
 }
 
 /* Animations */
@@ -203,7 +204,7 @@ blockquote:before {
   position: absolute;
   top: 0;
   left: 10px;
-  color: #fdfefe;
+  color: #1c1c1c;
 }
 
 blockquote:after {
@@ -212,7 +213,7 @@ blockquote:after {
   position: absolute;
   bottom: -1px;
   right: 25px;
-  color: #fdfefe;
+  color: #1c1c1c;
 }
 
 blockquote cite {
@@ -252,11 +253,11 @@ ul {
 }
 
 ::-webkit-scrollbar-track {
-  background: #060606;
+  background: #f2f0eb;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #232323;
+  background: #c8c5c0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -264,5 +265,5 @@ ul {
 }
 
 ::-webkit-scrollbar-thumb:active {
-  background: #fdfefe;
+  background: #1c1c1c;
 }

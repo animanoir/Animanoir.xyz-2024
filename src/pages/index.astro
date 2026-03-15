@@ -8,8 +8,6 @@ import videoartCover from "@/images/works/videoart.png";
 import { motion } from "motion/react";
 import "../styles/global.css";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
-import Video from "@/components/RandomVideo/Video.jsx";
-import ledvid from "@/images/videos/ledveo.webm";
 import Footer from "@/components/Footer/Footer.astro";
 import SceneIndex from "@/components/3DIndex/SceneIndex.jsx";
 
@@ -367,7 +365,77 @@ for (let i = posts.length - 1; i > 0; i--) {
       </motion.div>
       <style>
         :global(body) {
-          background-color: transparent !important;
+          background-color: #1c1c1c !important;
+        }
+
+        /* Override dark text back to smoky white for components over the 3D scene */
+        :global(header #headerTitle),
+        :global(header #headerSubtitle),
+        :global(header h1),
+        :global(header h2) {
+          color: #f2f0eb !important;
+        }
+        :global(header a:hover #headerTitle) {
+          color: #ee5858 !important;
+        }
+        :global(.navbar a),
+        :global(.mobile-nav-links a) {
+          color: #f2f0eb !important;
+        }
+        :global(.navbar a:hover),
+        :global(.mobile-nav-links a:hover) {
+          color: #ee5858 !important;
+        }
+        :global(.hamburger-line) {
+          background-color: #f2f0eb !important;
+        }
+        :global(.mobile-menu) {
+          background-color: rgba(6, 6, 6, 0.95) !important;
+        }
+        :global(.ornaments .circle) {
+          background-color: #f2f0eb !important;
+        }
+        :global(.lastfmContainer) {
+          color: rgba(255, 255, 255, 0.224) !important;
+        }
+        :global(.songInfo) {
+          color: #f2f0eb8f !important;
+        }
+        :global(.lastFmDash) {
+          color: rgba(255, 255, 255, 0.224) !important;
+        }
+        :global(.lastFmLink) {
+          text-decoration-color: #f2f0eb75 !important;
+        }
+        :global(.social-icon) {
+          filter: none !important;
+        }
+        :global(footer) {
+          color: #f2f0eb !important;
+        }
+        :global(.separator-line) {
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(242, 240, 235, 0.4) 20%,
+            rgba(242, 240, 235, 0.7) 50%,
+            rgba(242, 240, 235, 0.4) 80%,
+            transparent 100%
+          ) !important;
+        }
+        :global(.mobile-separator-line) {
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(242, 240, 235, 0.4) 20%,
+            rgba(242, 240, 235, 0.7) 50%,
+            rgba(242, 240, 235, 0.4) 80%,
+            transparent 100%
+          ) !important;
+        }
+        :global(.mobile-separator-line)::before {
+          background: rgba(242, 240, 235, 0.9) !important;
+          box-shadow: 0 0 12px rgba(242, 240, 235, 0.6) !important;
         }
 
         .scene-background {
@@ -612,7 +680,7 @@ for (let i = posts.length - 1; i > 0; i--) {
         .postTitle,
         .year {
           font-family: "Montserrat", sans-serif;
-          color: floralwhite;
+          color: #f2f0eb;
           margin: 0;
           padding: 0;
         }
@@ -625,7 +693,7 @@ for (let i = posts.length - 1; i > 0; i--) {
           font-weight: 600;
           line-height: 1.2;
           margin-bottom: 1.5rem;
-          color: floralwhite;
+          color: #f2f0eb;
           margin: 0;
           padding: 0;
           margin-bottom: 1.5rem;
@@ -672,7 +740,7 @@ for (let i = posts.length - 1; i > 0; i--) {
         .project {
           height: 100%;
           width: 100%;
-          background-color: rgba(0, 0, 0, 0.7);
+          background-color: rgba(242, 240, 235, 0.7);
           border-radius: 0.5rem;
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
           overflow: hidden;
@@ -774,7 +842,7 @@ for (let i = posts.length - 1; i > 0; i--) {
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #fdfefe;
+            color: #1c1c1c;
             font-family: "Bebas Neue", sans-serif;
             font-size: 1.2rem;
             opacity: 0.7;
@@ -864,7 +932,7 @@ for (let i = posts.length - 1; i > 0; i--) {
 
           .postInfo {
             display: block;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(242, 240, 235, 0.5);
             padding: 0.5rem;
             border-radius: 4px;
           }
@@ -944,7 +1012,7 @@ for (let i = posts.length - 1; i > 0; i--) {
           left: 0;
           right: 0;
           height: 30%;
-          background: linear-gradient(to bottom, transparent, #060606);
+          background: linear-gradient(to bottom, transparent, #f2f0eb);
           pointer-events: none;
           z-index: 10;
         }

@@ -2,12 +2,14 @@
 import HeaderLink from "@/components/HeaderLink.astro";
 import { ClientRouter } from "astro:transitions";
 
-// Work-related links
+const isHomePage = Astro.url.pathname === "/";
+
+// Work-related links — on homepage scroll to sections, elsewhere link to dedicated pages
 const workLinks = [
-  { href: "/#3d-animation", label: "3D Animation", target: "_self" },
-  { href: "/#videoart", label: "Video", target: "_self" },
-  { href: "/#interactive-art", label: "Interactive", target: "_self" },
-  { href: "/#sound-art", label: "Sound", target: "_self" },
+  { href: isHomePage ? "/#3d-animation" : "/3Dworks", label: "3D Animation", target: "_self" },
+  { href: isHomePage ? "/#videoart" : "/videoart", label: "Video", target: "_self" },
+  { href: isHomePage ? "/#interactive-art" : "/#interactive-art", label: "Interactive", target: "_self" },
+  { href: isHomePage ? "/#sound-art" : "/#sound-art", label: "Sound", target: "_self" },
 ];
 
 // Personal content links
@@ -138,19 +140,13 @@ const allLinks = [...workLinks, ...personalLinks];
 
 <style>
   :root {
-    --text-color: #fdfefe;
+    --text-color: #1c1c1c;
     --hover-color: #ee5858;
     --font-size: 1rem;
     --margin-horizontal: 1rem;
     --margin-vertical: 1rem;
-    --text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.475);
     --transition-speed: 0.3s;
-    --bg-color: rgba(6, 6, 6, 0.95);
-  }
-
-  .navbar,
-  .navbar a {
-    text-shadow: var(--text-shadow);
+    --bg-color: rgba(242, 240, 235, 0.95);
   }
 
   .navbar {
@@ -191,9 +187,9 @@ const allLinks = [...workLinks, ...personalLinks];
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(253, 254, 254, 0.4) 20%,
-      rgba(253, 254, 254, 0.7) 50%,
-      rgba(253, 254, 254, 0.4) 80%,
+      rgba(28, 28, 28, 0.4) 20%,
+      rgba(28, 28, 28, 0.7) 50%,
+      rgba(28, 28, 28, 0.4) 80%,
       transparent 100%
     );
     position: relative;
@@ -215,9 +211,9 @@ const allLinks = [...workLinks, ...personalLinks];
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(253, 254, 254, 0.4) 20%,
-      rgba(253, 254, 254, 0.7) 50%,
-      rgba(253, 254, 254, 0.4) 80%,
+      rgba(28, 28, 28, 0.4) 20%,
+      rgba(28, 28, 28, 0.7) 50%,
+      rgba(28, 28, 28, 0.4) 80%,
       transparent 100%
     );
     position: relative;
@@ -231,9 +227,9 @@ const allLinks = [...workLinks, ...personalLinks];
     transform: translate(-50%, -50%);
     width: 6px;
     height: 6px;
-    background: rgba(253, 254, 254, 0.9);
+    background: rgba(28, 28, 28, 0.9);
     border-radius: 50%;
-    box-shadow: 0 0 12px rgba(253, 254, 254, 0.6);
+    box-shadow: 0 0 12px rgba(28, 28, 28, 0.6);
   }
 
   .navbar a {
@@ -334,7 +330,6 @@ const allLinks = [...workLinks, ...personalLinks];
     font-size: 1.5rem;
     text-decoration: none;
     color: var(--text-color);
-    text-shadow: var(--text-shadow);
     transition: color var(--transition-speed);
   }
 

@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 
 const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
@@ -55,8 +55,8 @@ const posts = (await getCollection("blog")).sort(
     color: #999;
   }
   .postTitle {
-    background-color: black;
-    color: floralwhite;
+    background-color: #f2f0eb;
+    color: #1c1c1c;
     font-family: "Montserrat", sans-serif;
     font-weight: bold;
     font-size: 0.8rem;
@@ -72,7 +72,7 @@ const posts = (await getCollection("blog")).sort(
     padding: 0.2rem;
     margin-top: 0;
     line-height: 1.1;
-    color: #fdfefe;
+    color: #1c1c1c;
     width: fit-content;
   }
 
