@@ -12,7 +12,7 @@ const { goWild = false, sortSpeed = 0 } = Astro.props;
   <a href="/">
     <h2 id="headerTitle">
       {SITE_TITLE} | <span id="headerSubtitle"
-        ><MutatingSubheader client:load /></span
+        ><MutatingSubheader client:load goWild={goWild} sortSpeed={sortSpeed} /></span
       >
     </h2>
   </a>
