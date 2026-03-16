@@ -33,13 +33,13 @@ const { goWild = false, sortSpeed = 0 } = Astro.props;
     justify-content: space-between;
     width: auto;
     box-sizing: border-box;
-    padding: 0 var(--page-padding, 6%);
+    padding: 0 var(--page-padding, 6%) 0 calc(var(--page-padding, 6%) * 0.8);
     margin-top: 2rem;
     left: 0;
   }
   .navbar-wrapper {
     position: fixed;
-    left: var(--page-padding, 6%);
+    left: calc(var(--page-padding, 6%) * 0.8);
     top: 50%;
     transform: translateY(-50%);
     z-index: 1000;
