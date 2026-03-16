@@ -145,6 +145,57 @@ try {
         box-sizing: border-box;
       }
 
+      :global(header #headerTitle),
+      :global(header #headerSubtitle),
+      :global(header h1),
+      :global(header h2) {
+        color: #f2f0eb !important;
+      }
+      :global(header a:hover #headerTitle) {
+        color: #ee5858 !important;
+      }
+      :global(.navbar a),
+      :global(.mobile-nav-links a) {
+        color: #f2f0eb !important;
+      }
+      :global(.navbar a:hover),
+      :global(.mobile-nav-links a:hover) {
+        color: #ee5858 !important;
+      }
+      :global(.hamburger-line) {
+        background-color: #f2f0eb !important;
+      }
+      :global(.mobile-menu) {
+        background-color: rgba(6, 6, 6, 0.95) !important;
+      }
+      :global(.ornaments .circle) {
+        background-color: #f2f0eb !important;
+      }
+      :global(.separator-line) {
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(242, 240, 235, 0.4) 20%,
+          rgba(242, 240, 235, 0.7) 50%,
+          rgba(242, 240, 235, 0.4) 80%,
+          transparent 100%
+        ) !important;
+      }
+      :global(.mobile-separator-line) {
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(242, 240, 235, 0.4) 20%,
+          rgba(242, 240, 235, 0.7) 50%,
+          rgba(242, 240, 235, 0.4) 80%,
+          transparent 100%
+        ) !important;
+      }
+      :global(.mobile-separator-line)::before {
+        background: rgba(242, 240, 235, 0.9) !important;
+        box-shadow: 0 0 12px rgba(242, 240, 235, 0.6) !important;
+      }
+
       body {
         margin: 0;
         padding: 0;
