@@ -55,26 +55,44 @@ const socialLinks = [
       playsinline
       width={500}
       height={500}></video>
-    <h1 class="name">Óscar A. Montiel</h1>
-    <div class="social-row">
-      {
-        socialLinks.map((link) => (
-          <a
-            href={link.href}
-            target="_blank"
-            rel="noreferrer"
-            class="social-link"
-          >
-            <Image
-              src={link.icon}
-              alt={link.label}
-              class="social-icon"
-              loading="eager"
-            />
-            <span>{link.label}</span>
-          </a>
-        ))
-      }
+    <div class="about-info">
+      <h1 class="name">Óscar A. Montiel</h1>
+      <div class="bio">
+        <p class="bio-intro">
+          Interactive Media Artist & Software Engineer with 9+ years bridging code and creative expression.
+        </p>
+        <p class="bio-body">
+          I build immersive 3D web experiences, interactive installations, generative sound systems, and videogames — using React, Three.js, Max/MSP, and game engines as expressive tools. My work lives at the intersection of art, technology, and philosophy.
+        </p>
+        <p class="bio-collab">
+          <strong>Open to collaboration & commissions:</strong> 3D web development, interactive installations, creative coding workshops, front-end engineering, and artistic direction for digital projects.
+        </p>
+      </div>
+      <div class="social-row">
+        {
+          socialLinks.map((link) => (
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              class="social-link"
+            >
+              <Image
+                src={link.icon}
+                alt={link.label}
+                class="social-icon"
+                loading="eager"
+              />
+              </a>
+          ))
+        }
+      </div>
+      <a
+        href="mailto:etherealflux94@gmail.com?subject=I%20love%20you%2C%20%C3%93scar"
+        class="email-link"
+      >
+        etherealflux94@gmail.com
+      </a>
     </div>
   </div>
   <style>
@@ -84,24 +102,32 @@ const socialLinks = [
       left: 50%;
       transform: translate(-50%, -50%);
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      text-align: center;
+      gap: 3rem;
       color: #1c1c1c;
       font-family: "Bebas Neue", sans-serif;
     }
 
     .main-image {
       display: block;
-      max-width: 450px;
+      max-width: 400px;
       width: 100%;
       height: auto;
+      flex-shrink: 0;
+    }
+
+    .about-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
     }
 
     .name {
       font-size: 2rem;
       font-weight: 600;
-      margin: 1.5rem 0 0.25rem;
+      margin: 0 0 0.25rem;
       font-family: "Bebas Neue", sans-serif;
       display: none;
     }
@@ -114,13 +140,34 @@ const socialLinks = [
       font-weight: 400;
     }
 
+    .bio {
+      max-width: 480px;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #1c1c1c;
+    }
+
+    .bio-intro {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 0 0 0.75rem;
+    }
+
+    .bio-body {
+      margin: 0 0 0.75rem;
+    }
+
+    .bio-collab {
+      margin: 0;
+    }
+
     .social-row {
       display: flex;
       gap: 2rem;
-      margin-top: 2rem;
+      margin-top: 1.5rem;
       align-items: center;
       flex-wrap: wrap;
-      justify-content: center;
     }
 
     .social-link {
@@ -143,12 +190,32 @@ const socialLinks = [
       filter: brightness(0.11);
     }
 
+    .email-link {
+      margin-top: 1rem;
+      color: #1c1c1c;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: opacity 0.3s;
+    }
+
+    .email-link:hover {
+      opacity: 0.6;
+    }
+
     @media (max-width: 767.98px) {
       .about-container {
         position: static;
         transform: none;
+        flex-direction: column;
+        align-items: center;
         margin: 6rem auto 2rem;
         padding: 0 1.5rem;
+        gap: 1.5rem;
+      }
+
+      .about-info {
+        align-items: center;
+        text-align: center;
       }
 
       .main-image {
@@ -160,6 +227,7 @@ const socialLinks = [
       }
 
       .social-row {
+        justify-content: center;
         gap: 1.5rem;
       }
     }
