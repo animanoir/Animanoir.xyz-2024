@@ -21,8 +21,8 @@ const slugToExclude = currentUrl.replace("/blog/", "").replace(/\/+$/, "");
 const relatedPosts = allPosts
   .filter((post) => {
     // Exclude the current post by comparing slugs
-    if (post.slug === slugToExclude) {
-      // console.log("- Excluding current post:", post.slug);
+    if (post.id === slugToExclude) {
+      // console.log("- Excluding current post:", post.id);
       return false;
     }
 
@@ -41,7 +41,7 @@ const relatedPosts = allPosts
     // if (hasSharedTags) {
     //   console.log(
     //     "- Including related post:",
-    //     post.slug,
+    //     post.id,
     //     "shared tags:",
     //     sharedTags
     //   );
@@ -85,7 +85,7 @@ const relatedPosts = allPosts
       <div class="related-grid">
         {relatedPosts.map((post) => (
           <article class="related-card">
-            <a href={`/blog/${post.slug}/`} class="related-link">
+            <a href={`/blog/${post.id}/`} class="related-link">
               <div class="related-content">
                 <h4 class="related-post-title">{post.data.title}</h4>
                 {post.data.summary && (
