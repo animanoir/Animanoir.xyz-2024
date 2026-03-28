@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
 import avisualsCover from "@/images/works/visuals/visuals-cover.jpg";
 import videoartCover from "@/images/works/videoart.png";
+import gamesCover from "@/images/works/games/games-2.jpg";
 
 import { motion } from "motion/react";
 import "../styles/global.css";
@@ -222,6 +223,23 @@ for (let i = posts.length - 1; i > 0; i--) {
         <div id="interactive-art" class="listContainer">
           <h2 class="workType">Interactive Art</h2>
           <ul>
+            <li class="project">
+              <a href="https://animanoir.itch.io/" target="_blank" rel="noopener noreferrer">
+                <Picture
+                  class="postHeroImg"
+                  src={gamesCover}
+                  alt="Games by Óscar A. Montiel on itch.io"
+                  formats={["webp"]}
+                  quality={100}
+                  decoding="async"
+                  loading="lazy"
+                />
+                <div class="postInfo">
+                  <p class="postTitle">Games</p>
+                  <p class="year">on-going</p>
+                </div>
+              </a>
+            </li>
             {
               posts.map((post) => {
                 const { workType } = post.data;

@@ -16,43 +16,68 @@ import videoartCover from "@/images/works/videoart.png";
   </head>
   <body>
     <ModifiedHeader />
-    <main class="articleContainer">
-      <div>
-        <h1 class="page-title">Video Art</h1>
-      </div>
+    <main>
+      <article class="articleContainer">
+        <div class="articleBody">
+          <h1 class="page-title">Video Art</h1>
 
-      <div class="videos-container">
-        <YouTube id="https://www.youtube.com/watch?v=15PnoZ63I0U" />
-        <YouTube id="https://www.youtube.com/watch?v=Hv3F1eRYVNY" />
-        <YouTube id="https://www.youtube.com/watch?v=53mO61hIEOU" />
-        <YouTube id="https://www.youtube.com/watch?v=HLnraLAKT3M" />
-        <YouTube id="https://www.youtube.com/watch?v=S2-rMxZCKZs" />
-      </div>
+          <YouTube id="https://www.youtube.com/watch?v=15PnoZ63I0U" />
+          <YouTube id="https://www.youtube.com/watch?v=Hv3F1eRYVNY" />
+          <YouTube id="https://www.youtube.com/watch?v=53mO61hIEOU" />
+          <YouTube id="https://www.youtube.com/watch?v=HLnraLAKT3M" />
+          <YouTube id="https://www.youtube.com/watch?v=S2-rMxZCKZs" />
 
-      <p class="youtube-link">
-        To view more, you can visit my YouTube site: <a
-          href="https://www.youtube.com/@animanoir"
-          target="_blank"
-          rel="noopener noreferrer">https://www.youtube.com/@animanoir</a
-        >
-      </p>
+          <p class="youtube-link">
+            To view more, you can visit my YouTube site: <a
+              href="https://www.youtube.com/@animanoir"
+              target="_blank"
+              rel="noopener noreferrer">https://www.youtube.com/@animanoir</a
+            >
+          </p>
+        </div>
+      </article>
     </main>
     <Footer useTopOffset={false} />
   </body><style>
+    body {
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    main {
+      margin-left: 10vw;
+    }
+
     .page-title {
       font-family: "Bebas Neue", sans-serif;
       font-size: 4rem;
-      text-align: center;
       color: #1c1c1c;
       margin-bottom: 2rem;
     }
 
-    .videos-container {
+    .articleContainer {
+      padding-top: 25vh;
+      padding-bottom: 40vh;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .articleBody {
+      font-family: "Cormorant Garamond", serif;
+      color: #1c1c1c;
+      font-size: 1.3rem;
+      width: 90%;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .articleBody :global(lite-youtube) {
+      margin: 3.6rem 0 !important;
     }
 
     .youtube-link {
-      text-align: center;
       color: #1c1c1c;
       font-family: "Bebas Neue", sans-serif;
       font-size: 1.25rem;
@@ -69,79 +94,42 @@ import videoartCover from "@/images/works/videoart.png";
       opacity: 0.7;
     }
 
-    .videos-container :global(lite-youtube) {
-      width: 100%;
-      max-width: 800px;
-      aspect-ratio: 16 / 9;
-    }
-    .articleContainer {
-      z-index: 1000;
-    }
-
-    /* QHD - 2560x1440 */
-    @media (min-width: 2560px) {
-      .videos-container {
-        padding-top: 10vh;
-      }
+    @media (max-width: 1920px) {
       .articleContainer {
-        width: 70%;
-        max-width: 2000px;
+        width: 60%;
       }
-    }
-
-    /* Large Desktop */
-    @media (min-width: 1200px) and (max-width: 2559px) {
-      .articleContainer {
-        width: 75%;
-      }
-    }
-
-    /* Mobile Large */
-    @media (max-width: 767px) and (min-width: 576px) {
-      .videos-container {
-        grid-template-columns: 1fr;
-      }
-      .articleContainer {
-        width: 90%;
-      }
-    }
-
-    /* Mobile Small */
-    @media (max-width: 575px) {
-      .videos-container {
-        grid-template-columns: 1fr;
-        padding-top: 5vh;
-      }
-      .articleContainer {
-        width: 95%;
-      }
-      .page-title {
-        font-size: 2.5rem;
-      }
-    }
-
-    .articleContainer {
-      padding-bottom: 20vh;
-      margin: 0 auto;
-      position: relative;
-      width: 65%;
-    }
-
-    body {
-      margin: 0;
     }
 
     @media (max-width: 768px) {
-      .articleContainer {
-        width: 90%;
-        margin: 0 auto;
-        margin-top: 40%;
+      main {
+        margin-left: 0;
       }
-      .videos-container {
-        grid-template-columns: 1fr;
+      .articleContainer {
+        width: 100%;
+      }
+      .articleBody {
+        width: 95%;
+        font-size: 1.1rem;
       }
       .page-title {
         font-size: 2.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .articleContainer {
+        width: 100%;
+        padding-top: 5vh;
+        padding-bottom: 20vh;
+      }
+      .articleBody {
+        width: 100%;
+        padding: 0 1rem;
+        box-sizing: border-box;
+        font-size: 1rem;
+      }
+      .page-title {
+        font-size: 2rem;
       }
     }
   </style>
