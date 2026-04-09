@@ -44,6 +44,19 @@ const allLinks = [...workLinks, ...personalLinks];
       <span class="separator-line"></span>
     </div>
 
+    <!-- Disabled Link -->
+    <div class="link-group">
+      <div class="nav-item disabled-link">
+        <span>Web Design & Development</span>
+        <span class="under-construction">under construction</span>
+      </div>
+    </div>
+
+    <!-- Elegant Separator -->
+    <div class="nav-separator">
+      <span class="separator-line"></span>
+    </div>
+
     <!-- Personal Links Group -->
     <div class="link-group">
       {
@@ -72,6 +85,17 @@ const allLinks = [...workLinks, ...personalLinks];
           </HeaderLink>
         ))
       }
+
+      <!-- Mobile Separator -->
+      <div class="mobile-separator">
+        <span class="mobile-separator-line"></span>
+      </div>
+
+      <!-- Disabled Link -->
+      <div class="disabled-link mobile-disabled">
+        <span>Web Design & Development</span>
+        <span class="under-construction">under construction</span>
+      </div>
 
       <!-- Mobile Separator -->
       <div class="mobile-separator">
@@ -250,6 +274,31 @@ const allLinks = [...workLinks, ...personalLinks];
     display: flex;
     align-items: center;
     margin-right: 0;
+  }
+
+  .disabled-link {
+    display: flex;
+    flex-direction: column;
+    color: #999;
+    font-size: var(--font-size);
+    cursor: default;
+    font-weight: bold;
+  }
+
+  .disabled-link .under-construction {
+    font-size: 0.7rem;
+    font-style: italic;
+    font-weight: normal;
+    color: #bbb;
+  }
+
+  .mobile-disabled {
+    align-items: center;
+    font-size: 1.5rem;
+  }
+
+  .mobile-disabled .under-construction {
+    font-size: 0.85rem;
   }
 
   .nav-item:last-child {
