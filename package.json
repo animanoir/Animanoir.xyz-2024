@@ -19,10 +19,10 @@
     "sanity": "sanity dev"
   },
   "dependencies": {
-    "@astrojs/mdx": "5.0.2",
-    "@astrojs/react": "5.0.1",
-    "@astrojs/rss": "4.0.17",
-    "@astrojs/sitemap": "3.7.1",
+    "@astrojs/mdx": "5.0.4",
+    "@astrojs/react": "5.0.4",
+    "@astrojs/rss": "4.0.18",
+    "@astrojs/sitemap": "3.7.2",
     "@portabletext/react": "^6.0.2",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
@@ -36,7 +36,7 @@
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
     "@types/three": "^0.182.0",
-    "astro": "6.0.7",
+    "astro": "6.1.9",
     "astro-embed": "^0.12.0",
     "astro-lenis": "^1.0.5",
     "astro-particles": "^2.10.0",
