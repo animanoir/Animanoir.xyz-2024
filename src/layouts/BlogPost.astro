@@ -27,7 +27,6 @@ const actualSlug =
       publishDate={pubDate?.toISOString()}
       author="Óscar A. Montiel"
     />
-    {/* Preload hero image for instant display */}
     {
       heroImage && (
         <link
@@ -39,7 +38,7 @@ const actualSlug =
       )
     }
   </head>
-  <body>
+  <body class={heroImage ? "has-hero" : ""}>
     <ModifiedHeader />
     {
       heroImage &&
@@ -116,12 +115,75 @@ const actualSlug =
       </article>
     </div>
     <style>
-      /* ==========================================================================
-         FONT IMPORTS
-         External font imports for typography
-         ========================================================================== */
       @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
       @import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Space+Grotesk:wght@300..700&display=swap");
+
+      /* ==========================================================================
+         HEADER / NAVBAR LEGIBILITY OVER DARK HERO
+         The hero image is used as a darkened full-viewport background, so the
+         header and navbar (which default to dark text) need to be forced light
+         to stay readable. Mirrors the approach used in photodiary.astro.
+         ========================================================================== */
+      :global(body.has-hero header #headerTitle),
+      :global(body.has-hero header #headerSubtitle),
+      :global(body.has-hero header h1),
+      :global(body.has-hero header h2) {
+        color: #f2f0eb !important;
+      }
+      :global(body.has-hero header a:hover #headerTitle),
+      :global(body.has-hero header a:hover #headerSubtitle) {
+        color: #ee5858 !important;
+      }
+      :global(body.has-hero .navbar a),
+      :global(body.has-hero .mobile-nav-links a) {
+        color: #f2f0eb !important;
+      }
+      :global(body.has-hero .navbar a:hover),
+      :global(body.has-hero .mobile-nav-links a:hover) {
+        color: #ee5858 !important;
+      }
+      :global(body.has-hero .hamburger-line) {
+        background-color: #f2f0eb !important;
+      }
+      :global(body.has-hero .mobile-menu) {
+        background-color: rgba(6, 6, 6, 0.95) !important;
+      }
+      :global(body.has-hero .ornaments .circle) {
+        background-color: #f2f0eb !important;
+      }
+      :global(body.has-hero .separator-line),
+      :global(body.has-hero .mobile-separator-line) {
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(242, 240, 235, 0.4) 20%,
+          rgba(242, 240, 235, 0.7) 50%,
+          rgba(242, 240, 235, 0.4) 80%,
+          transparent 100%
+        ) !important;
+      }
+      :global(body.has-hero .mobile-separator-line)::before {
+        background: rgba(242, 240, 235, 0.9) !important;
+        box-shadow: 0 0 12px rgba(242, 240, 235, 0.6) !important;
+      }
+      :global(body.has-hero .lastfmContainer) {
+        color: rgba(255, 255, 255, 0.224) !important;
+      }
+      :global(body.has-hero .songInfo) {
+        color: #f2f0eb8f !important;
+      }
+      :global(body.has-hero .lastFmDash) {
+        color: rgba(255, 255, 255, 0.224) !important;
+      }
+      :global(body.has-hero .lastFmLink) {
+        text-decoration-color: #f2f0eb75 !important;
+      }
+      :global(body.has-hero .social-icon) {
+        filter: none !important;
+      }
+      :global(body.has-hero footer) {
+        color: #f2f0eb !important;
+      }
 
       /* ==========================================================================
          ARTICLE CONTAINER
@@ -134,7 +196,7 @@ const actualSlug =
         width: 100vw;
         height: 100vh;
         object-fit: cover;
-        filter: blur(8px) brightness(0.4);
+        filter:  brightness(0.1);
         z-index: 1;
         /* Placeholder background while image loads */
         background: linear-gradient(
@@ -171,6 +233,7 @@ const actualSlug =
       }
       .articleContainer {
         margin: 0 auto;
+        margin-right: 10rem;
         position: relative;
         max-width: 60%;
         font-size: 1.5rem;
@@ -193,24 +256,23 @@ const actualSlug =
          Content wrapper with base typography styles
          ========================================================================== */
       .title-container {
-        /* width: 70%; */
-        /* padding-right: 5rem; */
         z-index: 10;
       }
       .articleBody {
+        color: #f2f0eb;
         margin: 0 auto;
         width: 80%;
         display: flex;
         flex-direction: column;
         padding-top: 8rem;
         padding-bottom: 30vh;
-        color: #1c1c1c;
         font-family: "Cormorant Garamond", serif;
       }
 
       .articleBody p {
         margin-bottom: 1.1rem;
         line-height: 1.6;
+        font-size: 2rem;
       }
 
       /* ==========================================================================
@@ -221,20 +283,12 @@ const actualSlug =
       /* Main blog post title */
       .title {
         margin: 0;
-        font-size: 4rem;
+        font-size: 2rem;
         font-weight: normal;
         font-family: "Space Grotesk", sans-serif;
         text-align: start;
-      }
-
-      /* Blog post summary/subtitle */
-      .summary {
-        font-size: 1rem;
-        color: #1c1c1c7f;
-        margin: 1rem 0;
-        font-weight: normal;
-        font-family: "Space Grotesk", sans-serif;
-        text-align: start;
+        color: #f2f0eb;
+        margin-bottom: 1rem;
       }
 
       /* Publication date display */
@@ -298,7 +352,7 @@ const actualSlug =
           font-size: 0.8rem;
         }
         .articleContainer {
-          font-size: 1.5rem;
+          font-size: 2rem;
           max-width: 60%;
           margin-top: 0 !important;
         }
@@ -312,8 +366,9 @@ const actualSlug =
       @media (min-width: 1361px) and (max-width: 1920px) {
         .title {
           line-height: 1.2;
-          font-size: 3em;
+          font-size: 2em;
           line-height: 1;
+          font-weight: bold;
         }
         .summary {
           font-size: 1.1rem;
@@ -389,7 +444,7 @@ const actualSlug =
         .articleContainer {
           flex-direction: column;
           max-width: 95%;
-          font-size: 1.5rem;
+          font-size: 2rem;
           margin-top: 0 !important;
         }
         .articleBody {

@@ -4,7 +4,6 @@ import { ClientRouter } from "astro:transitions";
 
 const isHomePage = Astro.url.pathname === "/";
 
-// Work-related links — on homepage scroll to sections, elsewhere link to dedicated pages
 const workLinks = [
   { href: isHomePage ? "/#3d-animation" : "/3Dworks", label: "3D Animation", target: "_self" },
   { href: isHomePage ? "/#videoart" : "/videoart", label: "Video", target: "_self" },
@@ -12,9 +11,8 @@ const workLinks = [
   { href: isHomePage ? "/#sound-art" : "/#sound-art", label: "Sound", target: "_self" },
 ];
 
-// Personal content links
 const personalLinks = [
-  // { href: "/blog", label: "Blog", target: "_self" },
+  { href: "/blog", label: "Blog", target: "_self" },
   { href: "/photodiary", label: "Photodiary", target: "_self" },
   { href: "/aboutMe", label: "About", target: "_self" },
   { href: "https://linktr.ee/animanoir", label: "Contact", target: "_blank" },
@@ -39,22 +37,12 @@ const allLinks = [...workLinks, ...personalLinks];
       }
     </div>
 
-    <!-- Elegant Separator -->
-    <div class="nav-separator">
-      <span class="separator-line"></span>
-    </div>
-
     <!-- Disabled Link -->
     <div class="link-group">
       <div class="nav-item disabled-link">
-        <span>Web Design & Development</span>
+        <span>Web Design/Dev</span>
         <span class="under-construction">under construction</span>
       </div>
-    </div>
-
-    <!-- Elegant Separator -->
-    <div class="nav-separator">
-      <span class="separator-line"></span>
     </div>
 
     <!-- Personal Links Group -->
