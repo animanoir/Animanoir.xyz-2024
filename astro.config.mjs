@@ -74,5 +74,17 @@ export default defineConfig({
         'three/examples/jsm': 'three/examples/jsm',
       },
     },
+    build: {
+      rollupOptions: {
+        output: {
+          // The `[...slug]` route makes Vite name its CSS chunk `_..[hash].css`.
+          // URLs containing `..` get rejected/normalized by Netlify's edge as
+          // path traversal, so that stylesheet 404s in production while still
+          // working under local dev/preview. Drop the source-derived `[name]`
+          // so emitted assets never contain `..`.
+          assetFileNames: '_astro/asset-[hash][extname]',
+        },
+      },
+    },
   },
 });
