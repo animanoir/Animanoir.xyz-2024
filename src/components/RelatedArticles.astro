@@ -34,7 +34,7 @@ const relatedPosts = allPosts
 
     // Check if there are any shared tags
     const sharedTags = post.data.tags.filter((tag) =>
-      currentTags.includes(tag)
+      currentTags.includes(tag),
     );
 
     const hasSharedTags = sharedTags.length > 0;
@@ -163,7 +163,7 @@ const relatedPosts = allPosts
   }
 
   .related-summary {
-    font-family: "Cormorant Garamond"", serif;
+    font-family: "Cormorant Garamond", serif;
     font-size: 0.9rem;
     color: #1c1c1c7f;
     margin: 0 0 1rem 0;
