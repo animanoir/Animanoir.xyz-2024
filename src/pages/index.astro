@@ -27,7 +27,7 @@ for (let i = posts.length - 1; i > 0; i--) {
 <head>
   <BaseHead
     title="Interactive Media Artist"
-    description={"Works by Oscar A. Montiel — videoart, interactive 3D, videogames, and music."}
+    description={"Works by Oscar A. Montiel — games, installations, sound & music, web & code, 3D animation, and videoart."}
   />
 </head>
 <body style="background-color: #0a0a0a;">
@@ -141,42 +141,6 @@ for (let i = posts.length - 1; i > 0; i--) {
                 </div>
               </a>
             </li>
-            {
-              posts.map((post) => {
-                const { workType } = post.data;
-                if (workType.includes("Interactive 3D")) {
-                  return (
-                    <motion.div
-                      client:load
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.5 }}
-                      transition={{
-                        duration: Math.random() * 0.1 + 0.6,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <li class="project">
-                        <a href={`/works/${post.id}/`}>
-                          <Picture
-                            class="postHeroImg"
-                            src={post.data.heroImage}
-                            alt={`${post.data.title} by Óscar A. Montiel`}
-                            formats={["webp"]}
-                            decoding="async"
-                            loading="lazy"
-                          />
-                          <div class="postInfo">
-                            <p class="postTitle">{post.data.title}</p>
-                            <p class="year">{post.data.year || "on-going"}</p>
-                          </div>
-                        </a>
-                      </li>
-                    </motion.div>
-                  );
-                }
-              })
-            }
           </ul>
         </div>
       </motion.div>
@@ -220,8 +184,8 @@ for (let i = posts.length - 1; i > 0; i--) {
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <div id="interactive-art" class="listContainer">
-          <h2 class="workType">Interactive Art</h2>
+        <div id="games" class="listContainer">
+          <h2 class="workType">Games</h2>
           <ul>
             <li class="project">
               <a href="https://animanoir.itch.io/" target="_blank" rel="noopener noreferrer">
@@ -243,7 +207,7 @@ for (let i = posts.length - 1; i > 0; i--) {
             {
               posts.map((post) => {
                 const { workType } = post.data;
-                if (workType.includes("Videoart")) {
+                if (workType.includes("Games")) {
                   return (
                     <motion.div
                       client:load
@@ -280,7 +244,58 @@ for (let i = posts.length - 1; i > 0; i--) {
         </div>
       </motion.div>
 
-      <!-- Sound Art -->
+      <!-- Installations -->
+      <motion.div
+        client:load
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <div id="installations" class="listContainer">
+          <h2 class="workType">Installations</h2>
+          <ul>
+            {
+              posts.map((post) => {
+                const { workType } = post.data;
+                if (workType.includes("Installations")) {
+                  return (
+                    <motion.div
+                      client:load
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{
+                        duration: Math.random() * 0.1 + 0.6,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      <li class="project">
+                        <a href={`/works/${post.id}/`}>
+                          <Picture
+                            class="postHeroImg"
+                            src={post.data.heroImage}
+                            alt={`${post.data.title} by Óscar A. Montiel`}
+                            formats={["webp"]}
+                            decoding="async"
+                            loading="lazy"
+                          />
+                          <div class="postInfo">
+                            <p class="postTitle">{post.data.title}</p>
+                            <p class="year">{post.data.year || "on-going"}</p>
+                          </div>
+                        </a>
+                      </li>
+                    </motion.div>
+                  );
+                }
+              })
+            }
+          </ul>
+        </div>
+      </motion.div>
+
+      <!-- Sound & Music -->
       <motion.div
         client:load
         initial={{ opacity: 0, y: 30 }}
@@ -289,12 +304,12 @@ for (let i = posts.length - 1; i > 0; i--) {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div id="sound-art" class="listContainer">
-          <h2 class="workType">Sound Art</h2>
+          <h2 class="workType">Sound & Music</h2>
           <ul>
             {
               posts.map((post) => {
                 const { workType } = post.data;
-                if (workType.includes("Sound Art")) {
+                if (workType.includes("Sound & Music")) {
                   return (
                     <motion.div
                       client:load
@@ -331,7 +346,7 @@ for (let i = posts.length - 1; i > 0; i--) {
         </div>
       </motion.div>
 
-      <!-- Other -->
+      <!-- Web & Code -->
       <motion.div
         client:load
         initial={{ opacity: 0, y: 30 }}
@@ -339,13 +354,13 @@ for (let i = posts.length - 1; i > 0; i--) {
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <div class="listContainer">
-          <h2 class="workType">Other</h2>
+        <div id="web-code" class="listContainer">
+          <h2 class="workType">Web & Code</h2>
           <ul>
             {
               posts.map((post) => {
                 const { workType } = post.data;
-                if (workType.includes("Other")) {
+                if (workType.includes("Web & Code")) {
                   return (
                     <motion.div
                       client:load

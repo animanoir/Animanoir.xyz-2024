@@ -5,10 +5,12 @@ import { ClientRouter } from "astro:transitions";
 const isHomePage = Astro.url.pathname === "/";
 
 const workLinks = [
+  { href: isHomePage ? "/#games" : "/#games", label: "Games", target: "_self" },
+  { href: isHomePage ? "/#installations" : "/#installations", label: "Installations", target: "_self" },
+  { href: isHomePage ? "/#sound-art" : "/#sound-art", label: "Sound", target: "_self" },
+  { href: isHomePage ? "/#web-code" : "/#web-code", label: "Web & Code", target: "_self" },
   { href: isHomePage ? "/#3d-animation" : "/3Dworks", label: "3D Animation", target: "_self" },
   { href: isHomePage ? "/#videoart" : "/videoart", label: "Video", target: "_self" },
-  { href: isHomePage ? "/#interactive-art" : "/#interactive-art", label: "Interactive", target: "_self" },
-  { href: isHomePage ? "/#sound-art" : "/#sound-art", label: "Sound", target: "_self" },
 ];
 
 const personalLinks = [

@@ -29,7 +29,7 @@ let arenaTexts = [];
 let remainingTexts = [];
 try {
   const response = await fetch(
-    "https://api.are.na/v2/channels/2025-a-salvo-en-la-soledad/contents?per=50",
+    "https://api.are.na/v3/channels/2026-disuelto-en-la-soledad/contents",
     {
       headers: {
         Accept: "application/json",
@@ -38,6 +38,7 @@ try {
     },
   );
   if (response.ok) {
+    console.info(response)
     const data = await response.json();
     const allTexts = data.contents.filter(
       (block: any) => block.class === "Text" && block.content_html,
@@ -52,6 +53,7 @@ try {
     arenaTexts = allTexts.slice(0, 30);
     remainingTexts = allTexts.slice(30).map((t: any) => t.content_html);
   }
+
 } catch (e) {
   console.error("Failed to fetch Are.na texts", e);
 }
@@ -175,6 +177,7 @@ try {
       background-color: rgba(0, 0, 0, 0);
       color: #1c1c1c;
       font-family: "Bebas Neue", sans-serif;
+      line-height: 1.2!important;
       font-size: 1.5rem;
       /* line-height: 1.4; */
       width: fit-content;
