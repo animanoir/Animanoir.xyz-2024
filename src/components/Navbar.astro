@@ -17,7 +17,6 @@ const personalLinks = [
   { href: "/aboutMe", label: "About", target: "_self" },
   { href: "/blog", label: "Writing", target: "_self" },
   { href: "/photodiary", label: "Photodiary", target: "_self" },
-  { href: "https://linktr.ee/animanoir", label: "Contact me", target: "_blank" },
 ];
 
 // Combined for mobile menu
@@ -50,6 +49,9 @@ const allLinks = [...workLinks, ...personalLinks];
           </div>
         ))
       }
+      <HeaderLink href="mailto:etherealflux94@gmail.com" target="_blank">
+        Email me!
+      </HeaderLink>
     </div>
   </div>
   <button class="mobile-menu-button" aria-label="Toggle mobile menu">
