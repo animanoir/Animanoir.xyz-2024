@@ -7,10 +7,14 @@ const { href, class: className, ...props } = Astro.props;
 
 const { pathname } = Astro.url;
 const isActive = href === pathname || href === pathname.replace(/\/$/, "");
+
+// Only prefetch real, navigable internal links — never mailto:, tel:, etc.
+const hrefStr = typeof href === "string" ? href : "";
+const isPrefetchable = hrefStr.startsWith("/") || hrefStr.startsWith("http");
 ---
 
 <a
-  data-astro-prefetch
+  data-astro-prefetch={isPrefetchable ? true : undefined}
   href={href}
   class:list={[className, { active: isActive }]}
   {...props}
