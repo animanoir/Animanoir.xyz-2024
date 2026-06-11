@@ -122,7 +122,6 @@ for (let i = posts.length - 1; i > 0; i--) {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div id="3d-animation" class="listContainer">
-          <h2 class="workType">3D Animation</h2>
           <ul>
             <li class="project">
               <a href="/3Dworks">
@@ -154,7 +153,6 @@ for (let i = posts.length - 1; i > 0; i--) {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div id="videoart" class="listContainer">
-          <h2 class="workType">Videoart</h2>
           <ul>
             <li class="project">
               <a href="/videoart">
@@ -185,25 +183,8 @@ for (let i = posts.length - 1; i > 0; i--) {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div id="games" class="listContainer">
-          <h2 class="workType">Games</h2>
+          <h2 class="workType">Games & Play Metaphysics</h2>
           <ul>
-            <li class="project">
-              <a href="https://animanoir.itch.io/" target="_blank" rel="noopener noreferrer">
-                <Picture
-                  class="postHeroImg"
-                  src={gamesCover}
-                  alt="Games by Óscar A. Montiel on itch.io"
-                  formats={["webp"]}
-                  quality={100}
-                  decoding="async"
-                  loading="lazy"
-                />
-                <div class="postInfo">
-                  <p class="postTitle">Games</p>
-                  <p class="year">on-going</p>
-                </div>
-              </a>
-            </li>
             {
               posts.map((post) => {
                 const { workType } = post.data;
@@ -244,7 +225,7 @@ for (let i = posts.length - 1; i > 0; i--) {
         </div>
       </motion.div>
 
-      <!-- Installations -->
+      <!-- Art Installations -->
       <motion.div
         client:load
         initial={{ opacity: 0, y: 30 }}
@@ -253,7 +234,7 @@ for (let i = posts.length - 1; i > 0; i--) {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div id="installations" class="listContainer">
-          <h2 class="workType">Installations</h2>
+          <h2 class="workType">Art Installations</h2>
           <ul>
             {
               posts.map((post) => {
@@ -355,7 +336,7 @@ for (let i = posts.length - 1; i > 0; i--) {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div id="web-code" class="listContainer">
-          <h2 class="workType">Web & Code</h2>
+          <h2 class="workType">Web Design/Dev</h2>
           <ul>
             {
               posts.map((post) => {
@@ -758,12 +739,11 @@ for (let i = posts.length - 1; i > 0; i--) {
         ul {
           list-style-type: none;
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
           gap: 0.5rem;
-          width: 60vw;
           max-width: 1800px;
           justify-content: center;
           height: auto;
+          width: 55vw;
         }
 
         ul li {
