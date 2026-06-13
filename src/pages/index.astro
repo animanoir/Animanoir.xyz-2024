@@ -34,7 +34,7 @@ for (let i = posts.length - 1; i > 0; i--) {
   <div class="scene-background">
     <SceneIndex client:only="react" />
   </div>
-  <ModifiedHeader />
+  <ModifiedHeader animated />
 
   <main>
     <div class="scroll-indicator">
@@ -53,7 +53,7 @@ for (let i = posts.length - 1; i > 0; i--) {
       >
     </div>
     <!-- Main quote -->
-    <!--       <motion.div
+    <motion.div
         client:load
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -61,13 +61,12 @@ for (let i = posts.length - 1; i > 0; i--) {
       >
         <div class="quote-container">
           <h1 class="quote">
-            <b>Óscar A. Montiel</b> — <b class="animated-gradient-text"
-              >Interactive Media Artist</b
-            >.
+            <b class="animated-gradient-text" >Óscar A. Montiel</b>
+              <b class="animated-gradient-text"
+              >Interactive Media Artist</b>.
           </h1>
         </div>
-      </motion.div> -->
-    <!-- <Video client:only videoPath={vid2} /> -->
+      </motion.div>
     <div class="scene-spacer"></div>
     <div class="projectsContainer">
       <!-- Interactive / 3D -->
@@ -608,12 +607,10 @@ for (let i = posts.length - 1; i > 0; i--) {
 
         .quote {
           font-family: "Montserrat", sans-serif;
-          font-size: 3.5rem;
-          text-align: justify;
+          font-size: 3rem!important;
           line-height: 1.35;
           font-weight: 500;
           margin: 0;
-          max-width: 70%;
         }
 
         /* ==========================================================================
@@ -651,6 +648,7 @@ for (let i = posts.length - 1; i > 0; i--) {
 
         .postTitle,
         .year {
+          font-size: 1.8rem!important;
           font-family: "Montserrat", sans-serif;
           color: #f2f0eb;
           margin: 0;
@@ -711,7 +709,7 @@ for (let i = posts.length - 1; i > 0; i--) {
         .project {
           width: 100%;
           aspect-ratio: 16 / 9;
-          background-color: rgba(242, 240, 235, 0.7);
+          //background-color: rgba(242, 240, 235, 0.7);
           border-radius: 0.5rem;
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
           overflow: hidden;
@@ -738,6 +736,7 @@ for (let i = posts.length - 1; i > 0; i--) {
           width: 100%;
           object-fit: cover;
           opacity: 0;
+          filter: brightness(0.7);
           transition: opacity 0.5s ease-in-out;
         }
 
@@ -905,7 +904,7 @@ for (let i = posts.length - 1; i > 0; i--) {
 
           .postInfo {
             display: block;
-            background-color: rgba(242, 240, 235, 0.5);
+            //background-color: rgba(242, 240, 235, 0.5);
             padding: 0.5rem;
             border-radius: 4px;
           }

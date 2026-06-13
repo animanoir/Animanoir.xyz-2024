@@ -4,21 +4,61 @@ import LastFm from "@/components/LastFm.jsx";
 import MutatingSubheader from "@/components/MutatingSubheader.jsx";
 import Navbar from "@/components/Navbar.astro";
 import Ornaments from "./Ornaments.astro";
+import * as motion from "motion/react-client";
 
-const { goWild = false, sortSpeed = 0 } = Astro.props;
+// `animated` opts into the sequential narrative reveal (quote → header → navbar).
+// Only the homepage passes it; every other page renders the static markup.
+const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
 ---
 
 <header>
-  <a href="/">
-    <h2 id="headerTitle">
-      {SITE_TITLE} ∿ <span id="headerSubtitle"
-        ><MutatingSubheader client:load goWild={goWild} sortSpeed={sortSpeed} /></span
+  {
+    animated ? (
+      <motion.div
+        client:load
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.9, ease: "easeOut" }}
       >
-    </h2>
-  </a>
-  <LastFm client:load />
+        <a href="/">
+          <h2 id="headerTitle">
+            {SITE_TITLE} ∿{" "}
+            <span id="headerSubtitle">
+              <MutatingSubheader client:load goWild={goWild} sortSpeed={sortSpeed} />
+            </span>
+          </h2>
+        </a>
+        <LastFm client:load />
+      </motion.div>
+    ) : (
+      <Fragment>
+        <a href="/">
+          <h2 id="headerTitle">
+            {SITE_TITLE} ∿{" "}
+            <span id="headerSubtitle">
+              <MutatingSubheader client:load goWild={goWild} sortSpeed={sortSpeed} />
+            </span>
+          </h2>
+        </a>
+        <LastFm client:load />
+      </Fragment>
+    )
+  }
   <div class="navbar-wrapper">
-    <Navbar />
+    {
+      animated ? (
+        <motion.div
+          client:load
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 1.6, ease: "easeOut" }}
+        >
+          <Navbar />
+        </motion.div>
+      ) : (
+        <Navbar />
+      )
+    }
   </div>
 </header>
 <Ornaments />
@@ -84,13 +124,13 @@ const { goWild = false, sortSpeed = 0 } = Astro.props;
       padding-left: 1rem;
     }
     #headerTitle {
-      font-size: 1rem;
+      font-size: 1.2rem;
     }
     #headerSubtitle {
-      font-size: 1rem;
+      font-size: 1.2rem;
     }
     nav {
-      font-size: 0.75em;
+      font-size: 0.9em;
     }
   }
 </style>
