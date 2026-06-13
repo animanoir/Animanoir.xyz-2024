@@ -1,8 +1,20 @@
 ---
 import HeaderLink from "@/components/HeaderLink.astro";
 import { ClientRouter } from "astro:transitions";
+import * as motion from "motion/react-client";
 
 const isHomePage = Astro.url.pathname === "/";
+
+// `animated` opts into the per-item narrative reveal — items slide in one by one,
+// alternating from the right then the left. Only the homepage passes it; every
+// other page renders the static markup (no React islands).
+const { animated = false } = Astro.props;
+
+// Reveal tuning. Base delay starts the navbar after the header reveal so the
+// quote → header → navbar narrative keeps flowing.
+const REVEAL_BASE_DELAY = 1.5;
+const REVEAL_STEP = 0.1;
+const REVEAL_OFFSET = 24;
 
 const workLinks = [
   { href: isHomePage ? "/#3d-animation" : "/3Dworks", label: "3D Animation", target: "_self" },
@@ -28,26 +40,66 @@ const allLinks = [...workLinks, ...personalLinks];
     <!-- Work Links Group -->
     <div class="link-group">
       {
-        workLinks.map((link) => (
-          <div class="nav-item">
-            <HeaderLink href={link.href} target={link.target}>
-              {link.label}
-            </HeaderLink>
-          </div>
-        ))
+        workLinks.map((link, i) =>
+          animated ? (
+            <motion.div
+              client:load
+              initial={{ opacity: 0, x: i % 2 === 0 ? REVEAL_OFFSET : -REVEAL_OFFSET }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 0.6,
+                delay: REVEAL_BASE_DELAY + i * REVEAL_STEP,
+                ease: "easeOut",
+              }}
+            >
+              <div class="nav-item">
+                <HeaderLink href={link.href} target={link.target}>
+                  {link.label}
+                </HeaderLink>
+              </div>
+            </motion.div>
+          ) : (
+            <div class="nav-item">
+              <HeaderLink href={link.href} target={link.target}>
+                {link.label}
+              </HeaderLink>
+            </div>
+          )
+        )
       }
     </div>
     <div class="nav-separator"></div>
     <!-- Personal Links Group -->
     <div class="link-group">
       {
-        personalLinks.map((link) => (
-          <div class="nav-item">
-            <HeaderLink href={link.href} target={link.target}>
-              {link.label}
-            </HeaderLink>
-          </div>
-        ))
+        personalLinks.map((link, i) => {
+          // Continue the alternating right/left cadence across both groups.
+          const idx = workLinks.length + i;
+          return animated ? (
+            <motion.div
+              client:load
+              initial={{ opacity: 0, x: idx % 2 === 0 ? REVEAL_OFFSET : -REVEAL_OFFSET }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 0.6,
+                delay: REVEAL_BASE_DELAY + idx * REVEAL_STEP,
+                ease: "easeOut",
+              }}
+            >
+              <div class="nav-item">
+                <HeaderLink href={link.href} target={link.target}>
+                  {link.label}
+                </HeaderLink>
+              </div>
+            </motion.div>
+          ) : (
+            <div class="nav-item">
+              <HeaderLink href={link.href} target={link.target}>
+                {link.label}
+              </HeaderLink>
+            </div>
+          );
+        })
       }
     </div>
   </div>

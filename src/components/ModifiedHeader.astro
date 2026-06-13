@@ -45,20 +45,8 @@ const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
     )
   }
   <div class="navbar-wrapper">
-    {
-      animated ? (
-        <motion.div
-          client:load
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.6, ease: "easeOut" }}
-        >
-          <Navbar />
-        </motion.div>
-      ) : (
-        <Navbar />
-      )
-    }
+    <!-- When animated, the Navbar reveals its items one by one (right/left). -->
+    <Navbar animated={animated} />
   </div>
 </header>
 <Ornaments />
