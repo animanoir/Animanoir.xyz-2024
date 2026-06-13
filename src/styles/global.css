@@ -121,15 +121,15 @@ p {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Replace the existing p::selection rule with these general selection rules */
+/* Site-wide text selection: black background, white text */
 ::selection {
-  background-color: transparent;
-  color: #f2f0eb;
+  background-color: #1c1c1c;
+  color: #ffffff;
 }
 
 ::-moz-selection {
-  background-color: transparent;
-  color: #f2f0eb;
+  background-color: #1c1c1c;
+  color: #ffffff;
 }
 
 /* Animations */
