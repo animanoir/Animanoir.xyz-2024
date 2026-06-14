@@ -17,14 +17,20 @@ const HASH_TO_CATEGORY = {
 // grid. The featured tiles (3D / Videoart) are cross-page links, not hashes.
 const GRID_HASHES = new Set(["#all", ...Object.keys(HASH_TO_CATEGORY)]);
 
-// Lenis offset (px) when scrolling to the grid — negative leaves a little
-// breathing room above the first row.
-const SCROLL_OFFSET = -24;
+// Vertical breathing room (px) kept above the grid when it's taller than the
+// viewport and therefore can't be centered without hiding its top rows.
+const TOP_GAP = 48;
+
+// The grid re-flow (filter change) animates for ~0.4s (see the tile/grid
+// transitions below). We wait it out before measuring the grid's height so the
+// centering math uses the settled layout, not a mid-animation frame.
+const REFLOW_SETTLE_MS = 450;
 
 export default function ProjectGrid({ projects = [] }) {
   const [activeCategory, setActiveCategory] = useState(null); // null = show all
   const [activeId, setActiveId] = useState(null); // currently hovered/focused tile
   const wrapperRef = useRef(null); // grid root — scroll target for category links
+  const scrollTimerRef = useRef(null); // pending settle timer (debounces rapid clicks)
 
   // Drive the filter from the URL hash so the navbar links keep working and the
   // view stays deep-linkable (e.g. /#games) with working back/forward.
@@ -40,21 +46,45 @@ export default function ProjectGrid({ projects = [] }) {
       setActiveCategory(HASH_TO_CATEGORY[window.location.hash] ?? null);
     };
 
-    // Bring the grid into view so the projects are visible even if the user
-    // hasn't scrolled past the hero yet. Prefer the site's Lenis instance
-    // (astro-lenis exposes it as window.lenis) so the motion matches the page's
-    // smooth scroll; on a cold deep-link load Lenis may not have initialized in
-    // this frame yet, so retry briefly before falling back to native scrolling.
-    const scrollToProjects = (attempt = 0) => {
-      const el = wrapperRef.current;
-      if (!el) return;
-      if (window.lenis?.scrollTo) {
-        window.lenis.scrollTo(el, { offset: SCROLL_OFFSET, duration: 1.1 });
-      } else if (attempt < 20) {
-        requestAnimationFrame(() => scrollToProjects(attempt + 1));
-      } else {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+    // Bring the grid into view, centered vertically in the viewport, so a
+    // filtered category floats elegantly in the middle of the screen. When the
+    // grid is taller than the viewport (e.g. "All Works"), centering would push
+    // its top rows off-screen, so we align it near the top with a little
+    // breathing room instead.
+    //
+    // Prefer the site's Lenis instance (astro-lenis exposes it as window.lenis)
+    // so the motion matches the page's smooth scroll; on a cold deep-link load
+    // Lenis may not have initialized yet, so retry briefly before falling back
+    // to native scrolling. `settle` waits out the re-flow animation first so a
+    // filter change measures the final grid height, not a mid-animation frame
+    // (the tiles' fixed aspect-ratio keeps height stable across image loads).
+    const scrollToProjects = ({ settle = false } = {}) => {
+      const run = (attempt = 0) => {
+        const el = wrapperRef.current;
+        if (!el) return;
+        const lenis = window.lenis;
+        if (!lenis?.scrollTo && attempt < 20) {
+          requestAnimationFrame(() => run(attempt + 1));
+          return;
+        }
+        const rect = el.getBoundingClientRect();
+        const viewportH = window.innerHeight;
+        const elementTop = window.scrollY + rect.top; // absolute document offset
+        const target =
+          rect.height <= viewportH
+            ? elementTop - (viewportH - rect.height) / 2 // center vertically
+            : elementTop - TOP_GAP; // too tall to center — align near the top
+        const top = Math.max(0, target);
+        if (lenis?.scrollTo) {
+          lenis.scrollTo(top, { duration: 1.1 });
+        } else {
+          window.scrollTo({ top, behavior: "smooth" });
+        }
+      };
+      // Debounce so rapid category switching doesn't stack scrolls.
+      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
+      if (settle) scrollTimerRef.current = setTimeout(run, REFLOW_SETTLE_MS);
+      else run();
     };
 
     const onClick = (e) => {
@@ -79,16 +109,17 @@ export default function ProjectGrid({ projects = [] }) {
         return;
       setActiveCategory(HASH_TO_CATEGORY[url.hash] ?? null);
       // Already on the homepage: ClientRouter swallows this same-page hash link
-      // (no navigation/scroll), so scroll the re-filtered grid into view here.
-      // Wait a frame so the re-flow has started.
+      // (no navigation/scroll), so center the re-filtered grid here. `settle`
+      // waits for the re-flow to finish before measuring the grid's height.
       if (GRID_HASHES.has(url.hash)) {
-        requestAnimationFrame(() => scrollToProjects());
+        scrollToProjects({ settle: true });
       }
     };
 
     applyHash();
     // Arriving with a work hash (deep-link, or a cross-page navbar click that
-    // navigated home) should land the viewer on the projects, not the hero.
+    // navigated home) should land the viewer on the centered projects, not the
+    // hero. The grid mounts already filtered, so no settle wait is needed.
     if (GRID_HASHES.has(window.location.hash)) {
       requestAnimationFrame(() => scrollToProjects());
     }
@@ -101,6 +132,7 @@ export default function ProjectGrid({ projects = [] }) {
       window.removeEventListener("hashchange", applyHash);
       window.removeEventListener("popstate", applyHash);
       document.removeEventListener("astro:page-load", applyHash);
+      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
     };
   }, []);
 
@@ -115,6 +147,9 @@ export default function ProjectGrid({ projects = [] }) {
       <motion.ul
         className={styles.grid}
         layout
+        // Deterministic height tween (matches the tiles) so the re-flow settles
+        // within REFLOW_SETTLE_MS — the centering scroll measures the final size.
+        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
         onMouseLeave={() => setActiveId(null)}
       >
         <AnimatePresence mode="popLayout">
