@@ -259,9 +259,7 @@ export const AnimanoirLogoScene = () => {
         files={"/images/animanoir-xyz-space-small.hdr"}
         backgroundIntensity={1.2}
         background
-        backgroundBlurriness={0.1}
       />
-
       <Float rotationIntensity={5} speed={0.4}>
         <AndrosFetal />
       </Float>
@@ -274,17 +272,17 @@ export const AnimanoirLogoScene = () => {
               attach="attributes-position"
               count={positions.length / 3}
               array={positions}
-              itemSize={3}
+              itemSize={2}
             />
             <bufferAttribute
               attach="attributes-color"
               count={colors.length / 3}
               array={colors}
-              itemSize={3}
+              itemSize={2}
             />
           </bufferGeometry>
           <pointsMaterial
-            size={0.07}
+            size={0.06}
             vertexColors
             opacity={10.0}
             blending={THREE.AdditiveBlending}

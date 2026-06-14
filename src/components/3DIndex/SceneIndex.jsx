@@ -71,7 +71,6 @@ const FloatingCamera = ({ intensity = 0.15, speed = 0.3, scrollEffectRef }) => {
     camera.rotation.x += Math.sin(t * 0.5 + x1) * 0.01 * intensity;
     camera.rotation.y += Math.sin(t * 0.6 + y1) * 0.01 * intensity;
   });
-
   return null;
 };
 
@@ -160,8 +159,7 @@ export const SceneIndex = () => {
         dpr={[1, 1.5]}
         performance={{ min: 0.5 }}
         gl={{
-          antialias: false,
-          powerPreference: "high-performance",
+          antialias: true,
           stencil: false,
           depth: true
         }}
