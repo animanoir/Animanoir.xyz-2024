@@ -83,7 +83,6 @@ export const SceneIndex = () => {
 
   // Preload heavy assets ahead of render to avoid Loader stalling at 0%
   useEffect(() => {
-    useGLTF.preload("/animanoir-logo-3d.glb");
     useGLTF.preload("/andros_fetal.glb");
   }, []);
 
