@@ -5,8 +5,14 @@ import youtubeSvg from "./icons/youtube.svg";
 import linkedinSvg from "./icons/linkedin.svg";
 import arenaLogo from "./icons/arena-logo-white.png";
 import steamSvg from "./icons/steam.svg";
+import githubSvg from "./icons/github.svg";
 
 const socialLinks = [
+  {
+    href: "https://github.com/animanoir",
+    icon: githubSvg,
+    alt: "GitHub profile",
+  },
   {
     href: "https://www.linkedin.com/in/oscaramontiel/",
     icon: linkedinSvg,
@@ -56,7 +62,7 @@ const socialLinks = [
 </footer>
 <style>
   .email-link {
-    color: white;
+    color: inherit;
     text-decoration: none;
     font-size: 2rem!important;
     transition: opacity 0.3s ease;
