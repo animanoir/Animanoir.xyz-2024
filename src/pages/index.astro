@@ -1,26 +1,80 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import { getCollection } from "astro:content";
-import { Picture } from "astro:assets";
+import { getImage } from "astro:assets";
 import avisualsCover from "@/images/works/visuals/visuals-cover.jpg";
 import videoartCover from "@/images/works/videoart.png";
-import gamesCover from "@/images/works/games/games-2.jpg";
 
-import * as motion from "motion/react-client";
 import "../styles/global.css";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
 import Footer from "@/components/Footer/Footer.astro";
 import SceneIndex from "@/components/3DIndex/SceneIndex.jsx";
+import ProjectGrid from "@/components/ProjectGrid/ProjectGrid.jsx";
 
-// Orders the post chronologically
-const posts = (await getCollection("works")).sort(
+// Works, newest first.
+const works = (await getCollection("works")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-// Fisher-Yates shuffle algorithm to randomize the posts
-for (let i = posts.length - 1; i > 0; i--) {
+// Pre-optimize hero images here (Sharp/webp, responsive widths) so the React
+// grid island can render plain <img srcset> — Astro's <Picture> can't run inside
+// a framework component.
+async function optimize(image) {
+  const o = await getImage({
+    src: image,
+    format: "webp",
+    widths: [400, 600, 900],
+    quality: 90,
+  });
+  return { src: o.src, srcset: o.srcSet?.attribute ?? "" };
+}
+
+// Featured practice areas — link to their own pages and (having no categories)
+// only appear in the default "All" view.
+const featuredRaw = [
+  {
+    id: "featured-3d-animation",
+    title: "3D Animation",
+    description:
+      "Ongoing experiments in 3D animation and audiovisual (A/visuals) work.",
+    year: "on-going",
+    href: "/3Dworks",
+    categories: [],
+    image: avisualsCover,
+  },
+  {
+    id: "featured-videoart",
+    title: "Videoart",
+    description: "Ongoing videoart pieces and moving-image experiments.",
+    year: "on-going",
+    href: "/videoart",
+    categories: [],
+    image: videoartCover,
+  },
+];
+
+const worksRaw = works.map((post) => ({
+  id: post.id,
+  title: post.data.title,
+  description: post.data.description,
+  year: post.data.year ?? "on-going",
+  href: `/works/${post.id}/`,
+  categories: post.data.workType,
+  image: post.data.heroImage,
+}));
+
+// Build the final tile list with optimized images.
+const projects = await Promise.all(
+  [...featuredRaw, ...worksRaw].map(async ({ image, ...rest }) => ({
+    ...rest,
+    img: await optimize(image),
+  })),
+);
+
+// Fisher-Yates shuffle to randomize tile order.
+for (let i = projects.length - 1; i > 0; i--) {
   const j = Math.floor(Math.random() * (i + 1));
-  [posts[i], posts[j]] = [posts[j], posts[i]];
+  [projects[i], projects[j]] = [projects[j], projects[i]];
 }
 ---
 
@@ -52,939 +106,187 @@ for (let i = posts.length - 1; i > 0; i--) {
         ><polyline points="6 9 12 15 18 9"></polyline></svg
       >
     </div>
-    <!-- Main quote -->
-    <!-- <motion.div -->
-    <!--     client:load -->
-    <!--     initial={{ opacity: 0, y: 30 }} -->
-    <!--     animate={{ opacity: 1, y: 0 }} -->
-    <!--     transition={{ duration: 0.8, ease: "easeOut" }} -->
-    <!--   > -->
-    <!--     <div class="quote-container"> -->
-    <!--       <h1 class="quote"> -->
-    <!--         <b class="animated-gradient-text" >Óscar A. Montiel</b> -->
-    <!--           <b class="animated-gradient-text" -->
-    <!--           >Interactive Media Artist</b>. -->
-    <!--       </h1> -->
-    <!--     </div> -->
-    <!--   </motion.div> -->
+    <!-- Spacer keeps the 3D scene fully visible before the grid scrolls up. -->
     <div class="scene-spacer"></div>
-    <div class="projectsContainer">
-      <!-- Interactive / 3D -->
-      <motion.div
-        client:load
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        <div id="3d-animation" class="listContainer">
-          <ul>
-            <li class="project">
-              <a href="/3Dworks">
-                <Picture
-                  class="postHeroImg"
-                  src={avisualsCover}
-                  alt="A/visuals by Óscar A. Montiel"
-                  formats={["webp"]}
-                  quality={100}
-                  decoding="async"
-                  loading="lazy"
-                />
-                <div class="postInfo">
-                  <p class="postTitle">3D Animation</p>
-                  <p class="year">on-going</p>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </motion.div>
-
-      <!-- Videoart -->
-      <motion.div
-        client:load
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        <div id="videoart" class="listContainer">
-          <ul>
-            <li class="project">
-              <a href="/videoart">
-                <Picture
-                  class="postHeroImg"
-                  src={videoartCover}
-                  alt="Videoart by Óscar A. Montiel"
-                  formats={["webp"]}
-                  quality={100}
-                  decoding="async"
-                  loading="lazy"
-                />
-                <div class="postInfo">
-                  <p class="postTitle">Videoart</p>
-                  <p class="year">on-going</p>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </motion.div>
-      <motion.div
-        client:load
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        <div id="games" class="listContainer">
-          <h2 class="workType">Games & Play</h2>
-          <ul>
-            {
-              posts.map((post) => {
-                const { workType } = post.data;
-                if (workType.includes("Games")) {
-                  return (
-                    <motion.div
-                      client:load
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.5 }}
-                      transition={{
-                        duration: Math.random() * 0.1 + 0.6,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <li class="project">
-                        <a href={`/works/${post.id}/`}>
-                          <Picture
-                            class="postHeroImg"
-                            src={post.data.heroImage}
-                            alt={`${post.data.title} by Óscar A. Montiel`}
-                            formats={["webp"]}
-                            decoding="async"
-                            loading="lazy"
-                          />
-                          <div class="postInfo">
-                            <p class="postTitle">{post.data.title}</p>
-                            <p class="year">{post.data.year || "on-going"}</p>
-                          </div>
-                        </a>
-                      </li>
-                    </motion.div>
-                  );
-                }
-              })
-            }
-          </ul>
-        </div>
-      </motion.div>
-      <!-- Art Installations -->
-      <motion.div
-        client:load
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        <div id="installations" class="listContainer">
-          <h2 class="workType">Art Installations</h2>
-          <ul>
-            {
-              posts.map((post) => {
-                const { workType } = post.data;
-                if (workType.includes("Installations")) {
-                  return (
-                    <motion.div
-                      client:load
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.5 }}
-                      transition={{
-                        duration: Math.random() * 0.1 + 0.6,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <li class="project">
-                        <a href={`/works/${post.id}/`}>
-                          <Picture
-                            class="postHeroImg"
-                            src={post.data.heroImage}
-                            alt={`${post.data.title} by Óscar A. Montiel`}
-                            formats={["webp"]}
-                            decoding="async"
-                            loading="lazy"
-                          />
-                          <div class="postInfo">
-                            <p class="postTitle">{post.data.title}</p>
-                            <p class="year">{post.data.year || "on-going"}</p>
-                          </div>
-                        </a>
-                      </li>
-                    </motion.div>
-                  );
-                }
-              })
-            }
-          </ul>
-        </div>
-      </motion.div>
-      <!-- Sound & Music -->
-      <motion.div
-        client:load
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        <div id="sound-art" class="listContainer">
-          <h2 class="workType">Sound & Music</h2>
-          <ul>
-            {
-              posts.map((post) => {
-                const { workType } = post.data;
-                if (workType.includes("Sound & Music")) {
-                  return (
-                    <motion.div
-                      client:load
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.5 }}
-                      transition={{
-                        duration: Math.random() * 0.1 + 0.6,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <li class="project">
-                        <a href={`/works/${post.id}/`}>
-                          <Picture
-                            class="postHeroImg"
-                            src={post.data.heroImage}
-                            alt={`${post.data.title} by Óscar A. Montiel`}
-                            formats={["webp"]}
-                            decoding="async"
-                            loading="lazy"
-                          />
-                          <div class="postInfo">
-                            <p class="postTitle">{post.data.title}</p>
-                            <p class="year">{post.data.year || "on-going"}</p>
-                          </div>
-                        </a>
-                      </li>
-                    </motion.div>
-                  );
-                }
-              })
-            }
-          </ul>
-        </div>
-      </motion.div>
-      <!-- Web & Code -->
-      <motion.div
-        client:load
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        <div id="web-design-dev" class="listContainer">
-          <h2 class="workType">Web Design/Dev</h2>
-          <ul>
-            {
-              posts.map((post) => {
-                const { workType } = post.data;
-                if (workType.includes("Web & Code")) {
-                  return (
-                    <motion.div
-                      client:load
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.5 }}
-                      transition={{
-                        duration: Math.random() * 0.1 + 0.6,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <li class="project">
-                        <a href={`/works/${post.id}/`}>
-                          <Picture
-                            class="postHeroImg"
-                            src={post.data.heroImage}
-                            alt={`${post.data.title} by Óscar A. Montiel`}
-                            formats={["webp"]}
-                            decoding="async"
-                            loading="lazy"
-                          />
-                          <div class="postInfo">
-                            <p class="postTitle">{post.data.title}</p>
-                            <p class="year">{post.data.year || "on-going"}</p>
-                          </div>
-                        </a>
-                      </li>
-                    </motion.div>
-                  );
-                }
-              })
-            }
-          </ul>
-        </div>
-      </motion.div>
-      <style>
-        :global(body) {
-          background-color: #0a0a0a !important;
-        }
-        /* Override dark text back to smoky white for components over the 3D scene */
-        :global(header #headerTitle),
-        :global(header #headerSubtitle),
-        :global(header h1),
-        :global(header h2) {
-          color: #f2f0eb !important;
-        }
-        :global(header a:hover #headerTitle),
-        :global(header a:hover #headerSubtitle) {
-          color: #ee5858 !important;
-        }
-        :global(.navbar a),
-        :global(.mobile-nav-links a) {
-          color: #f2f0eb !important;
-        }
-        :global(.navbar a:hover),
-        :global(.mobile-nav-links a:hover) {
-          color: #ee5858 !important;
-        }
-        :global(.hamburger-line) {
-          background-color: #f2f0eb !important;
-        }
-        :global(.mobile-menu) {
-          background-color: rgba(6, 6, 6, 0.95) !important;
-        }
-        :global(.ornaments .circle) {
-          background-color: #f2f0eb !important;
-        }
-        :global(.lastfmContainer) {
-          color: rgba(255, 255, 255, 0.224) !important;
-        }
-        :global(.songInfo) {
-          color: #f2f0eb8f !important;
-        }
-        :global(.lastFmDash) {
-          color: rgba(255, 255, 255, 0.224) !important;
-        }
-        :global(.lastFmLink) {
-          text-decoration-color: #f2f0eb75 !important;
-        }
-        :global(.social-icon) {
-          filter: none !important;
-        }
-        :global(footer) {
-          color: #f2f0eb !important;
-        }
-        :global(.separator-line) {
-          background: linear-gradient(
-            90deg,
-            transparent 0%,
-            rgba(242, 240, 235, 0.4) 20%,
-            rgba(242, 240, 235, 0.7) 50%,
-            rgba(242, 240, 235, 0.4) 80%,
-            transparent 100%
-          ) !important;
-        }
-        :global(.mobile-separator-line) {
-          background: linear-gradient(
-            90deg,
-            transparent 0%,
-            rgba(242, 240, 235, 0.4) 20%,
-            rgba(242, 240, 235, 0.7) 50%,
-            rgba(242, 240, 235, 0.4) 80%,
-            transparent 100%
-          ) !important;
-        }
-        :global(.mobile-separator-line)::before {
-          background: rgba(242, 240, 235, 0.9) !important;
-          box-shadow: 0 0 12px rgba(242, 240, 235, 0.6) !important;
-        }
-
-        .scene-background {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          z-index: 0;
-        }
-
-        .scene-background :global(#fiberCanvas) {
-          position: fixed;
-          width: 100vw;
-          height: 100vh;
-        }
-
-        .scene-spacer {
-          width: 100%;
-          height: 100vh;
-          pointer-events: none;
-        }
-
-        main {
-          position: relative;
-          z-index: 1;
-          margin-left: 10vw;
-          pointer-events: none;
-        }
-
-        .projectsContainer {
-          pointer-events: auto;
-        }
-
-        .scroll-indicator {
-          display: none;
-        }
-        /* ==========================================================================
-     BACKGROUND VIDEO STYLES
-     Components for floating background video elements
-     ========================================================================== */
-
-        .background-videos {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 10%;
-          height: 20%;
-          z-index: 100;
-          pointer-events: none;
-          overflow: hidden;
-        }
-
-        .bg-video-container {
-          position: absolute;
-          width: 200px;
-          height: 150px;
-          opacity: 0.15;
-          animation: float 10s ease-in-out infinite;
-        }
-
-        /* Floating animation for background video containers */
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0px) rotate(0deg);
-          }
-          50% {
-            transform: translateY(-20px) rotate(5deg);
-          }
-        }
-
-        /* Entry animation for background videos */
-        @keyframes fadeInFloat {
-          0% {
-            opacity: 0;
-            transform: translateY(30px) scale(0.8);
-          }
-          100% {
-            opacity: 0.15;
-            transform: translateY(0px) scale(1);
-          }
-        }
-
-        /* ==========================================================================
-     VIDEO GRADIENT WRAPPER
-     Full viewport height video container
-     ========================================================================== */
-
-        .video-gradient-wrapper {
-          width: 100%;
-          height: 100vh;
-          overflow: hidden;
-        }
-
-        .video-gradient-wrapper :global(video) {
-          width: 100%;
-          height: 100vh;
-          object-fit: cover;
-        }
-
-        /* ==========================================================================
-     VIDEO GRID LAYOUT
-     Main video showcase grid system
-     ========================================================================== */
-
-        .videogrid-container {
-          min-height: 100vh;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          box-sizing: border-box;
-          padding: 0 2rem;
-        }
-
-        .videogrid {
-          margin: 0 auto;
-          display: grid;
-          grid-template-columns: 1.2fr 0.8fr 1fr;
-          grid-template-rows: auto auto;
-          gap: 0.5rem;
-          position: relative;
-        }
-
-        /* Artistic asymmetric positioning for each video */
-        .videogrid > :global(*:nth-child(1)) {
-          aspect-ratio: 4 / 3;
-          transform: rotate(-2deg) translateY(10%);
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-          transition:
-            transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-            box-shadow 0.5s ease;
-        }
-
-        .videogrid > :global(*:nth-child(1):hover) {
-          transform: rotate(0deg) translateY(5%) scale(1.02);
-          box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.6);
-        }
-
-        .videogrid > :global(*:nth-child(2)) {
-          aspect-ratio: 1 / 1;
-          transform: rotate(3deg) translateY(-15%);
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
-          transition:
-            transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-            box-shadow 0.5s ease;
-        }
-
-        .videogrid > :global(*:nth-child(2):hover) {
-          transform: rotate(0deg) translateY(-10%) scale(1.02);
-          box-shadow: 0 30px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        .videogrid > :global(*:nth-child(3)) {
-          aspect-ratio: 16 / 10;
-          transform: rotate(-1deg) translateY(25%);
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 30px 55px -15px rgba(0, 0, 0, 0.45);
-          grid-row: span 1;
-          transition:
-            transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-            box-shadow 0.5s ease;
-        }
-
-        .videogrid > :global(*:nth-child(3):hover) {
-          transform: rotate(0deg) translateY(20%) scale(1.02);
-          box-shadow: 0 40px 65px -18px rgba(0, 0, 0, 0.55);
-        }
-
-        .videogrid > :global(*) {
-          overflow: hidden;
-        }
-
-        .single-video {
-          width: 10%;
-          height: 20%;
-          z-index: -1;
-        }
-
-        /* ==========================================================================
-     HERO SECTION
-     Main quote and introduction section
-     ========================================================================== */
-
-        .quote-container {
-          width: 100%;
-          height: 100vh;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          box-sizing: border-box;
-        }
-
-        .quote {
-          font-family: "Montserrat", sans-serif;
-          font-size: 3rem!important;
-          line-height: 1.35;
-          font-weight: 500;
-          margin: 0;
-        }
-
-        /* ==========================================================================
-     PROJECTS CONTAINER
-     Main container for all project sections
-     ========================================================================== */
-
-        .projectsContainer {
-          width: 100%;
-          box-sizing: border-box;
-          padding: 0 var(--page-padding, 6%);
-          margin: 0 auto;
-          overflow-y: hidden;
-        }
-
-        /* ==========================================================================
-     SECTION LAYOUT
-     Individual work category sections
-     ========================================================================== */
-
-        .listContainer {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          text-align: center;
-          box-sizing: border-box;
-        }
-
-        /* ==========================================================================
-     TYPOGRAPHY
-     Text styles for headings and content
-     ========================================================================== */
-
-        .postTitle{
-          font-size: 1.8rem!important;
-          font-family: "Montserrat", sans-serif;
-          color: #f2f0eb;
-          margin: 0;
-          padding: 0;
-        }
-
-        .workType {
-          font-family: "Bebas Neue", sans-serif;
-          font-size: 3.5rem;
-          text-align: center;
-          z-index: 100;
-          font-weight: 600;
-          line-height: 1.2;
-          margin-bottom: 1.5rem;
-          color: #f2f0eb;
-          margin: 0;
-          padding: 0;
-          margin-bottom: 1.5rem;
-          text-shadow:
-            0 2px 8px rgba(0, 0, 0, 0.8),
-            0 0 20px rgba(0, 0, 0, 0.6);
-        }
-        .postTitle {
-          line-height: 1.25;
-          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-          font-weight: 500;
-          text-align: initial;
-          font-size: 2rem;
-        }
-
-        .year {
-          font-size: 1rem;
-          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-          font-weight: 400;
-          font-family: "Montserrat", sans-serif;
-         color: #f2f0eb;
-        }
-
-        /* ==========================================================================
-     PROJECT GRID
-     Grid layout for project thumbnails
-     ========================================================================== */
-
-        ul {
-          list-style-type: none;
-          display: grid;
-          gap: 0.5rem;
-          max-width: 1800px;
-          justify-content: center;
-          height: auto;
-          width: 55vw;
-        }
-
-        ul li {
-          display: flex;
-          justify-content: center;
-        }
-
-        .project {
-          width: 100%;
-          aspect-ratio: 16 / 9;
-          //background-color: rgba(242, 240, 235, 0.7);
-          border-radius: 0.5rem;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-          overflow: hidden;
-        }
-
-        /* ==========================================================================
-     PROJECT CARDS
-     Individual project card styling and interactions
-     ========================================================================== */
-
-        ul a {
-          display: block;
-          height: 100%;
-          width: 100%;
-          position: relative;
-        }
-
-        ul a:hover {
-          filter: invert(1);
-        }
-
-        .postHeroImg {
-          height: 100%;
-          width: 100%;
-          object-fit: cover;
-          opacity: 0;
-          filter: brightness(0.7);
-          transition: opacity 0.5s ease-in-out;
-        }
-
-        .postHeroImg.loaded {
-          opacity: 1;
-        }
-
-        /* Project info overlay - appears on hover */
-        .postInfo {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          z-index: 10;
-        }
-
-        .project:hover .postInfo {
-          display: block;
-        }
-
-        /* ==========================================================================
-     ANIMATED GRADIENT TEXT
-     Gradient animations for highlighted text elements
-     ========================================================================== */
-
-        @keyframes gradient-flow {
-          0% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-
-        .animated-gradient-text {
-          background-image: linear-gradient(
-            90deg,
-            #ec4899,
-            #f97316,
-            #eab308,
-            #84cc16,
-            #22c55e,
-            #14b8a6,
-            #0ea5e9,
-            #6366f1,
-            #a855f7,
-            #ec4899
-          );
-          background-size: 200% auto;
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-          animation: gradient-flow 5s linear infinite;
-          cursor: default;
-        }
-
-        /* ==========================================================================
-     RESPONSIVE DESIGN
-     Media queries for different screen sizes
-     ========================================================================== */
-
-        /* Small mobile screens - hide excess background videos */
-        @media (max-width: 480px) {
-          .bg-video-container:nth-child(n + 4) {
-            display: none;
-          }
-        }
-
-        /* Mobile and tablet styles */
-        @media (max-width: 760px) {
-          .scroll-indicator {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #1c1c1c;
-            font-family: "Bebas Neue", sans-serif;
-            font-size: 1.2rem;
-            opacity: 0.7;
-            margin-bottom: 5rem;
-            margin-top: -15vh;
-            animation: bounce 2s infinite;
-          }
-
-          @keyframes bounce {
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-              transform: translateY(0);
-            }
-            40% {
-              transform: translateY(-10px);
-            }
-            60% {
-              transform: translateY(-5px);
-            }
-          }
-          main {
-            margin-left: 0;
-            width: 100%;
-            margin-top: 40%;
-          }
-
-          .quote {
-            font-size: 2rem !important;
-            padding: 0 1rem;
-            max-width: 100%;
-          }
-
-          .video-gradient-wrapper {
-            display: none;
-          }
-
-          .projectsContainer {
-            width: 90%;
-            padding: 0;
-            margin: 0 auto;
-            box-sizing: border-box;
-            overflow-x: hidden;
-          }
-
-          .listContainer {
-            min-height: auto;
-            padding: 2rem 0;
-            width: 100%;
-          }
-
-          .workType {
-            font-size: 2.25rem;
-            transform: none;
-            padding: 0;
-            text-align: left;
-            margin-bottom: 2rem;
-          }
-
-          ul {
-            width: 90vw;
-            grid-template-columns: 1fr;
-            padding: 0;
-            box-sizing: border-box;
-            gap: 2rem;
-          }
-
-          .project {
-            opacity: 1;
-            width: 100%;
-            margin-bottom: 1rem;
-          }
-
-          ul a {
-            display: block;
-            width: 100%;
-          }
-
-          .postHeroImg {
-            opacity: 0.7;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-
-          .postInfo {
-            display: block;
-            //background-color: rgba(242, 240, 235, 0.5);
-            padding: 0.5rem;
-            border-radius: 4px;
-          }
-
-          .postTitle {
-            font-size: 1.4rem;
-          }
-        }
-
-        /* Tablet responsive for video grid */
-        @media (max-width: 768px) {
-          .videogrid-container {
-            padding: 2rem 1rem;
-          }
-
-          .videogrid {
-            width: 100%;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-          }
-
-          .videogrid > :global(*:nth-child(1)) {
-            transform: rotate(-1deg);
-            aspect-ratio: 16 / 9;
-          }
-
-          .videogrid > :global(*:nth-child(2)) {
-            transform: rotate(1.5deg) translateX(5%);
-            aspect-ratio: 16 / 9;
-          }
-
-          .videogrid > :global(*:nth-child(3)) {
-            transform: rotate(-0.5deg) translateX(-3%);
-            aspect-ratio: 16 / 9;
-          }
-        }
-
-        /* Standard HD screens - slightly reduced text sizes */
-        @media (max-width: 1920px) {
-          .quote {
-            font-size: 2.5rem;
-          }
-
-          .workType {
-            font-size: 2.8rem;
-          }
-
-          .postTitle {
-            font-size: 1.5rem;
-            text-align: center;
-          }
-        }
-
-        /* Large desktop screens */
-        @media (min-width: 1080px) {
-          .quote {
-            max-width: 50%;
-          }
-        }
-
-        /* Ultra-wide screens */
-        @media (min-width: 1921px) {
-          .mainquote {
-            font-size: 4rem;
-          }
-        }
-
-        /* Video gradient wrapper */
-        .video-gradient-wrapper {
-          position: relative;
-        }
-
-        .video-gradient-wrapper::after {
-          content: "";
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          height: 30%;
-          background: linear-gradient(to bottom, transparent, #f2f0eb);
-          pointer-events: none;
-          z-index: 10;
-        }
-      </style>
+    <div class="grid-scroll-wrapper">
+      <div class="projectsContainer">
+        <ProjectGrid client:load projects={projects} />
+      </div>
     </div>
   </main>
   <Footer />
+
+  <style>
+    :global(body) {
+      background-color: #0a0a0a !important;
+    }
+    /* Override dark text back to smoky white for components over the 3D scene */
+    :global(header #headerTitle),
+    :global(header #headerSubtitle),
+    :global(header h1),
+    :global(header h2) {
+      color: #f2f0eb !important;
+    }
+    :global(header a:hover #headerTitle),
+    :global(header a:hover #headerSubtitle) {
+      color: #ee5858 !important;
+    }
+    :global(.navbar a),
+    :global(.mobile-nav-links a) {
+      color: #f2f0eb !important;
+    }
+    :global(.navbar a:hover),
+    :global(.mobile-nav-links a:hover) {
+      color: #ee5858 !important;
+    }
+    :global(.hamburger-line) {
+      background-color: #f2f0eb !important;
+    }
+    :global(.mobile-menu) {
+      background-color: rgba(6, 6, 6, 0.95) !important;
+    }
+    :global(.ornaments .circle) {
+      background-color: #f2f0eb !important;
+    }
+    :global(.lastfmContainer) {
+      color: rgba(255, 255, 255, 0.224) !important;
+    }
+    :global(.songInfo) {
+      color: #f2f0eb8f !important;
+    }
+    :global(.lastFmDash) {
+      color: rgba(255, 255, 255, 0.224) !important;
+    }
+    :global(.lastFmLink) {
+      text-decoration-color: #f2f0eb75 !important;
+    }
+    :global(.social-icon) {
+      filter: none !important;
+    }
+    :global(footer) {
+      color: #f2f0eb !important;
+    }
+    :global(.separator-line) {
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(242, 240, 235, 0.4) 20%,
+        rgba(242, 240, 235, 0.7) 50%,
+        rgba(242, 240, 235, 0.4) 80%,
+        transparent 100%
+      ) !important;
+    }
+    :global(.mobile-separator-line) {
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(242, 240, 235, 0.4) 20%,
+        rgba(242, 240, 235, 0.7) 50%,
+        rgba(242, 240, 235, 0.4) 80%,
+        transparent 100%
+      ) !important;
+    }
+    :global(.mobile-separator-line)::before {
+      background: rgba(242, 240, 235, 0.9) !important;
+      box-shadow: 0 0 12px rgba(242, 240, 235, 0.6) !important;
+    }
+
+    .scene-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+    }
+
+    .scene-background :global(#fiberCanvas) {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .scene-spacer {
+      width: 100%;
+      height: 100vh;
+      pointer-events: none;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      overflow-x: hidden;
+      pointer-events: none;
+    }
+
+    /* Reserve a fixed-width block on the left for the fixed header + navbar
+       (see --left-rail in global.css) and let the grid fill everything to the
+       right of it — no per-page margin guessing. */
+    .grid-scroll-wrapper {
+      margin-left: var(--left-rail);
+      margin-right: var(--page-padding, 5%);
+    }
+
+    .projectsContainer {
+      pointer-events: auto;
+      position: relative;
+      padding: 0 0 20vh;
+      z-index: 10;
+    }
+
+    .scroll-indicator {
+      display: none;
+    }
+
+    /* Mobile and tablet styles */
+    @media (max-width: 760px) {
+      .scroll-indicator {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #1c1c1c;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.2rem;
+        opacity: 0.7;
+        margin-bottom: 5rem;
+        margin-top: -15vh;
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      main {
+        width: 100%;
+        margin-top: 40%;
+      }
+
+      /* The navbar collapses to a hamburger on mobile, so drop the left rail
+         and let the grid go full-width. */
+      .grid-scroll-wrapper {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .projectsContainer {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0 20px 20vh;
+        overflow-x: hidden;
+      }
+    }
+  </style>
 </body>

@@ -10,6 +10,9 @@
 
 :root {
   --page-padding: 5%;
+  /* Width reserved on the left for the fixed header + navbar block. Content
+     areas offset by this (margin-left) instead of guessing per-page margins. */
+  --left-rail: 22rem;
 }
 
 .visually-hidden {

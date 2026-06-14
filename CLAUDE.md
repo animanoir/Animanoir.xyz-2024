@@ -30,8 +30,9 @@ This is an Astro-based portfolio website for an Interactive Media Artist, featur
 The site uses both Astro's content collections and Sanity CMS. **Important:** the blog is fully Sanity-backed — the `src/content/blog/` collection does NOT render as pages (it only feeds `RelatedArticles.astro` and `BlogPostsNotifier.astro`). You cannot publish a blog post by dropping an MDX file.
 
 **Astro Content Collections (`src/content.config.ts`):**
-- `src/content/works/` - Portfolio works (`.mdx`, organized into year subfolders). Schema: `title`, `description`, `pubDate` (all required), `heroImage` (required `image()`), `updatedDate`, `year`, `tools` (string[]), and `workType` (required enum, see below)
-- `src/content/blog/` - Blog MDX with schema (`title`, `pubDate` required; `summary`, `heroImage`, `tags` optional). Feeds related-article and notifier components only — does NOT render as `/blog` pages
+- `src/content/works/` - Portfolio works (`.mdx`, organized into year subfolders). Schema: `title`, `description`, `pubDate` (all required), `heroImage` (required `image()`), `updatedDate`, `year` (number), `tools` (string[]), and `workType` (required **array** of one or more enum values, e.g. `workType: ["Web & Code"]`, see below)
+- `src/content/blog/` - Blog MDX (loader matches both `.md` and `.mdx`) with schema (`title`, `pubDate` required; `summary`, `heroImage`, `tags` optional). Feeds related-article and notifier components only — does NOT render as `/blog` pages
+- `src/drafts/` - Unpublished scratch/staging markdown (`.md`/`.mdx`) plus a `books.astro`. NOT wired into any content collection or route — nothing here renders
 
 **Sanity CMS (the live blog source):**
 - Project ID / dataset via env vars (`PUBLIC_SANITY_PROJECT_ID`, `PUBLIC_SANITY_DATASET`)
@@ -40,7 +41,7 @@ The site uses both Astro's content collections and Sanity CMS. **Important:** th
 - Portable Text rendering via `PortableTextRenderer.tsx`
 - `/blog` index and `/blog/[...slug]` posts are generated from Sanity
 
-**Work Categories (`workType` — STRICT ENUM, only these 4 values):**
+**Work Categories (`workType` — STRICT ENUM array; each work declares one or more of these 4 values):**
 - `Games` - Videogame development
 - `Installations` - Interactive / gallery installations
 - `Sound & Music` - Sound and music experiments
@@ -52,6 +53,7 @@ Two additional practice areas exist as standalone pages (NOT works-collection MD
 
 **Interactive Components:**
 - `src/components/3DIndex/` - Three.js scenes for homepage (AnimanoirLogoScene, ModelANLogo, AndrosFetal/, SceneIndex, useScrollEffect.js)
+- `src/components/ProjectGrid/` - Homepage filterable project grid (`ProjectGrid.jsx` + `ProjectGrid.module.css`); hash-driven category filter with Motion layout animations and a hover/focus caption
 - `src/components/CanvasAbout.jsx` - WebGL canvas for about page
 - `src/components/MutatingAbout/MutatingAbout.jsx` - Text mutation effects
 - `src/components/MutatingSubheader.jsx` - Subheader text mutations
@@ -75,7 +77,7 @@ Two additional practice areas exist as standalone pages (NOT works-collection MD
 - `src/components/Header.astro` - Main header (homepage)
 - `src/components/ModifiedHeader.astro` - Alternative header variant (inner pages)
 - `src/components/Navbar.astro` - Navigation bar (links to homepage section anchors)
-- `src/components/Footer/Footer.astro` - Site footer (with social icon SVGs)
+- `src/components/Footer/Footer.astro` - Site footer; social icons live as separate assets in `src/components/Footer/icons/` (github, ig, linkedin, steam, youtube SVGs + arena PNG)
 - `src/components/HeaderLink.astro` - Header navigation links
 
 **Utility Components:**
@@ -85,7 +87,7 @@ Two additional practice areas exist as standalone pages (NOT works-collection MD
 - `src/components/Ornaments.astro` - Decorative elements
 
 ### Routing Structure
-- `/` - Homepage with 3D animations; the ONLY works listing (there is no `/works` index page). Section anchor ids: `#games #installations #sound-art #web-code #3d-animation #videoart` (referenced by `Navbar.astro`)
+- `/` - Homepage with 3D animations; the ONLY works listing (there is no `/works` index page). Below a `100vh` scene spacer it renders a single filterable project grid (`ProjectGrid.jsx`, a React island). The navbar drives the filter via URL hash — `#all`, `#games`, `#installations`, `#sound-art`, `#web-design-dev` — which `ProjectGrid` maps onto `workType`; the grid animates the re-flow (Motion `layout` + `AnimatePresence`) and shows a hover/focus caption below it. **3D Animation** and **Videoart** are featured tiles that link out to `/3Dworks` and `/videoart` (their navbar links go straight to those pages, not the grid). Hero images are pre-optimized in the page frontmatter via `getImage()` and passed to the island as `srcset` (Astro `<Picture>` can't run inside a React component)
 - `/aboutMe` - About page with canvas animations
 - `/3Dworks` - 3D animation / A-visuals showcase
 - `/videoart` - Videoart showcase
@@ -120,6 +122,7 @@ Two additional practice areas exist as standalone pages (NOT works-collection MD
 - Images organized by category in `src/images/` (blog, works, about)
 - Video assets in `src/images/videos/` and work-specific directories
 - Extensive use of optimized images (jpg/webp) and video (webm)
+- `src/scripts/imageLoader.js` - helper script for image loading
 
 ### API Integration
 - **Sanity CMS** - Primary content management system with Portable Text support

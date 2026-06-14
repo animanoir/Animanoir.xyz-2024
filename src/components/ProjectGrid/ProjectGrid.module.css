@@ -1,0 +1,160 @@
+.wrapper {
+  width: 100%;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   GRID
+   ========================================================================== */
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.tile {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.72);
+  transition:
+    transform 0.6s cubic-bezier(0.2, 0, 0.2, 1),
+    filter 0.6s ease;
+}
+
+.tile:hover .img,
+.tile:focus-within .img {
+  transform: scale(1.05);
+  filter: brightness(1);
+}
+
+/* Per-tile title overlay — hidden on desktop (the caption carries the info),
+   shown on touch where hover doesn't exist. */
+.tileLabel {
+  display: none;
+}
+
+/* ==========================================================================
+   FIXED BOTTOM BAR
+   Pinned to the viewport bottom; shows the hovered/focused project's info so it
+   stays in view while browsing. Aligned to start at the left rail so it sits
+   under the grid, not the navbar.
+   ========================================================================== */
+.bar {
+  position: fixed;
+  left: var(--left-rail);
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  padding: 2.5rem var(--page-padding, 5%) 1.5rem;
+  pointer-events: none; /* never block hovering tiles near the bottom edge */
+  /* Legible over the scene/tiles without an expensive backdrop blur. */
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.97) 0%,
+    rgba(10, 10, 10, 0.88) 55%,
+    rgba(10, 10, 10, 0) 100%
+  );
+}
+
+.barInner {
+  max-width: 70ch;
+}
+
+.barTitle {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #f2f0eb;
+}
+
+.barYear {
+  margin-left: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+.barDesc {
+  margin: 0.4rem 0 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #f2f0eb;
+  opacity: 0.85;
+}
+
+.empty {
+  margin: 2.5rem 0 0;
+  font-family: "Montserrat", sans-serif;
+  font-style: italic;
+  text-align: center;
+  color: #f2f0eb;
+  opacity: 0.5;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  /* No hover on touch: keep images legible and surface the title per tile. */
+  .img {
+    filter: brightness(0.6);
+  }
+
+  .tileLabel {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.6rem 0.75rem;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: left;
+    color: #f2f0eb;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+  }
+
+  /* The hover bar is desktop-only; tiles carry their titles on touch. */
+  .bar {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
