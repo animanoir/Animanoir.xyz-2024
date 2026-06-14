@@ -53,20 +53,20 @@ for (let i = posts.length - 1; i > 0; i--) {
       >
     </div>
     <!-- Main quote -->
-    <motion.div
-        client:load
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <div class="quote-container">
-          <h1 class="quote">
-            <b class="animated-gradient-text" >Óscar A. Montiel</b>
-              <b class="animated-gradient-text"
-              >Interactive Media Artist</b>.
-          </h1>
-        </div>
-      </motion.div>
+    <!-- <motion.div -->
+    <!--     client:load -->
+    <!--     initial={{ opacity: 0, y: 30 }} -->
+    <!--     animate={{ opacity: 1, y: 0 }} -->
+    <!--     transition={{ duration: 0.8, ease: "easeOut" }} -->
+    <!--   > -->
+    <!--     <div class="quote-container"> -->
+    <!--       <h1 class="quote"> -->
+    <!--         <b class="animated-gradient-text" >Óscar A. Montiel</b> -->
+    <!--           <b class="animated-gradient-text" -->
+    <!--           >Interactive Media Artist</b>. -->
+    <!--       </h1> -->
+    <!--     </div> -->
+    <!--   </motion.div> -->
     <div class="scene-spacer"></div>
     <div class="projectsContainer">
       <!-- Interactive / 3D -->
@@ -139,7 +139,7 @@ for (let i = posts.length - 1; i > 0; i--) {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div id="games" class="listContainer">
-          <h2 class="workType">Games & Play Metaphysics</h2>
+          <h2 class="workType">Games & Play</h2>
           <ul>
             {
               posts.map((post) => {

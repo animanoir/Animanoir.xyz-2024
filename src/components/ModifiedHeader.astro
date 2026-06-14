@@ -16,7 +16,7 @@ const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
     animated ? (
       <motion.div
         client:load
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.9, ease: "easeOut" }}
       >

@@ -47,7 +47,6 @@ const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
     "Are.na Addict",
     "Fear & Laughter Technician",
     "Ontological Clown",
-    "Mezcal Metaphysician",
     "Voluntarily Confused",
     "Professionally Astonished",
     "Broken Mirror Collector",
