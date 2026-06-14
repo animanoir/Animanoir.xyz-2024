@@ -16,15 +16,54 @@ export default function ProjectGrid({ projects = [] }) {
   const [activeCategory, setActiveCategory] = useState(null); // null = show all
   const [activeId, setActiveId] = useState(null); // currently hovered/focused tile
 
-  // Drive the filter from the URL hash so the existing navbar links keep working
-  // and the view stays deep-linkable (e.g. /#games) with working back/forward.
+  // Drive the filter from the URL hash so the navbar links keep working and the
+  // view stays deep-linkable (e.g. /#games) with working back/forward.
+  //
+  // Gotcha: the navbar lives inside Astro's <ClientRouter /> (View Transitions).
+  // For a same-page hash link like /#games it just runs history.pushState and
+  // returns early — firing NO hashchange / popstate / astro:page-load. So a
+  // hashchange listener alone never sees in-page category clicks. We bridge that
+  // by reading the category straight off any clicked same-page hash anchor; the
+  // other listeners cover deep-links, back/forward, and cross-page navigation.
   useEffect(() => {
     const applyHash = () => {
       setActiveCategory(HASH_TO_CATEGORY[window.location.hash] ?? null);
     };
+
+    const onClick = (e) => {
+      // Ignore modified clicks (new tab / window) and non-primary buttons.
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)
+        return;
+      const anchor = e.target.closest?.("a");
+      if (!anchor) return;
+      let url;
+      try {
+        url = new URL(anchor.href, window.location.href);
+      } catch {
+        return;
+      }
+      // Only same-page hash links drive the filter. Cross-page links navigate
+      // normally and the freshly-mounted grid re-reads the hash on load.
+      if (
+        url.origin !== window.location.origin ||
+        url.pathname !== window.location.pathname ||
+        !url.hash
+      )
+        return;
+      setActiveCategory(HASH_TO_CATEGORY[url.hash] ?? null);
+    };
+
     applyHash();
+    document.addEventListener("click", onClick, true);
     window.addEventListener("hashchange", applyHash);
-    return () => window.removeEventListener("hashchange", applyHash);
+    window.addEventListener("popstate", applyHash);
+    document.addEventListener("astro:page-load", applyHash);
+    return () => {
+      document.removeEventListener("click", onClick, true);
+      window.removeEventListener("hashchange", applyHash);
+      window.removeEventListener("popstate", applyHash);
+      document.removeEventListener("astro:page-load", applyHash);
+    };
   }, []);
 
   const visible = projects.filter(

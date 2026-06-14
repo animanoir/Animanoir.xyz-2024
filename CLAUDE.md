@@ -71,12 +71,12 @@ Two additional practice areas exist as standalone pages (NOT works-collection MD
 - `src/components/RelatedArticles.astro` - Related content suggestions
 
 **Layout & Navigation Components:**
-- `src/layouts/MainLayout.astro` - Base layout (also `src/layouts/index.astro`)
-- `src/layouts/BlogPost.astro` - Blog post layout
-- `src/layouts/WorkPost.astro` - Portfolio work layout
-- `src/components/Header.astro` - Main header (homepage)
-- `src/components/ModifiedHeader.astro` - Alternative header variant (inner pages)
-- `src/components/Navbar.astro` - Navigation bar (links to homepage section anchors)
+- `src/layouts/MainLayout.astro` - Base layout, only referenced by `src/layouts/index.astro` — and neither is wired to a live route, so this layout (and the `Header.astro` it pulls in) is effectively unused
+- `src/layouts/BlogPost.astro` - Blog post layout (uses `ModifiedHeader`)
+- `src/layouts/WorkPost.astro` - Portfolio work layout (uses `ModifiedHeader`)
+- `src/components/ModifiedHeader.astro` - **The header on every rendered page** (homepage, aboutMe, 3Dworks, videoart, photodiary, blog, plus the BlogPost/WorkPost layouts). Renders `MutatingSubheader` + `LastFm` + `Navbar` + `Ornaments`. Props: `animated` (homepage only — opts into the sequential quote → header → navbar Motion reveal), and `goWild` + `sortSpeed` (aboutMe — tune the `MutatingSubheader` text scramble)
+- `src/components/Header.astro` - Older base header; only referenced by `MainLayout.astro`, so it does NOT appear on any live page. `ModifiedHeader` is what's actually used
+- `src/components/Navbar.astro` - Navigation bar. Work links drive the homepage `ProjectGrid` filter via URL hashes (`#all`, `#games`, `#installations`, `#sound-art`, `#web-design-dev`; off the homepage they navigate home carrying the hash); **3D Animation** and **VideoArt** link straight to `/3Dworks` and `/videoart`. Accepts an `animated` prop (passed only by the homepage, via `ModifiedHeader animated`) that reveals nav items one by one, alternating right/left (Motion)
 - `src/components/Footer/Footer.astro` - Site footer; social icons live as separate assets in `src/components/Footer/icons/` (github, ig, linkedin, steam, youtube SVGs + arena PNG)
 - `src/components/HeaderLink.astro` - Header navigation links
 
@@ -87,12 +87,12 @@ Two additional practice areas exist as standalone pages (NOT works-collection MD
 - `src/components/Ornaments.astro` - Decorative elements
 
 ### Routing Structure
-- `/` - Homepage with 3D animations; the ONLY works listing (there is no `/works` index page). Below a `100vh` scene spacer it renders a single filterable project grid (`ProjectGrid.jsx`, a React island). The navbar drives the filter via URL hash — `#all`, `#games`, `#installations`, `#sound-art`, `#web-design-dev` — which `ProjectGrid` maps onto `workType`; the grid animates the re-flow (Motion `layout` + `AnimatePresence`) and shows a hover/focus caption below it. **3D Animation** and **Videoart** are featured tiles that link out to `/3Dworks` and `/videoart` (their navbar links go straight to those pages, not the grid). Hero images are pre-optimized in the page frontmatter via `getImage()` and passed to the island as `srcset` (Astro `<Picture>` can't run inside a React component)
+- `/` - Homepage with 3D animations; the ONLY works listing (there is no `/works` index page). On load it plays a sequential narrative reveal (quote → header → navbar) via `<ModifiedHeader animated />` (Motion). Below a `100vh` scene spacer it renders a single filterable project grid (`ProjectGrid.jsx`, a React island). The navbar drives the filter via URL hash — `#all`, `#games`, `#installations`, `#sound-art`, `#web-design-dev` — which `ProjectGrid` maps onto `workType`; the grid animates the re-flow (Motion `layout` + `AnimatePresence`) and shows a hover/focus caption below it. **3D Animation** and **Videoart** are featured tiles that link out to `/3Dworks` and `/videoart` (their navbar links go straight to those pages, not the grid). Hero images are pre-optimized in the page frontmatter via `getImage()` and passed to the island as `srcset` (Astro `<Picture>` can't run inside a React component)
 - `/aboutMe` - About page with canvas animations
 - `/3Dworks` - 3D animation / A-visuals showcase
 - `/videoart` - Videoart showcase
 - `/photodiary` - Photo diary page
-- `/blog/` - Blog index (`blog/index.astro`) and individual posts via `blog/[...slug].astro` — both generated from Sanity
+- `/blog/` - Blog index (`blog/index.astro`) and individual posts via `blog/[...slug].astro` — both generated from Sanity. The index has a `LAYOUT_MODE` toggle constant: `"vertical"` (default — a clean, year-grouped vertical list, pure CSS) or `"random"` (legacy scattered / absolutely-positioned layout positioned by a client script, including a now-commented-out Are.na text background). Posts are grouped and sorted by year, newest first
 - `/works/[...slug]` - Individual work pages from the works content collection
 - `/rss.xml` - RSS feed (`rss.xml.js`)
 
