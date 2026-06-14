@@ -130,7 +130,6 @@ for (let i = posts.length - 1; i > 0; i--) {
           </ul>
         </div>
       </motion.div>
-
       <motion.div
         client:load
         initial={{ opacity: 0, y: 30 }}
@@ -180,7 +179,6 @@ for (let i = posts.length - 1; i > 0; i--) {
           </ul>
         </div>
       </motion.div>
-
       <!-- Art Installations -->
       <motion.div
         client:load
@@ -231,7 +229,6 @@ for (let i = posts.length - 1; i > 0; i--) {
           </ul>
         </div>
       </motion.div>
-
       <!-- Sound & Music -->
       <motion.div
         client:load
@@ -282,7 +279,6 @@ for (let i = posts.length - 1; i > 0; i--) {
           </ul>
         </div>
       </motion.div>
-
       <!-- Web & Code -->
       <motion.div
         client:load
@@ -337,7 +333,6 @@ for (let i = posts.length - 1; i > 0; i--) {
         :global(body) {
           background-color: #0a0a0a !important;
         }
-
         /* Override dark text back to smoky white for components over the 3D scene */
         :global(header #headerTitle),
         :global(header #headerSubtitle),
@@ -646,8 +641,7 @@ for (let i = posts.length - 1; i > 0; i--) {
      Text styles for headings and content
      ========================================================================== */
 
-        .postTitle,
-        .year {
+        .postTitle{
           font-size: 1.8rem!important;
           font-family: "Montserrat", sans-serif;
           color: #f2f0eb;
@@ -671,7 +665,6 @@ for (let i = posts.length - 1; i > 0; i--) {
             0 2px 8px rgba(0, 0, 0, 0.8),
             0 0 20px rgba(0, 0, 0, 0.6);
         }
-
         .postTitle {
           line-height: 1.25;
           text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
@@ -681,9 +674,11 @@ for (let i = posts.length - 1; i > 0; i--) {
         }
 
         .year {
-          font-size: 0.9rem;
+          font-size: 1rem;
           text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
           font-weight: 400;
+          font-family: "Montserrat", sans-serif;
+         color: #f2f0eb;
         }
 
         /* ==========================================================================
