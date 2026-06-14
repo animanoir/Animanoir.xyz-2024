@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import styles from "./ProjectGrid.module.css";
 
@@ -12,9 +12,19 @@ const HASH_TO_CATEGORY = {
   "#web-design-dev": "Web & Code",
 };
 
+// Hashes that should scroll the grid into view when clicked or deep-linked
+// (every navbar "work" link). "#all" carries no category but still targets the
+// grid. The featured tiles (3D / Videoart) are cross-page links, not hashes.
+const GRID_HASHES = new Set(["#all", ...Object.keys(HASH_TO_CATEGORY)]);
+
+// Lenis offset (px) when scrolling to the grid — negative leaves a little
+// breathing room above the first row.
+const SCROLL_OFFSET = -24;
+
 export default function ProjectGrid({ projects = [] }) {
   const [activeCategory, setActiveCategory] = useState(null); // null = show all
   const [activeId, setActiveId] = useState(null); // currently hovered/focused tile
+  const wrapperRef = useRef(null); // grid root — scroll target for category links
 
   // Drive the filter from the URL hash so the navbar links keep working and the
   // view stays deep-linkable (e.g. /#games) with working back/forward.
@@ -28,6 +38,23 @@ export default function ProjectGrid({ projects = [] }) {
   useEffect(() => {
     const applyHash = () => {
       setActiveCategory(HASH_TO_CATEGORY[window.location.hash] ?? null);
+    };
+
+    // Bring the grid into view so the projects are visible even if the user
+    // hasn't scrolled past the hero yet. Prefer the site's Lenis instance
+    // (astro-lenis exposes it as window.lenis) so the motion matches the page's
+    // smooth scroll; on a cold deep-link load Lenis may not have initialized in
+    // this frame yet, so retry briefly before falling back to native scrolling.
+    const scrollToProjects = (attempt = 0) => {
+      const el = wrapperRef.current;
+      if (!el) return;
+      if (window.lenis?.scrollTo) {
+        window.lenis.scrollTo(el, { offset: SCROLL_OFFSET, duration: 1.1 });
+      } else if (attempt < 20) {
+        requestAnimationFrame(() => scrollToProjects(attempt + 1));
+      } else {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     };
 
     const onClick = (e) => {
@@ -51,9 +78,20 @@ export default function ProjectGrid({ projects = [] }) {
       )
         return;
       setActiveCategory(HASH_TO_CATEGORY[url.hash] ?? null);
+      // Already on the homepage: ClientRouter swallows this same-page hash link
+      // (no navigation/scroll), so scroll the re-filtered grid into view here.
+      // Wait a frame so the re-flow has started.
+      if (GRID_HASHES.has(url.hash)) {
+        requestAnimationFrame(() => scrollToProjects());
+      }
     };
 
     applyHash();
+    // Arriving with a work hash (deep-link, or a cross-page navbar click that
+    // navigated home) should land the viewer on the projects, not the hero.
+    if (GRID_HASHES.has(window.location.hash)) {
+      requestAnimationFrame(() => scrollToProjects());
+    }
     document.addEventListener("click", onClick, true);
     window.addEventListener("hashchange", applyHash);
     window.addEventListener("popstate", applyHash);
@@ -73,7 +111,7 @@ export default function ProjectGrid({ projects = [] }) {
   const active = visible.find((p) => p.id === activeId) || null;
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} ref={wrapperRef}>
       <motion.ul
         className={styles.grid}
         layout
