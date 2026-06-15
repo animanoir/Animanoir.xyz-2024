@@ -166,16 +166,25 @@ export default function ProjectGrid({ projects = [] }) {
               onFocus={() => setActiveId(p.id)}
             >
               <a className={styles.link} href={p.href}>
-                <img
-                  className={styles.img}
-                  src={p.img.src}
-                  srcSet={p.img.srcset || undefined}
-                  sizes="(max-width: 480px) 100vw, (max-width: 760px) 50vw, 30vw"
-                  alt={`${p.title} by Óscar A. Montiel`}
-                  loading="lazy"
-                  decoding="async"
-                />
-                <span className={styles.tileLabel}>{p.title}</span>
+                {p.img?.src ? (
+                  <>
+                    <img
+                      className={styles.img}
+                      src={p.img.src}
+                      srcSet={p.img.srcset || undefined}
+                      sizes="(max-width: 480px) 100vw, (max-width: 760px) 50vw, 30vw"
+                      alt={`${p.title} by Óscar A. Montiel`}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <span className={styles.tileLabel}>{p.title}</span>
+                  </>
+                ) : (
+                  // Imageless work: a text-only tile with the title centered.
+                  <span className={styles.placeholder}>
+                    <span className={styles.placeholderTitle}>{p.title}</span>
+                  </span>
+                )}
               </a>
             </motion.li>
           ))}

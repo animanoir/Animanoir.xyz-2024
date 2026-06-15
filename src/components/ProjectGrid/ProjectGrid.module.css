@@ -47,6 +47,38 @@
   filter: brightness(1);
 }
 
+/* Text-only tile for works that have no hero image. Fills the same 16:9 tile
+   and centers the title in place of the image. */
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  text-align: center;
+  background: linear-gradient(135deg, #1c1c1c 0%, #0f0f0f 100%);
+  transition:
+    transform 0.6s cubic-bezier(0.2, 0, 0.2, 1),
+    filter 0.6s ease;
+}
+
+.tile:hover .placeholder,
+.tile:focus-within .placeholder {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+
+.placeholderTitle {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.7rem;
+  letter-spacing: 0.12rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: #f2f0eb;
+}
+
 /* Per-tile title overlay — hidden on desktop (the caption carries the info),
    shown on touch where hover doesn't exist. */
 .tileLabel {

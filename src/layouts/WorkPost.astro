@@ -13,7 +13,7 @@ type HeroImage = {
 };
 
 type Props = CollectionEntry<"works">["data"] & {
-  heroImage: HeroImage;
+  heroImage?: HeroImage;
 };
 
 const { title, description, heroImage } = Astro.props;
@@ -24,7 +24,7 @@ const { title, description, heroImage } = Astro.props;
     <BaseHead
       title={title}
       description={description}
-      image={heroImage.src}
+      image={heroImage?.src}
       type="article"
       author="Óscar A. Montiel"
     />
@@ -32,7 +32,7 @@ const { title, description, heroImage } = Astro.props;
   <body>
     <ModifiedHeader />
     <main>
-      <div class="top-section">
+      <div class:list={["top-section", { "no-hero": !heroImage }]}>
         {
           heroImage && (
             <div class="gradient-black">
@@ -78,6 +78,28 @@ const { title, description, heroImage } = Astro.props;
         width: 80%;
         margin: 0 auto;
         height: 100vh;
+      }
+
+      /* Imageless work: drop the full-height hero stage and just show the
+         title/description near the top (clearing the fixed header). */
+      .top-section.no-hero {
+        display: block;
+        height: auto;
+        padding-top: 22vh;
+        padding-bottom: 4vh;
+        /* Mirror .articleContainer so the title/description share the body's
+           column width instead of the wider 80% hero stage. */
+        width: 100%;
+      }
+
+      .top-section.no-hero .project-description-container {
+        /* The default -50% pull overlays the text on the faded image edge;
+           with no image it would shove the text off to the left. Instead,
+           match .articleBody (90% of the column, centered) so the heading's
+           left edge aligns with the article text below it. */
+        transform: none;
+        width: 90%;
+        margin: 0 auto;
       }
 
       .gradient-black {
@@ -194,6 +216,9 @@ const { title, description, heroImage } = Astro.props;
         .articleContainer {
           width: 60%;
         }
+        .top-section.no-hero {
+          width: 60%;
+        }
       }
 
       @media (max-width: 768px) {
@@ -205,6 +230,10 @@ const { title, description, heroImage } = Astro.props;
           margin-top: 40%;
           width: 90%;
         }
+        /* margin-top: 40% already clears the header on mobile. */
+        .top-section.no-hero {
+          padding-top: 0;
+        }
         .gradient-black::before {
           background: linear-gradient(
             to top,
@@ -215,6 +244,13 @@ const { title, description, heroImage } = Astro.props;
         }
         .project-description-container {
           transform: initial;
+        }
+        /* Stay matched to .articleContainer (100%) / .articleBody (95%). */
+        .top-section.no-hero {
+          width: 100%;
+        }
+        .top-section.no-hero .project-description-container {
+          width: 95%;
         }
         .title {
           transform: initial;

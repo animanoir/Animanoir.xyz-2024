@@ -20,6 +20,8 @@ const works = (await getCollection("works")).sort(
 // grid island can render plain <img srcset> — Astro's <Picture> can't run inside
 // a framework component.
 async function optimize(image) {
+  // Works may omit a hero image — the grid renders a text-only tile for those.
+  if (!image) return null;
   const o = await getImage({
     src: image,
     format: "webp",
