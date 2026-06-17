@@ -57,7 +57,6 @@ const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
     display: flex;
     position: fixed;
     flex-direction: column;
-
     justify-content: space-between;
     width: auto;
     box-sizing: border-box;
@@ -105,17 +104,26 @@ const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
     color: #ee5858;
   }
 
+  /* On mobile the navbar collapses into the hamburger menu (see Navbar.astro).
+     Drop the translate here: a `transform` turns this wrapper into the containing
+     block for the hamburger button + full-screen overlay (both position: fixed),
+     which would otherwise anchor them to this little left-center box instead of
+     the viewport. Without the transform they pin to the viewport corner. */
+  @media (max-width: 768px) {
+    .navbar-wrapper {
+      position: static;
+      transform: none;
+    }
+  }
+
   @media (max-width: 500px) {
     header {
       flex-direction: column;
       align-items: left;
       padding-left: 1rem;
     }
-    #headerTitle {
-      font-size: 1.2rem;
-    }
-    #headerSubtitle {
-      font-size: 1.2rem;
+    #headerTitle, #headerSubtitle {
+      font-size: 1.5rem;
     }
     nav {
       font-size: 0.9em;
