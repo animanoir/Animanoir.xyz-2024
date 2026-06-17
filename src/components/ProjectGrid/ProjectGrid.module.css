@@ -35,7 +35,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.72);
+  filter: brightness(0.8);
   transition:
     transform 0.6s cubic-bezier(0.2, 0, 0.2, 1),
     filter 0.6s ease;
@@ -98,14 +98,13 @@
   bottom: 0;
   z-index: 50;
   padding: 2.5rem var(--page-padding, 5%) 1.5rem;
-  pointer-events: none; /* never block hovering tiles near the bottom edge */
+  pointer-events: none;
+  /* never block hovering tiles near the bottom edge */
   /* Legible over the scene/tiles without an expensive backdrop blur. */
-  background: linear-gradient(
-    to top,
-    rgba(10, 10, 10, 0.97) 0%,
-    rgba(10, 10, 10, 0.88) 55%,
-    rgba(10, 10, 10, 0) 100%
-  );
+  background: linear-gradient(to top,
+      rgba(10, 10, 10, 0.97) 0%,
+      rgba(10, 10, 10, 0.88) 55%,
+      rgba(10, 10, 10, 0) 100%);
 }
 
 .barInner {
@@ -158,7 +157,7 @@
 
   /* No hover on touch: keep images legible and surface the title per tile. */
   .img {
-    filter: brightness(0.6);
+    filter: brightness(1.0);
   }
 
   .tileLabel {
