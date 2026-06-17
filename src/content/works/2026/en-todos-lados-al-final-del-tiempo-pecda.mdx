@@ -7,17 +7,57 @@ tools: ["Godot"]
 workType: ["Games"]
 ---
 
+import { Picture } from "astro:assets";
 import { YouTube } from "astro-embed";
+import img1 from "@/images/flowersjpg.jpg";
+import img2 from "@/images/qro-logotipos.png";
 
-I tend to view video games as an art still in need to be exploited experimentally to find
-new avenues in human-computer interaction to incite specific sensations. Also, I tinker a lot
-with human diseases such as Alzheimer's, which I think is one of the most severe ones since
-it alters completely our whole conception of "self".
+- _Role: Solo developer (concept, game design, programming, shaders, and narrative)._
+- _Stack: Godot (GDscript, custom GLSL shaders, Blender)._
+- _Context: Funded by the PECDA (Programa de Estímulo a la Creación y Desarrollo Artístico)._
+
+I treat video games as an art form still waiting to be explored, a medium where
+new forms of human-computer interaction can be built specifically to provoke
+particular sensations, rather than to entertain or to win. This project asks a
+narrow, deliberate question: **can a game make you _feel_ what it is to lose your
+memory?**
 
 <YouTube id="L_4giGhDvoo" />
 
-Because of this, and with economic help from a grant I was awarded from the PECDA state program,
-I created a game using Godot which tries to _confuse_ players in similar ways someone with severe
-memory loss might feel, which include frustration and sporadic, but short lasting bliss.
+The starting point was Alzheimer's, which I find one of the most unsettling
+conditions precisely because it dissolves our whole notion of the "self." Instead
+of representing memory loss from the outside, I designed the game to _induce_ it.
+Disorientation, frustration, and brief, fleeting moments of clarity aren't side
+effects here, they're the core mecanics. The player is placed inside the
+experience rather than shown a story about it.
+
+<a href={img1.src} target="_blank" rel="noopener noreferrer">
+  <Picture
+    src={img1}
+    alt="En todos lados al final del tiempo, videogame by Óscar A. Montiel. This image represents flowers recollected by the player. Illustration by Lilian Tendilla (@lilianilustra)"
+    formats={["webp"]}
+    decoding="async"
+    loading="lazy"
+    class="blog-image"
+  />
+</a>
+
+I built the project end to end in **Godot**: gameplay and systems in **GDScript**,
+the unstable, dreamlike look through **custom GLSL shaders**, and a fragmented
+narrative structure that withholds and scrambles information by design. Every
+technical decision serves the same intent, to keep the player slightly lost, the
+way severe memory loss feels from within.
+
+The work was made possible by a grant from the **PECDA Querétaro** state program,
+and is playable now:
 
 https://animanoir.itch.io/en-todos-lados-al-final-del-tiempo-redux
+
+<Picture
+  src={img2}
+  alt="En todos lados al final del tiempo, videogame by Óscar A. Montiel. These are the branding from Querétaro."
+  formats={["webp"]}
+  decoding="async"
+  loading="lazy"
+  class="blog-image"
+/>

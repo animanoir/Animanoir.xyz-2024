@@ -31,8 +31,6 @@ const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
     "Poet of Systems",
     "Friend",
     "Human",
-    "Ex-boyfriend",
-    "Incredibly DuMb",
     "Meta-vibe-coder",
     "Neo-Buddhist",
     "Deleuzean Zhuangzian",
@@ -57,11 +55,13 @@ const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
     "Fragrance Ontologist",
     "Eternally Lovesick",
     "Hallucinating Happiness",
-    "Recursive Self-Doubter",
     "The '&' Between Fear & Laughter",
-    "My Greatest Sin Is Believing I'm Real",
     "Fractal Evangelist",
     "Consciousness Is Latex",
+    "Creative Developer",
+    "Shader Apprentice",
+    "WebGL Tinkerer",
+    "Generative Systems Designer"
   ];
 
   const getRandomWord = (words) => {

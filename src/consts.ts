@@ -2,5 +2,6 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 
 export const SITE_TITLE = "Óscar A. Montiel";
-export const SITE_SUBTITLE = "Interactive Media Artist";
-export const SITE_DESCRIPTION = "Interactive Media Artist. Videoart, videogames, music, and interactive 3D.";
+export const SITE_SUBTITLE = "Creative Developer & Interactive Media Artist";
+export const SITE_DESCRIPTION =
+  "Creative Developer & Interactive Media Artist. Interactive 3D web (React, TypeScript, Three.js / R3F, GLSL), installations, generative sound, and games.";
