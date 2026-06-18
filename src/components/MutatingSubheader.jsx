@@ -49,7 +49,6 @@ const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
     "Professionally Astonished",
     "Broken Mirror Collector",
     "Identity Dissolvent",
-    "My Personality Is a Bug",
     "Conjurer of Realities",
     "Play > Talk",
     "Fragrance Ontologist",
