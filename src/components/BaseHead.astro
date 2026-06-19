@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css";
+import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
 
 interface Props {
   title: string;
@@ -31,6 +32,59 @@ const {
 const siteTitle =
 title === "Óscar A. Montiel" ? title : `Óscar A. Montiel ∿ ${title}`;
 const fullImageUrl = new URL(image, Astro.site);
+
+// Machine-readable identity for search engines (invisible to visitors). Emitted
+// only on the homepage so crawlers get a clean "who/what" without us having to
+// spell it out in visible copy. Person + WebSite are cross-linked via @id.
+const siteHref = Astro.site?.href ?? "https://animanoir.xyz/";
+const personId = `${siteHref}#person`;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteHref}#website`,
+      url: siteHref,
+      name: SITE_TITLE,
+      description: SITE_DESCRIPTION,
+      inLanguage: "en",
+      publisher: { "@id": personId },
+    },
+    {
+      "@type": "Person",
+      "@id": personId,
+      name: "Óscar A. Montiel",
+      alternateName: ["Animanoir", "geosmina"],
+      url: siteHref,
+      image: fullImageUrl.href,
+      jobTitle: "Creative Developer & Interactive Media Artist",
+      description: SITE_DESCRIPTION,
+      knowsAbout: [
+        "Three.js",
+        "React Three Fiber",
+        "WebGL",
+        "GLSL shaders",
+        "Creative coding",
+        "Generative art",
+        "Interactive 3D",
+        "Interactive installations",
+        "Sound art",
+        "Game development",
+        "Videoart",
+        "3D animation",
+      ],
+      sameAs: [
+        "https://github.com/animanoir",
+        "https://www.linkedin.com/in/oscaramontiel/",
+        "https://www.youtube.com/channel/UCGe1qc0nF0uNypETYDQmMMQ",
+        "https://twitter.com/geosminu",
+        "https://steamcommunity.com/id/geosmina/",
+        "https://www.are.na/tilde-colon-pipe-degrees-degrees-bullet-period-pipe-colon-tilde/channels",
+      ],
+    },
+  ],
+};
+const isHomepage = pathname === "/";
 ---
 
 <!-- Global Metadata -->
@@ -85,6 +139,17 @@ const fullImageUrl = new URL(image, Astro.site);
 <!-- Additional SEO -->
 <meta name="theme-color" content="#000000" />
 <meta name="msapplication-TileColor" content="#000000" />
+
+<!-- Structured data (JSON-LD) — homepage only -->
+{
+  isHomepage && (
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(structuredData)}
+    />
+  )
+}
 
 <script>
   import { handleAllImages } from "../scripts/imageLoader";

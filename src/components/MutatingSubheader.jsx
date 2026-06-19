@@ -67,7 +67,11 @@ const MutatingSubheader = ({ goWild, sortSpeed = 1000 }) => {
     return words[Math.floor(Math.random() * words.length)];
   };
 
-  const [description, setDescription] = useState("I don't know what I am yet");
+  // Server-rendered initial value: this is the text crawlers read inside the
+  // header <h2>, so keep it a real descriptor (it scrambles on the client).
+  const [description, setDescription] = useState(
+    "Creative Developer & Interactive Media Artist",
+  );
   const [scrollY, setScrollY] = useState(0);
 
   const updateScrollPosition = useCallback(
