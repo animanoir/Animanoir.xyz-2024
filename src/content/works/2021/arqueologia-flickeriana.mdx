@@ -1,9 +1,8 @@
 ---
 title: "Arqueología Flickeriana"
-description: "A Digital Lens Into Mexico's Daily Photographic Pulse"
-pubDate: "Nov 11 2021"
+description: "A web tool that surfaces photos uploaded on a single day across Mexico's states–a daily, unfiltered portrait of a country, built in React on the Flickr API."
 heroImage: "@/images/works/arqueologia-flickeriana/arqueologia-digital-visual-cover.jpg"
-tools: ["React"]
+tools: ["React", "Flickr API"]
 workType: ["Installations"]
 year: 2021
 ---
@@ -14,53 +13,62 @@ import img2 from "@/images/works/arqueologia-flickeriana/óscar a montiel-flickr
 import img3 from "@/images/works/arqueologia-flickeriana/óscar a montiel-flickr-3.png";
 import img4 from "@/images/works/arqueologia-flickeriana/imagen-territorio-logo.png";
 
-<h3 style="padding: 3rem;font-weight:bold;">[**Arqueología Flickeriana**](https://arqueologia-flickeriana.vercel.app/) is a tool designed to explore photographs uploaded at a specific date across various states in Mexico.</h3>
+- _Role: Solo developer — concept, interaction design, and **React** development._
+- _Stack: React, Flickr **API** (date + geolocation querying)._
+- _Context: Developed for a public open call for projects. Live tool._
+
+[**Arqueología Flickeriana**](https://arqueologia-flickeriana.vercel.app/) is a web
+tool that lets you excavate the photographs uploaded on a single chosen date across
+the different states of Mexico–a daily, collective, unfiltered portrait of a
+country, assembled from the images ordinary people happened to share that day.
 
 <Picture
   src={img4}
-  alt={
-    "Óscar A. Montiel — Arqueología Flickeriana: A Digital Lens Into Mexico's Daily Photographic Pulse "
-  }
+  alt={"Óscar A. Montiel — Arqueología Flickeriana"}
   formats={["webp"]}
   decoding="async"
   loading="lazy"
   class="blog-image"
 />
 
-
-The inspiration for this tool predates its submission to a public call for projects. I find myself captivated by the allure of photos uploaded to [**Flickr**](https://www.flickr.com/), believing them to hold a more natural and human essence, significantly more spontaneous than the overly curated and often artificial images found on mainstream social media platforms. To me, the genuine quality of these images contrasts sharply with the pretense prevalent in social media photos.
+The premise is a small bet about images. I'm drawn to photos uploaded to
+[**Flickr**](https://www.flickr.com/) because they tend to feel more human and
+spontaneous than the heavily-curated, performative images of mainstream social
+platforms. So I built a tool around that material: query the Flickr API by **date
+and location**, and **reassemble the results into a snapshot of a specific day**, state
+by state.
 
 <Picture
   src={img2}
-  alt={
-    "Óscar A. Montiel — Arqueología Flickeriana: A Digital Lens Into Mexico's Daily Photographic Pulse "
-  }
+  alt={"Óscar A. Montiel — Arqueología Flickeriana"}
   formats={["webp"]}
   decoding="async"
   loading="lazy"
   class="blog-image"
 />
 
-Moreover, I'm intrigued by the concept of simultaneity, the idea of multiple events occurring in different places at the same time. This tool provides a snapshot, not just of individual experiences, but also of the collective emotional and visual landscape across different states in Mexico. It's an exploration of space and time, a digital archaeology of sorts that uncovers the layers of everyday life as captured by ordinary people.
+The idea driving the whole build is **simultaneity**: the quiet fact of many lives
+happening at once, in different places, on the same day. The interface is designed
+to make that legible, not as individual experiences but as a collective emotional
+and visual landscape. It's a kind of digital archaeology, surfacing the layers of
+ordinary life as captured by ordinary people.
 
 <Picture
   src={img3}
-  alt={
-    "Óscar A. Montiel — Arqueología Flickeriana: A Digital Lens Into Mexico's Daily Photographic Pulse "
-  }
+  alt={"Óscar A. Montiel — Arqueología Flickeriana"}
   formats={["webp"]}
   decoding="async"
   loading="lazy"
   class="blog-image"
 />
 
-In a world increasingly defined by filtered experiences, "Arqueología Flickeriana" serves as a refreshing counterpoint, inviting us to ponder the complexities and simplicities of human existence, one photograph at a time.
+In a world increasingly defined by filtered experiences, Arqueología Flickeriana
+is a deliberate counterpoint, an invitation to sit with the complexity and the
+plainness of human existence, one photograph at a time.
 
 <Picture
   src={img1}
-  alt={
-    "Óscar A. Montiel — Arqueología Flickeriana: A Digital Lens Into Mexico's Daily Photographic Pulse "
-  }
+  alt={"Óscar A. Montiel — Arqueología Flickeriana"}
   formats={["webp"]}
   decoding="async"
   loading="lazy"
