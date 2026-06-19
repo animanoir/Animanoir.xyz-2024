@@ -29,8 +29,9 @@ const workLinks = [
   { href: "/#web-design-dev", label: "Web Design/Dev", target: "_self" },
 ];
 
+// "About" now lives on the homepage (#about section), so it's no longer a nav
+// link — the standalone /aboutMe page still exists but is unlinked.
 const personalLinks = [
-  { href: "/aboutMe", label: "About", target: "_self" },
   { href: "/blog", label: "Writing", target: "_self" },
   { href: "/photodiary", label: "Photodiary", target: "_self" },
 ];
@@ -203,7 +204,7 @@ const allLinks = [...workLinks, ...personalLinks];
   :root {
     --text-color: #1c1c1c;
     --hover-color: #ee5858;
-    --font-size: 1rem;
+    --font-size: 0.9rem;
     --margin-horizontal: 1rem;
     --margin-vertical: 1rem;
     --transition-speed: 0.3s;
@@ -214,12 +215,12 @@ const allLinks = [...workLinks, ...personalLinks];
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    font-family: "Cormorant Garamond", serif;
+    /* Same face as the Quote's subtitle line (.hero-sub) on the homepage. */
+    font-family: "Montserrat", sans-serif;
     gap: 0.75rem;
   }
 
   .nav-links {
-    font-weight: bold;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

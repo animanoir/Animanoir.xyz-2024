@@ -71,11 +71,12 @@
 }
 
 .placeholderTitle {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 1.7rem;
-  letter-spacing: 0.12rem;
-  line-height: 1.1;
-  text-transform: uppercase;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 2rem;
+  letter-spacing: 0;
+  line-height: 1.15;
   color: #f2f0eb;
 }
 
@@ -113,10 +114,11 @@
 
 .barTitle {
   margin: 0;
-  font-family: "Montserrat", sans-serif;
-  font-size: 1.4rem;
-  font-weight: 600;
-  line-height: 1.2;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1;
   color: #f2f0eb;
 }
 
@@ -128,7 +130,6 @@
 }
 
 .barDesc {
-  margin: 0.4rem 0 0;
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
   font-weight: 400;
@@ -167,8 +168,9 @@
     right: 0;
     bottom: 0;
     padding: 0.6rem 0.75rem;
-    font-family: "Montserrat", sans-serif;
-    font-size: 0.95rem;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 1.1rem;
     font-weight: 600;
     text-align: left;
     color: #f2f0eb;

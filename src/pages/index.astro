@@ -94,28 +94,40 @@ for (let i = projects.length - 1; i > 0; i--) {
   <ModifiedHeader animated />
 
   <main>
-    <!-- <div class="scroll-indicator"> -->
-    <!--   <span>Scroll</span> -->
-    <!--   <svg -->
-    <!--     xmlns="http://www.w3.org/2000/svg" -->
-    <!--     width="24" -->
-    <!--     height="24" -->
-    <!--     viewBox="0 0 24 24" -->
-    <!--     fill="none" -->
-    <!--     stroke="currentColor" -->
-    <!--     stroke-width="2" -->
-    <!--     stroke-linecap="round" -->
-    <!--     stroke-linejoin="round" -->
-    <!--     ><polyline points="6 9 12 15 18 9"></polyline></svg -->
-    <!--   > -->
-    <!-- </div> -->
-    <!-- Spacer keeps the 3D scene fully visible before the grid scrolls up. -->
-    <div class="scene-spacer"></div>
+    <!-- Hero quote (the page H1). Fills the first viewport over the 3D scene,
+         centered like the grid. pointer-events:none keeps the scene interactive. -->
+    <section class="hero-quote">
+      <h1 class="hero-quote-text">
+        <span class="hero-line">Code as ritual.</span>
+        <span class="hero-line">Play as method.</span>
+        <span class="hero-line hero-sub"
+          >Interactive 3D, generative sound, and games.</span
+        >
+      </h1>
+    </section>
     <div class="grid-scroll-wrapper">
       <div class="projectsContainer">
         <ProjectGrid client:load projects={projects} />
       </div>
     </div>
+    <!-- About — its own viewport below the works. Text only; the portrait and
+         contact links live in the Footer. -->
+    <section class="about" id="about">
+      <div class="about-inner">
+        <h2 class="about-name">Óscar A. Montiel</h2>
+        <p class="about-intro">Creative Developer & Interactive Media Artist.</p>
+        <p class="about-body">
+          I build interactive 3D experiences for the web, generative systems,
+          installations, and video games—from concept and design through to
+          production code. My stack revolves around React, TypeScript, and
+          Three.js / React Three Fiber, with GLSL, Godot, and a foundation in
+          sound art via Max/MSP and SuperCollider.
+        </p>
+        <p class="about-collab">
+          <strong>Available for studio roles, freelance, and commissions.</strong>
+        </p>
+      </div>
+    </section>
   </main>
   <Footer />
 
@@ -209,10 +221,117 @@ for (let i = projects.length - 1; i > 0; i--) {
       height: 100vh;
     }
 
-    .scene-spacer {
-      width: 100%;
-      height: 100vh;
+    /* Hero quote — fills the first viewport, centered in the content area to the
+       right of the fixed navbar (mirrors the grid's left rail). */
+    .hero-quote {
+      min-height: 100vh;
+      margin-left: var(--left-rail);
+      margin-right: var(--page-padding, 5%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
       pointer-events: none;
+    }
+
+    .hero-quote-text {
+      margin: 0;
+      max-width: 22ch;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(2.4rem, 5.5vw, 5rem);
+      line-height: 1.12;
+      color: #f2f0eb;
+      /* A little depth over the 3D scene (also aids legibility). */
+      text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.4),
+        0 8px 28px rgba(0, 0, 0, 0.35);
+      /* Entrance: fade in while rising from below — the opening beat of the
+         quote → header → navbar reveal. `both` holds the start frame through
+         the delay so there's no flash of the final position. */
+      animation: quoteFadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+    }
+
+    @keyframes quoteFadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(2rem);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Honor reduced-motion: show the quote in place, no movement. */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-quote-text {
+        animation: none;
+      }
+    }
+
+    .hero-line {
+      display: block;
+    }
+
+    /* The keyword line — quieter, in the site's display face for contrast. */
+    .hero-sub {
+      font-family: "Bebas Neue", sans-serif;
+      font-style: normal;
+      font-size: 0.34em;
+      letter-spacing: 0.12em;
+      line-height: 1.4;
+      opacity: 0.7;
+      margin-top: 1.4rem;
+    }
+
+    /* About — its own viewport, elegant and legible, over the dark scene. */
+    .about {
+      min-height: 100vh;
+      margin-left: var(--left-rail);
+      margin-right: var(--page-padding, 5%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+    }
+
+    .about-inner {
+      max-width: 620px;
+      text-align: center;
+      color: #f2f0eb;
+    }
+
+    .about-name {
+      color: #f2f0eb;
+      font-family: "Bebas Neue", sans-serif;
+      font-weight: 400;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.04em;
+      margin: 0 0 0.4rem;
+    }
+
+    .about-intro {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+      opacity: 0.85;
+      margin: 0 0 1.75rem;
+    }
+
+    .about-body {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+      line-height: 1.65;
+      opacity: 0.92;
+      margin: 0 0 1.75rem;
+    }
+
+    .about-collab {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+      margin: 0;
     }
 
     main {
@@ -282,6 +401,13 @@ for (let i = projects.length - 1; i > 0; i--) {
       .grid-scroll-wrapper {
         margin-left: 0;
         margin-right: 0;
+      }
+
+      .hero-quote,
+      .about {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0 1.5rem;
       }
 
       .projectsContainer {

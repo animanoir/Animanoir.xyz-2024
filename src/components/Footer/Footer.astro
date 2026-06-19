@@ -1,6 +1,7 @@
 ---
 const today = new Date();
 import { Image } from "astro:assets";
+import portrait from "@/images/about/oam-optim.webm";
 import youtubeSvg from "./icons/youtube.svg";
 import linkedinSvg from "./icons/linkedin.svg";
 import arenaLogo from "./icons/arena-logo-white.png";
@@ -31,6 +32,15 @@ const socialLinks = [
 ];
 ---
 <footer>
+  <video
+    class="footer-portrait"
+    src={portrait}
+    autoplay
+    loop
+    muted
+    playsinline
+    width={360}
+    height={360}></video>
   <div class="social-icons">
     {
       socialLinks.map((social) => (
@@ -61,6 +71,13 @@ const socialLinks = [
   </div>
 </footer>
 <style>
+  .footer-portrait {
+    display: block;
+    width: 360px;
+    max-width: 55vw;
+    height: auto;
+    margin-bottom: 2rem;
+  }
   .email-link {
     color: inherit;
     text-decoration: none;

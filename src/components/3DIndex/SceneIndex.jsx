@@ -185,7 +185,16 @@ export const SceneIndex = () => {
         }}
       />
       <div style={fadeOverlayStyle} />
-      <Loader containerStyles={{ backgroundColor: "#0a0a0a" }} />
+      <Loader
+        containerStyles={{
+          backgroundColor: "#0a0a0a",
+          // Lift the progress bar up to the header's height so it doesn't sit
+          // behind the centered hero quote (which looked cramped).
+          alignItems: "flex-start",
+          paddingTop: "2.5rem",
+          boxSizing: "border-box",
+        }}
+      />
     </div>
   );
 };
