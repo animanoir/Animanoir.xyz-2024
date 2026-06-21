@@ -36,6 +36,18 @@ const personalLinks = [
   { href: "/photodiary", label: "Photodiary", target: "_self" },
 ];
 
+// Downloadable CVs — one per role I take on. PDFs live in `public/cv/`, so the
+// hrefs resolve at the site root. Open in a new tab so the visitor keeps the
+// site. Replace these placeholders once the real files are dropped in.
+const cvLinks = [
+  { href: "https://docs.google.com/document/d/1_z6qVB2aFGpwAh-6SqUoq90lp_4uPvhhT6OXUG-MEqQ/edit?tab=t.0", label: "Frontend" },
+  { href: "https://docs.google.com/document/d/13DbRDxHjGEKgoU2BNz3qVA6YtubAVguMu0b32RIIUZ0/edit?tab=t.0", label: "Creative Developer" },
+];
+
+// Continue the alternating reveal cadence past both link groups so the CV item
+// slides in as the final navbar element.
+const cvRevealIndex = workLinks.length + personalLinks.length;
+
 // Combined for mobile menu
 const allLinks = [...workLinks, ...personalLinks];
 ---
@@ -107,6 +119,55 @@ const allLinks = [...workLinks, ...personalLinks];
         })
       }
     </div>
+    <!-- C.V. Dropdown — last item so the hover menu drops down unobstructed -->
+    <div class="link-group cv-group">
+      {
+        animated ? (
+          <motion.div
+            client:load
+            initial={{ opacity: 0, x: cvRevealIndex % 2 === 0 ? REVEAL_OFFSET : -REVEAL_OFFSET }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: 0.6,
+              delay: REVEAL_BASE_DELAY + cvRevealIndex * REVEAL_STEP,
+              ease: "easeOut",
+            }}
+          >
+            <div class="nav-item cv-dropdown">
+              <button type="button" class="cv-trigger" aria-haspopup="true" aria-expanded="false">
+                C.V.
+                <span class="cv-caret" aria-hidden="true">▾</span>
+              </button>
+              <ul class="cv-menu" role="menu">
+                {cvLinks.map((cv) => (
+                  <li role="none">
+                    <a role="menuitem" href={cv.href} target="_blank" rel="noopener noreferrer">
+                      {cv.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        ) : (
+          <div class="nav-item cv-dropdown">
+            <button type="button" class="cv-trigger" aria-haspopup="true" aria-expanded="false">
+              C.V.
+              <span class="cv-caret" aria-hidden="true">▾</span>
+            </button>
+            <ul class="cv-menu" role="menu">
+              {cvLinks.map((cv) => (
+                <li role="none">
+                  <a role="menuitem" href={cv.href} target="_blank" rel="noopener noreferrer">
+                    {cv.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </div>
   </div>
   <button class="mobile-menu-button" aria-label="Toggle mobile menu">
     <span class="hamburger-line"></span>
@@ -146,6 +207,21 @@ const allLinks = [...workLinks, ...personalLinks];
           <HeaderLink href={link.href} target={link.target}>
             {link.label}
           </HeaderLink>
+        ))
+      }
+
+      <!-- Mobile Separator -->
+      <div class="mobile-separator">
+        <span class="mobile-separator-line"></span>
+      </div>
+
+      <!-- C.V. Links (flat on mobile — no hover affordance on touch) -->
+      <span class="mobile-cv-label">C.V.</span>
+      {
+        cvLinks.map((cv) => (
+          <a class="mobile-cv-link" href={cv.href} target="_blank" rel="noopener noreferrer">
+            {cv.label}
+          </a>
         ))
       }
     </div>
@@ -193,11 +269,45 @@ const allLinks = [...workLinks, ...personalLinks];
     }
   }
 
+  // CSS handles the hover-open for mouse users; this wires click + keyboard
+  // (Enter/Space toggles, Escape closes, outside-click closes) for everyone else.
+  function initializeCvDropdown() {
+    const dropdown = document.querySelector(".cv-dropdown");
+    const trigger = dropdown?.querySelector(".cv-trigger");
+    if (!dropdown || !(trigger instanceof HTMLButtonElement)) return;
+
+    // Avoid stacking listeners across Astro page transitions.
+    const freshTrigger = trigger.cloneNode(true);
+    if (!(freshTrigger instanceof HTMLButtonElement)) return;
+    trigger.parentNode?.replaceChild(freshTrigger, trigger);
+
+    const close = () => {
+      dropdown.classList.remove("open");
+      freshTrigger.setAttribute("aria-expanded", "false");
+    };
+
+    freshTrigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = dropdown.classList.toggle("open");
+      freshTrigger.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!dropdown.contains(e.target as Node)) close();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
+    });
+  }
+
   // Initialize on page load
   document.addEventListener("DOMContentLoaded", initializeMobileMenu);
+  document.addEventListener("DOMContentLoaded", initializeCvDropdown);
 
   // Reinitialize after Astro page transitions
   document.addEventListener("astro:page-load", initializeMobileMenu);
+  document.addEventListener("astro:page-load", initializeCvDropdown);
 </script>
 
 <style>
@@ -341,6 +451,108 @@ const allLinks = [...workLinks, ...personalLinks];
 
   .nav-item:last-child {
     margin-right: 0;
+  }
+
+  /* ---- C.V. Dropdown (desktop) ---- */
+  .cv-group {
+    /* Slight breathing room so the CV trigger reads as its own affordance. */
+    margin-top: 0.75rem;
+  }
+
+  .cv-dropdown {
+    position: relative;
+  }
+
+  .cv-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: var(--font-size);
+    line-height: 1;
+  }
+
+  .cv-trigger:hover {
+    color: var(--hover-color);
+  }
+
+  .cv-caret {
+    font-size: 0.7em;
+    transition: transform var(--transition-speed) ease;
+  }
+
+  .cv-dropdown:hover .cv-caret,
+  .cv-dropdown.open .cv-caret {
+    transform: rotate(180deg);
+  }
+
+  .cv-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem 0;
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    left: 0;
+    min-width: 11rem;
+    background-color: var(--bg-color);
+    border: 1px solid rgba(28, 28, 28, 0.12);
+    box-shadow: 0 8px 24px rgba(28, 28, 28, 0.12);
+    /* Hidden until hover / focus / click-open. opacity+visibility keeps it
+       animatable and out of the tab order while closed. */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition:
+      opacity var(--transition-speed) ease,
+      transform var(--transition-speed) ease,
+      visibility var(--transition-speed) ease;
+    z-index: 1000;
+  }
+
+  .cv-dropdown:hover .cv-menu,
+  .cv-dropdown:focus-within .cv-menu,
+  .cv-dropdown.open .cv-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .cv-menu a {
+    display: block;
+    padding: 0.4rem 1rem;
+    color: var(--text-color);
+    font-size: var(--font-size);
+    white-space: nowrap;
+    transition: color var(--transition-speed) ease;
+  }
+
+  .cv-menu a:hover {
+    color: var(--hover-color);
+  }
+
+  /* ---- C.V. Links (mobile) ---- */
+  .mobile-cv-label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+  }
+
+  .mobile-cv-link {
+    font-size: 1.25rem;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: color var(--transition-speed);
+  }
+
+  .mobile-cv-link:hover {
+    color: var(--hover-color);
   }
 
   /* Mobile Menu Button */
