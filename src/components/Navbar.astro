@@ -40,7 +40,7 @@ const personalLinks = [
 // hrefs resolve at the site root. Open in a new tab so the visitor keeps the
 // site. Replace these placeholders once the real files are dropped in.
 const cvLinks = [
-  { href: "https://docs.google.com/document/d/1_z6qVB2aFGpwAh-6SqUoq90lp_4uPvhhT6OXUG-MEqQ/edit?tab=t.0", label: "Frontend" },
+  { href: "https://docs.google.com/document/d/1_z6qVB2aFGpwAh-6SqUoq90lp_4uPvhhT6OXUG-MEqQ/edit?tab=t.0", label: "Fullstack Web Developer" },
   { href: "https://docs.google.com/document/d/13DbRDxHjGEKgoU2BNz3qVA6YtubAVguMu0b32RIIUZ0/edit?tab=t.0", label: "Creative Developer" },
 ];
 
@@ -500,9 +500,13 @@ const allLinks = [...workLinks, ...personalLinks];
     top: calc(100% + 0.4rem);
     left: 0;
     min-width: 11rem;
-    background-color: var(--bg-color);
-    border: 1px solid rgba(28, 28, 28, 0.12);
-    box-shadow: 0 8px 24px rgba(28, 28, 28, 0.12);
+    /* The dropdown is locked to a dark surface regardless of the page's dynamic
+       navbar color (some pages flip the links to off-white via `:global(.navbar a)
+       !important`, which also hits the items here). A fixed dark panel + light
+       text keeps the menu readable on both light and dark backgrounds. */
+    background-color: black;
+    border: 1px solid rgba(242, 240, 235, 0.14);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
     /* Hidden until hover / focus / click-open. opacity+visibility keeps it
        animatable and out of the tab order while closed. */
     opacity: 0;
@@ -526,7 +530,9 @@ const allLinks = [...workLinks, ...personalLinks];
   .cv-menu a {
     display: block;
     padding: 0.4rem 1rem;
-    color: var(--text-color);
+    /* Off-white, fixed — matches the site's "white" and the value the dark-page
+       override already forces, so the menu text reads the same everywhere. */
+    color: #f2f0eb;
     font-size: var(--font-size);
     white-space: nowrap;
     transition: color var(--transition-speed) ease;
