@@ -107,6 +107,20 @@ const socialLinks = [
     width: auto;
     filter: brightness(0) invert(1);
   }
+  /* Soft transition into the black footer: a transparent → black gradient that
+     sits directly above it (over whatever content precedes the footer) so the
+     top edge doesn't read as a hard cut — same pattern as the homepage
+     `.about::after` (index.astro). */
+  footer::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    width: 100%;
+    height: 15vh;
+    background: linear-gradient(to bottom, transparent 0%, #000 100%);
+    pointer-events: none;
+  }
   footer {
     width: 100vw;
     min-height: 100vh;

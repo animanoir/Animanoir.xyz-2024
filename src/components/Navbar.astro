@@ -301,14 +301,119 @@ const allLinks = [...workLinks, ...personalLinks];
     });
   }
 
+  // The footer is always black, but most pages have a light background — so the
+  // fixed header/navbar/LastFm text must flip to white while the footer covers
+  // the viewport. An IntersectionObserver watches the footer and toggles
+  // `footer-in-view` on <body>; the global styles below do the color flip.
+  let footerObserver: IntersectionObserver | null = null;
+
+  function initializeFooterColorFlip() {
+    // Drop the previous page's observer (Astro page transitions).
+    footerObserver?.disconnect();
+    document.body.classList.remove("footer-in-view");
+
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+
+    footerObserver = new IntersectionObserver(
+      ([entry]) => {
+        document.body.classList.toggle("footer-in-view", entry.isIntersecting);
+      },
+      // Shrink the observation root to the top half of the viewport — where the
+      // fixed header and navbar live. The flip then happens exactly when the
+      // footer's black background slides up underneath them, not as soon as the
+      // footer merely peeks in at the bottom.
+      { rootMargin: "0px 0px -50% 0px" },
+    );
+    footerObserver.observe(footer);
+  }
+
   // Initialize on page load
   document.addEventListener("DOMContentLoaded", initializeMobileMenu);
   document.addEventListener("DOMContentLoaded", initializeCvDropdown);
+  document.addEventListener("DOMContentLoaded", initializeFooterColorFlip);
 
   // Reinitialize after Astro page transitions
   document.addEventListener("astro:page-load", initializeMobileMenu);
   document.addEventListener("astro:page-load", initializeCvDropdown);
+  document.addEventListener("astro:page-load", initializeFooterColorFlip);
 </script>
+
+<!-- Global (unscoped): flips the fixed header / navbar / LastFm to white while
+     the black footer covers the viewport (body.footer-in-view, toggled by the
+     IntersectionObserver above). Global because it must reach elements outside
+     the Navbar — the header title and the LastFm island. `!important` mirrors
+     the per-page dark-background overrides (e.g. index.astro) so the flip wins
+     everywhere; on pages already forcing white it's a visual no-op. -->
+<style is:global>
+  /* Smooth the flip in both directions. */
+  #headerTitle,
+  #headerSubtitle,
+  .navbar a,
+  .cv-trigger,
+  .mobile-nav-links a,
+  .lastfmContainer,
+  .songInfo,
+  .lastFmDash {
+    transition: color 0.4s ease;
+  }
+
+  body.footer-in-view #headerTitle,
+  body.footer-in-view #headerSubtitle,
+  body.footer-in-view header h2 {
+    color: #f2f0eb !important;
+  }
+  body.footer-in-view header a:hover #headerTitle,
+  body.footer-in-view header a:hover #headerSubtitle {
+    color: #ee5858 !important;
+  }
+  body.footer-in-view .navbar a,
+  body.footer-in-view .cv-trigger,
+  body.footer-in-view .mobile-nav-links a,
+  body.footer-in-view .mobile-cv-label,
+  body.footer-in-view .mobile-cv-link {
+    color: #f2f0eb !important;
+  }
+  body.footer-in-view .navbar a:hover,
+  body.footer-in-view .cv-trigger:hover,
+  body.footer-in-view .mobile-nav-links a:hover,
+  body.footer-in-view .mobile-cv-link:hover {
+    color: #ee5858 !important;
+  }
+  body.footer-in-view .hamburger-line {
+    background-color: #f2f0eb !important;
+  }
+  body.footer-in-view .separator-line,
+  body.footer-in-view .mobile-separator-line {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(242, 240, 235, 0.4) 20%,
+      rgba(242, 240, 235, 0.7) 50%,
+      rgba(242, 240, 235, 0.4) 80%,
+      transparent 100%
+    ) !important;
+  }
+  body.footer-in-view .mobile-separator-line::before {
+    background: rgba(242, 240, 235, 0.9) !important;
+    box-shadow: 0 0 12px rgba(242, 240, 235, 0.6) !important;
+  }
+  body.footer-in-view .ornaments .circle {
+    background-color: #f2f0eb !important;
+  }
+  body.footer-in-view .lastfmContainer {
+    color: rgba(255, 255, 255, 0.4) !important;
+  }
+  body.footer-in-view .songInfo {
+    color: #f2f0ebd9 !important;
+  }
+  body.footer-in-view .lastFmDash {
+    color: rgba(255, 255, 255, 0.4) !important;
+  }
+  body.footer-in-view .lastFmLink {
+    text-decoration-color: #f2f0eb75 !important;
+  }
+</style>
 
 <style>
   :root {
