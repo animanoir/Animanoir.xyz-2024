@@ -188,10 +188,10 @@ export const SceneIndex = () => {
       <Loader
         containerStyles={{
           backgroundColor: "#0a0a0a",
-          // Lift the progress bar up to the header's height so it doesn't sit
-          // behind the centered hero quote (which looked cramped).
-          alignItems: "flex-start",
-          paddingTop: "2.5rem",
+          // Drop the progress bar to the bottom of the viewport so it doesn't
+          // sit behind the centered hero quote.
+          alignItems: "flex-end",
+          paddingBottom: "2.5rem",
           boxSizing: "border-box",
         }}
       />

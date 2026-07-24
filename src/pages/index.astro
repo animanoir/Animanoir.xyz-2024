@@ -81,344 +81,468 @@ for (let i = projects.length - 1; i > 0; i--) {
 ---
 
 <html lang="en">
-<head>
-  <BaseHead
-    title="Creative Developer & Interactive Media Artist"
-    description={"Óscar A. Montiel — creative developer & interactive media artist building interactive 3D for the web (Three.js / WebGL), installations, generative sound, games, and videoart."}
-  />
-</head>
-<body style="background-color: #0a0a0a;">
-  <div class="scene-background">
-    <SceneIndex client:only="react" />
-  </div>
-  <ModifiedHeader animated />
-
-  <main>
-    <!-- Hero quote (the page H1). Fills the first viewport over the 3D scene,
-         centered like the grid. pointer-events:none keeps the scene interactive. -->
-    <section class="hero-quote">
-      <h1 class="hero-quote-text">
-        <span class="hero-line">Machinic instruments.</span>
-        <span class="hero-line">Play as method.</span>
-        <span class="hero-line hero-sub"
-          >Interactive 3D, generative sound & games.</span
-        >
-      </h1>
-    </section>
-    <div class="grid-scroll-wrapper">
-      <div class="projectsContainer">
-        <ProjectGrid client:load projects={projects} />
-      </div>
+  <head>
+    <BaseHead
+      title="Creative Software Developer & Interactive Media Artist"
+      description={"Óscar A. Montiel — creative developer & interactive media artist building interactive 3D for the web (Three.js / WebGL), installations, generative sound, games, and videoart."}
+    />
+  </head>
+  <body style="background-color: #0a0a0a;">
+    <div class="scene-background">
+      <SceneIndex client:only="react" />
     </div>
-    <!-- About — its own viewport below the works. Text only; the portrait and
-         contact links live in the Footer. -->
-    <section class="about" id="about">
-      <div class="about-inner">
-        <h2 class="about-name">Óscar A. Montiel</h2>
-        <p class="about-intro">Creative Developer & Interactive Media Artist.</p>
-        <p class="about-body">
-          I build interactive 3D experiences for the web, generative systems,
-          installations, and video games—from concept and design through to
-          production code. My stack revolves around React, TypeScript, and
-          Three.js / React Three Fiber, with GLSL, Godot, and a foundation in
-          sound art via Max/MSP and SuperCollider.
-        </p>
-        <p class="about-collab">
-          <strong>Available for studio roles, freelance, and commissions.</strong>
-        </p>
+    <ModifiedHeader animated />
+
+    <main>
+      <!-- Hero quote (the page H1). Fills the first viewport over the 3D scene,
+         centered like the grid. pointer-events:none keeps the scene interactive. -->
+      <section class="hero-quote">
+        <h1 class="hero-quote-text">
+          <span class="hero-line">Machinic instruments.</span>
+          <span class="hero-line">Play as method.</span>
+          <span class="hero-line hero-sub"
+            >Interactive 3D, generative sound & games.</span
+          >
+        </h1>
+      </section>
+      <div class="grid-scroll-wrapper">
+        <div class="projectsContainer">
+          <ProjectGrid client:load projects={projects} />
+        </div>
       </div>
-    </section>
-  </main>
-  <Footer />
+      <!-- About — its own viewport below the works. Text only; the portrait and
+         contact links live in the Footer. -->
+      <section class="about" id="about">
+        <div class="about-inner">
+          <p class="about-intro">
+            Creative Software Developer & Interactive Media Artist.
+          </p>
+          <p class="about-body">
+            I build interactive 3D experiences for the web, generative systems,
+            installations, and video games—from concept and design through to
+            production code. My stack revolves around React, TypeScript, and
+            Three.js / React Three Fiber, with GLSL, Godot, and a foundation in
+            sound art via Max/MSP and SuperCollider.
+          </p>
+          <p class="about-collab">
+            <strong
+              >Available for studio roles, freelance, and commissions.</strong
+            >
+          </p>
+        </div>
+      </section>
+    </main>
+    <Footer />
 
-  <style>
-    :global(body) {
-      background-color: #0a0a0a !important;
-    }
-    /* Override dark text back to smoky white for components over the 3D scene */
-    :global(header #headerTitle),
-    :global(header #headerSubtitle),
-    :global(header h1),
-    :global(header h2) {
-      color: #f2f0eb !important;
-    }
-    :global(header a:hover #headerTitle),
-    :global(header a:hover #headerSubtitle) {
-      color: #ee5858 !important;
-    }
-    :global(.navbar a),
-    :global(.navbar .cv-trigger),
-    :global(.mobile-nav-links a) {
-      color: #f2f0eb !important;
-    }
-    :global(.navbar a:hover),
-    :global(.navbar .cv-trigger:hover),
-    :global(.mobile-nav-links a:hover) {
-      color: #ee5858 !important;
-    }
-    :global(.hamburger-line) {
-      background-color: #f2f0eb !important;
-    }
-    :global(.mobile-menu) {
-      background-color: rgba(6, 6, 6, 0.95) !important;
-    }
-    :global(.ornaments .circle) {
-      background-color: #f2f0eb !important;
-    }
-    :global(.lastfmContainer) {
-      color: rgba(255, 255, 255, 0.224) !important;
-    }
-    :global(.songInfo) {
-      color: #f2f0eb8f !important;
-    }
-    :global(.lastFmDash) {
-      color: rgba(255, 255, 255, 0.224) !important;
-    }
-    :global(.lastFmLink) {
-      text-decoration-color: #f2f0eb75 !important;
-    }
-    :global(.social-icon) {
-      filter: none !important;
-    }
-    :global(footer) {
-      color: #f2f0eb !important;
-    }
-    :global(.separator-line) {
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(242, 240, 235, 0.4) 20%,
-        rgba(242, 240, 235, 0.7) 50%,
-        rgba(242, 240, 235, 0.4) 80%,
-        transparent 100%
-      ) !important;
-    }
-    :global(.mobile-separator-line) {
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(242, 240, 235, 0.4) 20%,
-        rgba(242, 240, 235, 0.7) 50%,
-        rgba(242, 240, 235, 0.4) 80%,
-        transparent 100%
-      ) !important;
-    }
-    :global(.mobile-separator-line)::before {
-      background: rgba(242, 240, 235, 0.9) !important;
-      box-shadow: 0 0 12px rgba(242, 240, 235, 0.6) !important;
-    }
+    <style>
+      :global(body) {
+        background-color: #0a0a0a !important;
+      }
+      /* Override dark text back to smoky white for components over the 3D scene */
+      :global(header #headerTitle),
+      :global(header #headerSubtitle),
+      :global(header h1),
+      :global(header h2) {
+        color: #f2f0eb !important;
+      }
+      :global(header a:hover #headerTitle),
+      :global(header a:hover #headerSubtitle) {
+        color: #ee5858 !important;
+      }
+      :global(.navbar a),
+      :global(.navbar .cv-trigger),
+      :global(.mobile-nav-links a) {
+        color: #f2f0eb !important;
+      }
+      :global(.navbar a:hover),
+      :global(.navbar .cv-trigger:hover),
+      :global(.mobile-nav-links a:hover) {
+        color: #ee5858 !important;
+      }
+      :global(.hamburger-line) {
+        background-color: #f2f0eb !important;
+      }
+      :global(.mobile-menu) {
+        background-color: rgba(6, 6, 6, 0.95) !important;
+      }
+      :global(.ornaments .circle) {
+        background-color: #f2f0eb !important;
+      }
+      :global(.lastfmContainer) {
+        color: rgba(255, 255, 255, 0.224) !important;
+      }
+      :global(.songInfo) {
+        color: #f2f0eb8f !important;
+      }
+      :global(.lastFmDash) {
+        color: rgba(255, 255, 255, 0.224) !important;
+      }
+      :global(.lastFmLink) {
+        text-decoration-color: #f2f0eb75 !important;
+      }
+      :global(.social-icon) {
+        filter: none !important;
+      }
+      :global(footer) {
+        color: #f2f0eb !important;
+      }
+      :global(.separator-line) {
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(242, 240, 235, 0.4) 20%,
+          rgba(242, 240, 235, 0.7) 50%,
+          rgba(242, 240, 235, 0.4) 80%,
+          transparent 100%
+        ) !important;
+      }
+      :global(.mobile-separator-line) {
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(242, 240, 235, 0.4) 20%,
+          rgba(242, 240, 235, 0.7) 50%,
+          rgba(242, 240, 235, 0.4) 80%,
+          transparent 100%
+        ) !important;
+      }
+      :global(.mobile-separator-line)::before {
+        background: rgba(242, 240, 235, 0.9) !important;
+        box-shadow: 0 0 12px rgba(242, 240, 235, 0.6) !important;
+      }
 
-    .scene-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-    }
+      .scene-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+      }
 
-    .scene-background :global(#fiberCanvas) {
-      position: fixed;
-      width: 100vw;
-      height: 100vh;
-    }
+      .scene-background :global(#fiberCanvas) {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+      }
 
-    /* Hero quote — fills the first viewport, centered in the content area to the
+      /* Hero quote — fills the first viewport, centered in the content area to the
        right of the fixed navbar (mirrors the grid's left rail). */
-    .hero-quote {
-      min-height: 100vh;
-      margin-left: var(--left-rail);
-      margin-right: var(--page-padding, 5%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      pointer-events: none;
-    }
+      .hero-quote {
+        min-height: 100vh;
+        margin-left: var(--left-rail);
+        margin-right: var(--page-padding, 5%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        pointer-events: none;
+      }
 
-    .hero-quote-text {
-      margin: 0;
-      max-width: 22ch;
-      font-family: "Cormorant Garamond", serif;
-      font-style: italic;
-      font-weight: 500;
-      font-size: clamp(2.4rem, 5.5vw, 5rem);
-      line-height: 1.12;
-      color: #f2f0eb;
-      /* A little depth over the 3D scene (also aids legibility). */
-      text-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.4),
-        0 8px 28px rgba(0, 0, 0, 0.35);
-      /* Entrance: fade in while rising from below — the opening beat of the
+      .hero-quote-text {
+        margin: 0;
+        max-width: 22ch;
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-weight: 500;
+        font-size: clamp(2.4rem, 5.5vw, 5rem);
+        line-height: 1.12;
+        color: #f2f0eb;
+        /* Depth + legibility over the 3D scene: a tight dark halo close to the
+         glyphs guarantees contrast against bright/busy areas, layered over a
+         soft wide glow for depth. */
+        text-shadow:
+          0 0 8px rgba(0, 0, 0, 0.7),
+          0 2px 6px rgba(0, 0, 0, 0.6),
+          0 8px 28px rgba(0, 0, 0, 0.45);
+        /* Entrance: fade in while rising from below — the opening beat of the
          quote → header → navbar reveal. `both` holds the start frame through
          the delay so there's no flash of the final position. */
-      animation: quoteFadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
-    }
+        animation: quoteFadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+      }
 
-    @keyframes quoteFadeInUp {
-      from {
+      @keyframes quoteFadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(2rem);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Honor reduced-motion: show the quote in place, no movement. */
+      @media (prefers-reduced-motion: reduce) {
+        .hero-quote-text {
+          animation: none;
+        }
+      }
+
+      .hero-line {
+        display: block;
+      }
+
+      /* The keyword line — quieter, in the site's display face for contrast. */
+      .hero-sub {
+        font-family: "Bebas Neue", sans-serif;
+        font-style: normal;
+        font-size: 0.34em;
+        letter-spacing: 0.12em;
+        line-height: 1.4;
+        opacity: 0.7;
+        margin-top: 1.4rem;
+      }
+
+      /* About — its own viewport, elegant and legible. A solid black background
+       spans the full width of the viewport (breaking out of the left/right
+       rail margins) so it fully covers the 3D scene behind it. */
+      .about {
+        position: relative;
+        min-height: 100vh;
+        margin-left: var(--left-rail);
+        margin-right: var(--page-padding, 5%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: auto;
+      }
+
+      /* Full-bleed black backdrop: pin to the viewport's full width regardless of
+       the section's own margins (works on desktop and mobile alike) so it fully
+       covers the 3D scene behind it. */
+      .about::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        /* Cancel the section's left-rail margin so the backdrop starts at the
+         viewport's left edge, then span the full viewport width. */
+        left: calc(-1 * var(--left-rail));
+        width: 100vw;
+        background-color: #000;
+        z-index: -1;
+      }
+
+      /* Soft transition into the black: a transparent → black gradient that sits
+       directly above the section (over the grid/scene) so the top edge doesn't
+       read as a hard cut. Full viewport width, same layer as the backdrop. */
+      .about::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: calc(-1 * var(--left-rail));
+        width: 100vw;
+        height: 40vh;
+        background: linear-gradient(to bottom, transparent 0%, #000 100%);
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .about-inner {
+        max-width: 620px;
+        text-align: center;
+        color: #f2f0eb;
+      }
+
+      /* Entrance for the about text: each paragraph fades in while rising from
+       below. Held hidden until the section scrolls into view (see the
+       IntersectionObserver below), which toggles `.is-visible`. A small
+       per-paragraph delay staggers the reveal. */
+      .about-inner > * {
         opacity: 0;
         transform: translateY(2rem);
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
 
-    /* Honor reduced-motion: show the quote in place, no movement. */
-    @media (prefers-reduced-motion: reduce) {
-      .hero-quote-text {
-        animation: none;
-      }
-    }
-
-    .hero-line {
-      display: block;
-    }
-
-    /* The keyword line — quieter, in the site's display face for contrast. */
-    .hero-sub {
-      font-family: "Bebas Neue", sans-serif;
-      font-style: normal;
-      font-size: 0.34em;
-      letter-spacing: 0.12em;
-      line-height: 1.4;
-      opacity: 0.7;
-      margin-top: 1.4rem;
-    }
-
-    /* About — its own viewport, elegant and legible, over the dark scene. */
-    .about {
-      min-height: 100vh;
-      margin-left: var(--left-rail);
-      margin-right: var(--page-padding, 5%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: auto;
-    }
-
-    .about-inner {
-      max-width: 620px;
-      text-align: center;
-      color: #f2f0eb;
-    }
-
-    .about-name {
-      color: #f2f0eb;
-      font-family: "Bebas Neue", sans-serif;
-      font-weight: 400;
-      font-size: clamp(2rem, 4vw, 3rem);
-      letter-spacing: 0.04em;
-      margin: 0 0 0.4rem;
-    }
-
-    .about-intro {
-      font-family: "Cormorant Garamond", serif;
-      font-style: italic;
-      font-size: clamp(1.2rem, 2.2vw, 1.6rem);
-      opacity: 0.85;
-      margin: 0 0 1.75rem;
-    }
-
-    .about-body {
-      font-family: "Cormorant Garamond", serif;
-      font-size: clamp(1.15rem, 1.7vw, 1.5rem);
-      line-height: 1.65;
-      opacity: 0.92;
-      margin: 0 0 1.75rem;
-    }
-
-    .about-collab {
-      font-family: "Cormorant Garamond", serif;
-      font-size: clamp(1.15rem, 1.8vw, 1.5rem);
-      margin: 0;
-    }
-
-    main {
-      position: relative;
-      z-index: 1;
-      overflow-x: hidden;
-      pointer-events: none;
-    }
-
-    /* Reserve a fixed-width block on the left for the fixed header + navbar
-       (see --left-rail in global.css) and let the grid fill everything to the
-       right of it — no per-page margin guessing. */
-    .grid-scroll-wrapper {
-      margin-left: var(--left-rail);
-      margin-right: var(--page-padding, 5%);
-    }
-
-    .projectsContainer {
-      pointer-events: auto;
-      position: relative;
-      padding: 0 0 20vh;
-      z-index: 10;
-    }
-
-    .scroll-indicator {
-      display: none;
-    }
-
-    /* Mobile and tablet styles */
-    @media (max-width: 760px) {
-      .scroll-indicator {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        color: #1c1c1c;
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 1.2rem;
-        opacity: 0.7;
-        margin-bottom: 5rem;
-        margin-top: -15vh;
-        animation: bounce 2s infinite;
+      .about-inner.is-visible > * {
+        animation: aboutFadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
       }
 
-      @keyframes bounce {
-        0%,
-        20%,
-        50%,
-        80%,
-        100% {
+      .about-inner.is-visible > *:nth-child(1) {
+        animation-delay: 0.05s;
+      }
+      .about-inner.is-visible > *:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .about-inner.is-visible > *:nth-child(3) {
+        animation-delay: 0.35s;
+      }
+
+      @keyframes aboutFadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(2rem);
+        }
+        to {
+          opacity: 1;
           transform: translateY(0);
         }
-        40% {
-          transform: translateY(-10px);
+      }
+
+      /* Honor reduced-motion: reveal the text in place, no movement. */
+      @media (prefers-reduced-motion: reduce) {
+        .about-inner > * {
+          opacity: 1;
+          transform: none;
+          animation: none;
         }
-        60% {
-          transform: translateY(-5px);
-        }
+      }
+
+      .about-name {
+        color: #f2f0eb;
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-size: clamp(2rem, 4vw, 3rem);
+        letter-spacing: 0.04em;
+        margin: 0 0 0.4rem;
+      }
+
+      .about-intro {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-weight: bold;
+        font-size: clamp(1.44rem, 2.64vw, 1.92rem);
+        opacity: 0.85;
+        margin: 0 0 1.75rem;
+      }
+
+      .about-body {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+        line-height: 1.65;
+        opacity: 0.92;
+        margin: 0 0 1.75rem;
+      }
+
+      .about-collab {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+        margin: 0;
       }
 
       main {
-        width: 100%;
-        margin-top: 40%;
+        position: relative;
+        z-index: 1;
+        overflow-x: hidden;
+        pointer-events: none;
       }
 
-      /* The navbar collapses to a hamburger on mobile, so drop the left rail
-         and let the grid go full-width. */
+      /* Reserve a fixed-width block on the left for the fixed header + navbar
+       (see --left-rail in global.css) and let the grid fill everything to the
+       right of it — no per-page margin guessing. */
       .grid-scroll-wrapper {
-        margin-left: 0;
-        margin-right: 0;
-      }
-
-      .hero-quote,
-      .about {
-        margin-left: 0;
-        margin-right: 0;
-        padding: 0 1.5rem;
+        margin-left: var(--left-rail);
+        margin-right: var(--page-padding, 5%);
       }
 
       .projectsContainer {
-        max-width: 100%;
-        margin: 0 auto;
-        padding: 0 20px 20vh;
-        overflow-x: hidden;
+        pointer-events: auto;
+        position: relative;
+        padding: 0 0 20vh;
+        z-index: 10;
       }
-    }
-  </style>
-</body>
+
+      .scroll-indicator {
+        display: none;
+      }
+
+      /* Mobile and tablet styles */
+      @media (max-width: 760px) {
+        .scroll-indicator {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          color: #1c1c1c;
+          font-family: "Bebas Neue", sans-serif;
+          font-size: 1.2rem;
+          opacity: 0.7;
+          margin-bottom: 5rem;
+          margin-top: -15vh;
+          animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+          0%,
+          20%,
+          50%,
+          80%,
+          100% {
+            transform: translateY(0);
+          }
+          40% {
+            transform: translateY(-10px);
+          }
+          60% {
+            transform: translateY(-5px);
+          }
+        }
+
+        main {
+          width: 100%;
+          margin-top: 40%;
+        }
+
+        /* The navbar collapses to a hamburger on mobile, so drop the left rail
+         and let the grid go full-width. */
+        .grid-scroll-wrapper {
+          margin-left: 0;
+          margin-right: 0;
+        }
+
+        .hero-quote,
+        .about {
+          margin-left: 0;
+          margin-right: 0;
+          padding: 0 1.5rem;
+        }
+
+        /* No left rail on mobile — the section already sits at the viewport edge,
+         so the full-bleed backdrop/gradient anchor at 0. */
+        .about::before,
+        .about::after {
+          left: 0;
+        }
+
+        .projectsContainer {
+          max-width: 100%;
+          margin: 0 auto;
+          padding: 0 20px 20vh;
+          overflow-x: hidden;
+        }
+      }
+    </style>
+
+    <script>
+      // Reveal the about text (fade-in + rise) when the section scrolls into view.
+      // Runs on astro:page-load so it re-binds after client-side navigations.
+      function initAboutReveal() {
+        const inner = document.querySelector(".about-inner");
+        if (!inner) return;
+
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        if (reduceMotion) {
+          inner.classList.add("is-visible");
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.3 },
+        );
+
+        observer.observe(inner);
+      }
+
+      document.addEventListener("astro:page-load", initAboutReveal);
+    </script>
+  </body>
 </html>

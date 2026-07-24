@@ -14,7 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is an Astro-based portfolio website for an Interactive Media Artist, featuring a hybrid approach with both static content and React components for interactive elements.
 
 ### Key Technologies
-- **Astro 7.0.7** - Main framework with experimental client prerender enabled
+- **Astro 7.1.3** - Main framework with experimental client prerender enabled
 - **React 19** - For interactive components (Three.js scenes, animations, LastFM integration)
 - **Sanity CMS** - Headless CMS for blog content management with Portable Text support (@sanity/astro, @sanity/client, @portabletext/react)
 - **Three.js 0.182** - 3D graphics via React Three Fiber ecosystem (@react-three/fiber, @react-three/drei, @react-three/postprocessing, postprocessing)
@@ -87,7 +87,7 @@ Two additional practice areas exist as standalone pages (NOT works-collection MD
 - `src/components/Ornaments.astro` - Decorative elements
 
 ### Routing Structure
-- `/` - Homepage with 3D animations; the ONLY works listing (there is no `/works` index page). On load it plays a sequential narrative reveal (quote → header → navbar) via `<ModifiedHeader animated />` (Motion). Below a `100vh` scene spacer it renders a single filterable project grid (`ProjectGrid.jsx`, a React island). The navbar drives the filter via URL hash — `#all`, `#games`, `#installations`, `#sound-art`, `#web-design-dev` — which `ProjectGrid` maps onto `workType`; the grid animates the re-flow (Motion `layout` + `AnimatePresence`) and shows a hover/focus caption below it. **3D Animation** and **Videoart** are featured tiles that link out to `/3Dworks` and `/videoart` (their navbar links go straight to those pages, not the grid). Hero images are pre-optimized in the page frontmatter via `getImage()` and passed to the island as `srcset` (Astro `<Picture>` can't run inside a React component)
+- `/` - Homepage with 3D animations; the ONLY works listing (there is no `/works` index page). On load it plays a sequential narrative reveal (quote → header → navbar) via `<ModifiedHeader animated />` (Motion). Below a `100vh` scene spacer it renders a single filterable project grid (`ProjectGrid.jsx`, a React island). The navbar drives the filter via URL hash — `#all`, `#games`, `#installations`, `#sound-art`, `#web-design-dev` — which `ProjectGrid` maps onto `workType`; the grid animates the re-flow (Motion `layout` + `AnimatePresence`) and shows a hover/focus caption below it. **3D Animation** and **Videoart** are featured tiles that link out to `/3Dworks` and `/videoart` (their navbar links go straight to those pages, not the grid). Hero images are pre-optimized in the page frontmatter via `getImage()` and passed to the island as `srcset` (Astro `<Picture>` can't run inside a React component). Below the grid sits an `#about` prose section (its own `100vh` viewport) — a "Creative Software Developer & Interactive Media Artist." intro, bio, and availability line; it paints a full-bleed black backdrop (`.about::before` spanning `100vw`, with a `.about::after` transparent→black gradient above it) to fully cover the 3D scene behind it. The portrait and contact links live in the Footer, not here
 - `/aboutMe` - About page with canvas animations
 - `/3Dworks` - 3D animation / A-visuals showcase
 - `/videoart` - Videoart showcase
@@ -135,7 +135,7 @@ Two additional practice areas exist as standalone pages (NOT works-collection MD
 - Prettier configured with Astro plugin for code formatting
 - Environment variables managed via dotenv
 - Sharp image service configured for optimal performance
-- Site identity constants in `src/consts.ts` (`SITE_TITLE` "Óscar A. Montiel", `SITE_SUBTITLE` "Interactive Media Artist", `SITE_DESCRIPTION`)
+- Site identity constants in `src/consts.ts` (`SITE_TITLE` "Óscar A. Montiel", `SITE_SUBTITLE` "Creative Developer & Interactive Media Artist", `SITE_DESCRIPTION`). Note the homepage (`index.astro`) intentionally uses the longer "Creative **Software** Developer & Interactive Media Artist" in its `<BaseHead title>` and `#about` intro — don't "fix" this to match `consts.ts`
 - Removed works are archived (non-rendering) under repo-root `archive/works-removed/`
 - Additional libraries integrated:
   - **astro-embed** - Content embedding capabilities
