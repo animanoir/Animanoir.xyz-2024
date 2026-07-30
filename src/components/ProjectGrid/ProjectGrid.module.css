@@ -4,6 +4,40 @@
 }
 
 /* ==========================================================================
+   FILTER ROW
+   Plain hash anchors above the grid — the only visible filter control now that
+   the work categories left the navbar. Muted until hovered/active.
+   ========================================================================== */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 0 0 1.5rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.85rem;
+}
+
+.filterLink {
+  color: #f2f0eb;
+  opacity: 0.5;
+  text-decoration: none;
+  transition:
+    opacity 0.3s ease,
+    color 0.3s ease;
+}
+
+.filterLink:hover {
+  opacity: 1;
+  color: #ee5858;
+}
+
+.filterActive {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 0.35em;
+}
+
+/* ==========================================================================
    GRID
    ========================================================================== */
 .grid {
@@ -86,6 +120,19 @@
   display: none;
 }
 
+/* Category/medium metadata under the tile title (touch layouts only, where the
+   hover bar doesn't exist). */
+.tileCats {
+  display: block;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
 /* ==========================================================================
    FIXED BOTTOM BAR
    Pinned to the viewport bottom; shows the hovered/focused project's info so it
@@ -127,6 +174,18 @@
   font-size: 0.9rem;
   font-weight: 400;
   opacity: 0.6;
+}
+
+/* Category/medium metadata next to the title — small, quiet, sans-serif. */
+.barCats {
+  margin-left: 0.75rem;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.5;
 }
 
 .barDesc {

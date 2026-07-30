@@ -12,10 +12,21 @@ const HASH_TO_CATEGORY = {
   "#web-design-dev": "Web & Code",
 };
 
-// Hashes that should scroll the grid into view when clicked or deep-linked
-// (every navbar "work" link). "#all" carries no category but still targets the
-// grid. The featured tiles (3D / Videoart) are cross-page links, not hashes.
+// Hashes that should scroll the grid into view when clicked or deep-linked.
+// "#all" carries no category but still targets the grid. The featured tiles
+// (3D / Videoart) are cross-page links, not hashes.
 const GRID_HASHES = new Set(["#all", ...Object.keys(HASH_TO_CATEGORY)]);
+
+// The filter row above the grid — plain hash anchors driving the same filter
+// the deep-links use. Categories left the navbar ("studio" nav refactor), so
+// this row is now the only visible filter control.
+const FILTER_LINKS = [
+  { hash: "#all", label: "All" },
+  { hash: "#games", label: "Games & Play" },
+  { hash: "#installations", label: "Art Installations" },
+  { hash: "#sound-art", label: "Music & Sound" },
+  { hash: "#web-design-dev", label: "Web & Code" },
+];
 
 // Vertical breathing room (px) kept above the grid when it's taller than the
 // viewport and therefore can't be centered without hiding its top rows.
@@ -144,6 +155,22 @@ export default function ProjectGrid({ projects = [] }) {
 
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
+      <nav className={styles.filters} aria-label="Filter works by category">
+        {FILTER_LINKS.map(({ hash, label }) => {
+          const isActive =
+            (HASH_TO_CATEGORY[hash] ?? null) === activeCategory;
+          return (
+            <a
+              key={hash}
+              href={hash}
+              className={`${styles.filterLink} ${isActive ? styles.filterActive : ""}`}
+              aria-current={isActive ? "true" : undefined}
+            >
+              {label}
+            </a>
+          );
+        })}
+      </nav>
       <motion.ul
         className={styles.grid}
         layout
@@ -177,7 +204,14 @@ export default function ProjectGrid({ projects = [] }) {
                       loading="lazy"
                       decoding="async"
                     />
-                    <span className={styles.tileLabel}>{p.title}</span>
+                    <span className={styles.tileLabel}>
+                      {p.title}
+                      {(p.categories || []).length > 0 && (
+                        <span className={styles.tileCats}>
+                          {p.categories.join(" · ")}
+                        </span>
+                      )}
+                    </span>
                   </>
                 ) : (
                   // Imageless work: a text-only tile with the title centered.
@@ -223,6 +257,11 @@ export default function ProjectGrid({ projects = [] }) {
                   {active.year ? (
                     <span className={styles.barYear}>{active.year}</span>
                   ) : null}
+                  {(active.categories || []).length > 0 && (
+                    <span className={styles.barCats}>
+                      {active.categories.join(" · ")}
+                    </span>
+                  )}
                 </p>
                 <p className={styles.barDesc}>{active.description}</p>
               </motion.div>

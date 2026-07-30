@@ -7,6 +7,7 @@ import videoartCover from "@/images/works/videoart.png";
 
 import "../styles/global.css";
 import ModifiedHeader from "@/components/ModifiedHeader.astro";
+import LastFm from "@/components/LastFm.jsx";
 import Footer from "@/components/Footer/Footer.astro";
 import SceneIndex from "@/components/3DIndex/SceneIndex.jsx";
 import ProjectGrid from "@/components/ProjectGrid/ProjectGrid.jsx";
@@ -129,6 +130,16 @@ for (let i = projects.length - 1; i > 0; i--) {
               >Available for studio roles, freelance, and commissions.</strong
             >
           </p>
+          <!-- TODO: drop cv-oscar-a-montiel.pdf into public/ -->
+          <p class="about-cv">
+            <a href="/cv-oscar-a-montiel.pdf" target="_blank" rel="noopener"
+              >CV (PDF)</a
+            >
+          </p>
+          <!-- Now-playing widget, relocated from the header — small and muted. -->
+          <div class="about-listening">
+            <LastFm client:load showAlbumCover={false} />
+          </div>
         </div>
       </section>
     </main>
@@ -367,6 +378,12 @@ for (let i = projects.length - 1; i > 0; i--) {
       .about-inner.is-visible > *:nth-child(3) {
         animation-delay: 0.35s;
       }
+      .about-inner.is-visible > *:nth-child(4) {
+        animation-delay: 0.5s;
+      }
+      .about-inner.is-visible > *:nth-child(5) {
+        animation-delay: 0.65s;
+      }
 
       @keyframes aboutFadeInUp {
         from {
@@ -418,6 +435,34 @@ for (let i = projects.length - 1; i > 0; i--) {
         font-family: "Cormorant Garamond", serif;
         font-size: clamp(1.15rem, 1.8vw, 1.5rem);
         margin: 0;
+      }
+
+      .about-cv {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+        margin: 1.75rem 0 0;
+      }
+
+      .about-cv a {
+        color: #f2f0eb;
+        text-decoration: underline;
+        text-decoration-color: #f2f0eb75;
+        text-underline-offset: 0.2em;
+        transition: color 0.3s ease;
+      }
+
+      .about-cv a:hover {
+        color: #ee5858;
+      }
+
+      /* Keep the now-playing line quiet — it's a footnote, not a headline. The
+         page-level :global(.lastfmContainer) overrides above already flip its
+         text to the light palette for this black section. */
+      .about-listening {
+        margin-top: 2.5rem;
+        display: flex;
+        justify-content: center;
+        opacity: 0.8;
       }
 
       main {

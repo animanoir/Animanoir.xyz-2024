@@ -1,6 +1,5 @@
 ---
 import { SITE_TITLE } from "@/consts";
-import LastFm from "@/components/LastFm.jsx";
 import MutatingSubheader from "@/components/MutatingSubheader.jsx";
 import Navbar from "@/components/Navbar.astro";
 import Ornaments from "./Ornaments.astro";
@@ -28,7 +27,6 @@ const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
             </span>
           </h2>
         </a>
-        <LastFm client:load />
       </motion.div>
     ) : (
       <Fragment>
@@ -40,7 +38,6 @@ const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
             </span>
           </h2>
         </a>
-        <LastFm client:load />
       </Fragment>
     )
   }

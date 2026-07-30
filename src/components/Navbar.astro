@@ -16,48 +16,22 @@ const REVEAL_BASE_DELAY = 1.5;
 const REVEAL_STEP = 0.1;
 const REVEAL_OFFSET = 24;
 
-// On the homepage these hashes drive the ProjectGrid filter; off the homepage
-// they navigate home with the hash so the grid loads pre-filtered. The two
-// featured areas (3D / Videoart) link straight to their own pages.
-const workLinks = [
-  { href: isHomePage ? "/#all" : "/", label: "All Works", target: "_self" },
-  { href: "/3Dworks", label: "3D Animation", target: "_self" },
-  { href: "/videoart", label: "VideoArt", target: "_self" },
-  { href: "/#games", label: "Games & Play", target: "_self" },
-  { href: "/#installations", label: "Art Installations", target: "_self" },
-  { href: "/#sound-art", label: "Music & Sound", target: "_self" },
-  { href: "/#web-design-dev", label: "Web Design/Dev", target: "_self" },
-];
-
-// "About" now lives on the homepage (#about section), so it's no longer a nav
-// link — the standalone /aboutMe page still exists but is unlinked.
-const personalLinks = [
+// The whole nav: Work (grid), About (homepage section), Writing (blog),
+// Contact (email). Work categories are no longer nav items — they live as
+// filter links and metadata labels on the grid itself.
+const links = [
+  { href: isHomePage ? "/#all" : "/", label: "Work", target: "_self" },
+  { href: "/#about", label: "About", target: "_self" },
   { href: "/blog", label: "Writing", target: "_self" },
-  { href: "/photodiary", label: "Photodiary", target: "_self" },
+  { href: "mailto:etherealflux94@gmail.com", label: "Contact", target: "_self" },
 ];
-
-// Downloadable CVs — one per role I take on. PDFs live in `public/cv/`, so the
-// hrefs resolve at the site root. Open in a new tab so the visitor keeps the
-// site. Replace these placeholders once the real files are dropped in.
-const cvLinks = [
-  { href: "https://docs.google.com/document/d/1_z6qVB2aFGpwAh-6SqUoq90lp_4uPvhhT6OXUG-MEqQ/edit?tab=t.0", label: "Fullstack Web Developer" },
-  { href: "https://docs.google.com/document/d/13DbRDxHjGEKgoU2BNz3qVA6YtubAVguMu0b32RIIUZ0/edit?tab=t.0", label: "Creative Developer" },
-];
-
-// Continue the alternating reveal cadence past both link groups so the CV item
-// slides in as the final navbar element.
-const cvRevealIndex = workLinks.length + personalLinks.length;
-
-// Combined for mobile menu
-const allLinks = [...workLinks, ...personalLinks];
 ---
 
 <nav class="navbar" role="navigation">
   <div class="nav-links">
-    <!-- Work Links Group -->
     <div class="link-group">
       {
-        workLinks.map((link, i) =>
+        links.map((link, i) =>
           animated ? (
             <motion.div
               client:load
@@ -85,89 +59,6 @@ const allLinks = [...workLinks, ...personalLinks];
         )
       }
     </div>
-    <div class="nav-separator"></div>
-    <!-- Personal Links Group -->
-    <div class="link-group">
-      {
-        personalLinks.map((link, i) => {
-          // Continue the alternating right/left cadence across both groups.
-          const idx = workLinks.length + i;
-          return animated ? (
-            <motion.div
-              client:load
-              initial={{ opacity: 0, x: idx % 2 === 0 ? REVEAL_OFFSET : -REVEAL_OFFSET }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{
-                duration: 0.6,
-                delay: REVEAL_BASE_DELAY + idx * REVEAL_STEP,
-                ease: "easeOut",
-              }}
-            >
-              <div class="nav-item">
-                <HeaderLink href={link.href} target={link.target}>
-                  {link.label}
-                </HeaderLink>
-              </div>
-            </motion.div>
-          ) : (
-            <div class="nav-item">
-              <HeaderLink href={link.href} target={link.target}>
-                {link.label}
-              </HeaderLink>
-            </div>
-          );
-        })
-      }
-    </div>
-    <!-- C.V. Dropdown — last item so the hover menu drops down unobstructed -->
-    <div class="link-group cv-group">
-      {
-        animated ? (
-          <motion.div
-            client:load
-            initial={{ opacity: 0, x: cvRevealIndex % 2 === 0 ? REVEAL_OFFSET : -REVEAL_OFFSET }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{
-              duration: 0.6,
-              delay: REVEAL_BASE_DELAY + cvRevealIndex * REVEAL_STEP,
-              ease: "easeOut",
-            }}
-          >
-            <div class="nav-item cv-dropdown">
-              <button type="button" class="cv-trigger" aria-haspopup="true" aria-expanded="false">
-                C.V.
-                <span class="cv-caret" aria-hidden="true">▾</span>
-              </button>
-              <ul class="cv-menu" role="menu">
-                {cvLinks.map((cv) => (
-                  <li role="none">
-                    <a role="menuitem" href={cv.href} target="_blank" rel="noopener noreferrer">
-                      {cv.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-        ) : (
-          <div class="nav-item cv-dropdown">
-            <button type="button" class="cv-trigger" aria-haspopup="true" aria-expanded="false">
-              C.V.
-              <span class="cv-caret" aria-hidden="true">▾</span>
-            </button>
-            <ul class="cv-menu" role="menu">
-              {cvLinks.map((cv) => (
-                <li role="none">
-                  <a role="menuitem" href={cv.href} target="_blank" rel="noopener noreferrer">
-                    {cv.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )
-      }
-    </div>
   </div>
   <button class="mobile-menu-button" aria-label="Toggle mobile menu">
     <span class="hamburger-line"></span>
@@ -176,52 +67,11 @@ const allLinks = [...workLinks, ...personalLinks];
   </button>
   <div class="mobile-menu">
     <div class="mobile-nav-links">
-      <!-- Work Links -->
       {
-        workLinks.map((link) => (
+        links.map((link) => (
           <HeaderLink href={link.href} target={link.target}>
             {link.label}
           </HeaderLink>
-        ))
-      }
-
-      <!-- Mobile Separator -->
-      <div class="mobile-separator">
-        <span class="mobile-separator-line"></span>
-      </div>
-
-      <!-- Disabled Link -->
-      <div class="disabled-link mobile-disabled">
-        <span>Web Design & Development</span>
-        <span class="under-construction">under construction</span>
-      </div>
-
-      <!-- Mobile Separator -->
-      <div class="mobile-separator">
-        <span class="mobile-separator-line"></span>
-      </div>
-
-      <!-- Personal Links -->
-      {
-        personalLinks.map((link) => (
-          <HeaderLink href={link.href} target={link.target}>
-            {link.label}
-          </HeaderLink>
-        ))
-      }
-
-      <!-- Mobile Separator -->
-      <div class="mobile-separator">
-        <span class="mobile-separator-line"></span>
-      </div>
-
-      <!-- C.V. Links (flat on mobile — no hover affordance on touch) -->
-      <span class="mobile-cv-label">C.V.</span>
-      {
-        cvLinks.map((cv) => (
-          <a class="mobile-cv-link" href={cv.href} target="_blank" rel="noopener noreferrer">
-            {cv.label}
-          </a>
         ))
       }
     </div>
@@ -269,37 +119,47 @@ const allLinks = [...workLinks, ...personalLinks];
     }
   }
 
-  // CSS handles the hover-open for mouse users; this wires click + keyboard
-  // (Enter/Space toggles, Escape closes, outside-click closes) for everyone else.
-  function initializeCvDropdown() {
-    const dropdown = document.querySelector(".cv-dropdown");
-    const trigger = dropdown?.querySelector(".cv-trigger");
-    if (!dropdown || !(trigger instanceof HTMLButtonElement)) return;
-
-    // Avoid stacking listeners across Astro page transitions.
-    const freshTrigger = trigger.cloneNode(true);
-    if (!(freshTrigger instanceof HTMLButtonElement)) return;
-    trigger.parentNode?.replaceChild(freshTrigger, trigger);
-
-    const close = () => {
-      dropdown.classList.remove("open");
-      freshTrigger.setAttribute("aria-expanded", "false");
-    };
-
-    freshTrigger.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const isOpen = dropdown.classList.toggle("open");
-      freshTrigger.setAttribute("aria-expanded", String(isOpen));
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!dropdown.contains(e.target as Node)) close();
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") close();
-    });
-  }
+  // Astro's ClientRouter swallows same-page hash clicks (it only runs
+  // history.pushState — no scroll, no hashchange). The grid hashes (#all,
+  // #games, …) are handled by ProjectGrid; this covers hashes that target a
+  // real element on the page (e.g. the About link → #about section).
+  document.addEventListener(
+    "click",
+    (e) => {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)
+        return;
+      const anchor =
+        e.target instanceof Element ? e.target.closest("a") : null;
+      if (!anchor) return;
+      let url;
+      try {
+        url = new URL(anchor.href, window.location.href);
+      } catch {
+        return;
+      }
+      if (
+        url.origin !== window.location.origin ||
+        url.pathname !== window.location.pathname ||
+        !url.hash
+      )
+        return;
+      let target = null;
+      try {
+        target = document.querySelector(url.hash);
+      } catch {
+        return;
+      }
+      if (!target) return;
+      const top = window.scrollY + target.getBoundingClientRect().top;
+      const lenis = (window as any).lenis;
+      if (lenis?.scrollTo) {
+        lenis.scrollTo(top, { duration: 1.1 });
+      } else {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    },
+    true,
+  );
 
   // The footer is always black, but most pages have a light background — so the
   // fixed header/navbar/LastFm text must flip to white while the footer covers
@@ -330,12 +190,10 @@ const allLinks = [...workLinks, ...personalLinks];
 
   // Initialize on page load
   document.addEventListener("DOMContentLoaded", initializeMobileMenu);
-  document.addEventListener("DOMContentLoaded", initializeCvDropdown);
   document.addEventListener("DOMContentLoaded", initializeFooterColorFlip);
 
   // Reinitialize after Astro page transitions
   document.addEventListener("astro:page-load", initializeMobileMenu);
-  document.addEventListener("astro:page-load", initializeCvDropdown);
   document.addEventListener("astro:page-load", initializeFooterColorFlip);
 </script>
 
@@ -350,7 +208,6 @@ const allLinks = [...workLinks, ...personalLinks];
   #headerTitle,
   #headerSubtitle,
   .navbar a,
-  .cv-trigger,
   .mobile-nav-links a,
   .lastfmContainer,
   .songInfo,
@@ -368,35 +225,15 @@ const allLinks = [...workLinks, ...personalLinks];
     color: #ee5858 !important;
   }
   body.footer-in-view .navbar a,
-  body.footer-in-view .cv-trigger,
-  body.footer-in-view .mobile-nav-links a,
-  body.footer-in-view .mobile-cv-label,
-  body.footer-in-view .mobile-cv-link {
+  body.footer-in-view .mobile-nav-links a {
     color: #f2f0eb !important;
   }
   body.footer-in-view .navbar a:hover,
-  body.footer-in-view .cv-trigger:hover,
-  body.footer-in-view .mobile-nav-links a:hover,
-  body.footer-in-view .mobile-cv-link:hover {
+  body.footer-in-view .mobile-nav-links a:hover {
     color: #ee5858 !important;
   }
   body.footer-in-view .hamburger-line {
     background-color: #f2f0eb !important;
-  }
-  body.footer-in-view .separator-line,
-  body.footer-in-view .mobile-separator-line {
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(242, 240, 235, 0.4) 20%,
-      rgba(242, 240, 235, 0.7) 50%,
-      rgba(242, 240, 235, 0.4) 80%,
-      transparent 100%
-    ) !important;
-  }
-  body.footer-in-view .mobile-separator-line::before {
-    background: rgba(242, 240, 235, 0.9) !important;
-    box-shadow: 0 0 12px rgba(242, 240, 235, 0.6) !important;
   }
   body.footer-in-view .ornaments .circle {
     background-color: #f2f0eb !important;
@@ -449,66 +286,6 @@ const allLinks = [...workLinks, ...personalLinks];
     gap: 0.25rem;
   }
 
-  /* Elegant separator between link groups */
-  .nav-separator {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 0;
-    width: 100%;
-  }
-
-  .separator-line {
-    display: block;
-    width: 60px;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(28, 28, 28, 0.4) 20%,
-      rgba(28, 28, 28, 0.7) 50%,
-      rgba(28, 28, 28, 0.4) 80%,
-      transparent 100%
-    );
-    position: relative;
-  }
-
-  /* Mobile separator */
-  .mobile-separator {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 1rem 0;
-  }
-
-  .mobile-separator-line {
-    display: block;
-    width: 120px;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(28, 28, 28, 0.4) 20%,
-      rgba(28, 28, 28, 0.7) 50%,
-      rgba(28, 28, 28, 0.4) 80%,
-      transparent 100%
-    );
-    position: relative;
-  }
-
-  .mobile-separator-line::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 6px;
-    height: 6px;
-    background: rgba(28, 28, 28, 0.9);
-    border-radius: 50%;
-    box-shadow: 0 0 12px rgba(28, 28, 28, 0.6);
-  }
-
   .navbar a {
     color: var(--text-color);
     font-size: var(--font-size);
@@ -518,10 +295,6 @@ const allLinks = [...workLinks, ...personalLinks];
     color: var(--hover-color);
   }
 
-  .navbar a:not(:last-child) {
-    /* margin-right: var(--margin-horizontal); */
-  }
-
   .nav-item {
     position: relative;
     display: flex;
@@ -529,141 +302,8 @@ const allLinks = [...workLinks, ...personalLinks];
     margin-right: 0;
   }
 
-  .disabled-link {
-    display: flex;
-    flex-direction: column;
-    color: #999;
-    font-size: var(--font-size);
-    cursor: default;
-    font-weight: bold;
-  }
-
-  .disabled-link .under-construction {
-    font-size: 0.7rem;
-    font-style: italic;
-    font-weight: normal;
-    color: #bbb;
-  }
-
-  .mobile-disabled {
-    align-items: center;
-    font-size: 1.5rem;
-  }
-
-  .mobile-disabled .under-construction {
-    font-size: 0.85rem;
-  }
-
   .nav-item:last-child {
     margin-right: 0;
-  }
-
-  /* ---- C.V. Dropdown (desktop) ---- */
-  .cv-group {
-    /* Slight breathing room so the CV trigger reads as its own affordance. */
-    margin-top: 0.75rem;
-  }
-
-  .cv-dropdown {
-    position: relative;
-  }
-
-  .cv-trigger {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    padding: 0;
-    margin: 0;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--text-color);
-    font-family: inherit;
-    font-size: var(--font-size);
-    line-height: 1;
-  }
-
-  .cv-trigger:hover {
-    color: var(--hover-color);
-  }
-
-  .cv-caret {
-    font-size: 0.7em;
-    transition: transform var(--transition-speed) ease;
-  }
-
-  .cv-dropdown:hover .cv-caret,
-  .cv-dropdown.open .cv-caret {
-    transform: rotate(180deg);
-  }
-
-  .cv-menu {
-    list-style: none;
-    margin: 0;
-    padding: 0.4rem 0;
-    position: absolute;
-    top: calc(100% + 0.4rem);
-    left: 0;
-    min-width: 11rem;
-    /* The dropdown is locked to a dark surface regardless of the page's dynamic
-       navbar color (some pages flip the links to off-white via `:global(.navbar a)
-       !important`, which also hits the items here). A fixed dark panel + light
-       text keeps the menu readable on both light and dark backgrounds. */
-    background-color: black;
-    border: 1px solid rgba(242, 240, 235, 0.14);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-    /* Hidden until hover / focus / click-open. opacity+visibility keeps it
-       animatable and out of the tab order while closed. */
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-4px);
-    transition:
-      opacity var(--transition-speed) ease,
-      transform var(--transition-speed) ease,
-      visibility var(--transition-speed) ease;
-    z-index: 1000;
-  }
-
-  .cv-dropdown:hover .cv-menu,
-  .cv-dropdown:focus-within .cv-menu,
-  .cv-dropdown.open .cv-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-
-  .cv-menu a {
-    display: block;
-    padding: 0.4rem 1rem;
-    /* Off-white, fixed — matches the site's "white" and the value the dark-page
-       override already forces, so the menu text reads the same everywhere. */
-    color: #f2f0eb;
-    font-size: var(--font-size);
-    white-space: nowrap;
-    transition: color var(--transition-speed) ease;
-  }
-
-  .cv-menu a:hover {
-    color: var(--hover-color);
-  }
-
-  /* ---- C.V. Links (mobile) ---- */
-  .mobile-cv-label {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: var(--text-color);
-    margin-bottom: 0.25rem;
-  }
-
-  .mobile-cv-link {
-    font-size: 1.25rem;
-    text-decoration: none;
-    color: var(--text-color);
-    transition: color var(--transition-speed);
-  }
-
-  .mobile-cv-link:hover {
-    color: var(--hover-color);
   }
 
   /* Mobile Menu Button */
