@@ -179,8 +179,9 @@ const HERO_H = 1200;
     <Footer />
     <style>
       main {
-        /* Same geometry as the Work pages. */
-        margin-left: var(--left-rail);
+        /* Work-page geometry + 20% extra so the article clears the fixed
+           header title while scrolling (it was sliding underneath it). */
+        margin-left: calc(var(--left-rail) + 20%);
         margin-right: var(--page-padding, 5%);
       }
 
