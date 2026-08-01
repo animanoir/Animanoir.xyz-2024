@@ -138,6 +138,8 @@ const rows = [...workRows, ...practiceRows];
     grid-template-columns: 60% 1fr;
     gap: 3rem;
     align-items: start;
+    /* First row column fits "ongoing" (the practice rows), not just years. */
+    --index-col: 8ch;
   }
 
   /* Row/typography styles live in global.css (.index-row et al., phase 3). */
@@ -167,9 +169,10 @@ const rows = [...workRows, ...practiceRows];
     opacity: 1;
   }
 
-  /* Mobile: single column, no preview — tapping a row goes straight to the
-     work, so the pane (and its media requests) is dropped entirely. */
-  @media (max-width: 768px) {
+  /* Tablet & mobile: single column, no preview — below ~900px the pane
+     would shrink past usefulness, and tapping a row goes straight to the
+     work anyway, so the pane (and its media requests) is dropped entirely. */
+  @media (max-width: 900px) {
     .work-index {
       grid-template-columns: 1fr;
     }

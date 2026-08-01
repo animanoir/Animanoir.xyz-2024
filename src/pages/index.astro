@@ -151,6 +151,9 @@ const features = await Promise.all(
       main {
         margin-left: var(--left-rail);
         margin-right: var(--page-padding, 5%);
+        /* Featured sections stay a composed width on large desktops; the
+           full-bleed bands (signature, flow) escape via negative margins. */
+        max-width: var(--content-max);
       }
 
       .mono-label {

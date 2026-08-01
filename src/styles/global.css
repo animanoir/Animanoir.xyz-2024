@@ -5,9 +5,14 @@
  */
 :root {
   --page-padding: 5%;
-  /* Width reserved on the left for the fixed header + navbar block. Content
-     areas offset by this (margin-left) instead of guessing per-page margins. */
+  /* Width reserved on the left for the fixed header block. Content areas
+     offset by this (margin-left) instead of guessing per-page margins.
+     Steps down with the viewport (see media queries below) so laptops and
+     tablets give the space back to content. */
   --left-rail: 22rem;
+  /* Content cap: rail + this + margins ≈ a standard desktop envelope
+     (~1500px). Every content column resolves through it. */
+  --content-max: 68rem;
 
   /* == Editorial design tokens (phase 2) ==================================
      Binary palette + one accent. The accent is reserved for hover/link
@@ -56,6 +61,21 @@
   --frame-inset: 1.5rem;
   --frame-opacity: 0.14;
   --frame-mark-opacity: 0.3;
+}
+
+/* Laptops: a leaner rail keeps the content column concise, not cramped. */
+@media (max-width: 1440px) {
+  :root {
+    --left-rail: 17rem;
+  }
+}
+
+/* Tablets: the rail nearly collapses — the fixed header only needs a small
+   offset, the rest goes to the reading column. */
+@media (max-width: 1100px) {
+  :root {
+    --left-rail: 8rem;
+  }
 }
 
 @media (max-width: 768px) {

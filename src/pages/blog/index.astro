@@ -62,7 +62,7 @@ const years = [...new Set(rows.map((r) => r.year))].sort((a, b) => b - a);
         /* Same geometry as the Work index page (/work). */
         margin-left: var(--left-rail);
         margin-right: var(--page-padding, 5%);
-        max-width: 68rem;
+        max-width: var(--content-max);
         padding-top: 22vh;
         padding-bottom: var(--space-section);
         min-height: 70vh;

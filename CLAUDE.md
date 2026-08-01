@@ -44,7 +44,9 @@ All presentation resolves through tokens in `src/styles/global.css` `:root`. **N
 
 **Palette:** binary plus one accent — `--color-bg` (#0d0d0d), `--color-ink` (#f2f0eb), `--color-accent` (#ee5858, reserved for hover/link states, never static decoration). Neutrals derive from `--color-ink-rgb` at low alpha; named roles are `--text-secondary` (0.75) and `--text-muted` (0.55). No gradients, no shadows, no border-radius beyond 2px, no decorative color.
 
-**Measures & rhythm:** `--measure` (65ch prose), `--measure-wide` (88ch figures), `--space-section`, `--left-rail` (22rem reserved for the fixed header), `--page-padding`.
+**Measures & rhythm:** `--measure` (65ch prose), `--measure-wide` (88ch figures), `--content-max` (68rem — every content column caps through it), `--space-section`, `--left-rail`, `--page-padding`.
+
+**Responsive tiers** (token-level — pages inherit them automatically): desktop `--left-rail: 22rem`; laptops ≤1440px → 17rem; tablets ≤1100px → 8rem; mobile ≤768px → pages zero the rail and use 1.5rem gutters. The WorkIndex preview pane drops below 900px; the footer columns wrap via `auto-fit` with no breakpoint. Total desktop envelope ≈ rail + 68rem + margins ≈ 1500px, left-anchored (extra ultrawide space stays on the right by design).
 
 **Framing (phase 5):** `--frame-inset`, `--frame-opacity` (0.14), `--frame-mark-opacity` (0.3). All strokes are **0.5px**; framing should be perceived before it is seen — calibrate opacity **downward**, never up. (The post body's vertical gutter rules were later removed at Óscar's request — don't reintroduce them.)
 
