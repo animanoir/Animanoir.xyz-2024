@@ -5,18 +5,43 @@ import ModifiedHeader from "../components/ModifiedHeader.astro";
 import { Picture } from "astro:assets";
 import Footer from "@/components/Footer/Footer.astro";
 
-type HeroImage = {
-  src: string;
-  width: number;
-  height: number;
-  format: "png" | "jpg" | "jpeg" | "tiff" | "webp" | "gif" | "svg" | "avif";
-};
+// Editorial case study template (phase 2). Fixed sequence:
+// hero → intent → body (process/evidence) → process media → technical note →
+// metadata footer → sequential navigation. Optional sections render nothing
+// when their frontmatter field is absent.
 
-type Props = CollectionEntry<"works">["data"] & {
-  heroImage?: HeroImage;
-};
+interface WorkLink {
+  href: string;
+  title: string;
+}
 
-const { title, description, heroImage } = Astro.props;
+interface Props {
+  post: CollectionEntry<"works">;
+  prev?: WorkLink;
+  next?: WorkLink;
+}
+
+const { post, prev, next } = Astro.props;
+const {
+  title,
+  description,
+  heroImage,
+  intent,
+  processMedia,
+  technicalDetail,
+  stack,
+  tools,
+  role,
+  year,
+  pubDate,
+} = post.data;
+
+const displayYear = year ?? pubDate.getFullYear();
+// The metadata footer's stack falls back to the legacy `tools` field.
+const stackList = stack ?? tools ?? [];
+const metaLine = [String(displayYear), stackList.join(" / "), role]
+  .filter(Boolean)
+  .join(" · ");
 ---
 
 <html lang="en">
@@ -32,10 +57,11 @@ const { title, description, heroImage } = Astro.props;
   <body>
     <ModifiedHeader />
     <main>
-      <div class:list={["top-section", { "no-hero": !heroImage }]}>
-        {
-          heroImage && (
-            <div class="gradient-black">
+      <div class="case">
+        <!-- 1 · Hero: one large media + the title. Nothing else above the fold. -->
+        <section class="hero">
+          {
+            heroImage && (
               <Picture
                 src={heroImage}
                 alt={description}
@@ -45,152 +71,160 @@ const { title, description, heroImage } = Astro.props;
                 loading="eager"
                 quality={80}
               />
-            </div>
+            )
+          }
+          <h1 class="title">{title}</h1>
+        </section>
+
+        <!-- 2 · Intent: a single prose paragraph, 65ch. Renders nothing when
+             the frontmatter field is missing (build logs which works lack it). -->
+        {
+          intent && (
+            <section class="intent">
+              <p>{intent}</p>
+            </section>
           )
         }
-        <div class="project-description-container">
-          <h1 class="title">{title}</h1>
-          <h3>{description}</h3>
-        </div>
-      </div>
-      <article class="articleContainer">
-        <div class="articleBody">
+
+        <!-- 3 · Process / evidence: the work's MDX body. -->
+        <article class="articleBody">
           <slot />
-        </div>
-      </article>
+        </article>
+
+        <!-- 3b · Optional additional process media, two-up. -->
+        {
+          processMedia && processMedia.length > 0 && (
+            <section class="process-media">
+              {processMedia.map((media) => (
+                <Picture
+                  src={media}
+                  alt={title}
+                  formats={["webp"]}
+                  decoding="async"
+                  loading="lazy"
+                  quality={80}
+                />
+              ))}
+            </section>
+          )
+        }
+
+        <!-- 4 · Technical detail, under a small mono label. -->
+        {
+          technicalDetail && (
+            <section class="technical">
+              <span class="mono-label">technical note</span>
+              <p>{technicalDetail}</p>
+            </section>
+          )
+        }
+
+        <!-- 5 · Metadata footer: hairline rule, one mono line. -->
+        <footer class="meta-footer">
+          <p class="mono-label">{metaLine}</p>
+        </footer>
+
+        <!-- 6 · Sequential navigation — no dead ends. -->
+        <nav class="sequence" aria-label="Work navigation">
+          {
+            prev && (
+              <a class="seq-link seq-prev" href={prev.href}>
+                <span class="mono-label">previous</span>
+                <span class="seq-title">{prev.title}</span>
+              </a>
+            )
+          }
+          {
+            next && (
+              <a class="seq-link seq-next" href={next.href}>
+                <span class="mono-label">next work</span>
+                <span class="seq-title">{next.title}</span>
+              </a>
+            )
+          }
+        </nav>
+      </div>
     </main>
-    <Footer useTopOffset={false} />
+    <Footer />
     <style>
       body {
         margin: 0;
-        overflow-x: hidden; /* Prevent horizontal scrolling */
+        overflow-x: hidden;
       }
 
       main {
-        margin-left: 10vw;
+        margin-left: var(--left-rail);
+        margin-right: var(--page-padding, 5%);
       }
 
-      .top-section {
+      .case {
+        max-width: 68rem;
+        margin: 0 auto;
+        padding-bottom: var(--space-section);
+      }
+
+      /* -- 1 · Hero ------------------------------------------------------- */
+      .hero {
+        min-height: 100vh;
         display: flex;
-        position: relative;
+        flex-direction: column;
         justify-content: center;
-        align-items: center;
-        width: 80%;
-        margin: 0 auto;
-        height: 100vh;
+        padding-top: 14vh;
+        box-sizing: border-box;
       }
 
-      /* Imageless work: drop the full-height hero stage and just show the
-         title/description near the top (clearing the fixed header). */
-      .top-section.no-hero {
-        display: block;
-        height: auto;
-        padding-top: 22vh;
-        padding-bottom: 4vh;
-        /* Mirror .articleContainer so the title/description share the body's
-           column width instead of the wider 80% hero stage. */
+      .hero :global(.heroImage) {
         width: 100%;
-      }
-
-      .top-section.no-hero .project-description-container {
-        /* The default -50% pull overlays the text on the faded image edge;
-           with no image it would shove the text off to the left. Instead,
-           match .articleBody (90% of the column, centered) so the heading's
-           left edge aligns with the article text below it. */
-        transform: none;
-        width: 90%;
-        margin: 0 auto;
-      }
-
-      .gradient-black {
-        position: relative;
-        width: 100%;
-      }
-
-      .gradient-black::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(
-          to left,
-          rgba(242, 240, 235, 1) 0%,
-          rgba(242, 240, 235, 0.5) 40%,
-          transparent 100%
-        );
-        z-index: 1;
-        pointer-events: none;
-      }
-
-      .heroImage {
-        height: 100%;
-        width: 100%;
+        max-height: 68vh;
         object-fit: cover;
-        filter: brightness(0.9);
         opacity: 0;
         transition: opacity 0.5s ease-in-out;
-        position: relative;
-        z-index: 0;
       }
-      .heroImage.loaded {
+
+      .hero :global(.heroImage.loaded) {
         opacity: 1;
       }
 
       .title {
-        width: 100%;
-        margin: 0;
-        margin-bottom: 1rem;
-        font-size: 4rem;
-        font-family: "Cormorant Garamond", serif;
-        font-style: italic;
-        font-weight: bold;
-        letter-spacing: 0;
+        margin: 2rem 0 0;
+        font-family: var(--font-sans);
+        font-weight: var(--weight-heading);
+        font-size: var(--type-display);
+        letter-spacing: -0.01em;
         line-height: 1.05;
-        /* position: absolute; */
-        top: 50%;
-        left: 50%;
-        color: #1c1c1c;
-        z-index: 2;
+        color: var(--color-ink);
       }
 
-      .project-description-container {
-        transform: translate(-50%, 0);
-        z-index: 3;
+      /* -- 2 · Intent ------------------------------------------------------ */
+      .intent {
+        margin-top: var(--space-section);
       }
 
-      .project-description-container h3 {
-        font-family: "Bebas Neue", sans-serif;
-        font-weight: normal;
-        margin-top: 0.1rem;
-        font-size: 1.5rem;
-        opacity: 0.5;
+      .intent p {
+        max-width: var(--measure);
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-sans);
+        font-size: calc(var(--type-body) * 1.25);
+        font-weight: var(--weight-heading);
+        line-height: 1.55;
+        color: var(--color-ink);
       }
 
-      .articleContainer {
-        padding-bottom: 40vh;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-      }
-
+      /* -- 3 · Body -------------------------------------------------------- */
       .articleBody {
-        font-family: "Cormorant Garamond", serif;
-        font-weight: 500;
-        color: #1c1c1c;
-        font-size: 1.45rem;
-        width: 90%;
-        margin: 0 auto;
-        line-height: 1.8;
+        margin-top: var(--space-section);
+        max-width: var(--measure);
+        font-family: var(--font-sans);
+        font-weight: 400;
+        color: var(--color-ink);
+        font-size: var(--type-body);
+        line-height: 1.6;
       }
 
       .articleBody :global(p) {
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        margin-top: 1.8rem !important;
-        margin-bottom: 2.4rem !important;
+        padding: 0 !important;
+        margin: 1.8rem 0 2.4rem !important;
       }
 
       .articleBody :global(h2),
@@ -198,111 +232,123 @@ const { title, description, heroImage } = Astro.props;
       .articleBody :global(h4) {
         margin-top: 4.2rem !important;
         margin-bottom: 1.8rem !important;
+        font-family: var(--font-sans);
+        font-weight: var(--weight-heading);
       }
 
       .articleBody :global(img),
       .articleBody :global(video),
       .articleBody :global(lite-youtube) {
         margin: 3.6rem 0 !important;
+        max-width: 100%;
+        height: auto;
       }
 
-      .articleContainer h1 {
-        font-size: 4rem;
-        width: 50%;
+      /* -- 3b · Process media ---------------------------------------------- */
+      .process-media {
+        margin-top: var(--space-section);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
       }
 
-      hr {
-        border-top: 1px solid #ddd;
-        margin: 1rem 0;
+      .process-media :global(img) {
+        width: 100%;
+        height: auto;
+        display: block;
       }
 
-      @media (max-width: 1920px) {
-        .articleContainer {
-          width: 60%;
-        }
-        .top-section.no-hero {
-          width: 60%;
-        }
+      /* -- 4 · Technical note ---------------------------------------------- */
+      .technical {
+        margin-top: var(--space-section);
       }
 
+      .technical p {
+        max-width: var(--measure);
+        margin: 1rem 0 0;
+        padding: 0;
+        font-family: var(--font-sans);
+        font-size: var(--type-body);
+        line-height: 1.6;
+      }
+
+      /* Shared small mono label. */
+      .mono-label {
+        font-family: var(--font-mono);
+        font-size: var(--type-meta);
+        letter-spacing: 0.06em;
+        color: var(--color-ink);
+        opacity: 0.55;
+      }
+
+      /* -- 5 · Metadata footer --------------------------------------------- */
+      .meta-footer {
+        margin-top: var(--space-section);
+        border-top: 0.5px solid rgba(var(--color-ink-rgb), 0.35);
+        padding-top: 1.25rem;
+      }
+
+      .meta-footer p {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* -- 6 · Sequential navigation ---------------------------------------- */
+      .sequence {
+        margin-top: var(--space-section);
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+      }
+
+      .seq-link {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        text-decoration: none;
+        color: var(--color-ink);
+      }
+
+      .seq-next {
+        margin-left: auto;
+        text-align: right;
+      }
+
+      .seq-title {
+        font-family: var(--font-sans);
+        font-weight: var(--weight-heading);
+        font-size: var(--type-body);
+        transition: color 0.2s ease;
+      }
+
+      .seq-link:hover .seq-title,
+      .seq-link:focus-visible .seq-title {
+        color: var(--color-accent);
+      }
+
+      .seq-link:focus-visible {
+        outline: 1px solid var(--color-accent);
+        outline-offset: 4px;
+      }
+
+      /* -- Responsive ------------------------------------------------------- */
       @media (max-width: 768px) {
-        .project-description-container h3 {
-          font-size: 1rem;
-        }
-        .top-section {
-          flex-direction: column;
-          margin-top: 40%;
-          width: 90%;
-        }
-        /* margin-top: 40% already clears the header on mobile. */
-        .top-section.no-hero {
-          padding-top: 0;
-        }
-        .gradient-black::before {
-          background: linear-gradient(
-            to top,
-            rgba(242, 240, 235, 1) 0%,
-            rgba(242, 240, 235, 0.5) 40%,
-            transparent 100%
-          );
-        }
-        .project-description-container {
-          transform: initial;
-        }
-        /* Stay matched to .articleContainer (100%) / .articleBody (95%). */
-        .top-section.no-hero {
-          width: 100%;
-        }
-        .top-section.no-hero .project-description-container {
-          width: 95%;
-        }
-        .title {
-          transform: initial;
-          top: initial;
-          left: initial;
-          font-size: 2.5rem;
-        }
-        .articleContainer {
-          width: 100%;
-        }
-        .articleBody {
-          width: 95%;
-          font-size: 1.3rem!important;
-        }
         main {
           margin-left: 0;
+          padding: 0 1.5rem;
         }
-      }
 
-      @media (max-width: 480px) {
-        .top-section {
-          flex-direction: column;
-          height: auto;
-          width: 90%;
+        .hero {
+          min-height: 0;
+          padding-top: 34%;
         }
-        .project-description-container {
-          text-align: center;
-          margin-top: 1rem;
+
+        .hero :global(.heroImage) {
+          max-height: 46vh;
         }
-        .title {
-          font-size: 2rem;
-          text-align: center;
-        }
-        .articleContainer {
-          width: 100%;
-          padding-top: 5vh;
-          padding-bottom: 20vh;
-        }
-        .articleBody {
-          width: 100%;
-          padding: 0 1rem;
-          box-sizing: border-box;
-          font-size: 1rem;
-        }
-        .heroImage {
-          height: auto;
-          max-height: 300px;
-          width: 100%;
+
+        .process-media {
+          grid-template-columns: 1fr;
         }
       }
     </style>

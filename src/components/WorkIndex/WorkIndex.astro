@@ -1,0 +1,181 @@
+---
+import { getCollection } from "astro:content";
+import { getImage } from "astro:assets";
+import avisualsCover from "@/images/works/visuals/visuals-cover.jpg";
+import videoartCover from "@/images/works/videoart.png";
+
+// Typographic work index: year — title — medium rows on the left, a hover
+// preview pane on the right. Replaces the thumbnail grid (phase 2).
+
+// Short lowercase index labels derived from workType when no explicit
+// `medium` is set in frontmatter.
+const TYPE_TO_MEDIUM = {
+  Games: "game",
+  Installations: "installation",
+  "Sound & Music": "sound",
+  "Web & Code": "web",
+};
+
+const works = (await getCollection("works")).sort((a, b) => {
+  const yearOf = (e) => e.data.year ?? e.data.pubDate.getFullYear();
+  return (
+    yearOf(b) - yearOf(a) || b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+});
+
+// Pre-optimize preview media at a single size — the pane is ~40% of the
+// viewport, so one 900px webp per work is plenty.
+async function preview(image) {
+  if (!image) return null;
+  const o = await getImage({ src: image, format: "webp", width: 900, quality: 85 });
+  return { src: o.src, srcset: o.srcSet?.attribute ?? "" };
+}
+
+const workRows = await Promise.all(
+  works.map(async (w) => ({
+    href: `/works/${w.id}/`,
+    title: w.data.title,
+    year: String(w.data.year ?? w.data.pubDate.getFullYear()),
+    medium:
+      w.data.medium ??
+      (w.data.workType || []).map((t) => TYPE_TO_MEDIUM[t] ?? t).join(" · "),
+    img: await preview(w.data.heroImage),
+  })),
+);
+
+// The two standalone practice areas keep a row here — with the homepage grid
+// gone, the index is what keeps /3Dworks and /videoart reachable.
+const practiceRows = [
+  {
+    href: "/3Dworks",
+    title: "3D Animation",
+    year: "ongoing",
+    medium: "a/visuals",
+    img: await preview(avisualsCover),
+  },
+  {
+    href: "/videoart",
+    title: "Videoart",
+    year: "ongoing",
+    medium: "moving image",
+    img: await preview(videoartCover),
+  },
+];
+
+const rows = [...workRows, ...practiceRows];
+---
+
+<div class="work-index">
+  <!-- Rows use the shared .index-row language from global.css (phase 3) so the
+       Work index and the Writing index share one structural DNA. -->
+  <ul class="index-list">
+    {
+      rows.map((row, i) => (
+        <li>
+          <a class="index-row" href={row.href} data-index={String(i)}>
+            <span class="index-row-meta">{row.year}</span>
+            <span class="index-row-title">{row.title}</span>
+            <span class="index-row-meta">{row.medium}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <!-- All previews are stacked in the pane and lazy-loaded; hovering/focusing
+       a row crossfades the matching one in. aria-hidden: purely decorative,
+       the rows themselves carry all information. -->
+  <div class="preview" aria-hidden="true">
+    {
+      rows.map(
+        (row, i) =>
+          row.img && (
+            <img
+              class:list={["preview-img", { "is-active": i === 0 }]}
+              data-preview={String(i)}
+              src={row.img.src}
+              srcset={row.img.srcset || undefined}
+              sizes="40vw"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          ),
+      )
+    }
+  </div>
+</div>
+
+<script>
+  // Delegated hover/focus → preview swap. Delegation on document survives
+  // Astro ClientRouter swaps without re-binding, and plain mouseover/focusin
+  // keeps keyboard and pointer behavior identical.
+  function activate(row: Element) {
+    const root = row.closest(".work-index");
+    if (!root) return;
+    const idx = (row as HTMLElement).dataset.index;
+    root.querySelectorAll(".preview-img").forEach((img) => {
+      img.classList.toggle(
+        "is-active",
+        (img as HTMLElement).dataset.preview === idx,
+      );
+    });
+  }
+
+  function onEnter(e: Event) {
+    const target = e.target;
+    if (!(target instanceof Element)) return;
+    const row = target.closest(".work-index .index-row");
+    if (row) activate(row);
+  }
+
+  document.addEventListener("mouseover", onEnter);
+  document.addEventListener("focusin", onEnter);
+</script>
+
+<style>
+  .work-index {
+    display: grid;
+    grid-template-columns: 60% 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  /* Row/typography styles live in global.css (.index-row et al., phase 3). */
+
+  /* Preview pane: fixed 16:10 box (closest to the covers' median ~3:2 ratio),
+     sticky so it follows the list. Crossfade = stacked absolutely-positioned
+     images toggling opacity — zero layout shift. */
+  .preview {
+    /* sticky is a positioned box, so it also anchors the absolute images. */
+    position: sticky;
+    top: 20vh;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  .preview-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .preview-img.is-active {
+    opacity: 1;
+  }
+
+  /* Mobile: single column, no preview — tapping a row goes straight to the
+     work, so the pane (and its media requests) is dropped entirely. */
+  @media (max-width: 768px) {
+    .work-index {
+      grid-template-columns: 1fr;
+    }
+
+    .preview {
+      display: none;
+    }
+  }
+</style>

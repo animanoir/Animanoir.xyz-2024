@@ -1,5 +1,6 @@
 ---
 import { SITE_TITLE } from "@/consts";
+import LastFm from "@/components/LastFm.jsx";
 import MutatingSubheader from "@/components/MutatingSubheader.jsx";
 import Navbar from "@/components/Navbar.astro";
 import Ornaments from "./Ornaments.astro";
@@ -27,6 +28,7 @@ const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
             </span>
           </h2>
         </a>
+        <LastFm client:load />
       </motion.div>
     ) : (
       <Fragment>
@@ -38,6 +40,7 @@ const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
             </span>
           </h2>
         </a>
+        <LastFm client:load />
       </Fragment>
     )
   }
@@ -61,23 +64,24 @@ const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
     margin-top: 2rem;
     left: 0;
   }
+  /* Navbar sits top-right, on the same band as the header title (top-left) —
+     clearly separated across the viewport width. */
   .navbar-wrapper {
     position: fixed;
-    left: calc(var(--page-padding, 6%) * 0.8);
-    top: 50%;
-    transform: translateY(-50%);
+    right: var(--page-padding, 6%);
+    top: 2rem;
     z-index: 1000;
   }
   header a {
     text-decoration: none;
   }
   #headerTitle {
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 400;
     margin: 0;
     padding: 0;
     line-height: 1.2;
-    font-family: "Bebas Neue", sans-serif;
+    font-family: var(--font-sans);
     user-select: none;
     transition: color 0.25s ease-out;
   }
@@ -93,7 +97,7 @@ const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
 
   h1 {
     margin: 0.5em 0;
-    color: #1c1c1c;
+    color: var(--color-ink);
     transition: color 0.25s ease-out;
     cursor: pointer;
   }
@@ -101,15 +105,12 @@ const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
     color: #ee5858;
   }
 
-  /* On mobile the navbar collapses into the hamburger menu (see Navbar.astro).
-     Drop the translate here: a `transform` turns this wrapper into the containing
-     block for the hamburger button + full-screen overlay (both position: fixed),
-     which would otherwise anchor them to this little left-center box instead of
-     the viewport. Without the transform they pin to the viewport corner. */
+  /* On mobile the navbar collapses into the hamburger menu (see Navbar.astro);
+     the wrapper goes static so the fixed hamburger/overlay anchor to the
+     viewport, not this box. */
   @media (max-width: 768px) {
     .navbar-wrapper {
       position: static;
-      transform: none;
     }
   }
 
@@ -120,7 +121,7 @@ const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
       padding-left: 1rem;
     }
     #headerTitle, #headerSubtitle {
-      font-size: 1.5rem;
+      font-size: 1.05rem;
     }
     nav {
       font-size: 0.9em;

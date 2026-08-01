@@ -1,26 +1,26 @@
 .lastfmContainer {
   /* max-width: 95%;
   word-wrap: break-word; */
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-mono);
   font-size: 0.7rem;
   display: flex;
   flex-direction: row;
   align-items: center;
   cursor: crosshair;
   user-select: none;
-  color: rgba(28, 28, 28, 0.224);
+  color: rgba(var(--color-ink-rgb, 242, 240, 235), 0.3);
 }
 
 .lastFmLink {
-  text-decoration-color: #1c1c1c75
+  text-decoration-color: rgba(var(--color-ink-rgb, 242, 240, 235), 0.45);
 }
 
 .songInfo {
-  color: #1c1c1c8f;
+  color: rgba(var(--color-ink-rgb, 242, 240, 235), 0.6);
 }
 
 .lastFmDash {
-  color: rgba(28, 28, 28, 0.224);
+  color: rgba(var(--color-ink-rgb, 242, 240, 235), 0.3);
 }
 
 .lastfmContainer p {
@@ -35,7 +35,6 @@
   pointer-events: none;
   transition: opacity 0.4s ease;
   z-index: 100;
-  box-shadow: 6px 6px 10px rgba(0, 0, 0, 1);
 }
 
 @media screen and (max-width: 768px) {

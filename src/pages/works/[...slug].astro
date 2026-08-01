@@ -5,17 +5,53 @@ import WorkPost from "../../layouts/WorkPost.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("works");
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: post,
-  }));
-}
-type Props = CollectionEntry<"works">;
 
-const post = Astro.props;
+  // Same ordering as the /work index: year descending, then pubDate.
+  const yearOf = (e: CollectionEntry<"works">) =>
+    e.data.year ?? e.data.pubDate.getFullYear();
+  const sorted = [...posts].sort(
+    (a, b) =>
+      yearOf(b) - yearOf(a) || b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+  );
+
+  // Build-time report: which works still lack the editorial fields. No
+  // placeholders are rendered for missing fields — these are for Óscar to fill.
+  for (const field of ["intent", "role"] as const) {
+    const missing = sorted.filter((p) => !p.data[field]).map((p) => p.id);
+    if (missing.length > 0)
+      console.warn(`[works] missing \`${field}\`: ${missing.join(", ")}`);
+  }
+  const missingStack = sorted
+    .filter((p) => !(p.data.stack ?? p.data.tools)?.length)
+    .map((p) => p.id);
+  if (missingStack.length > 0)
+    console.warn(`[works] missing \`stack\`/\`tools\`: ${missingStack.join(", ")}`);
+
+  // Sequential navigation wraps around so no case study dead-ends.
+  return sorted.map((post, i) => {
+    const next = sorted[(i + 1) % sorted.length];
+    const prev = sorted[(i - 1 + sorted.length) % sorted.length];
+    return {
+      params: { slug: post.id },
+      props: {
+        post,
+        prev: { href: `/works/${prev.id}/`, title: prev.data.title },
+        next: { href: `/works/${next.id}/`, title: next.data.title },
+      },
+    };
+  });
+}
+
+type Props = {
+  post: CollectionEntry<"works">;
+  prev: { href: string; title: string };
+  next: { href: string; title: string };
+};
+
+const { post, prev, next } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<WorkPost {...post.data}>
+<WorkPost post={post} prev={prev} next={next}>
   <Content />
 </WorkPost>

@@ -13,7 +13,7 @@
   flex-wrap: wrap;
   gap: 0.5rem 1.5rem;
   margin: 0 0 1.5rem;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
 }
 
@@ -54,7 +54,6 @@
   aspect-ratio: 16 / 9;
   border-radius: 0.5rem;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 }
 
 .link {
@@ -105,8 +104,7 @@
 }
 
 .placeholderTitle {
-  font-family: "Cormorant Garamond", serif;
-  font-style: italic;
+  font-family: var(--font-sans);
   font-weight: 500;
   font-size: 2rem;
   letter-spacing: 0;
@@ -124,7 +122,7 @@
    hover bar doesn't exist). */
 .tileCats {
   display: block;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans);
   font-style: normal;
   font-size: 0.65rem;
   font-weight: 400;
@@ -161,8 +159,7 @@
 
 .barTitle {
   margin: 0;
-  font-family: "Cormorant Garamond", serif;
-  font-style: italic;
+  font-family: var(--font-sans);
   font-size: 2rem;
   font-weight: 500;
   line-height: 1;
@@ -179,7 +176,7 @@
 /* Category/medium metadata next to the title — small, quiet, sans-serif. */
 .barCats {
   margin-left: 0.75rem;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans);
   font-style: normal;
   font-size: 0.75rem;
   font-weight: 400;
@@ -189,7 +186,7 @@
 }
 
 .barDesc {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans);
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -199,8 +196,7 @@
 
 .empty {
   margin: 2.5rem 0 0;
-  font-family: "Montserrat", sans-serif;
-  font-style: italic;
+  font-family: var(--font-sans);
   text-align: center;
   color: #f2f0eb;
   opacity: 0.5;
@@ -227,10 +223,9 @@
     right: 0;
     bottom: 0;
     padding: 0.6rem 0.75rem;
-    font-family: "Cormorant Garamond", serif;
-    font-style: italic;
+    font-family: var(--font-sans);
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: var(--weight-heading);
     text-align: left;
     color: #f2f0eb;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);

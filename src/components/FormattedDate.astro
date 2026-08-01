@@ -7,21 +7,16 @@ const { date } = Astro.props;
 ---
 
 <style>
+  /* Dates are data: mono, tabular, muted (phase 3). */
   time {
-    font-size: 0.8em;
-    font-family: "Open Sans", sans-serif;
-    color: #1c1c1c !important;
-    background-color: #f2f0eb;
-    padding: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: var(--type-meta);
+    color: var(--color-ink);
+    opacity: 0.6;
   }
 </style>
 
+<!-- Site-wide date format: ISO-like YYYY-MM-DD. -->
 <time datetime={date.toISOString()}>
-  {
-    date.toLocaleDateString("en-us", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })
-  }
+  {date.toISOString().slice(0, 10)}
 </time>

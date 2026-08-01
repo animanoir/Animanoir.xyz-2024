@@ -7,9 +7,9 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  font-size: 1.8rem;
-  color: #1c1c1c;
-  font-family: "Montserrat", sans-serif;
+  font-size: 1.25rem;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
 }
 
@@ -115,12 +115,12 @@
 
 .youtubeWelcome {
   margin: 0;
-  color: #1c1c1c;
+  color: var(--color-ink);
 }
 
 .youtubeWelcome p {
   text-align: center;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans);
   font-size: 1rem;
   padding: 0 1rem;
   animation: glitchEffect 0.5s infinite;
@@ -150,12 +150,6 @@
 .random-fade {
   animation: fadeInOut 3s ease-in-out infinite;
   animation-delay: calc(var(--random-delay) * 1s);
-}
-
-@media (max-width: 1920px) {
-  .youtubeWelcome p {
-    font-size: 1.45rem;
-  }
 }
 
 @media (max-width: 1200px) {

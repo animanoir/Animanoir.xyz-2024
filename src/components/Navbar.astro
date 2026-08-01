@@ -3,8 +3,6 @@ import HeaderLink from "@/components/HeaderLink.astro";
 import { ClientRouter } from "astro:transitions";
 import * as motion from "motion/react-client";
 
-const isHomePage = Astro.url.pathname === "/";
-
 // `animated` opts into the per-item narrative reveal — items slide in one by one,
 // alternating from the right then the left. Only the homepage passes it; every
 // other page renders the static markup (no React islands).
@@ -20,7 +18,7 @@ const REVEAL_OFFSET = 24;
 // Contact (email). Work categories are no longer nav items — they live as
 // filter links and metadata labels on the grid itself.
 const links = [
-  { href: isHomePage ? "/#all" : "/", label: "Work", target: "_self" },
+  { href: "/work", label: "Work", target: "_self" },
   { href: "/#about", label: "About", target: "_self" },
   { href: "/blog", label: "Writing", target: "_self" },
   { href: "mailto:etherealflux94@gmail.com", label: "Contact", target: "_self" },
@@ -254,36 +252,37 @@ const links = [
 
 <style>
   :root {
-    --text-color: #1c1c1c;
-    --hover-color: #ee5858;
-    --font-size: 0.9rem;
+    --text-color: var(--color-ink);
+    --hover-color: var(--color-accent);
+    --font-size: 0.8rem;
     --margin-horizontal: 1rem;
     --margin-vertical: 1rem;
     --transition-speed: 0.3s;
-    --bg-color: rgba(242, 240, 235, 0.95);
+    /* Mobile menu overlay — near-black to match the inverted ground. */
+    --bg-color: rgba(10, 10, 10, 0.95);
   }
 
+  /* Horizontal row — the navbar lives at the top-right of the viewport. */
   .navbar {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    /* Same face as the Quote's subtitle line (.hero-sub) on the homepage. */
-    font-family: "Montserrat", sans-serif;
+    flex-direction: row;
+    align-items: center;
+    font-family: var(--font-sans);
     gap: 0.75rem;
   }
 
   .nav-links {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
     order: 1;
   }
 
   .link-group {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.75rem;
   }
 
   .navbar a {
@@ -377,7 +376,7 @@ const links = [
   }
 
   .mobile-nav-links a {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     text-decoration: none;
     color: var(--text-color);
     transition: color var(--transition-speed);

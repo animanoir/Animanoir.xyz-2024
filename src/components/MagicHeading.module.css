@@ -1,81 +1,24 @@
 .headingContainer {
-  height: 12.5rem;
-  /* Instead of 200px */
+  height: 8rem;
   padding: 0 5rem;
 }
 
+/* Sized by the display token — the clamp() handles responsiveness, so the old
+   per-breakpoint font-size ladder is gone. min-height reserves space for the
+   scramble animation to avoid layout shift. */
 .heading {
-  font-size: 4rem;
+  font-size: var(--type-display);
+  font-weight: var(--weight-heading);
+  letter-spacing: -0.01em;
   line-height: 1.2;
-  min-height: 11.25rem;
-  /* Instead of 180px */
+  min-height: 7rem;
   transition: opacity 0.3s ease;
   margin: 0;
-}
-
-/* For 1920x1080 screens - reduced text sizes */
-@media (max-width: 1920px) {
-  .heading {
-    font-size: 4rem !important;
-  }
-}
-
-/* Mobile Large */
-@media (min-width: 576px) {
-  .heading {
-    font-size: 2.5rem;
-    min-height: 120px;
-  }
-
-  .headingContainer {
-    height: 140px;
-    padding: 0 3rem;
-  }
-}
-
-/* Tablet */
-@media (min-width: 768px) {
-  .heading {
-    font-size: 3.5rem;
-    min-height: 160px;
-  }
-
-  .headingContainer {
-    height: 180px;
-    padding: 0 4rem;
-  }
-}
-
-/* Desktop */
-@media (min-width: 992px) {
-  .heading {
-    font-size: 4rem;
-    min-height: 180px;
-  }
-
-  .headingContainer {
-    height: 200px;
-    padding: 0 5rem;
-  }
-}
-
-/* Large Desktop */
-@media (min-width: 1200px) {
-  .heading {
-    font-size: 4.5rem;
-    min-height: 200px;
-  }
-
-  .headingContainer {
-    height: 220px;
-    padding: 0 6rem;
-  }
 }
 
 /* Mobile adjust */
 @media (max-width: 760px) {
   .heading {
-    font-size: 2rem !important;
     min-height: auto;
     line-height: normal;
   }

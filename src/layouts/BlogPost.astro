@@ -1,19 +1,77 @@
 ---
-import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import ModifiedHeader from "../components/ModifiedHeader.astro";
-import Picture from "astro/components/Picture.astro";
-import RelatedArticles from "@/components/RelatedArticles.astro";
+import Footer from "@/components/Footer/Footer.astro";
 
-type Props = CollectionEntry<"blog">["data"] & {
+// Technical-journal post template (phase 4). One grid, three widths:
+// every child of the article opts into text (65ch), wide (~1.35×), or full.
+// Sequence: header (eyebrow → balanced title → deck → labeled metadata) →
+// hero figure with text-anchored caption → body → footer (tags, prev/next).
+
+interface PostLink {
+  href: string;
+  title: string;
+}
+
+interface MetaPair {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  title: string;
+  summary?: string;
+  deck?: string;
+  pubDate: Date;
+  hero?: { src: string; alt?: string };
+  heroCaption?: string;
+  heroCredit?: string;
+  heroWidth?: "text" | "wide" | "full";
+  tags?: string[];
   slug?: string;
-};
+  minutes?: number;
+  meta?: MetaPair[];
+  prev?: PostLink;
+  next?: PostLink;
+}
 
-const { title, summary, pubDate, heroImage, tags, slug } = Astro.props;
+const {
+  title,
+  summary,
+  deck,
+  pubDate,
+  hero,
+  heroCaption,
+  heroCredit,
+  heroWidth = "wide",
+  tags,
+  minutes,
+  meta = [],
+  prev,
+  next,
+} = Astro.props;
 
-// Extract the actual slug from the URL if not provided
-const actualSlug =
-  slug || Astro.url.pathname.split("/").filter(Boolean).pop() || "";
+// Site-wide date format: ISO-like YYYY-MM-DD.
+const isoDate = pubDate.toISOString().slice(0, 10);
+
+// Null-safe (Sanity nulls bypass destructuring defaults): heroes default wide.
+const heroCol = heroWidth ?? "wide";
+
+// Eyebrow: the post's first tag, else the section name.
+const eyebrow = tags?.[0] ?? "writing";
+
+// Labeled metadata pairs; posts append their own via the `meta` field.
+// (Sanity returns null — not undefined — for absent fields, so coalesce.)
+const metaPairs: MetaPair[] = [
+  { label: "date", value: isoDate },
+  ...(minutes ? [{ label: "reading", value: `${minutes} min` }] : []),
+  ...(meta ?? []),
+];
+
+// Hero images are served pre-cropped to 4:3 (the native ratio of 6 of the 7
+// existing heroes) — see [...slug].astro. 1600×1200 rendered box.
+const HERO_W = 1600;
+const HERO_H = 1200;
 ---
 
 <html lang="en">
@@ -22,478 +80,334 @@ const actualSlug =
       title={title}
       description={summary ??
         "Blog post by Óscar A. Montiel: interactive media artist."}
-      image={heroImage?.src}
+      image={hero?.src}
       type="article"
       publishDate={pubDate?.toISOString()}
       author="Óscar A. Montiel"
     />
-    {
-      heroImage && (
-        <link
-          rel="preload"
-          as="image"
-          href={heroImage.src}
-          fetchpriority="high"
-        />
-      )
-    }
   </head>
-  <body class={heroImage ? "has-hero" : ""}>
+  <body>
     <ModifiedHeader />
-    {
-      heroImage &&
-        (heroImage.format ? (
-          <Picture
-            class="heroimage"
-            src={heroImage}
-            alt={title}
-            quality={50}
-            loading="eager"
-            fetchpriority="high"
-            decoding="sync"
-          />
-        ) : (
-          <img
-            class="heroimage"
-            src={heroImage.src}
-            alt={title}
-            loading="eager"
-            fetchpriority="high"
-            decoding="sync"
-          />
-        ))
-    }
-    <div class="articleBody">
-      <article class="articleContainer">
-        <div class="top-container">
-          <div class="title-container">
-            <h1 class="title">{title}</h1>
-            <h2 class="summary">{summary}</h2>
-            <time class="postDate">
-              {new Date(pubDate).toLocaleDateString()}
-            </time>
-          </div>
-          <div class="related-container">
-            <RelatedArticles
-              currentTags={tags}
-              currentUrl={Astro.url.pathname}
-              currentSlug={actualSlug}
-              maxResults={3}
-            />
-          </div>
-        </div>
-        <slot />
+    <main>
+      <article class="post">
+        <!-- 1 · Header block: eyebrow, balanced title, optional deck, labeled
+             metadata as a definition list, hairline rule. -->
+        <header class="post-header">
+          <p class="eyebrow">{eyebrow}</p>
+          <h1 class="title">{title}</h1>
+          {deck && <p class="deck">{deck}</p>}
+          <dl class="meta-row">
+            {
+              metaPairs.map((pair) => (
+                <div class="meta-pair">
+                  <dt>{pair.label}</dt>
+                  <dd>
+                    {pair.label === "date" ? (
+                      <time datetime={pubDate.toISOString()}>{pair.value}</time>
+                    ) : (
+                      pair.value
+                    )}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+        </header>
+
+        <!-- 2 · Hero as a figure on the grid (default wide), fixed 4:3 box,
+             caption anchored to the text column's left edge. -->
         {
-          heroImage && (
-            <a
-              href={heroImage.src}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="end-hero-link"
-            >
-              {heroImage.format ? (
-                <Picture
-                  class="end-hero-image"
-                  src={heroImage}
-                  alt={title}
-                  quality={50}
-                  loading="lazy"
-                  decoding="async"
-                />
-              ) : (
-                <img
-                  class="end-hero-image"
-                  src={heroImage.src}
-                  alt={title}
-                  loading="lazy"
-                  decoding="async"
-                />
+          hero && (
+            <figure class="post-hero" data-width={heroCol}>
+              <img
+                src={hero.src}
+                alt={hero.alt ?? title}
+                width={HERO_W}
+                height={HERO_H}
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+              />
+              {(heroCaption || heroCredit) && (
+                <figcaption>
+                  {heroCaption}
+                  {heroCaption && heroCredit && (
+                    <span class="credit-sep" aria-hidden="true">
+                      {" "}
+                      ·{" "}
+                    </span>
+                  )}
+                  {heroCredit}
+                </figcaption>
               )}
-            </a>
+            </figure>
           )
         }
+
+        <!-- 3 · Body. The renderer's wrapper is display:contents so every
+             block sits directly on the article grid. -->
+        <slot />
+
+        <!-- 4 · Footer: hairline, tags, sequential navigation, back link. -->
+        <footer class="post-footer">
+          {
+            tags && tags.length > 0 && (
+              <p class="tag-row">{tags.join(" · ")}</p>
+            )
+          }
+          <nav class="sequence" aria-label="Post navigation">
+            {
+              prev && (
+                <a class="seq-link seq-prev" href={prev.href}>
+                  <span class="mono-label">previous</span>
+                  <span class="seq-title">{prev.title}</span>
+                </a>
+              )
+            }
+            {
+              next && (
+                <a class="seq-link seq-next" href={next.href}>
+                  <span class="mono-label">next post</span>
+                  <span class="seq-title">{next.title}</span>
+                </a>
+              )
+            }
+          </nav>
+          <a class="back-link mono-label" href="/blog">← index</a>
+        </footer>
       </article>
-    </div>
+    </main>
+    <Footer />
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
-      @import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Space+Grotesk:wght@300..700&display=swap");
-
-      /* ==========================================================================
-         HEADER / NAVBAR LEGIBILITY OVER DARK HERO
-         The hero image is used as a darkened full-viewport background, so the
-         header and navbar (which default to dark text) need to be forced light
-         to stay readable. Mirrors the approach used in photodiary.astro.
-         ========================================================================== */
-      :global(body.has-hero header #headerTitle),
-      :global(body.has-hero header #headerSubtitle),
-      :global(body.has-hero header h1),
-      :global(body.has-hero header h2) {
-        color: #f2f0eb !important;
-      }
-      :global(body.has-hero header a:hover #headerTitle),
-      :global(body.has-hero header a:hover #headerSubtitle) {
-        color: #ee5858 !important;
-      }
-      :global(body.has-hero .navbar a),
-      :global(body.has-hero .navbar .cv-trigger),
-      :global(body.has-hero .mobile-nav-links a) {
-        color: #f2f0eb !important;
-      }
-      :global(body.has-hero .navbar a:hover),
-      :global(body.has-hero .navbar .cv-trigger:hover),
-      :global(body.has-hero .mobile-nav-links a:hover) {
-        color: #ee5858 !important;
-      }
-      :global(body.has-hero .hamburger-line) {
-        background-color: #f2f0eb !important;
-      }
-      :global(body.has-hero .mobile-menu) {
-        background-color: rgba(6, 6, 6, 0.95) !important;
-      }
-      :global(body.has-hero .ornaments .circle) {
-        background-color: #f2f0eb !important;
-      }
-      :global(body.has-hero .separator-line),
-      :global(body.has-hero .mobile-separator-line) {
-        background: linear-gradient(
-          90deg,
-          transparent 0%,
-          rgba(242, 240, 235, 0.4) 20%,
-          rgba(242, 240, 235, 0.7) 50%,
-          rgba(242, 240, 235, 0.4) 80%,
-          transparent 100%
-        ) !important;
-      }
-      :global(body.has-hero .mobile-separator-line)::before {
-        background: rgba(242, 240, 235, 0.9) !important;
-        box-shadow: 0 0 12px rgba(242, 240, 235, 0.6) !important;
-      }
-      :global(body.has-hero .lastfmContainer) {
-        color: rgba(255, 255, 255, 0.224) !important;
-      }
-      :global(body.has-hero .songInfo) {
-        color: #f2f0eb8f !important;
-      }
-      :global(body.has-hero .lastFmDash) {
-        color: rgba(255, 255, 255, 0.224) !important;
-      }
-      :global(body.has-hero .lastFmLink) {
-        text-decoration-color: #f2f0eb75 !important;
-      }
-      :global(body.has-hero .social-icon) {
-        filter: none !important;
-      }
-      :global(body.has-hero footer) {
-        color: #f2f0eb !important;
+      main {
+        /* Same geometry as the Work pages. */
+        margin-left: var(--left-rail);
+        margin-right: var(--page-padding, 5%);
       }
 
-      /* ==========================================================================
-         ARTICLE CONTAINER
-         Main container for blog post content
-         ========================================================================== */
-      .heroimage {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover;
-        filter:  brightness(0.1);
-        z-index: 1;
-        /* Placeholder background while image loads */
-        background: linear-gradient(
-          135deg,
-          #1a1a2e 0%,
-          #16213e 50%,
-          #0f0f23 100%
-        );
-        /* Smooth fade-in animation when loaded */
-        animation: heroFadeIn 0.3s ease-out;
-      }
-
-      @keyframes heroFadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      .end-hero-link {
-        display: block;
-        width: 100%;
-      }
-      .end-hero-image {
-        width: 100%;
-        height: auto;
-        margin-top: 2rem;
-        border-radius: 8px;
-        transition: opacity 0.3s ease;
-      }
-      .end-hero-image:hover {
-        opacity: 0.9;
-      }
-      .articleContainer {
+      /* == The article grid (phase 4) =====================================
+         Left-anchored, three named widths. Every left edge lands on the same
+         start line; widths differ only rightward, so captions and prose stay
+         aligned with wide/full figures by construction. */
+      .post {
+        display: grid;
+        grid-template-columns:
+          [full-start wide-start text-start] minmax(0, var(--measure))
+          [text-end] minmax(0, calc(var(--measure-wide) - var(--measure)))
+          [wide-end] minmax(0, 1fr)
+          [full-end];
+        max-width: 68rem;
         margin: 0 auto;
-        margin-right: 10rem;
-        position: relative;
-        max-width: 60%;
-        font-size: 1.5rem;
-        z-index: 10;
-      }
-      .articleContainer h2 {
-        margin-top: 0 !important;
-      }
-      .top-container {
-        width: 100%;
-        position: relative;
-        z-index: 10;
-      }
-      /* ==========================================================================
-         ARTICLE BODY
-         Content wrapper with base typography styles
-         ========================================================================== */
-      .title-container {
-        z-index: 10;
-      }
-      .articleBody {
-        color: #f2f0eb;
-        margin: 0 auto;
-        width: 80%;
-        display: flex;
-        flex-direction: column;
-        padding-top: 8rem;
-        padding-bottom: 30vh;
-        font-family: "Cormorant Garamond", serif;
+        padding-top: 22vh;
+        padding-bottom: var(--space-section);
       }
 
-      .articleBody p {
-        margin-bottom: 1.1rem;
-        line-height: 1.6;
-        font-size: 2rem;
+      /* Everything defaults to the text column; media opts out via
+         data-width. The renderer wrapper joins the grid via display:contents
+         (astro-island already is). */
+      .post > :global(*),
+      .post :global(.portable-text-content > *) {
+        grid-column: text;
       }
 
-      /* ==========================================================================
-         TYPOGRAPHY COMPONENTS
-         Individual text elements with specific styling
-         ========================================================================== */
+      .post :global(.portable-text-content) {
+        display: contents;
+      }
 
-      /* Main blog post title */
+      .post :global([data-width="text"]) {
+        grid-column: text;
+      }
+
+      .post :global([data-width="wide"]) {
+        grid-column: wide;
+      }
+
+      .post :global([data-width="full"]) {
+        grid-column: full;
+      }
+
+      /* == 1 · Header block =============================================== */
+      .post-header {
+        border-bottom: 0.5px solid rgba(var(--color-ink-rgb), 0.35);
+        padding-bottom: 1.5rem;
+      }
+
+      .eyebrow {
+        margin: 0 0 1.25rem;
+        padding: 0;
+        font-family: var(--font-mono);
+        font-size: var(--type-meta);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+      }
+
       .title {
         margin: 0;
-        font-size: 2rem;
-        font-weight: normal;
-        font-family: "Space Grotesk", sans-serif;
-        text-align: start;
-        color: #f2f0eb;
-        margin-bottom: 1rem;
+        /* ~20ch narrower than the body measure so long titles break well. */
+        max-width: 45ch;
+        font-family: var(--font-sans);
+        font-weight: var(--weight-heading);
+        font-size: var(--type-title);
+        letter-spacing: -0.01em;
+        line-height: 1.15;
+        text-wrap: balance;
+        color: var(--color-ink);
       }
 
-      /* Publication date display */
-      .postDate {
-        font-size: 0.5rem;
-        font-family: "Space Grotesk", sans-serif;
-        margin: 0 0 0 auto;
-        color: #999;
+      .deck {
+        margin: 1.25rem 0 0;
+        padding: 0;
+        max-width: var(--measure);
+        font-family: var(--font-sans);
+        font-size: calc(var(--type-body) * 1.15);
+        line-height: 1.5;
+        color: var(--text-secondary);
+      }
+
+      /* Labeled metadata: LABEL value pairs, mono, tabular. */
+      .meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 2.5rem;
+        margin: 1.75rem 0 0;
+        font-family: var(--font-mono);
+        font-size: var(--type-meta);
+        font-variant-numeric: tabular-nums;
+        font-feature-settings: "tnum";
+      }
+
+      .meta-pair {
+        display: flex;
+        gap: 0.75ch;
+        align-items: baseline;
+      }
+
+      .meta-pair dt {
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+      }
+
+      .meta-pair dd {
+        margin: 0;
+        color: var(--color-ink);
+      }
+
+      /* == 2 · Hero figure ================================================ */
+      .post-hero {
+        margin: 3rem 0 0;
+      }
+
+      .post-hero img {
+        display: block;
+        width: 100%;
+        height: auto;
+        /* One ratio site-wide; sources are also server-cropped to match. */
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+      }
+
+      .post-hero figcaption {
+        /* Anchored to the text column's left edge (shared start line). */
+        max-width: var(--measure);
+        margin-top: 0.75rem;
+        font-family: var(--font-mono);
+        font-size: var(--type-meta);
+        line-height: 1.5;
+        color: var(--text-muted);
+        text-align: left;
+      }
+
+      /* == 4 · Footer ===================================================== */
+      .post-footer {
+        margin-top: var(--space-section);
+        border-top: 0.5px solid rgba(var(--color-ink-rgb), 0.35);
+        padding-top: 1.5rem;
+      }
+
+      .mono-label {
+        font-family: var(--font-mono);
+        font-size: var(--type-meta);
+        letter-spacing: 0.02em;
+        color: var(--color-ink);
+        opacity: 0.55;
+        margin: 0;
         padding: 0;
       }
 
-      /* Tools/metadata display (unused but kept for future use) */
-      /* .tools {
-        display: block;
-        text-align: center;
-        font-size: 0.7rem;
-        font-family: "
-            Cormorant Garamond "",
-          serif;
-        color: #fdfefe7f;
-        padding-bottom: 2rem;
-        font-style: italic;
-      }
-      */
-
-      /* ==========================================================================
-         RELATED ARTICLES CONTAINER
-         Styling for the related articles section
-         ========================================================================== */
-      .related-container {
-        margin: 0 auto;
+      .tag-row {
+        margin: 0 0 1.5rem;
+        padding: 0;
+        font-family: var(--font-mono);
+        font-size: var(--type-meta);
+        color: var(--text-muted);
       }
 
-      /* ==========================================================================
-         CONTENT ELEMENTS
-         Styling for various content elements within articles
-         ========================================================================== */
-
-      /* Horizontal rule separator */
-      hr {
-        border: none;
-        border-top: 1px solid #ddd;
-        margin: 1rem 0;
+      .sequence {
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
       }
 
-      /* ==========================================================================
-         RESPONSIVE DESIGN
-         Media queries for different screen sizes
-         ========================================================================== */
-
-      /* Large desktop screens */
-      @media (min-width: 1921px) {
-        .title {
-          font-size: 3rem;
-          line-height: 1;
-        }
-        .summary {
-          font-size: 1.2rem;
-        }
-        .postDate {
-          font-size: 0.8rem;
-        }
-        .articleContainer {
-          font-size: 2rem;
-          max-width: 60%;
-          margin-top: 0 !important;
-        }
-        .articleBody {
-          width: 60%;
-          padding-top: 8rem;
-        }
+      .seq-link {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        text-decoration: none;
+        color: var(--color-ink);
       }
 
-      /* Desktop screens */
-      @media (min-width: 1361px) and (max-width: 1920px) {
-        .title {
-          line-height: 1.2;
-          font-size: 2.2em;
-          line-height: 1;
-          font-weight: bold;
-        }
-        .summary {
-          font-size: 1.1rem;
-        }
-        .postDate {
-          font-size: 0.8rem;
-        }
-        .top-container {
-          width: 100%;
-        }
-        .articleContainer {
-          font-size: 1.5rem;
-          max-width: 60%;
-          margin-top: 0 !important;
-        }
-        .articleBody {
-          padding-top: 15vh;
-        }
+      .seq-next {
+        margin-left: auto;
+        text-align: right;
       }
 
-      /* Tablet and small desktop */
-      @media (min-width: 769px) and (max-width: 1360px) {
-        .title {
-          font-size: 3rem;
-          line-height: 1.1;
-        }
-
-        .top-container {
-          width: 100%;
-        }
-        .summary {
-          font-size: 1.1rem;
-        }
-        .postDate {
-          font-size: 0.8rem;
-        }
-        .articleContainer {
-          font-size: 1.5rem;
-          margin-top: 0 !important;
-        }
-        .articleBody {
-          padding-top: 8rem;
-        }
-        .title-container {
-          width: 90%;
-        }
+      .seq-title {
+        font-family: var(--font-sans);
+        font-weight: var(--weight-heading);
+        font-size: var(--type-body);
+        transition: color 0.2s ease;
       }
 
-      /* Mobile devices */
+      .seq-link:hover .seq-title,
+      .seq-link:focus-visible .seq-title {
+        color: var(--color-accent);
+      }
+
+      .seq-link:focus-visible,
+      .back-link:focus-visible {
+        outline: 1px solid var(--color-accent);
+        outline-offset: 4px;
+      }
+
+      .back-link {
+        display: inline-block;
+        margin-top: 2.5rem;
+        text-decoration: none;
+        transition:
+          color 0.2s ease,
+          opacity 0.2s ease;
+      }
+
+      .back-link:hover {
+        color: var(--color-accent);
+        opacity: 1;
+      }
+
+      /* == Responsive ===================================================== */
       @media (max-width: 768px) {
-        .title-container {
-          width: 100%;
-          padding-right: 0;
-          padding-top: 10vh;
+        main {
+          margin-left: 0;
+          padding: 0 1.5rem;
         }
-        .top-container {
-          width: 100%;
-        }
-        .title {
-          width: 100%;
-          font-size: 2.4rem;
-          line-height: 1.1;
-          text-align: left;
-        }
-        .summary {
-          font-size: 1rem;
-          margin: 1rem 0;
-        }
-        .postDate {
-          font-size: 0.7rem;
-          text-align: left;
-          margin: 1rem 0;
-        }
-        .articleContainer {
-          flex-direction: column;
-          max-width: 95%;
-          font-size: 2rem;
-          margin-right: initial;
-          margin-top: 0 !important;
-        }
-        .articleBody {
-          flex-direction: column;
-        }
-        .articleBody p {
-          margin-bottom: 1rem;
-          line-height: 1.5;
-        }
-        .top-container {
-          height: auto;
-          padding: 2rem 0;
-        }
-        .related-container {
-          position: relative;
-          width: 100%;
-          padding: 1rem 0;
-        }
-      }
 
-      /* Small mobile devices */
-      @media (max-width: 480px) {
-        .title {
-          font-size: 2.4rem;
-          line-height: 1.2;
-          padding: 1rem 0;
-        }
-        .summary {
-          font-size: 0.9rem;
-        }
-        .postDate {
-          font-size: 0.6rem;
-        }
-        .articleContainer {
-          max-width: 100%;
-          font-size: 1.5rem;
-          margin-top: 0 !important;
-        }
-        .articleBody {
-          padding: 0 0.5rem;
-        }
-        .articleBody p {
-          margin-bottom: 0.8rem;
-          line-height: 1.4;
-        }
-        .related-container {
-          position: relative;
-          width: 100%;
-          padding: 0.5rem 0;
+        .post {
+          padding-top: 30%;
+          /* All three widths collapse to one gutter-bounded column. */
+          grid-template-columns:
+            [full-start wide-start text-start] minmax(0, 1fr)
+            [text-end wide-end full-end];
         }
       }
     </style>

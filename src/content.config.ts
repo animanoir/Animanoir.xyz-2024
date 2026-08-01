@@ -23,6 +23,23 @@ const works = defineCollection({
       workType: z.array(
         z.enum(["Games", "Installations", "Sound & Music", "Web & Code"]),
       ),
+      // == Editorial fields (phase 2) — all optional ==
+      // Short lowercase label shown in the work index row (e.g. "game",
+      // "installation", "sound", "web"). Derived from workType when absent.
+      medium: z.string().optional(),
+      // Case study: single intent paragraph. No placeholder is rendered when
+      // missing — the build logs which works lack it.
+      intent: z.string().optional(),
+      // Case study: optional 2–3 process images rendered as a two-up grid.
+      processMedia: z.array(image()).optional(),
+      // Case study: short technical section under a mono "technical note" label.
+      technicalDetail: z.string().optional(),
+      // Metadata footer: YEAR · STACK · ROLE. `stack` falls back to `tools`.
+      stack: z.array(z.string()).optional(),
+      role: z.string().optional(),
+      // Narrative homepage: works with featuredOrder appear as the three
+      // full-viewport featured sections, sorted ascending.
+      featuredOrder: z.number().optional(),
     }),
 });
 

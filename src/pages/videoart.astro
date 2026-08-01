@@ -49,9 +49,11 @@ import videoartCover from "@/images/works/videoart.png";
     }
 
     .page-title {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 4rem;
-      color: #1c1c1c;
+      font-family: var(--font-sans);
+      font-weight: var(--weight-heading);
+      font-size: var(--type-display);
+      letter-spacing: -0.01em;
+      color: var(--color-ink);
       margin-bottom: 2rem;
     }
 
@@ -64,12 +66,12 @@ import videoartCover from "@/images/works/videoart.png";
     }
 
     .articleBody {
-      font-family: "Cormorant Garamond", serif;
-      color: #1c1c1c;
-      font-size: 1.3rem;
+      font-family: var(--font-sans);
+      color: var(--color-ink);
+      font-size: var(--type-body);
       width: 90%;
       margin: 0 auto;
-      line-height: 1.8;
+      line-height: 1.6;
     }
 
     .articleBody :global(lite-youtube) {
@@ -77,14 +79,14 @@ import videoartCover from "@/images/works/videoart.png";
     }
 
     .youtube-link {
-      color: #1c1c1c;
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 1.25rem;
+      color: var(--color-ink);
+      font-family: var(--font-sans);
+      font-size: var(--type-body);
       margin-top: 3rem;
     }
 
     .youtube-link a {
-      color: #1c1c1c;
+      color: var(--color-ink);
       text-decoration: underline;
       transition: opacity 0.2s ease;
     }
@@ -108,10 +110,6 @@ import videoartCover from "@/images/works/videoart.png";
       }
       .articleBody {
         width: 95%;
-        font-size: 1.1rem;
-      }
-      .page-title {
-        font-size: 2.5rem;
       }
     }
 
@@ -125,10 +123,6 @@ import videoartCover from "@/images/works/videoart.png";
         width: 100%;
         padding: 0 1rem;
         box-sizing: border-box;
-        font-size: 1rem;
-      }
-      .page-title {
-        font-size: 2rem;
       }
     }
   </style>

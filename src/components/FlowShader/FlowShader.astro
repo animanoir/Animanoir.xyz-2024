@@ -1,0 +1,363 @@
+---
+// Flow shader band (homepage, under the thesis). A Three.js fullscreen-quad
+// fragment shader: an ethereal current of deep blue / purple / red with white
+// crests, streaming left→right while rushing out of a far horizon toward the
+// viewer. Same runtime discipline as SignatureLayer: deferred init, pauses
+// when off-screen or the tab is hidden, static frame under reduced motion,
+// DPR capped, disposed before ClientRouter swaps away.
+---
+
+<canvas class="flow-canvas" aria-hidden="true"></canvas>
+
+<style>
+  .flow-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  import * as THREE from "three";
+
+  // ---- Tunable parameters -------------------------------------------------
+  const DPR_CAP = 1.75;
+  const SPEED_FLOW = 10.4; // current streaming along the serpent's body
+  const SLITHER_SPEED = 1.15; // how fast the body undulates
+  const SPARKLE_DRIFT = 0.15; // sparkles lag far behind the current
+  const STATIC_TIME = 14.0; // frame shown under prefers-reduced-motion
+
+  const FRAGMENT = /* glsl */ `
+    precision highp float;
+
+    uniform float uTime;
+    uniform vec2 uRes;
+    uniform vec2 uMouse; // cursor in p-space (aspect-corrected x, y in [-1,1])
+    uniform float uMouseInf; // eased 0→1 while the cursor is over the band
+
+    // -- value noise + fbm --------------------------------------------------
+    float hash(vec2 p) {
+      p = fract(p * vec2(234.34, 435.345));
+      p += dot(p, p + 34.23);
+      return fract(p.x * p.y);
+    }
+
+    float noise(vec2 p) {
+      vec2 i = floor(p);
+      vec2 f = fract(p);
+      vec2 u = f * f * (3.0 - 2.0 * f);
+      return mix(
+        mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x),
+        mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x),
+        u.y
+      );
+    }
+
+    float fbm(vec2 p) {
+      float v = 0.0;
+      float a = 0.5;
+      for (int i = 0; i < 5; i++) {
+        v += a * noise(p);
+        p = p * 2.03 + vec2(17.7, 9.2);
+        a *= 0.5;
+      }
+      return v;
+    }
+
+    // Per-glint color, same family as the signature particles above:
+    // blue / purple / red / white, picked by hash.
+    vec3 sparkleColor(float rnd) {
+      if (rnd < 0.25) return vec3(0.45, 0.60, 1.00); // blue
+      if (rnd < 0.50) return vec3(0.70, 0.45, 1.00); // purple
+      if (rnd < 0.75) return vec3(1.00, 0.45, 0.55); // red
+      return vec3(1.00, 0.97, 0.95);                 // white
+    }
+
+    // Sparse twinkling glints: one soft star per ~1/6 of grid cells, each with
+    // its own position, color, twinkle speed and phase.
+    vec3 sparkle(vec2 g) {
+      vec2 id = floor(g);
+      vec2 f = fract(g) - 0.5;
+      float rnd = hash(id);
+      if (rnd < 0.84) return vec3(0.0);
+      vec2 off = (vec2(hash(id + 17.3), hash(id + 41.7)) - 0.5) * 0.7;
+      float d = length(f - off);
+      float tw = 0.5 + 0.5 * sin(uTime * (1.5 + rnd * 5.0) + rnd * 87.0);
+      tw = pow(tw, 4.0);
+      // Soft halo + a brighter pin-point core.
+      float i = (smoothstep(0.20, 0.0, d) * 0.6 + smoothstep(0.06, 0.0, d)) * tw;
+      return sparkleColor(hash(id + 5.9)) * i;
+    }
+
+    void main() {
+      vec2 uv = gl_FragCoord.xy / uRes;
+      float aspect = uRes.x / uRes.y;
+      vec2 p = uv * 2.0 - 1.0;
+      p.x *= aspect;
+
+      // Travel parameter along the band: left = far away, right = near.
+      // The serpent emerges tiny in the distance and swells as it approaches
+      // the viewer.
+      float t = uv.x;
+      float s = mix(0.20, 1.45, pow(t, 1.35)); // perspective scale
+
+      // Serpentine spine: layered travelling sines + a slow fbm wobble so the
+      // winding never repeats exactly. Phases advance left → right, so the
+      // body reads as slithering out of the distance toward the camera.
+      float x = p.x;
+      float spine =
+          0.34 * sin(x * 1.6 - uTime * ${SLITHER_SPEED.toFixed(2)})
+        + 0.13 * sin(x * 3.4 + uTime * 0.7)
+        + (fbm(vec2(x * 0.7 - uTime * 0.10, uTime * 0.13)) - 0.5) * 0.42;
+      spine *= s; // smaller sway when far away
+
+      // Mouse touch: near the cursor's x the body bends toward the cursor,
+      // like the current acknowledging the finger. Falls off as a gaussian
+      // along the length, eased in/out by uMouseInf.
+      float mReach = exp(-pow((x - uMouse.x) / 0.55, 2.0)) * uMouseInf;
+      spine = mix(spine, uMouse.y * 0.8, mReach * 0.5);
+
+      // Tube seen from outside: signed distance to the spine, lateral
+      // coordinate q across the body, fake cylinder shading.
+      float r = 0.24 * s; // radius grows as it approaches
+      float d = p.y - spine;
+      float q = clamp(d / r, -1.0, 1.0);
+      // Misty, vapor-soft edge — the body dissolves rather than ends.
+      float body = smoothstep(1.25, 0.35, abs(d) / r);
+      float shade = sqrt(max(1.0 - q * q, 0.0)); // round-body lighting
+
+      // The current streaming ALONG the body. Lower frequency + a much deeper,
+      // slower domain warp than a plain scroll: big silky billows instead of
+      // granular detail.
+      vec2 st = vec2(
+        x / s * 0.85 - uTime * ${SPEED_FLOW.toFixed(2)},
+        q * 1.1
+      );
+      vec2 warp = vec2(
+        fbm(st * 10.8 + vec2(0.0, uTime * 0.18)),
+        fbm(st * 0.8 - vec2(uTime * 0.14, 0.0))
+      );
+      float n = fbm(st + (warp - 0.5) * 2.6);
+      // Compress contrast toward the middle — no hard plaster-like clumps.
+      n = mix(0.5, n, 0.72);
+      // Slow breathing so the color balance drifts dreamily over time.
+      n += 0.05 * sin(uTime * 0.30);
+
+      // The touch agitates the current locally — pushes it toward its hot
+      // (red/white) end around the cursor.
+      float touch = exp(-dot(p - uMouse, p - uMouse) * 5.0) * uMouseInf;
+      n += touch * 0.16;
+
+      // -- palette: deep blue → purple → red, white-hot crests ---------------
+      vec3 deepBlue = vec3(0.04, 0.10, 0.52);
+      vec3 purple   = vec3(0.02, 0.10, 0.12);
+      vec3 red      = vec3(0.92, 0.08, 0.16);
+      vec3 white    = vec3(1.00, 0.97, 0.95);
+
+      // Long, gentle color transitions, biased hot: red arrives earlier and
+      // the white bloom opens sooner and stronger.
+      vec3 col = mix(deepBlue, purple, smoothstep(0.06, 0.55, n));
+      col = mix(col, red, smoothstep(0.38, 0.80, n));
+      // Soft white bloom where the current peaks — mist, not hard crests.
+      col += white * pow(max(n - 0.52, 0.0) * 2.4, 1.5) * 0.9;
+
+      // A slow translucent veil drifting over the body — gauze over the flow.
+      float veil = fbm(vec2(x / s * 0.95 - uTime * 0.35, q * 0.6 + uTime * 0.05));
+      col = mix(col, mix(purple, white, 0.5), smoothstep(0.55, 0.95, veil) * 0.22);
+
+      // Diffuse cylinder shading + a satin sheen along the spine.
+      col *= 0.48 + 1.05 * shade;
+      col += white * pow(shade, 5.0) * 0.22;
+
+      // Distance cue: dim in the far distance, blazing as it reaches us.
+      float nearBright = mix(0.38, 1.55, pow(t, 1.2));
+
+      // Ethereal aura bleeding off the body into the dark — kept tight so it
+      // dies out well before the band's edges. Warmed with a breath of red.
+      float aura = exp(-abs(d) / (r * 1.8)) * 0.30;
+      vec3 auraCol = mix(mix(deepBlue, purple, 0.6), red, 0.22) + white * 0.10;
+
+      vec3 ground = vec3(0.051); // page bg #0d0d0d
+      vec3 outCol = ground
+        + auraCol * aura * nearBright
+        + col * body * nearBright;
+
+      // Dreamy sparkles: two drifting layers of multicolor twinkling glints,
+      // clustered around the body (aura-weighted). They drift much slower
+      // than the current racing along the body — floating dust, not spray.
+      vec2 sp = vec2(x * 1.0 - uTime * ${SPARKLE_DRIFT.toFixed(2)}, uv.y * 1.8);
+      vec3 glints = sparkle(sp * 7.0)
+                  + sparkle(sp * 12.0 + 31.7) * 0.6;
+      float sparkZone = clamp(aura * 2.2 + body * 0.55, 0.0, 1.0);
+      outCol += glints * sparkZone * nearBright * 0.9;
+
+      // Wide top/bottom fade: everything — body and aura — dissolves into the
+      // page ground long before the container edge, so no rectangle reads.
+      float edge = smoothstep(0.0, 0.24, uv.y) * smoothstep(1.0, 0.76, uv.y);
+      outCol = mix(ground, outCol, edge);
+
+      gl_FragColor = vec4(outCol, 1.0);
+    }
+  `;
+
+  const VERTEX = /* glsl */ `
+    void main() {
+      gl_Position = vec4(position, 1.0);
+    }
+  `;
+
+  let cleanupFns: Array<() => void> = [];
+
+  function initFlowShader() {
+    const canvas = document.querySelector<HTMLCanvasElement>(".flow-canvas");
+    if (!canvas || canvas.dataset.initialized) return;
+    canvas.dataset.initialized = "true";
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: false,
+        alpha: false,
+        powerPreference: "low-power",
+      });
+    } catch {
+      // No WebGL — the band simply stays as the page ground color.
+      return;
+    }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, DPR_CAP));
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const uniforms = {
+      uTime: { value: 0 },
+      uRes: { value: new THREE.Vector2(1, 1) },
+      uMouse: { value: new THREE.Vector2(0, 0) },
+      uMouseInf: { value: 0 },
+    };
+    const material = new THREE.ShaderMaterial({
+      vertexShader: VERTEX,
+      fragmentShader: FRAGMENT,
+      uniforms,
+      depthTest: false,
+      depthWrite: false,
+    });
+    const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
+    scene.add(quad);
+
+    function resize() {
+      const w = canvas!.clientWidth;
+      const h = canvas!.clientHeight;
+      if (w === 0 || h === 0) return;
+      renderer.setSize(w, h, false);
+      const dpr = renderer.getPixelRatio();
+      uniforms.uRes.value.set(w * dpr, h * dpr);
+    }
+    resize();
+
+    // Reduced motion: one static frame, release the GL loop entirely.
+    if (reduceMotion) {
+      uniforms.uTime.value = STATIC_TIME;
+      renderer.render(scene, camera);
+      cleanupFns.push(() => {
+        material.dispose();
+        quad.geometry.dispose();
+        renderer.dispose();
+      });
+      return;
+    }
+
+    let raf = 0;
+    let running = false;
+    let inView = false;
+    const clock = new THREE.Clock();
+
+    // Cursor target in the shader's p-space; eased toward every frame so the
+    // body reacts with a liquid lag instead of snapping to the pointer.
+    const mouseTarget = new THREE.Vector2(0, 0);
+    let mouseInfTarget = 0;
+
+    function onPointerMove(e: PointerEvent) {
+      const rect = canvas!.getBoundingClientRect();
+      const nx = (e.clientX - rect.left) / rect.width;
+      const ny = (e.clientY - rect.top) / rect.height;
+      const inside = nx >= 0 && nx <= 1 && ny >= 0 && ny <= 1;
+      mouseInfTarget = inside ? 1 : 0;
+      if (inside) {
+        const aspect = rect.width / rect.height;
+        // Match the fragment shader's coordinates: aspect-corrected x,
+        // y up-positive in [-1, 1].
+        mouseTarget.set((nx * 2 - 1) * aspect, (1 - ny) * 2 - 1);
+      }
+    }
+
+    function loop() {
+      if (!running) return;
+      uniforms.uTime.value += Math.min(clock.getDelta(), 0.05);
+      uniforms.uMouse.value.lerp(mouseTarget, 0.07);
+      uniforms.uMouseInf.value +=
+        (mouseInfTarget - uniforms.uMouseInf.value) * 0.06;
+      renderer.render(scene, camera);
+      raf = requestAnimationFrame(loop);
+    }
+
+    function setRunning(next: boolean) {
+      if (next === running) return;
+      running = next;
+      if (running) {
+        clock.getDelta(); // swallow the pause so time doesn't jump
+        raf = requestAnimationFrame(loop);
+      } else {
+        cancelAnimationFrame(raf);
+      }
+    }
+
+    const io = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      setRunning(inView && document.visibilityState === "visible");
+    });
+    io.observe(canvas);
+
+    function onVisibility() {
+      setRunning(inView && document.visibilityState === "visible");
+    }
+
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("resize", resize);
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+
+    cleanupFns.push(() => {
+      setRunning(false);
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("pointermove", onPointerMove);
+      material.dispose();
+      quad.geometry.dispose();
+      renderer.dispose();
+    });
+  }
+
+  function deferInit() {
+    // Initialize after content paint so the band never competes with LCP.
+    if (!document.querySelector(".flow-canvas")) return;
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(() => initFlowShader(), { timeout: 1500 });
+    } else {
+      setTimeout(initFlowShader, 200);
+    }
+  }
+
+  document.addEventListener("astro:before-swap", () => {
+    cleanupFns.forEach((fn) => fn());
+    cleanupFns = [];
+  });
+  document.addEventListener("astro:page-load", deferInit);
+</script>

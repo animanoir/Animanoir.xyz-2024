@@ -45,6 +45,14 @@ export default defineType({
       description: "A brief summary of the blog post for SEO and previews",
     }),
     defineField({
+      name: "deck",
+      title: "Deck / standfirst",
+      type: "text",
+      rows: 2,
+      description:
+        "One-sentence thesis shown under the title, before the image",
+    }),
+    defineField({
       name: "publishedAt",
       title: "Published At",
       type: "datetime",
@@ -63,6 +71,52 @@ export default defineType({
           type: "string",
           title: "Alternative text",
           description: "Important for SEO and accessibility",
+        },
+      ],
+    }),
+    defineField({
+      name: "heroCaption",
+      title: "Hero caption",
+      type: "string",
+      description:
+        "Required whenever a main image is set — anchored to the text column",
+    }),
+    defineField({
+      name: "heroCredit",
+      title: "Hero credit",
+      type: "string",
+      description: "Optional credit, rendered after the caption",
+    }),
+    defineField({
+      name: "heroWidth",
+      title: "Hero width",
+      type: "string",
+      options: {
+        list: [
+          { title: "Text (65ch)", value: "text" },
+          { title: "Wide (default)", value: "wide" },
+          { title: "Full", value: "full" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "wide",
+    }),
+    defineField({
+      name: "meta",
+      title: "Extra metadata pairs",
+      type: "array",
+      description:
+        "Optional labeled pairs for the header metadata row (e.g. ARCHIVE / 2024–2025)",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "label", type: "string", title: "Label" },
+            { name: "value", type: "string", title: "Value" },
+          ],
+          preview: {
+            select: { title: "label", subtitle: "value" },
+          },
         },
       ],
     }),
@@ -139,6 +193,19 @@ export default defineType({
               name: "caption",
               type: "string",
               title: "Caption",
+            },
+            {
+              name: "width",
+              type: "string",
+              title: "Figure width",
+              options: {
+                list: [
+                  { title: "Text (65ch)", value: "text" },
+                  { title: "Wide (default)", value: "wide" },
+                  { title: "Full", value: "full" },
+                ],
+                layout: "radio",
+              },
             },
           ],
         },

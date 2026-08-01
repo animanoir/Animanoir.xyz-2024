@@ -1,156 +1,257 @@
 ---
 import BlogPost from "../../layouts/BlogPost.astro";
 import PortableTextRenderer from "../../components/PortableTextRenderer";
-import { getAllPostSlugs, getPostBySlug, urlFor } from "../../lib/sanity";
+import {
+  getAllPosts,
+  readingTimeFromBody,
+  urlFor,
+  type SanityPost,
+} from "../../lib/sanity";
 
+// One fetch for the whole collection: each page gets its post plus its
+// sequential neighbors (posts are ordered publishedAt desc, so "previous" is
+// the newer post and "next" the older one — no dead ends).
 export async function getStaticPaths() {
-  const slugs = await getAllPostSlugs();
-  return slugs.map((item) => ({
-    params: { slug: item.slug },
+  const posts = await getAllPosts();
+  const link = (p?: SanityPost) =>
+    p ? { href: `/blog/${p.slug.current}/`, title: p.title } : undefined;
+
+  // Captions are mandatory for heroes (phase 4) — warn, don't autogenerate.
+  const missingCaptions = posts
+    .filter((p) => p.mainImage && !p.heroCaption)
+    .map((p) => p.slug.current);
+  if (missingCaptions.length > 0) {
+    console.warn(
+      `[blog] ${missingCaptions.length} post(s) have a hero but no heroCaption:\n` +
+        missingCaptions.map((s) => `  - ${s}`).join("\n"),
+    );
+  }
+
+  return posts.map((post, i) => ({
+    params: { slug: post.slug.current },
+    props: {
+      post,
+      prev: link(posts[i - 1]),
+      next: link(posts[i + 1]),
+    },
   }));
 }
 
-const { slug } = Astro.params;
-const post = await getPostBySlug(slug as string);
+const { post, prev, next } = Astro.props;
 
-if (!post) {
-  return Astro.redirect("/404");
-}
-
-// Get the hero image URL if available
-const heroImageUrl = post.mainImage
-  ? urlFor(post.mainImage).width(1920).auto("format").url()
+// Hero pre-cropped server-side to the site-wide 4:3 figure ratio — Sanity's
+// crop honors the image hotspot, so the download already matches the box.
+const heroUrl = post.mainImage
+  ? urlFor(post.mainImage)
+      .width(1600)
+      .height(1200)
+      .fit("crop")
+      .auto("format")
+      .url()
   : undefined;
 ---
 
 <BlogPost
   title={post.title}
+  summary={post.summary}
+  deck={post.deck}
   pubDate={new Date(post.publishedAt)}
-  heroImage={heroImageUrl ? { src: heroImageUrl } : undefined}
+  hero={heroUrl ? { src: heroUrl, alt: post.mainImage?.alt } : undefined}
+  heroCaption={post.heroCaption}
+  heroCredit={post.heroCredit}
+  heroWidth={post.heroWidth}
   tags={post.tags}
   slug={post.slug.current}
+  minutes={readingTimeFromBody(post.body)}
+  meta={post.meta}
+  prev={prev}
+  next={next}
 >
   {post.body && <PortableTextRenderer client:load value={post.body} />}
 </BlogPost>
 
-<style>
-  /* Markdown heading styles */
-  :global(.sanity-h1) {
-    font-size: 1.8em;
-    margin: 1.5rem 0 1rem 0;
+<style is:global>
+  /* Portable Text (Sanity) rendering — phase 4 precise register. All blocks
+     sit directly on the article grid (the wrapper is display:contents), so
+     these rules only set type, spacing, and column opt-ins. */
+
+  /* -- Prose ------------------------------------------------------------- */
+  .sanity-paragraph {
+    margin: 0 0 1.4rem;
+    padding: 0;
+    font-size: var(--type-body);
+    line-height: 1.65;
   }
 
-  :global(.sanity-h2) {
-    color: #e5e3de;
-    font-size: 1.44em;
-    margin: 1.3rem 0 0.8rem 0;
+  .portable-text-content > .sanity-paragraph:first-child {
+    margin-top: 3rem;
   }
 
-  :global(.sanity-h3) {
-    font-size: 1.26em;
-    margin: 1.2rem 0 0.6rem 0;
+  /* -- Headings: two visual levels, differentiated by size and space above,
+     not by weight or color. h1/h2 share the large step, h3/h4 the small. -- */
+  .sanity-h1,
+  .sanity-h2 {
+    margin: 3.2rem 0 1.2rem;
+    font-size: calc(var(--type-body) * 1.35);
+    font-weight: 400;
+    line-height: 1.3;
   }
 
-  :global(.sanity-h4) {
-    font-size: 1.08em;
-    margin: 1rem 0 0.5rem 0;
+  .sanity-h3,
+  .sanity-h4 {
+    margin: 2.6rem 0 1rem;
+    font-size: calc(var(--type-body) * 1.15);
+    font-weight: 400;
+    line-height: 1.35;
   }
 
-  :global(.sanity-paragraph) {
-    font-size: 1em;
-    margin: 0.8rem 0;
-  }
-
-  :global(.portable-text-content > .sanity-paragraph:first-child) {
-    margin-top: 0;
-    padding-top: 0;
-  }
-
-  :global(.sanity-blockquote) {
-    border-left: 4px solid #ee5858;
-    margin: 1rem auto;
-    font-style: italic;
-    color: #aaa;
-    text-align: center;
-  }
-
-  :global(.sanity-blockquote:before),
-  :global(.sanity-blockquote:after) {
-    color: #ee5858;
-  }
-
-  :global(.sanity-list-bullet),
-  :global(.sanity-list-number) {
-    margin: 0.8rem 0;
-    padding-left: 1.5rem;
-  }
-
-  :global(.sanity-list-item) {
-    margin: 0.4rem 0;
-    line-height: 1.6;
-    font-size: 0.9em;
-  }
-
-  :global(.sanity-image) {
-    margin: 1.5rem 0;
-    text-align: center;
-  }
-
-  :global(.sanity-image img) {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-
-  :global(.sanity-image figcaption) {
-    font-size: 0.65rem;
-    color: #888;
-    margin-top: 0.5rem;
-  }
-
-  :global(.code-block) {
-    margin: 1rem 0;
-    background: #1e1e1e;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  :global(.code-filename) {
-    padding: 0.5rem 1rem;
-    background: #2d2d2d;
-    font-size: 0.61rem;
-    color: #aaa;
-    border-bottom: 1px solid #444;
-  }
-
-  :global(.code-block pre) {
-    margin: 0;
-    padding: 1rem;
-    overflow-x: auto;
-  }
-
-  :global(.code-block code) {
-    font-family: "JetBrains Mono", "Fira Code", monospace;
-    font-size: 0.65rem;
-  }
-
-  :global(.inline-code) {
-    background: #2d2d2d;
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
-    font-family: "JetBrains Mono", "Fira Code", monospace;
-    font-size: 0.65em;
-  }
-
-  :global(.portable-text-content a),
-  :global(.portable-text-link) {
-    color: #ee5858;
+  /* -- Links ------------------------------------------------------------- */
+  .portable-text-content a {
+    color: var(--color-accent);
     text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
     cursor: pointer;
   }
 
-  :global(.portable-text-content a:hover),
-  :global(.portable-text-link:hover) {
-    color: #fa8e8e;
+  .portable-text-content a:hover {
+    color: var(--color-ink);
+  }
+
+  /* Bare-URL links are locators (archive permalinks etc.): mono, secondary
+     ink, allowed to break anywhere — data, not prose. */
+  .portable-text-content a.link-locator {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--text-secondary);
+    word-break: break-all;
+    text-decoration-color: rgba(var(--color-ink-rgb), 0.35);
+  }
+
+  .portable-text-content a.link-locator:hover {
+    color: var(--color-accent);
+  }
+
+  /* Tiny mono marker after external links. */
+  .portable-text-content a.link-external::after {
+    content: " ↗";
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    color: var(--text-muted);
+  }
+
+  /* -- Blockquote: hairline + secondary ink (phase 3 policy holds). ------ */
+  .sanity-blockquote {
+    border-left: 1px solid rgba(var(--color-ink-rgb), 0.35);
+    margin: 2rem 0;
+    padding: 0.25rem 0 0.25rem 1.5rem;
+    font-style: normal;
+    color: var(--text-secondary);
+    text-align: left;
+  }
+
+  /* -- Lists: hanging mono markers — numbers with tnum, an em-dash for
+     unordered. Marker hangs in the gutter; text aligns to the measure. ---- */
+  .sanity-list-bullet,
+  .sanity-list-number {
+    list-style: none;
+    margin: 1.4rem 0;
+    padding: 0;
+  }
+
+  .sanity-list-number {
+    counter-reset: item;
+  }
+
+  .sanity-list-item {
+    position: relative;
+    margin: 0.5rem 0;
+    line-height: 1.65;
+  }
+
+  .sanity-list-item::before {
+    position: absolute;
+    left: -2.8ch;
+    font-family: var(--font-mono);
+    font-size: var(--type-meta);
+    font-variant-numeric: tabular-nums;
+    line-height: 2.2;
+    color: var(--text-muted);
+  }
+
+  .sanity-list-bullet > .sanity-list-item::before {
+    content: "—";
+  }
+
+  .sanity-list-number > .sanity-list-item {
+    counter-increment: item;
+  }
+
+  .sanity-list-number > .sanity-list-item::before {
+    content: counter(item);
+  }
+
+  /* No room to hang markers inside the mobile gutter — tuck them inline. */
+  @media (max-width: 768px) {
+    .sanity-list-item {
+      padding-left: 2.2ch;
+    }
+
+    .sanity-list-item::before {
+      left: 0;
+    }
+  }
+
+  /* -- Figures in the body ------------------------------------------------ */
+  .sanity-image {
+    margin: 2.5rem 0;
+  }
+
+  .sanity-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .sanity-image figcaption {
+    max-width: var(--measure);
+    margin-top: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--type-meta);
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+
+  .sanity-embed {
+    margin: 2.5rem 0;
+  }
+
+  /* -- Code: hairline-bordered block, no background fill. ----------------- */
+  .code-block {
+    margin: 2rem 0;
+    border: 0.5px solid rgba(var(--color-ink-rgb), 0.25);
+    background: none;
+  }
+
+  .code-filename {
+    padding: 0.5rem 1rem;
+    font-family: var(--font-mono);
+    font-size: var(--type-meta);
+    color: var(--text-muted);
+    border-bottom: 0.5px solid rgba(var(--color-ink-rgb), 0.25);
+  }
+
+  .code-block pre {
+    margin: 0;
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.75rem;
+  }
+
+  .inline-code {
+    background: rgba(var(--color-ink-rgb), 0.1);
+    padding: 0.15rem 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.85em;
   }
 </style>

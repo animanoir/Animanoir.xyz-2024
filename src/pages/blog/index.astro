@@ -1,524 +1,87 @@
 ---
 import BaseHead from "../../components/BaseHead.astro";
 import ModifiedHeader from "../../components/ModifiedHeader.astro";
-import { getAllPosts } from "../../lib/sanity";
+import { getAllPosts, readingTimeFromBody } from "../../lib/sanity";
 import Footer from "../../components/Footer/Footer.astro";
 
-// ---------------------------------------------------------------------------
-// Blog listing layout mode.
-//   "vertical" -> clean, year-grouped vertical list (simpler, more legible).
-//   "random"   -> original scattered / randomly-positioned layout.
-// Switch the value below to toggle between the two modes.
-// ---------------------------------------------------------------------------
-const LAYOUT_MODE: "vertical" | "random" = "vertical";
+// Writing index (phase 3): the same typographic list language as the Work
+// index — hairline-separated rows of date · title · reading time, grouped by
+// year under a small mono label. No covers, no excerpts: the list IS the
+// design. Row styles come from the shared .index-row classes in global.css.
 
 const posts = await getAllPosts();
 
-// Group posts by year
-const postsByYear = posts.reduce(
-  (acc, post) => {
-    const year = new Date(post.publishedAt).getFullYear();
-    if (!acc[year]) {
-      acc[year] = [];
-    }
-    acc[year].push(post);
-    return acc;
-  },
-  {} as Record<number, typeof posts>,
-);
+const rows = posts.map((post) => ({
+  href: `/blog/${post.slug.current}/`,
+  // Site-wide date format: ISO-like YYYY-MM-DD.
+  date: post.publishedAt.slice(0, 10),
+  year: new Date(post.publishedAt).getFullYear(),
+  title: post.title,
+  minutes: readingTimeFromBody(post.body),
+}));
 
-// Ensure posts within each year are newest -> oldest (defensive; getAllPosts
-// already returns publishedAt desc).
-for (const year of Object.keys(postsByYear)) {
-  postsByYear[Number(year)].sort(
-    (a, b) =>
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
-  );
-}
-
-// Sort years in descending order (newest first)
-const sortedYears = Object.keys(postsByYear)
-  .map(Number)
-  .sort((a, b) => b - a);
-
-// Fetch Are.na texts
-/**
-let arenaTexts = [];
-let remainingTexts = [];
-try {
-  const response = await fetch(
-    "https://api.are.na/v3/channels/2026-disuelto-en-la-soledad/contents"
-  );
-  if (response.ok) {
-    const data = await response.json();
-    const allTexts = data.contents.filter(
-      (block: any) => block.class === "Text" && block.content_html,
-    );
-
-    console.info(data)
-    // Shuffle array (Fisher-Yates)
-    for (let i = allTexts.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [allTexts[i], allTexts[j]] = [allTexts[j], allTexts[i]];
-    }
-
-    arenaTexts = allTexts.slice(0, 30);
-    remainingTexts = allTexts.slice(30).map((t: any) => t.content_html);
-  }
-
-} catch (e) {
-  console.error("Failed to fetch Are.na texts", e);
-}
-**/
+// Group by year, newest first (getAllPosts already returns publishedAt desc).
+const years = [...new Set(rows.map((r) => r.year))].sort((a, b) => b - a);
 ---
 
 <html lang="en">
-<head>
-  <BaseHead
-    title="Blog"
-    description={"Blog & studies about subjects I find interesting and fun. Expect random, weird and probably confusing thoughts."}
-  />
-</head>
-<body style={LAYOUT_MODE === "random" ? "overflow-y: hidden;" : undefined}>
-  <ModifiedHeader />
-  <h1 class="visually-hidden">Blog - Óscar A. Montiel</h1>
-  <main data-layout-mode={LAYOUT_MODE}>
-    <!--
-    <div
-      class="arena-background"
-      aria-hidden="true"
-      data-remaining-texts={JSON.stringify(remainingTexts)}
-    >
+  <head>
+    <BaseHead
+      title="Writing"
+      description={"Blog & studies about subjects I find interesting and fun. Expect random, weird and probably confusing thoughts."}
+    />
+  </head>
+  <body>
+    <ModifiedHeader />
+    <h1 class="visually-hidden">Writing - Óscar A. Montiel</h1>
+    <main>
       {
-        arenaTexts.map((text: any) => (
-          <div class="arena-text-item" set:html={text.content_html} />
+        years.map((year) => (
+          <section class="year-section">
+            <h2 class="index-group-label">{year}</h2>
+            <ul class="index-list">
+              {rows
+                .filter((r) => r.year === year)
+                .map((r) => (
+                  <li>
+                    <a class="index-row" data-astro-prefetch href={r.href}>
+                      <time class="index-row-meta" datetime={r.date}>
+                        {r.date}
+                      </time>
+                      <span class="index-row-title">{r.title}</span>
+                      <span class="index-row-meta">{r.minutes} min</span>
+                    </a>
+                  </li>
+                ))}
+            </ul>
+          </section>
         ))
       }
-    </div>
-    -->
-    <div class="vertical-scroll-wrapper">
-      <div class="blogpostsContainer">
-        <!-- Posts grouped by year -->
-        {
-          sortedYears.map((year) => (
-            <section class="year-section" data-year={year}>
-              <h2 class="year-heading">{year}</h2>
-              <div class="year-posts">
-                {postsByYear[year].map((post) => (
-                  <div class="post-item" data-year={year}>
-                    <small class="postDate">
-                      {new Date(post.publishedAt).toLocaleDateString()}
-                    </small>
-                    <a data-astro-prefetch href={`/blog/${post.slug.current}/`}>
-                      <div class="postInfo">
-                        <p class="postTitle">{post.title}</p>
-                      </div>
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </section>
-          ))
-        }
-      </div>
-    </div>
-  </main>
-  <Footer />
-  <style>
-    main {
-      width: 100%;
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    .arena-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .arena-text-item {
-      position: absolute;
-      color: #b0b0b0;
-      opacity: 0.2;
-      font-size: 1rem;
-      max-width: 400px;
-      font-style: italic;
-      font-family: "Cormorant Garamond", serif;
-    }
-
-    a {
-      text-decoration: none;
-    }
-
-    a:hover .postTitle {
-      color: #ee5858;
-    }
-
-    /* =====================================================================
-       VERTICAL MODE (default) — clean year-grouped list
-       ===================================================================== */
-    /* Mirror the article geometry from BlogPost.astro so the listing and an
-       individual post share the same horizontal start position:
-         .articleBody     -> width: 80%; margin: 0 auto
-         .articleContainer-> max-width: 60%; margin-left: auto; margin-right: 10rem
-       (the auto-left + fixed-right margin is what shifts content right-of-center). */
-    main[data-layout-mode="vertical"] .vertical-scroll-wrapper {
-      width: 80%;
-      margin: 0 auto;
-    }
-
-    .blogpostsContainer {
-      position: relative;
-      max-width: 60%;
-      margin-left: auto;
-      margin-right: 10rem;
-      padding: 8rem 0 20vh;
-      z-index: 10;
-    }
-
-    .year-section {
-      position: relative;
-      width: 100%;
-      margin-bottom: 3.5rem;
-    }
-
-    .year-heading {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: clamp(2.2rem, 6vw, 3.2rem);
-      line-height: 1;
-      color: #c4c0b5;
-      margin: 0 0 0.6rem;
-      padding-bottom: 0.3rem;
-      border-bottom: 2px solid #1c1c1c;
-    }
-
-    .year-posts {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .post-item {
-      padding: 0.85rem 0;
-      border-bottom: 1px solid #e4e1d8;
-    }
-
-    .post-item:last-child {
-      border-bottom: none;
-    }
-
-    .postDate {
-      display: block;
-      font-family: "Open Sans", sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.03em;
-      margin: 0 0 0.2rem;
-      color: #8a8a8a;
-    }
-
-    .postTitle {
-      background-color: rgba(0, 0, 0, 0);
-      color: #1c1c1c;
-      font-family: "Bebas Neue", sans-serif;
-      line-height: 1.1 !important;
-      font-size: 1.6rem;
-      width: fit-content;
-      margin: 0;
-      padding-top: 0;
-    }
-
-    /* =====================================================================
-       RANDOM MODE — original scattered / absolutely-positioned layout
-       ===================================================================== */
-    main[data-layout-mode="random"] {
-      margin-left: 10vw;
-    }
-
-    main[data-layout-mode="random"] .blogpostsContainer {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 100px var(--page-padding, 6%) 20vh;
-    }
-
-    main[data-layout-mode="random"] .year-heading {
-      display: none;
-    }
-
-    main[data-layout-mode="random"] .year-section {
-      min-height: 60vh;
-      margin-bottom: 0;
-    }
-
-    main[data-layout-mode="random"] .year-posts {
-      display: block;
-    }
-
-    main[data-layout-mode="random"] .post-item {
-      position: absolute;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-      max-width: 350px;
-      padding: 0;
-      border: none;
-      z-index: 15;
-    }
-
-    main[data-layout-mode="random"] .postInfo {
-      mix-blend-mode: exclusion;
-    }
-
-    main[data-layout-mode="random"] .postTitle {
-      color: #1c1c1c;
-      font-size: 1.5rem;
-      line-height: 1.2 !important;
-    }
-
-    main[data-layout-mode="random"] .postDate {
-      font-size: 0.8rem;
-      color: #484848;
-    }
-
-    /* Match the article: at >1920px .articleBody narrows to 60%. */
-    @media (min-width: 1921px) {
-      main[data-layout-mode="vertical"] .vertical-scroll-wrapper {
-        width: 60%;
-      }
-    }
-
-    /* Match the article's vertical start at this breakpoint (padding-top: 15vh). */
-    @media (min-width: 1361px) and (max-width: 1920px) {
-      main[data-layout-mode="vertical"] .blogpostsContainer {
-        padding-top: 15vh;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .blogpostsContainer {
-        padding-left: 20px;
-        padding-right: 20px;
-        padding-top: 120px;
+    </main>
+    <Footer />
+    <style>
+      main {
+        /* Same geometry as the Work index page (/work). */
+        margin-left: var(--left-rail);
+        margin-right: var(--page-padding, 5%);
+        max-width: 68rem;
+        padding-top: 22vh;
+        padding-bottom: var(--space-section);
+        min-height: 70vh;
+        /* Full ISO dates in the first row column. */
+        --index-col: 10ch;
       }
 
-      /* On mobile keep the listing full-width & legible rather than mirroring
-         the article's narrow right-pushed column. */
-      main[data-layout-mode="vertical"] .vertical-scroll-wrapper {
-        width: 100%;
-      }
-      main[data-layout-mode="vertical"] .blogpostsContainer {
-        max-width: 100%;
-        margin: 0 auto;
-        padding: 120px 20px 20vh;
+      .year-section:first-child .index-group-label {
+        margin-top: 0;
       }
 
-      main[data-layout-mode="random"] {
-        margin-left: 0;
-      }
-
-      main[data-layout-mode="random"] .year-section {
-        min-height: auto !important;
-        height: auto !important;
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
-        margin-bottom: 60px;
-      }
-
-      main[data-layout-mode="random"] .post-item {
-        position: static;
-        opacity: 1;
-        max-width: 100%;
-      }
-    }
-  </style>
-  <script>
-    function initBlogLayout() {
-      const main = document.querySelector("main") as HTMLElement | null;
-
-      // Vertical mode is pure CSS — no positioning script needed.
-      if (!main || main.dataset.layoutMode !== "random") return;
-
-      const container = document.querySelector(".blogpostsContainer");
-      if (!container) return;
-
-      const sections = document.querySelectorAll(".year-section");
-      const posts = document.querySelectorAll(".post-item");
-
-      // --- Are.na Background Logic ---
-      const arenaContainer = document.querySelector(
-        ".arena-background",
-      ) as HTMLElement;
-      const arenaItems = document.querySelectorAll(".arena-text-item");
-
-      if (arenaContainer && arenaItems.length > 0) {
-        const distributeArenaItems = () => {
-          // Use clientWidth to avoid scrollbar width issues and potential horizontal overflow loops
-          const docWidth = document.documentElement.clientWidth;
-          const docHeight = Math.max(
-            document.body.scrollHeight,
-            window.innerHeight,
-          );
-
-          arenaContainer.style.height = `${docHeight}px`;
-
-          arenaItems.forEach((item) => {
-            const el = item as HTMLElement;
-            // Distribute heavily across the width, minus a buffer for the item width
-            const x = Math.random() * (docWidth - 250);
-            const y = Math.random() * (docHeight - 100);
-
-            el.style.left = `${Math.max(0, x)}px`;
-            el.style.top = `${y}px`;
-          });
-        };
-
-        // Initial distribution
-        setTimeout(distributeArenaItems, 100);
-
-        window.addEventListener("resize", () => {
-          setTimeout(distributeArenaItems, 200);
-        });
-
-        // --- Swapping Logic ---
-        const remainingTextsData = arenaContainer.dataset.remainingTexts;
-        let pool: string[] = [];
-
-        try {
-          if (remainingTextsData) {
-            pool = JSON.parse(remainingTextsData);
-          }
-        } catch (e) {
-          console.error("Failed to parse remaining texts", e);
-        }
-
-        if (pool.length > 0) {
-          const swapRandomText = () => {
-            // Pick a random currently displayed item
-            const randomIndex = Math.floor(Math.random() * arenaItems.length);
-            const el = arenaItems[randomIndex] as HTMLElement;
-
-            // 1. Fade out
-            el.style.transition = "opacity 2s ease-in-out"; // Slower transition for subtlety
-            el.style.opacity = "0";
-
-            setTimeout(() => {
-              // 2. Swap content
-              if (pool.length === 0) return; // Should not happen if we push back
-
-              const oldContent = el.innerHTML;
-              const newContentIndex = Math.floor(Math.random() * pool.length);
-              const newContent = pool[newContentIndex];
-
-              // Remove new content from pool, add old content back
-              pool.splice(newContentIndex, 1);
-              pool.push(oldContent);
-
-              el.innerHTML = newContent;
-
-              // 3. New Random Position
-              const docWidth = document.documentElement.clientWidth;
-              const docHeight = Math.max(
-                document.body.scrollHeight,
-                window.innerHeight,
-              );
-
-              // Same logic as distributeArenaItems
-              const x = Math.random() * (docWidth - 250);
-              const y = Math.random() * (docHeight - 100);
-
-              el.style.left = `${Math.max(0, x)}px`;
-              el.style.top = `${y}px`;
-
-              // 4. Fade back in
-              // Small delay to ensure position is set
-              requestAnimationFrame(() => {
-                el.style.opacity = "0.2"; // Back to base opacity
-              });
-            }, 2000); // Wait for fade out
-          };
-
-          // Start loop - swap one every 4 seconds
-          setInterval(swapRandomText, 4000);
+      @media (max-width: 768px) {
+        main {
+          margin-left: 0;
+          padding: 30% 1.5rem var(--space-section);
         }
       }
-      // -------------------------------
-
-      // Mobile Reset
-      if (window.innerWidth <= 768) {
-        posts.forEach((p) => {
-          const el = p as HTMLElement;
-          el.style.removeProperty("top");
-          el.style.removeProperty("left");
-          el.style.opacity = "1";
-        });
-        sections.forEach((s) =>
-          (s as HTMLElement).style.removeProperty("height"),
-        );
-        return;
-      }
-
-      // Desktop Positioning
-      sections.forEach((section) => {
-        const secEl = section as HTMLElement;
-        const items = secEl.querySelectorAll(".post-item");
-
-        if (items.length === 0) return;
-
-        const heightVal = Math.max(80, items.length * 25);
-        secEl.style.height = `${heightVal}vh`;
-
-        const w = secEl.offsetWidth;
-        const h = secEl.offsetHeight;
-
-        items.forEach((item, i) => {
-          const el = item as HTMLElement;
-          const x = Math.random() * (w - 400);
-          const y = Math.random() * (h - 200) + 50;
-
-          el.style.left = `${Math.max(0, x)}px`;
-          el.style.top = `${y}px`;
-
-          setTimeout(() => {
-            el.style.opacity = "1";
-          }, i * 150);
-        });
-      });
-
-      // Year Marker Logic
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const y = (entry.target as HTMLElement).dataset.year;
-              document.querySelectorAll(".year-marker").forEach((m) => {
-                const mEl = m as HTMLElement;
-                if (mEl.dataset.year === y) mEl.classList.add("active");
-                else mEl.classList.remove("active");
-              });
-            }
-          });
-        },
-        {
-          rootMargin: "-45% 0px -45% 0px",
-        },
-      );
-
-      sections.forEach((s) => observer.observe(s));
-    }
-
-    document.addEventListener("astro:page-load", initBlogLayout);
-    document.addEventListener("DOMContentLoaded", initBlogLayout);
-
-    let resizeTimer: number;
-    window.addEventListener("resize", () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(initBlogLayout, 200) as unknown as number;
-    });
-  </script>
-</body>
+    </style>
+  </body>
 </html>

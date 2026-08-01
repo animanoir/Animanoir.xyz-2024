@@ -36,7 +36,6 @@ const posts = (await getCollection("blog")).sort(
 
   .postContainer {
     background-color: #00000019;
-    border-radius: 0.5rem;
     margin-bottom: 1rem;
   }
 
@@ -47,7 +46,7 @@ const posts = (await getCollection("blog")).sort(
     line-height: 0 !important;
   }
   .postDate {
-    font-family: "Open Sans", sans-serif;
+    font-family: var(--font-mono);
     font-size: 0.6rem;
     margin-top: 0;
     line-height: 1.1;
@@ -55,10 +54,11 @@ const posts = (await getCollection("blog")).sort(
     color: #999;
   }
   .postTitle {
-    background-color: #f2f0eb;
-    color: #1c1c1c;
-    font-family: "Montserrat", sans-serif;
-    font-weight: bold;
+    /* Light chip, dark text — token-driven since the site-wide inversion. */
+    background-color: var(--color-ink);
+    color: var(--color-bg);
+    font-family: var(--font-sans);
+    font-weight: var(--weight-heading);
     font-size: 0.8rem;
     padding: 0.2rem;
     margin-bottom: 0;
@@ -67,12 +67,12 @@ const posts = (await getCollection("blog")).sort(
   }
 
   .postSummary {
-    font-family: "Open Sans", sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.8rem;
     padding: 0.2rem;
     margin-top: 0;
     line-height: 1.1;
-    color: #1c1c1c;
+    color: var(--color-ink);
     width: fit-content;
   }
 

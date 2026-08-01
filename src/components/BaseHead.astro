@@ -1,5 +1,16 @@
 ---
 import "@/styles/global.css";
+// Self-hosted IBM Plex (phase 3) — the only two families on the site.
+// latin-only subset: it covers Spanish diacritics (á é í ó ú ñ ü ¿ ¡) via
+// U+0000-00FF. Fontsource's per-subset files carry no unicode-range, so
+// stacking latin-ext on top would shadow latin instead of extending it —
+// don't add it back without switching to the combined 400.css imports.
+import "@fontsource/ibm-plex-sans/latin-400.css";
+import "@fontsource/ibm-plex-sans/latin-500.css";
+import "@fontsource/ibm-plex-sans/latin-400-italic.css";
+import "@fontsource/ibm-plex-mono/latin-400.css";
+import sansWoff2 from "@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2?url";
+import monoWoff2 from "@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2?url";
 import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
 
 interface Props {
@@ -97,6 +108,10 @@ const isHomepage = pathname === "/";
 <meta name="language" content={Astro.props.lang ?? "en"} />
 <link rel="icon" type="image/png" href="/animanoir-favicon-32x32.png" />
 <meta name="generator" content={Astro.generator} />
+
+<!-- Preload the two workhorse font files (body sans + metadata mono). -->
+<link rel="preload" href={sansWoff2} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={monoWoff2} as="font" type="font/woff2" crossorigin />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />

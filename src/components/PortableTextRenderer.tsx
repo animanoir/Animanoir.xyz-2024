@@ -14,8 +14,10 @@ const components: Partial<PortableTextReactComponents> = {
       if (!value?.asset) {
         return null;
       }
+      // Figures opt into the article grid via data-width (text|wide|full),
+      // authored per-image in Sanity; wide is the default.
       return (
-        <figure className="sanity-image">
+        <figure className="sanity-image" data-width={value.width || "wide"}>
           <img
             src={urlFor(value).width(1200).auto("format").url()}
             alt={value.alt || "Blog image"}
@@ -37,11 +39,15 @@ const components: Partial<PortableTextReactComponents> = {
     },
     youtube: ({ value }) => {
       const { url } = value;
-      return <ReactPlayer url={url} />;
+      return (
+        <figure className="sanity-embed" data-width="wide">
+          <ReactPlayer url={url} />
+        </figure>
+      );
     },
   },
   marks: {
-    link: ({ children, value }) => {
+    link: ({ children, value, text }) => {
       // Extract href - handle different possible structures from Sanity
       let href = "";
       if (typeof value === "string") {
@@ -57,12 +63,25 @@ const components: Partial<PortableTextReactComponents> = {
       const shouldOpenInNewTab = value?.blank !== false; // Default to true unless explicitly false
       const target = shouldOpenInNewTab ? "_blank" : undefined;
 
+      // A link whose visible text IS a URL is a locator (e.g. an archive.org
+      // permalink): render it in mono so it reads as data, not prose. The
+      // authoring convention for everything else is descriptive link text.
+      const isBareUrl = /^https?:\/\//.test((text ?? "").trim());
+
+      const classNames = [
+        "portable-text-link",
+        isBareUrl ? "link-locator" : "",
+        isExternal ? "link-external" : "",
+      ]
+        .filter(Boolean)
+        .join(" ");
+
       return (
         <a
           href={href}
           target={target}
           rel={target ? "noopener noreferrer" : undefined}
-          className="portable-text-link"
+          className={classNames}
         >
           {children}
         </a>

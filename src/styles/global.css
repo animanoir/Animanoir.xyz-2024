@@ -3,16 +3,52 @@
   https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-
 :root {
   --page-padding: 5%;
   /* Width reserved on the left for the fixed header + navbar block. Content
      areas offset by this (margin-left) instead of guessing per-page margins. */
   --left-rail: 22rem;
+
+  /* == Editorial design tokens (phase 2) ==================================
+     Binary palette + one accent. The accent is reserved for hover/link
+     states — never for static decoration. Inverted: near-black ground,
+     near-white ink. The -rgb variants feed rgba() for hairlines/neutrals. */
+  --color-bg: #0d0d0d;
+  --color-ink: #f2f0eb;
+  --color-ink-rgb: 242, 240, 235;
+  --color-accent: #ee5858;
+
+  /* Exactly two families site-wide (phase 3): Plex Sans for UI/headings/prose,
+     Plex Mono for metadata, dates, index columns, captions, and code. Both are
+     self-hosted via Fontsource (imported in BaseHead.astro). Every font-family
+     declaration in the codebase must resolve through these two variables. */
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas,
+    monospace;
+  /* Single heading weight loaded/used beyond 400. 500 (Plex Medium) keeps the
+     lab-report restraint; 600 read too heavy against the 400 body. */
+  --weight-heading: 500;
+
+  /* Exactly three type scales. Display for hero/thesis, body for prose,
+     meta for captions, metadata, and index columns. Deliberately quiet:
+     ~16-17px body, restrained display — precision over presence. */
+  --type-display: clamp(1.9rem, 3.6vw, 3.2rem);
+  --type-body: clamp(0.95rem, 1.05vw, 1.0625rem);
+  --type-meta: 0.75rem;
+
+  /* Article title scale — between body and display; used by post headers. */
+  --type-title: clamp(1.5rem, 2.6vw, 2.4rem);
+
+  /* Ink opacities as named roles (phase 4) — always derive from the ink,
+     never introduce new grays. */
+  --text-secondary: rgba(var(--color-ink-rgb), 0.75);
+  --text-muted: rgba(var(--color-ink-rgb), 0.55);
+
+  /* Max prose measure and the vertical rhythm between editorial sections.
+     --measure-wide is the article grid's figure width (~1.35× the text). */
+  --measure: 65ch;
+  --measure-wide: 88ch;
+  --space-section: clamp(6rem, 12vh, 10rem);
 }
 
 .visually-hidden {
@@ -31,14 +67,14 @@
 html,
 body {
   overflow-x: hidden;
-  font-family: "Gotham-Bold";
+  font-family: var(--font-sans);
+  font-weight: 400;
   text-align: left;
-  /* background-color: #060606; */
-  background-color: #f2f0eb;
-  color: #1c1c1c;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
   word-wrap: break-word;
   overflow-wrap: break-word;
-  line-height: 1.5;
+  line-height: 1.6;
   margin: 0;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
@@ -46,12 +82,28 @@ body {
   /* cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='none' stroke='white' stroke-width='1'/%3E%3Ccircle cx='12' cy='12' r='2' fill='white'/%3E%3C/svg%3E") 12 12, auto; */
 }
 
-a {
-  color: #ee5858;
+/* == Italic policy (phase 3) ================================================
+   Italic exists in exactly one place: the homepage thesis quote (.thesis-text).
+   Semantic emphasis everywhere else renders upright at the heading weight —
+   weight, not color, so links stay unambiguous in body prose. */
+em,
+i {
+  font-style: normal;
+  font-weight: var(--weight-heading);
 }
 
-nav a {
-  margin-right: 10px;
+/* Metadata reads as data: tabular numerals on every mono/metadata element. */
+code,
+pre,
+time,
+.mono-label,
+.index-row-meta {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+a {
+  color: var(--color-accent);
 }
 
 textarea,
@@ -61,15 +113,18 @@ input {
 }
 
 code {
-  font-size: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
   padding: 2px 5px;
-  background-color: #e5e3de;
+  /* Neutral surface derived from ink over bg — not a palette color. */
+  background-color: rgba(var(--color-ink-rgb), 0.08);
 }
 
 pre {
+  font-family: var(--font-mono);
   padding: 1rem;
   margin-bottom: 3rem;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 pre>code {
@@ -98,14 +153,15 @@ h3,
 h4,
 h5,
 h6,
-b {
-  color: #1c1c1c;
+b,
+strong {
+  color: var(--color-ink);
+  font-weight: var(--weight-heading);
 }
 
 h3 {
-  font-family: "Montserrat", serif;
   font-style: normal;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   margin-bottom: 2rem !important;
 }
 
@@ -124,15 +180,15 @@ p {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Site-wide text selection: black background, white text */
+/* Site-wide text selection: ink background, bg text */
 ::selection {
-  background-color: #1c1c1c;
-  color: #ffffff;
+  background-color: var(--color-ink);
+  color: var(--color-bg);
 }
 
 ::-moz-selection {
-  background-color: #1c1c1c;
-  color: #ffffff;
+  background-color: var(--color-ink);
+  color: var(--color-bg);
 }
 
 /* Animations */
@@ -169,7 +225,6 @@ p {
 }
 
 .blog-image {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   width: 100%;
   display: block;
   margin: 2rem auto;
@@ -188,65 +243,101 @@ iframe {
   margin-top: 2rem;
 }
 
-/* Blockquote */
+/* Blockquote — no italics, no quote glyphs: a left hairline and reduced ink,
+   matching the lab-report register. */
 blockquote {
-  position: relative;
-  width: 60%;
-  font-family: "Georgia", serif;
-  font-size: 1.3rem;
+  max-width: var(--measure);
+  font-size: 1.1em;
   line-height: 1.6;
-  margin: 20px auto;
-  padding: 1em 3rem;
-  quotes: "\201C" "\201D" "\2018" "\2019";
-}
-
-blockquote:before {
-  content: open-quote;
-  font-size: 2em;
-  position: absolute;
-  top: 0;
-  left: 10px;
-  color: #1c1c1c;
-}
-
-blockquote:after {
-  content: close-quote;
-  font-size: 2em;
-  position: absolute;
-  bottom: -1px;
-  right: 25px;
-  color: #1c1c1c;
+  margin: 2rem 0;
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  border-left: 1px solid rgba(var(--color-ink-rgb), 0.35);
+  color: rgba(var(--color-ink-rgb), 0.75);
 }
 
 blockquote cite {
-  font-size: 0.875rem;
-  /* Instead of 14px for consistency */
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: var(--type-meta);
   display: block;
-  margin-top: 0.3125rem;
-  /* Instead of 5px */
-  text-align: right;
-}
-
-@media screen and (max-width: 600px) {
-  blockquote {
-    padding: 1.2em 1.5rem 1.2em 1.5rem;
-    font-size: 1.2rem;
-  }
-
-  blockquote:before {
-    left: 5px;
-    /* Adjust for smaller screens */
-  }
-
-  blockquote:after {
-    right: 15px;
-    /* Adjust for smaller screens */
-  }
+  margin-top: 0.5rem;
 }
 
 /* Lists */
 ul {
   margin: 0;
+}
+
+/* == Shared index rows (phase 3) ============================================
+   One structural row language for the Work index and the Writing index:
+   meta (mono, muted) — title — meta (mono, muted), hairline-separated.
+   The first column width is tuned per index via --index-col. */
+.index-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.index-row {
+  display: grid;
+  grid-template-columns: var(--index-col, 5ch) 1fr auto;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 0.85rem 0;
+  text-decoration: none;
+  border-bottom: 0.5px solid rgba(var(--color-ink-rgb), 0.25);
+  color: var(--color-ink);
+}
+
+.index-list > li:first-child .index-row {
+  border-top: 0.5px solid rgba(var(--color-ink-rgb), 0.25);
+}
+
+.index-row-meta {
+  font-family: var(--font-mono);
+  font-size: var(--type-meta);
+  color: var(--color-ink);
+  opacity: 0.5;
+}
+
+.index-row-title {
+  font-family: var(--font-sans);
+  font-size: var(--type-body);
+  font-weight: var(--weight-heading);
+  line-height: 1.2;
+  transition: color 0.2s ease;
+}
+
+.index-row:hover .index-row-title,
+.index-row:focus-visible .index-row-title {
+  color: var(--color-accent);
+}
+
+.index-row:focus-visible {
+  outline: 1px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+/* Small mono group label (e.g. a year heading above a run of rows). */
+.index-group-label {
+  font-family: var(--font-mono);
+  font-size: var(--type-meta);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink);
+  opacity: 0.5;
+  margin: 3rem 0 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .index-row {
+    grid-template-columns: var(--index-col, 5ch) 1fr;
+    gap: 1rem;
+  }
+
+  .index-row-meta:last-child {
+    grid-column: 2;
+  }
 }
 
 /* Scrollbar */
@@ -255,17 +346,18 @@ ul {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f2f0eb;
+  background: var(--color-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c8c5c0;
+  /* Neutral: ink at low opacity over the track. */
+  background: rgba(var(--color-ink-rgb), 0.25);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ee5858;
+  background: var(--color-accent);
 }
 
 ::-webkit-scrollbar-thumb:active {
-  background: #1c1c1c;
+  background: var(--color-ink);
 }

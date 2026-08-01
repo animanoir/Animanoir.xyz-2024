@@ -66,7 +66,7 @@ const socialLinks = [
   >
     etherealflux94@gmail.com
   </a>
-  <div>
+  <div class="footer-line">
     {today.getFullYear()} · Mexico
   </div>
 </footer>
@@ -81,8 +81,16 @@ const socialLinks = [
   .email-link {
     color: inherit;
     text-decoration: none;
-    font-size: 2rem!important;
+    font-size: 1.25rem;
     transition: opacity 0.3s ease;
+  }
+  /* Footer line as metadata: mono, tabular, muted. */
+  .footer-line {
+    font-family: var(--font-mono);
+    font-size: var(--type-meta);
+    font-variant-numeric: tabular-nums;
+    opacity: 0.6;
+    margin-top: 0.75rem;
   }
   .email-link:hover {
     opacity: 0.7;
@@ -128,7 +136,7 @@ const socialLinks = [
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: "Cormorant Garamond", serif;
+    font-family: var(--font-sans);
     color: #ffffff;
     background-color: #000000;
     margin-top: auto;
@@ -142,7 +150,7 @@ const socialLinks = [
       flex-direction: column;
       padding: 1.5rem;
       text-align: center;
-      font-size: 1.12rem;
+      font-size: 0.95rem;
     }
     .social-icons {
       gap: 1.5rem;
@@ -155,7 +163,7 @@ const socialLinks = [
   /* Small mobile devices */
   @media (max-width: 480px) {
     footer {
-      font-size: 0.96rem;
+      font-size: 0.9rem;
       padding: 1rem;
     }
     .social-icons {

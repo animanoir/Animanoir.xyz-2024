@@ -10,7 +10,7 @@
 }
 
 .title {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans);
   font-size: 5rem;
   width: fit-content;
   color: "#1c1c1c";

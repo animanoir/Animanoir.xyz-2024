@@ -1,0 +1,210 @@
+---
+// Generative signature layer (phase 2, task 5) — a placeholder gesture behind
+// the homepage thesis. Canvas 2D, low-alpha multicolor particles (the flow
+// band's blue/purple/red/white family) with gentle cursor repulsion.
+// Deliberately parameterized (constants at the top of the script)
+// so the algorithm can be replaced later without touching the wiring: init
+// deferral, reduced-motion, off-screen/hidden pausing, and DPR handling all
+// live outside the particle logic.
+---
+
+<canvas class="signature-canvas" aria-hidden="true"></canvas>
+
+<style>
+  .signature-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  // ---- Tunable system parameters ------------------------------------------
+  const PARTICLE_COUNT = 260;
+  const FORCE_RADIUS = 150; // px — cursor influence radius
+  const FORCE_STRENGTH = 0.6; // repulsion impulse inside the radius
+  const DRIFT_SPEED = 0.18; // px/frame base wander
+  const MAX_ALPHA = 0.45; // kept low enough to never compete with the text
+  const PARTICLE_RADIUS = 1.4; // px
+  const DPR_CAP = 2;
+
+  // Multicolor: same family as the flow band below (blue / purple / red /
+  // white-ink), so the two gestures read as one system. Weighted toward the
+  // cool end; white stays in the mix so the field keeps its ethereal base.
+  const PALETTE = [
+    "80, 120, 255", // blue
+    "150, 90, 235", // purple
+    "235, 80, 110", // red
+    "242, 240, 235", // ink white
+    "242, 240, 235", // ink white (double weight)
+  ];
+
+  type Particle = {
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    alpha: number;
+    color: string;
+  };
+
+  let raf = 0;
+  let running = false;
+  let inView = true;
+  let cleanupFns: Array<() => void> = [];
+
+  function initSignatureLayer() {
+    const canvas = document.querySelector<HTMLCanvasElement>(
+      ".signature-canvas",
+    );
+    if (!canvas || canvas.dataset.initialized) return;
+    canvas.dataset.initialized = "true";
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
+    let width = 0;
+    let height = 0;
+
+    function resize() {
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+
+    // Particles wander slowly; alpha and color vary per particle for depth.
+    const particles: Particle[] = Array.from({ length: PARTICLE_COUNT }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * DRIFT_SPEED,
+      vy: (Math.random() - 0.5) * DRIFT_SPEED,
+      alpha: MAX_ALPHA * (0.25 + Math.random() * 0.75),
+      color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
+    }));
+
+    // Cursor position in canvas space; parked far away until first move.
+    let px = -1e4;
+    let py = -1e4;
+    function onPointerMove(e: PointerEvent) {
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      px = e.clientX - rect.left;
+      py = e.clientY - rect.top;
+    }
+
+    function draw() {
+      ctx!.clearRect(0, 0, width, height);
+      for (const p of particles) {
+        ctx!.beginPath();
+        ctx!.arc(p.x, p.y, PARTICLE_RADIUS, 0, Math.PI * 2);
+        ctx!.fillStyle = `rgba(${p.color}, ${p.alpha})`;
+        ctx!.fill();
+      }
+    }
+
+    function step() {
+      for (const p of particles) {
+        // Gentle cursor repulsion, falling off linearly inside the radius.
+        const dx = p.x - px;
+        const dy = p.y - py;
+        const dist = Math.hypot(dx, dy);
+        if (dist < FORCE_RADIUS && dist > 0.001) {
+          const force = (1 - dist / FORCE_RADIUS) * FORCE_STRENGTH;
+          p.vx += (dx / dist) * force * 0.1;
+          p.vy += (dy / dist) * force * 0.1;
+        }
+
+        // Mild damping keeps velocities bounded after impulses.
+        p.vx *= 0.985;
+        p.vy *= 0.985;
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Wrap around the edges so density stays constant.
+        if (p.x < -5) p.x = width + 5;
+        if (p.x > width + 5) p.x = -5;
+        if (p.y < -5) p.y = height + 5;
+        if (p.y > height + 5) p.y = -5;
+      }
+      draw();
+    }
+
+    function loop() {
+      if (!running) return;
+      step();
+      raf = requestAnimationFrame(loop);
+    }
+
+    function setRunning(next: boolean) {
+      if (next === running) return;
+      running = next;
+      if (running) {
+        raf = requestAnimationFrame(loop);
+      } else {
+        cancelAnimationFrame(raf);
+      }
+    }
+
+    // Reduced motion: draw a single static frame, no loop, no listeners.
+    if (reduceMotion) {
+      draw();
+      return;
+    }
+
+    // Pause when the thesis section is off-screen…
+    const io = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      setRunning(inView && document.visibilityState === "visible");
+    });
+    io.observe(canvas);
+
+    // …and when the tab is hidden.
+    function onVisibility() {
+      setRunning(inView && document.visibilityState === "visible");
+    }
+
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("resize", resize);
+
+    cleanupFns.push(() => {
+      setRunning(false);
+      io.disconnect();
+      window.removeEventListener("pointermove", onPointerMove);
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("resize", resize);
+    });
+
+    setRunning(true);
+  }
+
+  function deferInit() {
+    // Initialize after content paint so the canvas never competes with LCP.
+    if (!document.querySelector(".signature-canvas")) return;
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(() => initSignatureLayer(), { timeout: 1500 });
+    } else {
+      setTimeout(initSignatureLayer, 200);
+    }
+  }
+
+  // Tear down before ClientRouter swaps the page away, re-init on arrival.
+  document.addEventListener("astro:before-swap", () => {
+    cleanupFns.forEach((fn) => fn());
+    cleanupFns = [];
+  });
+  document.addEventListener("astro:page-load", deferInit);
+</script>

@@ -1,0 +1,41 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import ModifiedHeader from "@/components/ModifiedHeader.astro";
+import Footer from "@/components/Footer/Footer.astro";
+import WorkIndex from "@/components/WorkIndex/WorkIndex.astro";
+import "../styles/global.css";
+---
+
+<html lang="en">
+  <head>
+    <BaseHead
+      title="Work"
+      description="Index of works by Óscar A. Montiel — interactive 3D, installations, generative sound, games, videoart, and web."
+    />
+  </head>
+  <body>
+    <ModifiedHeader />
+    <main>
+      <h1 class="visually-hidden">Work index</h1>
+      <WorkIndex />
+    </main>
+    <Footer />
+    <style>
+      main {
+        margin-left: var(--left-rail);
+        margin-right: var(--page-padding, 5%);
+        /* Clear the fixed header, then keep generous room before the footer. */
+        padding-top: 22vh;
+        padding-bottom: var(--space-section);
+        min-height: 70vh;
+      }
+
+      @media (max-width: 768px) {
+        main {
+          margin-left: 0;
+          padding: 30% 1.5rem var(--space-section);
+        }
+      }
+    </style>
+  </body>
+</html>
