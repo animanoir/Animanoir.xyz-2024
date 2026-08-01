@@ -67,6 +67,8 @@ const metaLine = [String(displayYear), stackList.join(" / "), role]
                 alt={description}
                 class="heroImage"
                 formats={["webp"]}
+                widths={[600, 900, 1500]}
+                sizes="(max-width: 768px) 100vw, 745px"
                 decoding="async"
                 loading="eager"
                 quality={80}
@@ -173,9 +175,14 @@ const metaLine = [String(displayYear), stackList.join(" / "), role]
         box-sizing: border-box;
       }
 
+      /* The hero is a figure, not a banner: capped at the wide measure (the
+         same width the post grid gives figures) and the 16:10 box the work
+         index preview uses, so it reads as one system. */
       .hero :global(.heroImage) {
         width: 100%;
-        max-height: 68vh;
+        max-width: var(--measure-wide);
+        aspect-ratio: 16 / 10;
+        max-height: 52vh;
         object-fit: cover;
         opacity: 0;
         transition: opacity 0.5s ease-in-out;

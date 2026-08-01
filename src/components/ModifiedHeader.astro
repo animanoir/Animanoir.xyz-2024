@@ -4,6 +4,7 @@ import LastFm from "@/components/LastFm.jsx";
 import MutatingSubheader from "@/components/MutatingSubheader.jsx";
 import Navbar from "@/components/Navbar.astro";
 import Ornaments from "./Ornaments.astro";
+import PageFrame from "@/components/PageFrame/PageFrame.astro";
 import * as motion from "motion/react-client";
 
 // `animated` opts into the sequential narrative reveal (quote → header → navbar).
@@ -50,6 +51,9 @@ const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
   </div>
 </header>
 <Ornaments />
+<!-- ModifiedHeader is the one component on every rendered page, so the fixed
+     structural frame (phase 5) mounts here rather than in a base layout. -->
+<PageFrame />
 <style>
   header {
     position: relative;

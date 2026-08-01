@@ -1,0 +1,137 @@
+---
+// Structural framing (phase 5): a fixed hairline frame with corner marks and
+// two lines of ambient corner data (location · build version). Rendered once
+// per page via ModifiedHeader. Purely visual: pointer-events none, aria-hidden.
+import { execSync } from "node:child_process";
+
+// Build-time version string: the short git commit hash (honest, traceable),
+// falling back to a build-date stamp when git isn't available.
+let version: string;
+try {
+  version = execSync("git rev-parse --short HEAD", {
+    encoding: "utf8",
+  }).trim();
+} catch {
+  const now = new Date();
+  version = `v.${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, "0")}`;
+}
+
+---
+
+<div class="page-frame" aria-hidden="true">
+  <span class="corner corner-tl"></span>
+  <span class="corner corner-tr"></span>
+  <span class="corner corner-bl"></span>
+  <span class="corner corner-br"></span>
+  <!-- Live cursor position, updated by the script below — instrument
+       readout, zero-padded tabular digits. -->
+  <span class="corner-data data-bl">0000 X · 0000 Y</span>
+  <span class="corner-data data-br">{version}</span>
+</div>
+
+<script>
+  // Live mouse-coordinate readout for the bottom-left corner datum. One
+  // module-scope listener survives ClientRouter page swaps; the span is
+  // re-queried inside the frame callback so DOM replacement is harmless.
+  let x = 0;
+  let y = 0;
+  let scheduled = false;
+
+  document.addEventListener("pointermove", (e) => {
+    x = Math.round(e.clientX);
+    y = Math.round(e.clientY);
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(() => {
+      scheduled = false;
+      const el = document.querySelector(".page-frame .data-bl");
+      if (!el) return;
+      const pad = (n: number) => String(Math.max(0, n)).padStart(4, "0");
+      el.textContent = `${pad(x)} X · ${pad(y)} Y`;
+    });
+  });
+</script>
+
+<style>
+  .page-frame {
+    position: fixed;
+    inset: var(--frame-inset);
+    /* 0.5px border over inset box-shadow: the codebase's existing hairlines
+       are 0.5px borders and render consistently here; a 0.5px inset shadow
+       anti-aliases to nothing on non-retina displays. */
+    border: 0.5px solid rgba(var(--color-ink-rgb), var(--frame-opacity));
+    pointer-events: none;
+    /* Above page content, below the interactive chrome (navbar 1000+). */
+    z-index: 900;
+  }
+
+  /* Corner marks: two short perpendicular strokes forming an L, sitting on
+     the frame line at a slightly higher opacity — they reinforce the corners
+     the way registration marks do on a technical drawing. */
+  .corner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+  }
+
+  .corner::before,
+  .corner::after {
+    content: "";
+    position: absolute;
+    background: rgba(var(--color-ink-rgb), var(--frame-mark-opacity));
+  }
+
+  /* Horizontal arm. */
+  .corner::before {
+    width: 16px;
+    height: 0.5px;
+  }
+
+  /* Vertical arm. */
+  .corner::after {
+    width: 0.5px;
+    height: 16px;
+  }
+
+  .corner-tl { top: -0.5px; left: -0.5px; }
+  .corner-tr { top: -0.5px; right: -0.5px; }
+  .corner-bl { bottom: -0.5px; left: -0.5px; }
+  .corner-br { bottom: -0.5px; right: -0.5px; }
+
+  .corner-tl::before, .corner-tl::after { top: 0; left: 0; }
+  .corner-tr::before { top: 0; right: 0; }
+  .corner-tr::after { top: 0; right: 0; }
+  .corner-bl::before { bottom: 0; left: 0; }
+  .corner-bl::after { bottom: 0; left: 0; }
+  .corner-br::before { bottom: 0; right: 0; }
+  .corner-br::after { bottom: 0; right: 0; }
+
+  /* Ambient corner data: mono, uppercase, tabular — real values only. */
+  .corner-data {
+    position: absolute;
+    bottom: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: var(--type-meta);
+    font-variant-numeric: tabular-nums;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(var(--color-ink-rgb), var(--frame-mark-opacity));
+    white-space: nowrap;
+  }
+
+  .data-bl { left: 0.75rem; }
+  .data-br { right: 0.75rem; }
+
+  /* Mobile keeps the frame but drops the data — crowding beats absence. */
+  @media (max-width: 768px) {
+    .corner-data {
+      display: none;
+    }
+  }
+
+  @media print {
+    .page-frame {
+      display: none;
+    }
+  }
+</style>

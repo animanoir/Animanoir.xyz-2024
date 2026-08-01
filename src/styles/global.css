@@ -49,6 +49,20 @@
   --measure: 65ch;
   --measure-wide: 88ch;
   --space-section: clamp(6rem, 12vh, 10rem);
+
+  /* == Structural framing (phase 5) — tuning values ========================
+     The frame is meant to be perceived before seen: if a line draws
+     attention to itself, lower its opacity, never raise it. */
+  --frame-inset: 1.5rem;
+  --frame-opacity: 0.14;
+  --frame-mark-opacity: 0.3;
+  --gutter-rule-opacity: 0.1;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --frame-inset: 0.75rem;
+  }
 }
 
 .visually-hidden {
