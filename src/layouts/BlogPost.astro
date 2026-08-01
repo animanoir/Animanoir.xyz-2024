@@ -29,7 +29,6 @@ interface Props {
   heroWidth?: "text" | "wide" | "full";
   tags?: string[];
   slug?: string;
-  minutes?: number;
   meta?: MetaPair[];
   prev?: PostLink;
   next?: PostLink;
@@ -45,7 +44,6 @@ const {
   heroCredit,
   heroWidth = "wide",
   tags,
-  minutes,
   meta = [],
   prev,
   next,
@@ -64,7 +62,6 @@ const eyebrow = tags?.[0] ?? "writing";
 // (Sanity returns null — not undefined — for absent fields, so coalesce.)
 const metaPairs: MetaPair[] = [
   { label: "date", value: isoDate },
-  ...(minutes ? [{ label: "reading", value: `${minutes} min` }] : []),
   ...(meta ?? []),
 ];
 
@@ -114,14 +111,10 @@ const HERO_H = 1200;
           </dl>
         </header>
 
-        <!-- The body zone is a subgrid spanning the full column: it inherits
-             the named lines (so figures still opt into text/wide/full) and
-             hosts the two gutter rules that make the reading column visible
-             (phase 5). Rules run from just below the header hairline to just
-             above the footer hairline, passing behind wide/full media. -->
-        <div class="post-body-zone">
         <!-- 2 · Hero as a figure on the grid (default wide), fixed 4:3 box,
-             caption anchored to the text column's left edge. -->
+             caption anchored to the text column's left edge. Deliberately
+             OUTSIDE the body zone: the gutter rules bound the reading column
+             only — a wide hero crossing them read as overflow. -->
         {
           hero && (
             <figure class="post-hero" data-width={heroCol}>
@@ -153,7 +146,6 @@ const HERO_H = 1200;
         <!-- 3 · Body. The renderer's wrapper is display:contents so every
              block sits directly on the article grid. -->
         <slot />
-        </div>
 
         <!-- 4 · Footer: hairline, tags, sequential navigation, back link. -->
         <footer class="post-footer">
@@ -213,62 +205,12 @@ const HERO_H = 1200;
          data-width. The renderer wrapper joins the grid via display:contents
          (astro-island already is). */
       .post > :global(*),
-      .post-body-zone > :global(*),
       .post :global(.portable-text-content > *) {
         grid-column: text;
       }
 
       .post :global(.portable-text-content) {
         display: contents;
-      }
-
-      /* == Body zone: subgrid + gutter rules (phase 5) ==================== */
-      .post-body-zone {
-        grid-column: full;
-        display: grid;
-        grid-template-columns: subgrid;
-        position: relative;
-      }
-
-      /* Two vertical hairlines on the text-start / text-end lines. The grid
-         is left-anchored, so text-start is the zone's left edge and text-end
-         sits at min(measure, 100%) — the same value the column track
-         resolves to, so the rules cannot drift from the grid. They render
-         behind content (no z-index) and never intercept the pointer. */
-      .post-body-zone::before,
-      .post-body-zone::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 0.5px;
-        background: rgba(var(--color-ink-rgb), var(--gutter-rule-opacity));
-        pointer-events: none;
-      }
-
-      .post-body-zone::before {
-        left: 0;
-      }
-
-      .post-body-zone::after {
-        left: min(var(--measure), 100%);
-      }
-
-      /* Graceful degradation without subgrid: single readable column, no
-         rules (they'd have nothing exact to align to). */
-      @supports not (grid-template-columns: subgrid) {
-        .post-body-zone {
-          display: block;
-        }
-
-        .post-body-zone::before,
-        .post-body-zone::after {
-          display: none;
-        }
-
-        .post-body-zone :global(.portable-text-content > *:not([data-width])) {
-          max-width: var(--measure);
-        }
       }
 
       .post :global([data-width="text"]) {
@@ -465,12 +407,6 @@ const HERO_H = 1200;
           grid-template-columns:
             [full-start wide-start text-start] minmax(0, 1fr)
             [text-end wide-end full-end];
-        }
-
-        /* Rules would sit at the viewport edges — drop them. */
-        .post-body-zone::before,
-        .post-body-zone::after {
-          display: none;
         }
       }
     </style>

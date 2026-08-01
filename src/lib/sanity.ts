@@ -77,26 +77,6 @@ export async function getPostBySlug(slug: string): Promise<SanityPost | null> {
 }
 
 /**
- * Approximate reading time in minutes from Portable Text blocks. Counts words
- * in text spans only (media/code blocks are ignored), 200 wpm, minimum 1.
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function readingTimeFromBody(body?: any[]): number {
-  if (!body) return 1;
-  let words = 0;
-  for (const block of body) {
-    if (block?._type === "block" && Array.isArray(block.children)) {
-      for (const child of block.children) {
-        if (typeof child?.text === "string") {
-          words += child.text.split(/\s+/).filter(Boolean).length;
-        }
-      }
-    }
-  }
-  return Math.max(1, Math.round(words / 200));
-}
-
-/**
  * Fetch all post slugs for static path generation
  */
 export async function getAllPostSlugs(): Promise<{ slug: string }[]> {

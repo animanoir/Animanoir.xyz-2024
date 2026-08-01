@@ -367,20 +367,16 @@ const features = await Promise.all(
       }
 
       /* -- Reveal on enter --------------------------------------------------
-         Sections fade/rise when scrolled into view. Only applied when motion
-         is allowed; reduced-motion (and the IO fallback) shows content as-is. */
+         Featured works fade in when scrolled into view. Only applied when
+         motion is allowed; reduced-motion shows content as-is. */
       @media (prefers-reduced-motion: no-preference) {
         .reveal {
           opacity: 0;
-          transform: translateY(2rem);
-          transition:
-            opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-            transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .reveal.is-visible {
           opacity: 1;
-          transform: translateY(0);
         }
       }
 
@@ -445,6 +441,10 @@ const features = await Promise.all(
         targets.forEach((el) => observer.observe(el));
       }
 
+      // Astro module scripts run after the DOM is parsed, so init directly —
+      // waiting only on astro:page-load can miss the first paint and leave
+      // the sections stuck invisible. Re-init after ClientRouter swaps.
+      initReveals();
       document.addEventListener("astro:page-load", initReveals);
     </script>
   </body>

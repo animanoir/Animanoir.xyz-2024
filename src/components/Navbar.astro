@@ -1,18 +1,17 @@
 ---
 import HeaderLink from "@/components/HeaderLink.astro";
 import { ClientRouter } from "astro:transitions";
-import * as motion from "motion/react-client";
 
-// `animated` opts into the per-item narrative reveal — items slide in one by one,
-// alternating from the right then the left. Only the homepage passes it; every
-// other page renders the static markup (no React islands).
+// `animated` opts into the per-item narrative reveal — each item fades in
+// from the left into place, staggered. Pure CSS (no React islands): it runs
+// from first paint, so there is no hydration flash. Only the homepage passes
+// it; every other page renders the static markup.
 const { animated = false } = Astro.props;
 
 // Reveal tuning. Base delay starts the navbar after the header reveal so the
 // quote → header → navbar narrative keeps flowing.
 const REVEAL_BASE_DELAY = 1.5;
 const REVEAL_STEP = 0.1;
-const REVEAL_OFFSET = 24;
 
 // The whole nav: Work (grid), About (homepage section), Writing (blog),
 // Contact (email). Work categories are no longer nav items — they live as
@@ -29,32 +28,20 @@ const links = [
   <div class="nav-links">
     <div class="link-group">
       {
-        links.map((link, i) =>
-          animated ? (
-            <motion.div
-              client:load
-              initial={{ opacity: 0, x: i % 2 === 0 ? REVEAL_OFFSET : -REVEAL_OFFSET }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{
-                duration: 0.6,
-                delay: REVEAL_BASE_DELAY + i * REVEAL_STEP,
-                ease: "easeOut",
-              }}
-            >
-              <div class="nav-item">
-                <HeaderLink href={link.href} target={link.target}>
-                  {link.label}
-                </HeaderLink>
-              </div>
-            </motion.div>
-          ) : (
-            <div class="nav-item">
-              <HeaderLink href={link.href} target={link.target}>
-                {link.label}
-              </HeaderLink>
-            </div>
-          )
-        )
+        links.map((link, i) => (
+          <div
+            class:list={["nav-item", { reveal: animated }]}
+            style={
+              animated
+                ? `animation-delay: ${(REVEAL_BASE_DELAY + i * REVEAL_STEP).toFixed(2)}s`
+                : undefined
+            }
+          >
+            <HeaderLink href={link.href} target={link.target}>
+              {link.label}
+            </HeaderLink>
+          </div>
+        ))
       }
     </div>
   </div>
@@ -299,6 +286,26 @@ const links = [
     display: flex;
     align-items: center;
     margin-right: 0;
+  }
+
+  /* Narrative reveal (homepage): each item fades in from the left into its
+     place, staggered via an inline animation-delay. `both` keeps items
+     hidden while their delay elapses. Skipped for reduced-motion users. */
+  @media (prefers-reduced-motion: no-preference) {
+    .nav-item.reveal {
+      animation: navReveal 0.6s ease-out both;
+    }
+
+    @keyframes navReveal {
+      from {
+        opacity: 0;
+        transform: translateX(-24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
   }
 
   .nav-item:last-child {

@@ -1,12 +1,7 @@
 ---
 import BlogPost from "../../layouts/BlogPost.astro";
 import PortableTextRenderer from "../../components/PortableTextRenderer";
-import {
-  getAllPosts,
-  readingTimeFromBody,
-  urlFor,
-  type SanityPost,
-} from "../../lib/sanity";
+import { getAllPosts, urlFor, type SanityPost } from "../../lib/sanity";
 
 // One fetch for the whole collection: each page gets its post plus its
 // sequential neighbors (posts are ordered publishedAt desc, so "previous" is
@@ -62,7 +57,6 @@ const heroUrl = post.mainImage
   heroWidth={post.heroWidth}
   tags={post.tags}
   slug={post.slug.current}
-  minutes={readingTimeFromBody(post.body)}
   meta={post.meta}
   prev={prev}
   next={next}

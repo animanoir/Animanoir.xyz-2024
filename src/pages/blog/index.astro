@@ -1,13 +1,13 @@
 ---
 import BaseHead from "../../components/BaseHead.astro";
 import ModifiedHeader from "../../components/ModifiedHeader.astro";
-import { getAllPosts, readingTimeFromBody } from "../../lib/sanity";
+import { getAllPosts } from "../../lib/sanity";
 import Footer from "../../components/Footer/Footer.astro";
 
 // Writing index (phase 3): the same typographic list language as the Work
-// index — hairline-separated rows of date · title · reading time, grouped by
-// year under a small mono label. No covers, no excerpts: the list IS the
-// design. Row styles come from the shared .index-row classes in global.css.
+// index — hairline-separated rows of date · title, grouped by year under a
+// small mono label. No covers, no excerpts: the list IS the design. Row
+// styles come from the shared .index-row classes in global.css.
 
 const posts = await getAllPosts();
 
@@ -17,7 +17,6 @@ const rows = posts.map((post) => ({
   date: post.publishedAt.slice(0, 10),
   year: new Date(post.publishedAt).getFullYear(),
   title: post.title,
-  minutes: readingTimeFromBody(post.body),
 }));
 
 // Group by year, newest first (getAllPosts already returns publishedAt desc).
@@ -49,7 +48,6 @@ const years = [...new Set(rows.map((r) => r.year))].sort((a, b) => b - a);
                         {r.date}
                       </time>
                       <span class="index-row-title">{r.title}</span>
-                      <span class="index-row-meta">{r.minutes} min</span>
                     </a>
                   </li>
                 ))}

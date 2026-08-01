@@ -46,7 +46,7 @@ const { goWild = false, sortSpeed = 0, animated = false } = Astro.props;
     )
   }
   <div class="navbar-wrapper">
-    <!-- When animated, the Navbar reveals its items one by one (right/left). -->
+    <!-- When animated, the Navbar items fade in from the left, staggered. -->
     <Navbar animated={animated} />
   </div>
 </header>

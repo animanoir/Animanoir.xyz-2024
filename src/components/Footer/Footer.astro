@@ -1,176 +1,173 @@
 ---
-const today = new Date();
-import { Image } from "astro:assets";
-import portrait from "@/images/about/oam-optim.webm";
-import youtubeSvg from "./icons/youtube.svg";
-import linkedinSvg from "./icons/linkedin.svg";
-import arenaLogo from "./icons/arena-logo-white.png";
-import steamSvg from "./icons/steam.svg";
-import githubSvg from "./icons/github.svg";
+// Colophon footer (phase 6): a left-anchored closing block in the mono/meta
+// register — index, elsewhere, colophon — not a utility bar. Sits in the
+// content flow; the phase 5 frame provides the page's actual bottom edge, so
+// there is no closing hairline here.
+import { buildVersion } from "@/lib/buildMeta";
 
-const socialLinks = [
-  {
-    href: "https://github.com/animanoir",
-    icon: githubSvg,
-    alt: "GitHub profile",
-  },
-  {
-    href: "https://www.linkedin.com/in/oscaramontiel/",
-    icon: linkedinSvg,
-    alt: "LinkedIn profile",
-  },
+const year = new Date().getFullYear();
+const version = buildVersion();
+
+const nav = [
+  { href: "/work", label: "Work" },
+  { href: "/#about", label: "About" },
+  { href: "/blog", label: "Writing" },
+  { href: "mailto:etherealflux94@gmail.com", label: "Contact" },
+];
+
+const elsewhere = [
+  { href: "https://github.com/animanoir", label: "GitHub" },
+  { href: "https://www.linkedin.com/in/oscaramontiel/", label: "LinkedIn" },
   {
     href: "https://www.youtube.com/channel/UCGe1qc0nF0uNypETYDQmMMQ",
-    icon: youtubeSvg,
-    alt: "YouTube channel",
+    label: "YouTube",
   },
   {
-    href: "https://steamcommunity.com/id/geosmina/",
-    icon: steamSvg,
-    alt: "Steam profile",
+    href: "https://www.are.na/tilde-colon-pipe-degrees-degrees-bullet-period-pipe-colon-tilde/channels",
+    label: "Are.na",
   },
+  { href: "https://steamcommunity.com/id/geosmina/", label: "Steam" },
 ];
 ---
+
 <footer>
-  <video
-    class="footer-portrait"
-    src={portrait}
-    autoplay
-    loop
-    muted
-    playsinline
-    width={360}
-    height={360}></video>
-  <div class="social-icons">
-    {
-      socialLinks.map((social) => (
-        <a
-          href={social.href}
-          target="_blank"
-          rel="noreferrer"
-          class="social-link"
-        >
-          <Image
-            loading="eager"
-            alt={social.alt}
-            src={social.icon}
-            class="social-icon"
-          />
-        </a>
-      ))
-    }
-  </div>
-  <a
-    href="mailto:etherealflux94@gmail.com"
-    class="email-link"
-  >
-    etherealflux94@gmail.com
-  </a>
-  <div class="footer-line">
-    {today.getFullYear()} · Mexico
+  <div class="colophon">
+    <div class="colophon-inner">
+      <div class="cols">
+        <nav aria-label="Footer navigation">
+          <h2 class="label">Index</h2>
+          <ul>
+            {
+              nav.map((item) => (
+                <li>
+                  <a href={item.href}>{item.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <section>
+          <h2 class="label">Everywhere</h2>
+          <ul>
+            {
+              elsewhere.map((item) => (
+                <li>
+                  <a
+                    class="link-external"
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <section>
+          <p>{year} Óscar A. Montiel · Querétaro, MX</p>
+          <p class="version">v.{version}</p>
+        </section>
+      </div>
+    </div>
   </div>
 </footer>
+
 <style>
-  .footer-portrait {
-    display: block;
-    width: 360px;
-    max-width: 55vw;
-    height: auto;
-    margin-bottom: 2rem;
-  }
-  .email-link {
-    color: inherit;
-    text-decoration: none;
-    font-size: 1.25rem;
-    transition: opacity 0.3s ease;
-  }
-  /* Footer line as metadata: mono, tabular, muted. */
-  .footer-line {
+  footer {
+    margin-top: var(--space-section);
+    /* Keep the last line clear of the fixed frame's bottom hairline. */
+    padding-bottom: calc(var(--frame-inset) + 2rem);
     font-family: var(--font-mono);
     font-size: var(--type-meta);
     font-variant-numeric: tabular-nums;
-    opacity: 0.6;
-    margin-top: 0.75rem;
+    color: var(--color-ink);
   }
-  .email-link:hover {
-    opacity: 0.7;
+
+  /* Same left anchor and max measure as every content page. */
+  .colophon {
+    margin-left: var(--left-rail);
+    margin-right: var(--page-padding, 5%);
   }
-  .social-icons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+  .colophon-inner {
+    max-width: 68rem;
+    margin: 0 auto;
+    border-top: 0.5px solid rgba(var(--color-ink-rgb), 0.15);
+    padding-top: 2rem;
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2rem;
-    margin-bottom: 10px;
+    max-width: var(--measure-wide);
   }
-  .social-link {
-    display: inline-flex;
-    align-items: center;
-    transition: opacity 0.3s ease;
+
+  .label {
+    margin: 0 0 0.9rem;
+    font-family: var(--font-mono);
+    font-size: var(--type-meta);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
   }
-  .social-link:hover {
-    opacity: 0.7;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
-  .social-icon {
-    height: 24px;
-    width: auto;
-    filter: brightness(0) invert(1);
+
+  li {
+    margin: 0 0 0.5rem;
   }
-  /* Soft transition into the black footer: a transparent → black gradient that
-     sits directly above it (over whatever content precedes the footer) so the
-     top edge doesn't read as a hard cut — same pattern as the homepage
-     `.about::after` (index.astro). */
-  footer::before {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    width: 100%;
-    height: 15vh;
-    background: linear-gradient(to bottom, transparent 0%, #000 100%);
-    pointer-events: none;
+
+  p {
+    margin: 0 0 0.5rem;
+    padding: 0;
+    line-height: 1.6;
+    color: var(--text-secondary);
   }
-  footer {
-    width: 100vw;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: var(--font-sans);
-    color: #ffffff;
-    background-color: #000000;
-    margin-top: auto;
-    padding: 2rem 0;
-    box-sizing: border-box;
-    position: relative;
+
+  /* Same link treatment as post body links (phase 4). */
+  a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    transition: color 0.2s ease;
   }
-  /* Mobile responsive styles */
+
+  a:hover,
+  a:focus-visible {
+    color: var(--color-ink);
+  }
+
+  a:focus-visible {
+    outline: 1px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+
+  .link-external::after {
+    content: " ↗";
+    font-size: 0.8em;
+    color: var(--text-muted);
+  }
+
   @media (max-width: 768px) {
-    footer {
-      flex-direction: column;
-      padding: 1.5rem;
-      text-align: center;
-      font-size: 0.95rem;
-    }
-    .social-icons {
-      gap: 1.5rem;
+    .colophon {
+      margin-left: 0;
+      padding: 0 1.5rem;
     }
 
-    .social-icon {
-      height: 32px;
-    }
-  }
-  /* Small mobile devices */
-  @media (max-width: 480px) {
-    footer {
-      font-size: 0.9rem;
-      padding: 1rem;
-    }
-    .social-icons {
-      gap: 1rem;
-    }
-    .social-icon {
-      height: 28.8px;
+    .cols {
+      grid-template-columns: 1fr;
+      gap: 2.25rem;
     }
   }
 </style>

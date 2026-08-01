@@ -1,21 +1,12 @@
 ---
 // Structural framing (phase 5): a fixed hairline frame with corner marks and
-// two lines of ambient corner data (location · build version). Rendered once
-// per page via ModifiedHeader. Purely visual: pointer-events none, aria-hidden.
-import { execSync } from "node:child_process";
+// two lines of ambient corner data (mouse position · current date). Rendered
+// once per page via ModifiedHeader. Purely visual: pointer-events none,
+// aria-hidden. The build version lives in the footer colophon.
 
-// Build-time version string: the short git commit hash (honest, traceable),
-// falling back to a build-date stamp when git isn't available.
-let version: string;
-try {
-  version = execSync("git rev-parse --short HEAD", {
-    encoding: "utf8",
-  }).trim();
-} catch {
-  const now = new Date();
-  version = `v.${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, "0")}`;
-}
-
+// Server-rendered fallback; the script below replaces it with the viewer's
+// local date, so a long-lived static build never shows a stale day.
+const buildDate = new Date().toISOString().slice(0, 10);
 ---
 
 <div class="page-frame" aria-hidden="true">
@@ -26,10 +17,23 @@ try {
   <!-- Live cursor position, updated by the script below — instrument
        readout, zero-padded tabular digits. -->
   <span class="corner-data data-bl">0000 X · 0000 Y</span>
-  <span class="corner-data data-br">{version}</span>
+  <span class="corner-data data-br">{buildDate}</span>
 </div>
 
 <script>
+  // Current date for the bottom-right corner datum, in the viewer's local
+  // time and the site-wide ISO format. Re-applied after ClientRouter swaps.
+  function setCornerDate() {
+    const el = document.querySelector(".page-frame .data-br");
+    if (!el) return;
+    const d = new Date();
+    const pad2 = (n: number) => String(n).padStart(2, "0");
+    el.textContent = `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+  }
+
+  setCornerDate();
+  document.addEventListener("astro:page-load", setCornerDate);
+
   // Live mouse-coordinate readout for the bottom-left corner datum. One
   // module-scope listener survives ClientRouter page swaps; the span is
   // re-queried inside the frame callback so DOM replacement is harmless.
