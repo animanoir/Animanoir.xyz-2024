@@ -1,8 +1,9 @@
 ---
 // Flow shader band (homepage, under the thesis). A Three.js fullscreen-quad
-// fragment shader: an ethereal current of deep blue / purple / red with white
-// crests, streaming left→right while rushing out of a far horizon toward the
-// viewer. Same runtime discipline as SignatureLayer: deferred init, pauses
+// fragment shader: an ethereal current of deep wine / red with a breath of
+// purple and white-hot crests, streaming left→right while rushing out of a
+// far horizon toward the viewer, plus an icy blue-white spiral companion
+// dancing a helix around the main body. Same runtime discipline as SignatureLayer: deferred init, pauses
 // when off-screen or the tab is hidden, static frame under reduced motion,
 // DPR capped, disposed before ClientRouter swaps away.
 ---
@@ -28,6 +29,8 @@
   const SPEED_FLOW = 10.4; // current streaming along the serpent's body
   const SLITHER_SPEED = 1.15; // how fast the body undulates
   const SPARKLE_DRIFT = 0.15; // sparkles lag far behind the current
+  const SPIRAL_SPEED = 1.4; // how fast the white ribbon orbits the body
+  const SPIRAL_TWIST = 4.6; // helix windings along the band
   const STATIC_TIME = 14.0; // frame shown under prefers-reduced-motion
 
   const FRAGMENT = /* glsl */ `
@@ -67,12 +70,24 @@
       return v;
     }
 
-    // Per-glint color, same family as the signature particles above:
-    // blue / purple / red / white, picked by hash.
+    // Silky organic pattern: coordinates folded by a few travelling sine
+    // warps (marble folds). Unlike granular fbm, every derivative is smooth,
+    // so the current reads as liquid silk rather than sediment.
+    float silk(vec2 p, float t) {
+      vec2 q = p;
+      for (int i = 1; i <= 4; i++) {
+        float fi = float(i);
+        q.x += (0.55 / fi) * sin(fi * 1.7 * q.y + t * 0.35 + fi * 1.9);
+        q.y += (0.45 / fi) * cos(fi * 1.3 * q.x - t * 0.28 + fi * 2.6);
+      }
+      return 0.5 + 0.5 * sin(q.x * 1.6 + q.y * 1.2);
+    }
+
+    // Per-glint color, matching the body's palette: mostly red and white
+    // with a breath of purple, picked by hash.
     vec3 sparkleColor(float rnd) {
-      if (rnd < 0.25) return vec3(0.45, 0.60, 1.00); // blue
-      if (rnd < 0.50) return vec3(0.70, 0.45, 1.00); // purple
-      if (rnd < 0.75) return vec3(1.00, 0.45, 0.55); // red
+      if (rnd < 0.20) return vec3(0.70, 0.45, 1.00); // purple
+      if (rnd < 0.55) return vec3(1.00, 0.42, 0.50); // red
       return vec3(1.00, 0.97, 0.95);                 // white
     }
 
@@ -129,19 +144,14 @@
       float body = smoothstep(1.25, 0.35, abs(d) / r);
       float shade = sqrt(max(1.0 - q * q, 0.0)); // round-body lighting
 
-      // The current streaming ALONG the body. Lower frequency + a much deeper,
-      // slower domain warp than a plain scroll: big silky billows instead of
-      // granular detail.
+      // The current streaming ALONG the body — silk-warped sines (marble
+      // folds) instead of granular fbm: smooth, liquid, organic.
       vec2 st = vec2(
         x / s * 0.85 - uTime * ${SPEED_FLOW.toFixed(2)},
         q * 1.1
       );
-      vec2 warp = vec2(
-        fbm(st * 10.8 + vec2(0.0, uTime * 0.18)),
-        fbm(st * 0.8 - vec2(uTime * 0.14, 0.0))
-      );
-      float n = fbm(st + (warp - 0.5) * 2.6);
-      // Compress contrast toward the middle — no hard plaster-like clumps.
+      float n = silk(st, uTime);
+      // Compress contrast toward the middle — gentle folds, no hard clumps.
       n = mix(0.5, n, 0.72);
       // Slow breathing so the color balance drifts dreamily over time.
       n += 0.05 * sin(uTime * 0.30);
@@ -151,18 +161,20 @@
       float touch = exp(-dot(p - uMouse, p - uMouse) * 5.0) * uMouseInf;
       n += touch * 0.16;
 
-      // -- palette: deep blue → purple → red, white-hot crests ---------------
-      vec3 deepBlue = vec3(0.04, 0.10, 0.52);
-      vec3 purple   = vec3(0.02, 0.10, 0.12);
-      vec3 red      = vec3(0.92, 0.08, 0.16);
-      vec3 white    = vec3(1.00, 0.97, 0.95);
+      // -- palette: deep wine → red, a violet breath, white-hot crests -------
+      vec3 deepRed = vec3(0.28, 0.02, 0.07);
+      vec3 purple  = vec3(0.48, 0.16, 0.62);
+      vec3 red     = vec3(0.92, 0.08, 0.16);
+      vec3 white   = vec3(1.00, 0.97, 0.95);
 
-      // Long, gentle color transitions, biased hot: red arrives earlier and
-      // the white bloom opens sooner and stronger.
-      vec3 col = mix(deepBlue, purple, smoothstep(0.06, 0.55, n));
-      col = mix(col, red, smoothstep(0.38, 0.80, n));
+      // Mostly red: the body runs deep wine → full red across the folds.
+      vec3 col = mix(deepRed, red, smoothstep(0.08, 0.62, n));
+      // A bit of purple: a narrow violet band between the red body and the
+      // white crests — an accent that passes through, never a stage.
+      float vio = smoothstep(0.44, 0.58, n) * (1.0 - smoothstep(0.58, 0.76, n));
+      col = mix(col, purple, vio * 0.45);
       // Soft white bloom where the current peaks — mist, not hard crests.
-      col += white * pow(max(n - 0.52, 0.0) * 2.4, 1.5) * 0.9;
+      col += white * pow(max(n - 0.52, 0.0) * 2.4, 1.5) * 1.0;
 
       // A slow translucent veil drifting over the body — gauze over the flow.
       float veil = fbm(vec2(x / s * 0.95 - uTime * 0.35, q * 0.6 + uTime * 0.05));
@@ -178,20 +190,46 @@
       // Ethereal aura bleeding off the body into the dark — kept tight so it
       // dies out well before the band's edges. Warmed with a breath of red.
       float aura = exp(-abs(d) / (r * 1.8)) * 0.30;
-      vec3 auraCol = mix(mix(deepBlue, purple, 0.6), red, 0.22) + white * 0.10;
+      vec3 auraCol = mix(mix(deepRed, purple, 0.30), red, 0.45) + white * 0.08;
 
       vec3 ground = vec3(0.051); // page bg #0d0d0d
       vec3 outCol = ground
         + auraCol * aura * nearBright
         + col * body * nearBright;
 
+      // -- Spiral companion: an ethereal-white ribbon dancing a helix around
+      // the main flow. cos(phase) is its depth cue: +1 swings in front of the
+      // body (fuller, brighter), -1 dips behind it (thinner, veiled by the
+      // body), so the orbit reads as 3D. An fbm wobble keeps the dance loose
+      // and dreamlike instead of mechanical.
+      float sPhase = x * ${SPIRAL_TWIST.toFixed(2)} - uTime * ${SPIRAL_SPEED.toFixed(2)}
+                   + (fbm(vec2(x * 0.45 + 3.1, uTime * 0.09)) - 0.5) * 2.4;
+      float sDepth = cos(sPhase);
+      // Breathing orbit radius — the ribbon leans out and swoops back in.
+      float orbitR = r * (2.0 + 0.4 * sin(uTime * 0.37 + x * 0.9));
+      float dS = p.y - (spine + sin(sPhase) * orbitR);
+      float rS = r * (0.16 + 0.07 * sDepth);
+      // Gaussian core + a wide soft halo — bloom, not stroke.
+      float sCore = exp(-pow(dS / max(rS, 1e-4), 2.0));
+      float sHalo = exp(-pow(dS / max(rS * 4.5, 1e-4), 2.0)) * 0.35;
+      // Gauze: brightness billows along the ribbon so it drifts like vapor.
+      float sGauze = 0.55 + 0.45 * fbm(vec2(x * 1.6 - uTime * 0.7, sPhase * 0.35));
+      // Behind the body the ribbon shows through only faintly.
+      float sOccl = mix(1.0, 1.0 - body * 0.85, step(sDepth, 0.0));
+      // Icy blue-white — still whiteish, but cold enough to contrast the warm
+      // red body — brighter on the near side.
+      vec3 spiralCol = mix(white, vec3(0.50, 0.66, 1.0), 0.68) * (0.8 + 0.2 * sDepth);
+      float sGlow = (sCore * 1.15 + sHalo) * sGauze * sOccl * nearBright;
+      outCol += spiralCol * sGlow;
+
       // Dreamy sparkles: two drifting layers of multicolor twinkling glints,
-      // clustered around the body (aura-weighted). They drift much slower
-      // than the current racing along the body — floating dust, not spray.
+      // clustered around the body and the spiral (halo-weighted). They drift
+      // much slower than the current racing along the body — floating dust,
+      // not spray.
       vec2 sp = vec2(x * 1.0 - uTime * ${SPARKLE_DRIFT.toFixed(2)}, uv.y * 1.8);
       vec3 glints = sparkle(sp * 7.0)
                   + sparkle(sp * 12.0 + 31.7) * 0.6;
-      float sparkZone = clamp(aura * 2.2 + body * 0.55, 0.0, 1.0);
+      float sparkZone = clamp(aura * 2.2 + body * 0.55 + sHalo * 1.3, 0.0, 1.0);
       outCol += glints * sparkZone * nearBright * 0.9;
 
       // Wide top/bottom fade: everything — body and aura — dissolves into the
