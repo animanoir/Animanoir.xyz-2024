@@ -1,8 +1,8 @@
 ---
 // Structural framing (phase 5): a fixed hairline frame with corner marks and
-// two lines of ambient corner data (mouse position · current date). Rendered
-// once per page via ModifiedHeader. Purely visual: pointer-events none,
-// aria-hidden. The build version lives in the footer colophon.
+// one line of ambient corner data (current date). Rendered once per page via
+// ModifiedHeader. Purely visual: pointer-events none, aria-hidden. The build
+// version lives in the footer colophon.
 
 // Server-rendered fallback; the script below replaces it with the viewer's
 // local date, so a long-lived static build never shows a stale day.
@@ -14,9 +14,6 @@ const buildDate = new Date().toISOString().slice(0, 10);
   <span class="corner corner-tr"></span>
   <span class="corner corner-bl"></span>
   <span class="corner corner-br"></span>
-  <!-- Live cursor position, updated by the script below — instrument
-       readout, zero-padded tabular digits. -->
-  <span class="corner-data data-bl">0000 X · 0000 Y</span>
   <span class="corner-data data-br">{buildDate}</span>
 </div>
 
@@ -33,27 +30,6 @@ const buildDate = new Date().toISOString().slice(0, 10);
 
   setCornerDate();
   document.addEventListener("astro:page-load", setCornerDate);
-
-  // Live mouse-coordinate readout for the bottom-left corner datum. One
-  // module-scope listener survives ClientRouter page swaps; the span is
-  // re-queried inside the frame callback so DOM replacement is harmless.
-  let x = 0;
-  let y = 0;
-  let scheduled = false;
-
-  document.addEventListener("pointermove", (e) => {
-    x = Math.round(e.clientX);
-    y = Math.round(e.clientY);
-    if (scheduled) return;
-    scheduled = true;
-    requestAnimationFrame(() => {
-      scheduled = false;
-      const el = document.querySelector(".page-frame .data-bl");
-      if (!el) return;
-      const pad = (n: number) => String(Math.max(0, n)).padStart(4, "0");
-      el.textContent = `${pad(x)} X · ${pad(y)} Y`;
-    });
-  });
 </script>
 
 <style>
@@ -110,7 +86,7 @@ const buildDate = new Date().toISOString().slice(0, 10);
   .corner-br::before { bottom: 0; right: 0; }
   .corner-br::after { bottom: 0; right: 0; }
 
-  /* Ambient corner data: mono, uppercase, tabular — real values only. */
+  /* Ambient corner datum: mono, uppercase, tabular — a real value only. */
   .corner-data {
     position: absolute;
     bottom: 0.6rem;
@@ -123,7 +99,6 @@ const buildDate = new Date().toISOString().slice(0, 10);
     white-space: nowrap;
   }
 
-  .data-bl { left: 0.75rem; }
   .data-br { right: 0.75rem; }
 
   /* Mobile keeps the frame but drops the data — crowding beats absence. */
