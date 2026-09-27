@@ -16,9 +16,12 @@
 
   /* == Editorial design tokens (phase 2) ==================================
      Binary palette + one accent. The accent is reserved for hover/link
-     states — never for static decoration. Inverted: near-black ground,
-     near-white ink. The -rgb variants feed rgba() for hairlines/neutrals. */
-  --color-bg: #0d0d0d;
+     states — never for static decoration. Inverted: pure black ground,
+     near-white ink. The -rgb variants feed rgba() for hairlines/neutrals
+     and for translucent backdrops (menus, overlays) that must match the
+     ground. */
+  --color-bg: #000000;
+  --color-bg-rgb: 0, 0, 0;
   --color-ink: #f2f0eb;
   --color-ink-rgb: 242, 240, 235;
   --color-accent: #ee5858;

@@ -1,12 +1,9 @@
 ---
-// Structural framing (phase 5): a fixed hairline frame with corner marks and
-// one line of ambient corner data (current date). Rendered once per page via
-// ModifiedHeader. Purely visual: pointer-events none, aria-hidden. The build
-// version lives in the footer colophon.
-
-// Server-rendered fallback; the script below replaces it with the viewer's
-// local date, so a long-lived static build never shows a stale day.
-const buildDate = new Date().toISOString().slice(0, 10);
+// Structural framing (phase 5): a fixed hairline frame with corner marks.
+// Rendered once per page via ModifiedHeader. Purely visual: pointer-events
+// none, aria-hidden. The build version lives in the footer colophon. The
+// frame carries no corner data (the mouse-coordinate readout and the date
+// datum were both removed at Óscar's request — don't reintroduce them).
 ---
 
 <div class="page-frame" aria-hidden="true">
@@ -14,23 +11,7 @@ const buildDate = new Date().toISOString().slice(0, 10);
   <span class="corner corner-tr"></span>
   <span class="corner corner-bl"></span>
   <span class="corner corner-br"></span>
-  <span class="corner-data data-br">{buildDate}</span>
 </div>
-
-<script>
-  // Current date for the bottom-right corner datum, in the viewer's local
-  // time and the site-wide ISO format. Re-applied after ClientRouter swaps.
-  function setCornerDate() {
-    const el = document.querySelector(".page-frame .data-br");
-    if (!el) return;
-    const d = new Date();
-    const pad2 = (n: number) => String(n).padStart(2, "0");
-    el.textContent = `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
-  }
-
-  setCornerDate();
-  document.addEventListener("astro:page-load", setCornerDate);
-</script>
 
 <style>
   .page-frame {
@@ -85,28 +66,6 @@ const buildDate = new Date().toISOString().slice(0, 10);
   .corner-bl::after { bottom: 0; left: 0; }
   .corner-br::before { bottom: 0; right: 0; }
   .corner-br::after { bottom: 0; right: 0; }
-
-  /* Ambient corner datum: mono, uppercase, tabular — a real value only. */
-  .corner-data {
-    position: absolute;
-    bottom: 0.6rem;
-    font-family: var(--font-mono);
-    font-size: var(--type-meta);
-    font-variant-numeric: tabular-nums;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: rgba(var(--color-ink-rgb), var(--frame-mark-opacity));
-    white-space: nowrap;
-  }
-
-  .data-br { right: 0.75rem; }
-
-  /* Mobile keeps the frame but drops the data — crowding beats absence. */
-  @media (max-width: 768px) {
-    .corner-data {
-      display: none;
-    }
-  }
 
   @media print {
     .page-frame {

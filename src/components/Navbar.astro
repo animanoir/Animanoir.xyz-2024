@@ -245,8 +245,9 @@ const links = [
     --margin-horizontal: 1rem;
     --margin-vertical: 1rem;
     --transition-speed: 0.3s;
-    /* Mobile menu overlay — near-black to match the inverted ground. */
-    --bg-color: rgba(10, 10, 10, 0.95);
+    /* Mobile menu overlay — derived from the page ground so it always
+       matches the site background. */
+    --bg-color: rgba(var(--color-bg-rgb), 0.95);
   }
 
   /* Horizontal row — the navbar lives at the top-right of the viewport. */

@@ -192,7 +192,7 @@
       float aura = exp(-abs(d) / (r * 1.8)) * 0.30;
       vec3 auraCol = mix(mix(deepRed, purple, 0.30), red, 0.45) + white * 0.08;
 
-      vec3 ground = vec3(0.051); // page bg #0d0d0d
+      vec3 ground = vec3(0.0); // page bg #000000
       vec3 outCol = ground
         + auraCol * aura * nearBright
         + col * body * nearBright;
